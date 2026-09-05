@@ -25,8 +25,8 @@ module mkSwayBaseline(SwayBaselineIfc);
 	SwayVectorIfc#(128, 128) softplus <- mkSwaySoftplus;
 	SwayScanIfc scan <- mkSwayScan;
 	SwayVectorIfc#(128, 64) outputProjection <- mkSwayOutputProjection;
-	FIFOF#(SwayConvFrame) originalQ <- mkSizedFIFOF(2);
-	FIFOF#(SwayParamMeta) parametersQ <- mkSizedFIFOF(2);
+	FIFOF#(SwayConvFrame) originalQ <- mkSizedFIFOF(1);
+	FIFOF#(SwayParamMeta) parametersQ <- mkSizedFIFOF(1);
 
 	rule process1;
 		let x <- inputProjection.get;

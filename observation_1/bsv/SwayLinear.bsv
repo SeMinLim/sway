@@ -23,7 +23,10 @@ module mkSwayLinear#(String weightFile, Integer shiftBits)(SwayVectorIfc#(ni, no
 	Integer nOut = valueOf(no);
 	Integer groups = (nOut + 3) / 4;
 	FIFOF#(SwayFrame#(ni)) inputQ <- mkSizedFIFOF(1);
-	FIFOF#(SwayFrame#(no)) outputQ <- mkSizedFIFOF(1);
+	// Reuse the result vector as the output holding buffer.
+	Reg#(Bool) outputReadyOn <- mkReg(False);
+	Reg#(Bool) outputFirstR <- mkReg(False);
+	Reg#(Bit#(16)) outputTagR <- mkReg(0);
 	FIFO#(SwayLinearMeta) requestQ <- mkSizedFIFO(4);
 	FIFO#(SwayProducts) productQ <- mkSizedFIFO(4);
 	BRAM_Configure cfg = defaultValue;
@@ -50,11 +53,11 @@ module mkSwayLinear#(String weightFile, Integer shiftBits)(SwayVectorIfc#(ni, no
 		cycleCnt <= cycleCnt + 1;
 		if ( computeOn ) busyCnt <= busyCnt + 1;
 		if ( !computeOn && !inputQ.notEmpty ) emptyCnt <= emptyCnt + 1;
-		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
+		if ( outputReadyOn ) blockedCnt <= blockedCnt + 1;
 	endrule
 
 	// [STAGE 1] Capture one token; independent engines overlap different tokens.
-	rule process1 ( !computeOn && inputQ.notEmpty );
+	rule process1 ( !computeOn && !outputReadyOn && inputQ.notEmpty );
 		columnCnt <= 0;
 		rowCnt <= 0;
 		addressCnt <= 0;
@@ -111,7 +114,9 @@ module mkSwayLinear#(String weightFile, Integer shiftBits)(SwayVectorIfc#(ni, no
 			outputR <= nextOutput;
 			if ( item.meta.row + 4 >= fromInteger(nOut) ) begin
 				inputQ.deq;
-				outputQ.enq(SwayFrame {first: inputR.first, tag: inputR.tag, data: nextOutput});
+				outputFirstR <= inputR.first;
+				outputTagR <= inputR.tag;
+				outputReadyOn <= True;
 				computeOn <= False;
 			end
 		end
@@ -120,10 +125,9 @@ module mkSwayLinear#(String weightFile, Integer shiftBits)(SwayVectorIfc#(ni, no
 	method Action put(SwayFrame#(ni) data);
 		inputQ.enq(data);
 	endmethod
-	method ActionValue#(SwayFrame#(no)) get;
-		let data = outputQ.first;
-		outputQ.deq;
-		return data;
+	method ActionValue#(SwayFrame#(no)) get if ( outputReadyOn );
+		outputReadyOn <= False;
+		return SwayFrame {first: outputFirstR, tag: outputTagR, data: outputR};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,

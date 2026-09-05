@@ -52,7 +52,10 @@ endmodule
 
 module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 	FIFOF#(SwayFrame#(n)) inputQ <- mkSizedFIFOF(1);
-	FIFOF#(SwayFrame#(n)) outputQ <- mkSizedFIFOF(1);
+	// Reuse the result vector as the output holding buffer.
+	Reg#(Bool) outputReadyOn <- mkReg(False);
+	Reg#(Bool) outputFirstR <- mkReg(False);
+	Reg#(Bit#(16)) outputTagR <- mkReg(0);
 	FIFO#(Bit#(9)) indexQ <- mkSizedFIFO(4);
 	SwayLutIfc lut <- mkSwayLut(filename);
 	let inputR = inputQ.first;
@@ -67,9 +70,9 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		cycleCnt <= cycleCnt + 1;
 		if ( computeOn ) busyCnt <= busyCnt + 1;
 		if ( !computeOn && !inputQ.notEmpty ) emptyCnt <= emptyCnt + 1;
-		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
+		if ( outputReadyOn ) blockedCnt <= blockedCnt + 1;
 	endrule
-	rule process1 ( !computeOn && inputQ.notEmpty );
+	rule process1 ( !computeOn && !outputReadyOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -87,17 +90,18 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		outputR <= nextOutput;
 		if ( idx == fromInteger(valueOf(n) - 1) ) begin
 			inputQ.deq;
-			outputQ.enq(SwayFrame {first: inputR.first, tag: inputR.tag, data: nextOutput});
+			outputFirstR <= inputR.first;
+			outputTagR <= inputR.tag;
+			outputReadyOn <= True;
 			computeOn <= False;
 		end
 	endrule
 	method Action put(SwayFrame#(n) x);
 		inputQ.enq(x);
 	endmethod
-	method ActionValue#(SwayFrame#(n)) get;
-		let y = outputQ.first;
-		outputQ.deq;
-		return y;
+	method ActionValue#(SwayFrame#(n)) get if ( outputReadyOn );
+		outputReadyOn <= False;
+		return SwayFrame {first: outputFirstR, tag: outputTagR, data: outputR};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,

@@ -17,7 +17,10 @@ endinterface
 (* synthesize *)
 module mkSwayConv(SwayConvIfc);
 	FIFOF#(SwayFrame#(256)) inputQ <- mkSizedFIFOF(1);
-	FIFOF#(SwayConvFrame) outputQ <- mkSizedFIFOF(1);
+	// Reuse the result vector as the output holding buffer.
+	Reg#(Bool) outputReadyOn <- mkReg(False);
+	Reg#(Bool) outputFirstR <- mkReg(False);
+	Reg#(Bit#(16)) outputTagR <- mkReg(0);
 	FIFO#(Bit#(7)) readQ <- mkSizedFIFO(4);
 	FIFO#(Bit#(7)) resultQ <- mkSizedFIFO(4);
 	SwayLutIfc activation <- mkSwayLut("data/silu.hex");
@@ -45,10 +48,10 @@ module mkSwayConv(SwayConvIfc);
 		cycleCnt <= cycleCnt + 1;
 		if ( computeOn ) busyCnt <= busyCnt + 1;
 		if ( !computeOn && !inputQ.notEmpty ) emptyCnt <= emptyCnt + 1;
-		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
+		if ( outputReadyOn ) blockedCnt <= blockedCnt + 1;
 	endrule
 	// [STAGE 1] Read one channel's four taps and three retained samples.
-	rule process1 ( !computeOn && inputQ.notEmpty );
+	rule process1 ( !computeOn && !outputReadyOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -103,18 +106,18 @@ module mkSwayConv(SwayConvIfc);
 		gateR <= nextGate;
 		if ( ch == 127 ) begin
 			inputQ.deq;
-			outputQ.enq(SwayConvFrame {first: inputR.first, tag: inputR.tag,
-				x: nextX, gate: nextGate});
+			outputFirstR <= inputR.first;
+			outputTagR <= inputR.tag;
+			outputReadyOn <= True;
 			computeOn <= False;
 		end
 	endrule
 	method Action put(SwayFrame#(256) x);
 		inputQ.enq(x);
 	endmethod
-	method ActionValue#(SwayConvFrame) get;
-		let x = outputQ.first;
-		outputQ.deq;
-		return x;
+	method ActionValue#(SwayConvFrame) get if ( outputReadyOn );
+		outputReadyOn <= False;
+		return SwayConvFrame {first: outputFirstR, tag: outputTagR, x: xR, gate: gateR};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,

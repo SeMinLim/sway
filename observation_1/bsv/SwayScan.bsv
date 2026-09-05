@@ -42,7 +42,10 @@ endinterface
 (* synthesize *)
 module mkSwayScan(SwayScanIfc);
 	FIFOF#(SwayScanFrame) inputQ <- mkSizedFIFOF(1);
-	FIFOF#(SwayFrame#(128)) outputQ <- mkSizedFIFOF(1);
+	// Reuse the result vector as the output holding buffer.
+	Reg#(Bool) outputReadyOn <- mkReg(False);
+	Reg#(Bool) outputFirstR <- mkReg(False);
+	Reg#(Bit#(16)) outputTagR <- mkReg(0);
 	FIFO#(Bit#(11)) readQ <- mkSizedFIFO(4);
 	FIFO#(Tuple2#(SwayScanProduct, SwayValue)) productQ <- mkSizedFIFO(4);
 	FIFO#(SwayScanInjection) injectionQ <- mkSizedFIFO(4);
@@ -73,10 +76,10 @@ module mkSwayScan(SwayScanIfc);
 		cycleCnt <= cycleCnt + 1;
 		if ( computeOn ) busyCnt <= busyCnt + 1;
 		if ( !computeOn && !inputQ.notEmpty ) emptyCnt <= emptyCnt + 1;
-		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
+		if ( outputReadyOn ) blockedCnt <= blockedCnt + 1;
 	endrule
 	// [STAGE 1] Independent diagonal modes, one request per cycle.
-	rule process1 ( !computeOn && inputQ.notEmpty );
+	rule process1 ( !computeOn && !outputReadyOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -151,8 +154,9 @@ module mkSwayScan(SwayScanIfc);
 			outputR <= nextOutput;
 			if ( ch == 127 ) begin
 				inputQ.deq;
-				outputQ.enq(SwayFrame {first: inputR.meta.inputFrame.first,
-					tag: inputR.meta.inputFrame.tag, data: nextOutput});
+				outputFirstR <= inputR.meta.inputFrame.first;
+				outputTagR <= inputR.meta.inputFrame.tag;
+				outputReadyOn <= True;
 				computeOn <= False;
 			end
 		end
@@ -160,10 +164,9 @@ module mkSwayScan(SwayScanIfc);
 	method Action put(SwayScanFrame x);
 		inputQ.enq(x);
 	endmethod
-	method ActionValue#(SwayFrame#(128)) get;
-		let x = outputQ.first;
-		outputQ.deq;
-		return x;
+	method ActionValue#(SwayFrame#(128)) get if ( outputReadyOn );
+		outputReadyOn <= False;
+		return SwayFrame {first: outputFirstR, tag: outputTagR, data: outputR};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,
