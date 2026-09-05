@@ -1,0 +1,67 @@
+name: Observation 1 blueYosys validation
+on:
+  push:
+    branches: [main]
+    paths: [observation_1/**, .github/workflows/observation_1.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: observation-1-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          path: sway
+      - uses: actions/checkout@v4
+        with:
+          repository: SeMinLim/blueyosys
+          ref: 15836908675784f36a7614085d418da6f77be65f
+          persist-credentials: false
+          path: blueyosys
+      - name: Install Bluespec
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libtinfo6 libgmp10 build-essential python3-numpy
+          bash sway/observation_1/scripts/install_bsc.sh "$RUNNER_TEMP/bsc"
+          echo "$RUNNER_TEMP/bsc/bin" >> "$GITHUB_PATH"
+      - uses: YosysHQ/setup-oss-cad-suite@c7845bc0d335c8076aa22047e85972caa8a916df
+        with:
+          version: '2026-09-01'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Prepare project
+        run: |
+          cp -a sway/observation_1 blueyosys/projects/sway_observation_1
+          mkdir -p reports
+          { bsc -v; yosys -V; nextpnr-ecp5 --version; } > reports/tools.log 2>&1
+      - name: Fixture equivalence, reset and backpressure
+        run: |
+          set -o pipefail
+          make -C blueyosys/projects/sway_observation_1 test DATA_MODE=fixture 2>&1 | tee reports/fixture-build.log
+          cp blueyosys/projects/sway_observation_1/simulation.log reports/fixture-simulation.log
+          cp blueyosys/projects/sway_observation_1/data/manifest.json reports/fixture-manifest.json
+      - name: Public KWS example equivalence
+        run: |
+          set -o pipefail
+          make -C blueyosys/projects/sway_observation_1 test 2>&1 | tee reports/upstream-build.log
+          cp blueyosys/projects/sway_observation_1/simulation.log reports/upstream-simulation.log
+          cp blueyosys/projects/sway_observation_1/data/manifest.json reports/upstream-manifest.json
+      - name: Synthesize and route using blueYosys
+        run: |
+          set -o pipefail
+          make -C blueyosys/projects/sway_observation_1 synth 2>&1 | tee reports/hardware-build.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: observation-1-build-${{ github.sha }}
+          path: |
+            reports/
+            blueyosys/projects/sway_observation_1/build/
+            blueyosys/projects/sway_observation_1/bsim/*.sched
+            blueyosys/projects/sway_observation_1/simulation.log
+            blueyosys/projects/sway_observation_1/data/manifest.json

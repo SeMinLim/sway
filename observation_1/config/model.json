@@ -1,0 +1,22 @@
+{
+  "model": "MambaLite-Micro examples/mambakws-any-10 Mamba_Forward kernel",
+  "source_revision": "44d51fce0f17ddadb6111c5e5554d1f7f6c67aff",
+  "d_model": 64,
+  "d_inner": 128,
+  "d_state": 16,
+  "d_conv": 4,
+  "dt_rank": 4,
+  "sequence_length": 100,
+  "batch": 1,
+  "linear_lanes": 4,
+  "state_lanes": 1,
+  "fraction_bits": 10,
+  "value_bits": 16,
+  "linear_accumulator_bits": 48,
+  "rounding": "arithmetic right shift toward negative infinity, saturate signed16",
+  "nonlinear_lut_entries": 4096,
+  "nonlinear_lut_step": 0.015625,
+  "scope_excludes": ["MFCC extraction", "40-to-64 application input projection", "temporal average and classifier", "training"],
+  "normalization": "No normalization or residual exists inside the pinned Mamba_Forward boundary",
+  "blueyosys_reference_revision": "15836908675784f36a7614085d418da6f77be65f"
+}
