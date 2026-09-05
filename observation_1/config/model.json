@@ -10,13 +10,43 @@
   "batch": 1,
   "linear_lanes": 4,
   "state_lanes": 1,
-  "fraction_bits": 10,
   "value_bits": 16,
   "linear_accumulator_bits": 48,
   "rounding": "arithmetic right shift toward negative infinity, saturate signed16",
   "nonlinear_lut_entries": 4096,
-  "nonlinear_lut_step": 0.015625,
-  "scope_excludes": ["MFCC extraction", "40-to-64 application input projection", "temporal average and classifier", "training"],
+  "nonlinear_lut_step": {
+    "silu": 0.015625,
+    "gate_silu": 0.0625,
+    "softplus": 0.015625,
+    "decay": 0.00390625
+  },
+  "scope_excludes": [
+    "MFCC extraction",
+    "40-to-64 application input projection",
+    "temporal average and classifier",
+    "training"
+  ],
   "normalization": "No normalization or residual exists inside the pinned Mamba_Forward boundary",
-  "blueyosys_reference_revision": "15836908675784f36a7614085d418da6f77be65f"
+  "blueyosys_reference_revision": "15836908675784f36a7614085d418da6f77be65f",
+  "fractions": {
+    "input": 8,
+    "linear_weights": 13,
+    "xz": 8,
+    "convolution_weights": 13,
+    "convolution_bias": 10,
+    "u": 10,
+    "gate": 8,
+    "parameters": 10,
+    "delta_bias": 10,
+    "delta": 15,
+    "A": 10,
+    "deltaB": 12,
+    "injection": 12,
+    "state": 12,
+    "readout": 10,
+    "gated": 5,
+    "output": 7
+  },
+  "softplus_output_max": 0.999969482421875,
+  "formats_note": "Static implementation profile, not a dataset-calibrated accuracy guarantee."
 }

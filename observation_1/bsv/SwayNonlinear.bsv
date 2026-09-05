@@ -27,12 +27,35 @@ module mkSwayLut#(String filename)(SwayLutIfc);
 	endmethod
 endmodule
 
+// Decay needs much finer resolution near zero than SiLU/softplus.
+// Input Q6.10, output Q1.15; nearest 1/256 step over [-16, 0].
+module mkSwayDecayLut(SwayLutIfc);
+	BRAM_Configure cfg = defaultValue;
+	cfg.memorySize = 4096;
+	cfg.latency = 1;
+	cfg.loadFormat = tagged Hex "data/exp.hex";
+	BRAM1Port#(Bit#(12), SwayValue) tableR <- mkBRAM1Server(cfg);
+	method Action put(SwayValue x);
+		Int#(18) magnitude = -signExtend(x);
+		Int#(18) rounded = (magnitude + 2) >> 2;
+		if ( rounded < 0 ) rounded = 0;
+		if ( rounded > 4095 ) rounded = 4095;
+		Bit#(12) address = truncate(pack(rounded));
+		tableR.portA.request.put(BRAMRequest {write: False, responseOnWrite: False,
+			address: address, datain: 0});
+	endmethod
+	method ActionValue#(SwayValue) get;
+		let y <- tableR.portA.response.get;
+		return y;
+	endmethod
+endmodule
+
 module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 	FIFOF#(SwayFrame#(n)) inputQ <- mkSizedFIFOF(1);
 	FIFOF#(SwayFrame#(n)) outputQ <- mkSizedFIFOF(1);
 	FIFO#(Bit#(9)) indexQ <- mkSizedFIFO(4);
 	SwayLutIfc lut <- mkSwayLut(filename);
-	Reg#(SwayFrame#(n)) inputR <- mkRegU;
+	let inputR = inputQ.first;
 	Reg#(Vector#(n, SwayValue)) outputR <- mkRegU;
 	Reg#(Bit#(9)) issueCnt <- mkReg(0);
 	Reg#(Bool) computeOn <- mkReg(False);
@@ -46,9 +69,7 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		if ( !computeOn && !inputQ.notEmpty ) emptyCnt <= emptyCnt + 1;
 		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
 	endrule
-	rule process1 ( !computeOn );
-		inputR <= inputQ.first;
-		inputQ.deq;
+	rule process1 ( !computeOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -57,7 +78,7 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		indexQ.enq(issueCnt);
 		issueCnt <= issueCnt + 1;
 	endrule
-	rule process3;
+	rule process3 ( computeOn );
 		let y <- lut.get;
 		let idx = indexQ.first;
 		indexQ.deq;
@@ -65,6 +86,7 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		nextOutput[idx] = y;
 		outputR <= nextOutput;
 		if ( idx == fromInteger(valueOf(n) - 1) ) begin
+			inputQ.deq;
 			outputQ.enq(SwayFrame {first: inputR.first, tag: inputR.tag, data: nextOutput});
 			computeOn <= False;
 		end
@@ -80,5 +102,10 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,
 		mulCount: 0, inputEmptyCycles: emptyCnt, outputFullCycles: blockedCnt};
+endmodule
+(* synthesize *)
+module mkSwaySoftplus(SwayVectorIfc#(128, 128));
+	let engine <- mkSwayActivation("data/softplus.hex");
+	return engine;
 endmodule
 endpackage

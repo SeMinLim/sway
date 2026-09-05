@@ -14,13 +14,14 @@ interface SwayConvIfc;
 	method Bool busy;
 endinterface
 
+(* synthesize *)
 module mkSwayConv(SwayConvIfc);
 	FIFOF#(SwayFrame#(256)) inputQ <- mkSizedFIFOF(1);
 	FIFOF#(SwayConvFrame) outputQ <- mkSizedFIFOF(1);
 	FIFO#(Bit#(7)) readQ <- mkSizedFIFO(4);
 	FIFO#(Bit#(7)) resultQ <- mkSizedFIFO(4);
 	SwayLutIfc activation <- mkSwayLut("data/silu.hex");
-	SwayLutIfc gateActivation <- mkSwayLut("data/silu.hex");
+	SwayLutIfc gateActivation <- mkSwayLut("data/gate_silu.hex");
 	BRAM_Configure cfg = defaultValue;
 	cfg.memorySize = 128;
 	cfg.latency = 1;
@@ -30,7 +31,7 @@ module mkSwayConv(SwayConvIfc);
 	histCfg.memorySize = 128;
 	histCfg.latency = 1;
 	BRAM2Port#(Bit#(7), Bit#(48)) history <- mkBRAM2Server(histCfg);
-	Reg#(SwayFrame#(256)) inputR <- mkRegU;
+	let inputR = inputQ.first;
 	Reg#(Vector#(128, SwayValue)) xR <- mkRegU;
 	Reg#(Vector#(128, SwayValue)) gateR <- mkRegU;
 	Reg#(Bit#(8)) issueCnt <- mkReg(0);
@@ -47,9 +48,7 @@ module mkSwayConv(SwayConvIfc);
 		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
 	endrule
 	// [STAGE 1] Read one channel's four taps and three retained samples.
-	rule process1 ( !computeOn );
-		inputR <= inputQ.first;
-		inputQ.deq;
+	rule process1 ( !computeOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -73,7 +72,7 @@ module mkSwayConv(SwayConvIfc);
 		if ( inputR.first ) h = replicate(0);
 		SwayValue x = inputR.data[ch];
 		SwayAcc sum = signExtend(w[4]);
-		sum = sum << swayFraction;
+		sum = sum << 11;
 		for ( Integer k = 0; k < 3; k = k + 1 ) begin
 			sum = sum + signExtend(swayProduct(h[k], w[k]));
 		end
@@ -84,14 +83,14 @@ module mkSwayConv(SwayConvIfc);
 		nextHistory[2] = x;
 		history.portB.request.put(BRAMRequest {write: True, responseOnWrite: False,
 			address: ch, datain: pack(nextHistory)});
-		activation.put(swayRound(sum));
+		activation.put(swayRound(sum, 11));
 		Bit#(8) gateIdx = zeroExtend(ch) + 128;
 		gateActivation.put(inputR.data[gateIdx]);
 		resultQ.enq(ch);
 		mulCnt <= mulCnt + 4;
 	endrule
 	// [STAGE 3] Pair the two independent activation results.
-	rule process4;
+	rule process4 ( computeOn );
 		let x <- activation.get;
 		let gate <- gateActivation.get;
 		let ch = resultQ.first;
@@ -103,6 +102,7 @@ module mkSwayConv(SwayConvIfc);
 		xR <= nextX;
 		gateR <= nextGate;
 		if ( ch == 127 ) begin
+			inputQ.deq;
 			outputQ.enq(SwayConvFrame {first: inputR.first, tag: inputR.tag,
 				x: nextX, gate: nextGate});
 			computeOn <= False;

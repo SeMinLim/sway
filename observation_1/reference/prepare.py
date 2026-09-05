@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export a matched Q6.10 Mamba block and self-checking HDL vectors.
+"""Export a matched per-tensor fixed-point Mamba block and self-checking HDL vectors.
 
 Default source: the pinned MambaLite-Micro KWS header and example MFCC input.
 --fixture is an explicitly synthetic implementation test, never KWS accuracy.
@@ -19,7 +19,9 @@ REV = "44d51fce0f17ddadb6111c5e5554d1f7f6c67aff"
 BASE = f"https://raw.githubusercontent.com/Whiten-Rock/MambaLite-Micro/{REV}/examples/mambakws-any-10/include/"
 SOURCE_SHA = {"mamba_weights.h": "67eff33bf62e5f42adbf1ac506b425de83e67880", "sample_input.h": "d58558694184960cd3f9acf394a977eb1a0717d8"}
 D, H, N, R, K, T = 64, 128, 16, 4, 4, 100
-F, SCALE = 10, 1024
+WEIGHT_FRACTION = 13
+INPUT_FRACTION = 8
+OUTPUT_FRACTION = 7
 
 
 def git_blob(data: bytes) -> str:
@@ -54,23 +56,23 @@ def sat(x):
     return np.clip(x, -32768, 32767).astype(np.int64)
 
 
-def quant(x):
-    return sat(np.rint(np.asarray(x) * SCALE))
+def quant(x, fraction):
+    return sat(np.rint(np.asarray(x) * (1 << fraction)))
 
 
-def mul(a, b):
-    return sat((np.asarray(a, dtype=np.int64) * np.asarray(b, dtype=np.int64)) >> F)
+def mul(a, b, shift):
+    return sat((np.asarray(a, dtype=np.int64) * np.asarray(b, dtype=np.int64)) >> shift)
 
 
 def add(a, b):
     return sat(np.asarray(a, dtype=np.int64) + np.asarray(b, dtype=np.int64))
 
 
-def mat(x, w, bias=None):
+def mat(x, w, shift, bias=None):
     s = w @ x
     if bias is not None:
-        s = s + bias * SCALE
-    return sat(s >> F)
+        s = s + (bias << shift)
+    return sat(s >> shift)
 
 
 def lookup(x, table):
@@ -78,12 +80,20 @@ def lookup(x, table):
 
 
 def tables():
-    x = (np.arange(4096, dtype=np.float64) * 16 - 32768) / SCALE
+    raw = np.arange(4096, dtype=np.float64) * 16 - 32768
+    x = raw / 1024.0
+    gate_x = raw / 256.0
     return {
-        "silu": quant(x / (1.0 + np.exp(-x))),
-        "softplus": quant(np.logaddexp(0.0, x)),
-        "exp": quant(np.exp(np.minimum(x, 0.0))),
+        "silu": quant(x / (1.0 + np.exp(-x)), 10),
+        "gate_silu": quant(gate_x / (1.0 + np.exp(-gate_x)), 8),
+        "softplus": quant(np.logaddexp(0.0, x), 15),
+        "exp": quant(np.exp(-np.arange(4096)/256.0), 15),
     }
+
+
+def decay_lookup(x, table):
+    index = np.clip((-np.asarray(x, dtype=np.int64) + 2) >> 2, 0, 4095)
+    return table[index]
 
 
 def packed_hex(path: Path, rows):
@@ -112,23 +122,23 @@ def fixed_forward(x, w, lut):
     outputs = []
     saturation_count = 0
     for token in x:
-        projected = mat(token, w["in"])
+        projected = mat(token, w["in"], 13)
         u, z = projected[:H], projected[H:]
         window = np.concatenate([hist, u[:, None]], axis=1)
-        conv = sat(((window * w["conv"]).sum(axis=1) + w["cb"] * SCALE) >> F)
+        conv = sat(((window * w["conv"]).sum(axis=1) + (w["cb"] << 11)) >> 11)
         hist = window[:, 1:].copy()
         u = lookup(conv, lut["silu"])
-        gate = lookup(z, lut["silu"])
-        p = mat(u, w["xp"])
-        delta = lookup(mat(p[:R], w["dt"], w["db"]), lut["softplus"])
+        gate = lookup(z, lut["gate_silu"])
+        p = mat(u, w["xp"], 13)
+        delta = lookup(mat(p[:R], w["dt"], 13, w["db"]), lut["softplus"])
         b, c = p[R:R+N], p[R+N:]
-        decay = lookup(mul(delta[:, None], w["a"]), lut["exp"])
-        injection = mul(mul(delta[:, None], b[None, :]), u[:, None])
-        state = add(mul(decay, state), injection)
-        skip = mul(w["skip"], u)
-        y = sat(((state * c[None, :]).sum(axis=1) + skip * SCALE) >> F)
-        y = mul(y, gate)
-        out = mat(y, w["out"])
+        decay = decay_lookup(mul(delta[:, None], w["a"], 15), lut["exp"])
+        injection = mul(mul(delta[:, None], b[None, :], 13), u[:, None], 10)
+        state = add(mul(decay, state, 15), injection)
+        skip = mul(w["skip"], u, 13)
+        y = sat(((state * c[None, :]).sum(axis=1) + (skip << 12)) >> 12)
+        y = mul(y, gate, 13)
+        out = mat(y, w["out"], 11)
         outputs.append(out)
         saturation_count += int(np.count_nonzero((state == -32768) | (state == 32767)))
     return np.asarray(outputs), saturation_count
@@ -199,8 +209,9 @@ def main():
     cache = out / "upstream"
     cache.mkdir(exist_ok=True)
     x_float, weights_float = get_fixture() if args.fixture else get_upstream(cache)
-    weights = {key: quant(v) for key, v in weights_float.items()}
-    x = quant(x_float)
+    weights = {key: quant(v, 10 if key in ("cb", "db", "a") else 13)
+               for key, v in weights_float.items()}
+    x = quant(x_float, INPUT_FRACTION)
     lut = tables()
     y, saturated = fixed_forward(x, weights, lut)
     if not np.any(y):
@@ -216,13 +227,14 @@ def main():
         packed_hex(out / (name + ".hex"), table[:,None])
     packed_hex(out / "input.hex", x)
     packed_hex(out / "expected.hex", y)
-    error = y/SCALE - yf
+    error = y/(1 << OUTPUT_FRACTION) - yf
     manifest = {"source": "synthetic fixture" if args.fixture else "MambaLite-Micro public KWS sample",
                 "revision": REV, "source_blobs": {} if args.fixture else SOURCE_SHA,
                 "dimensions": {"d_model":D,"d_inner":H,"d_state":N,"dt_rank":R,"d_conv":K,"sequence":T},
-                "numerics": "signed16 Q6.10; 48-bit linear accumulation; floor shift then saturation; LUT step1/64",
+                "numerics": "signed16 per-tensor fraction; 48-bit linear accumulation; floor shift then saturation; decay LUT nearest1/256",
                 "state_saturation_count": saturated,
                 "float_comparison": {"max_abs":float(np.max(np.abs(error))),"rmse":float(np.sqrt(np.mean(error**2)))},
+                "fractions": {"input":8,"xz":8,"u":10,"gate":8,"parameters":10,"delta":15,"state":12,"gated":5,"output":7,"linear_weights":13,"A":10},
                 "accuracy_evaluation": "NOT PERFORMED: one example and numeric equivalence are not task accuracy",
                 "files": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.glob("*.hex"))}}
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

@@ -16,14 +16,15 @@ endinterface
 
 // Token-overlapped stage organization inspired by eMamba Section 4.4.
 // This is a reimplementation for the MambaLite-Micro block, not author RTL.
+(* synthesize *)
 module mkSwayBaseline(SwayBaselineIfc);
-	SwayVectorIfc#(64, 256) inputProjection <- mkSwayLinear("data/in_proj.hex");
+	SwayVectorIfc#(64, 256) inputProjection <- mkSwayInputProjection;
 	SwayConvIfc convolution <- mkSwayConv;
-	SwayVectorIfc#(128, 36) parameterProjection <- mkSwayLinear("data/x_proj.hex");
-	SwayVectorIfc#(4, 128) deltaProjection <- mkSwayLinear("data/dt_proj.hex");
-	SwayVectorIfc#(128, 128) softplus <- mkSwayActivation("data/softplus.hex");
+	SwayVectorIfc#(128, 36) parameterProjection <- mkSwayParameterProjection;
+	SwayVectorIfc#(4, 128) deltaProjection <- mkSwayDeltaProjection;
+	SwayVectorIfc#(128, 128) softplus <- mkSwaySoftplus;
 	SwayScanIfc scan <- mkSwayScan;
-	SwayVectorIfc#(128, 64) outputProjection <- mkSwayLinear("data/out_proj.hex");
+	SwayVectorIfc#(128, 64) outputProjection <- mkSwayOutputProjection;
 	FIFOF#(SwayConvFrame) originalQ <- mkSizedFIFOF(2);
 	FIFOF#(SwayParamMeta) parametersQ <- mkSizedFIFOF(2);
 

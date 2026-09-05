@@ -39,6 +39,7 @@ interface SwayScanIfc;
 	method Bool busy;
 endinterface
 
+(* synthesize *)
 module mkSwayScan(SwayScanIfc);
 	FIFOF#(SwayScanFrame) inputQ <- mkSizedFIFOF(1);
 	FIFOF#(SwayFrame#(128)) outputQ <- mkSizedFIFOF(1);
@@ -47,7 +48,7 @@ module mkSwayScan(SwayScanIfc);
 	FIFO#(SwayScanInjection) injectionQ <- mkSizedFIFO(4);
 	FIFO#(SwayScanUpdated) updatedQ <- mkSizedFIFO(4);
 	FIFO#(SwayScanContribution) contributionQ <- mkSizedFIFO(4);
-	SwayLutIfc decayLut <- mkSwayLut("data/exp.hex");
+	SwayLutIfc decayLut <- mkSwayDecayLut;
 	BRAM_Configure cfg = defaultValue;
 	cfg.memorySize = 2048;
 	cfg.latency = 1;
@@ -57,7 +58,7 @@ module mkSwayScan(SwayScanIfc);
 	stateCfg.memorySize = 2048;
 	stateCfg.latency = 1;
 	BRAM2Port#(Bit#(11), SwayValue) stateMemory <- mkBRAM2Server(stateCfg);
-	Reg#(SwayScanFrame) inputR <- mkRegU;
+	let inputR = inputQ.first;
 	Reg#(Vector#(128, SwayValue)) outputR <- mkRegU;
 	Reg#(Bit#(12)) issueCnt <- mkReg(0);
 	Reg#(Bool) computeOn <- mkReg(False);
@@ -75,9 +76,7 @@ module mkSwayScan(SwayScanIfc);
 		if ( outputQ.notEmpty ) blockedCnt <= blockedCnt + 1;
 	endrule
 	// [STAGE 1] Independent diagonal modes, one request per cycle.
-	rule process1 ( !computeOn );
-		inputR <= inputQ.first;
-		inputQ.deq;
+	rule process1 ( !computeOn && inputQ.notEmpty );
 		issueCnt <= 0;
 		computeOn <= True;
 	endrule
@@ -104,9 +103,9 @@ module mkSwayScan(SwayScanIfc);
 		let x = frame.x[ch];
 		SwayScanProduct meta = SwayScanProduct {index: idx,
 			state: frame.first ? 0 : previous,
-			deltaB: swayMul(delta, inputR.meta.b[mode]), c: inputR.meta.c[mode],
-			x: x, gate: frame.gate[ch], skip: swayMul(w[1], x)};
-		productQ.enq(tuple2(meta, swayMul(delta, w[0])));
+			deltaB: swayMul(delta, inputR.meta.b[mode], 13), c: inputR.meta.c[mode],
+			x: x, gate: frame.gate[ch], skip: swayMul(w[1], x, 13)};
+		productQ.enq(tuple2(meta, swayMul(delta, w[0], 15)));
 	endrule
 	// [STAGE 3] Input injection and synchronous exponential approximation.
 	rule process4;
@@ -114,14 +113,14 @@ module mkSwayScan(SwayScanIfc);
 		let deltaA = tpl_2(productQ.first);
 		productQ.deq;
 		decayLut.put(deltaA);
-		injectionQ.enq(SwayScanInjection {meta: meta, injection: swayMul(meta.deltaB, meta.x)});
+		injectionQ.enq(SwayScanInjection {meta: meta, injection: swayMul(meta.deltaB, meta.x, 10)});
 	endrule
 	// [STAGE 4] h'=decay*h+injection, committed to SRAM in issue order.
 	rule process5;
 		let decay <- decayLut.get;
 		let item = injectionQ.first;
 		injectionQ.deq;
-		let h = swayAdd(swayMul(decay, item.meta.state), item.injection);
+		let h = swayAdd(swayMul(decay, item.meta.state, 15), item.injection);
 		stateMemory.portB.request.put(BRAMRequest {write: True, responseOnWrite: False,
 			address: item.meta.index, datain: h});
 		updatedQ.enq(SwayScanUpdated {meta: item.meta, state: h});
@@ -134,7 +133,7 @@ module mkSwayScan(SwayScanIfc);
 			contribution: swayProduct(item.state, item.meta.c)});
 	endrule
 	// [STAGE 6] Reduce 16 modes per channel; then gate and emit.
-	rule process7;
+	rule process7 ( computeOn );
 		let item = contributionQ.first;
 		contributionQ.deq;
 		Bit#(4) mode = truncate(item.meta.index);
@@ -142,15 +141,16 @@ module mkSwayScan(SwayScanIfc);
 		SwayAcc sum = signExtend(item.contribution);
 		if ( mode == 0 ) begin
 			SwayAcc skip = signExtend(item.meta.skip);
-			sum = sum + (skip << swayFraction);
+			sum = sum + (skip << 12);
 		end else sum = sum + sumR;
 		sumR <= sum;
 		mulCnt <= mulCnt + (mode == 15 ? 7 : 6);
 		if ( mode == 15 ) begin
 			Vector#(128, SwayValue) nextOutput = outputR;
-			nextOutput[ch] = swayMul(swayRound(sum), item.meta.gate);
+			nextOutput[ch] = swayMul(swayRound(sum, 12), item.meta.gate, 13);
 			outputR <= nextOutput;
 			if ( ch == 127 ) begin
+				inputQ.deq;
 				outputQ.enq(SwayFrame {first: inputR.meta.inputFrame.first,
 					tag: inputR.meta.inputFrame.tag, data: nextOutput});
 				computeOn <= False;

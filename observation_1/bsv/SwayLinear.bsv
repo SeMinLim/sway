@@ -18,7 +18,7 @@ typedef struct {
 	Vector#(4, Int#(32)) products;
 } SwayProducts deriving (Bits, Eq);
 
-module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
+module mkSwayLinear#(String weightFile, Integer shiftBits)(SwayVectorIfc#(ni, no));
 	Integer nIn = valueOf(ni);
 	Integer nOut = valueOf(no);
 	Integer groups = (nOut + 3) / 4;
@@ -32,7 +32,7 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 	cfg.loadFormat = tagged Hex weightFile;
 	BRAM1Port#(Bit#(15), Bit#(64)) weights <- mkBRAM1Server(cfg);
 
-	Reg#(SwayFrame#(ni)) inputR <- mkRegU;
+	let inputR = inputQ.first;
 	Reg#(Vector#(no, SwayValue)) outputR <- mkRegU;
 	Vector#(4, Reg#(SwayAcc)) accR <- replicateM(mkReg(0));
 	Reg#(Bool) computeOn <- mkReg(False);
@@ -54,9 +54,7 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 	endrule
 
 	// [STAGE 1] Capture one token; independent engines overlap different tokens.
-	rule process1 ( !computeOn );
-		inputR <= inputQ.first;
-		inputQ.deq;
+	rule process1 ( !computeOn && inputQ.notEmpty );
 		columnCnt <= 0;
 		rowCnt <= 0;
 		addressCnt <= 0;
@@ -65,9 +63,9 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 	endrule
 
 	// Packed SRAM supplies four output-row weights per cycle.
-	// A final column multiplies each row's bias by Q10 one.
+	// A final column multiplies each row's bias by the fixed alignment scale.
 	rule process2 ( computeOn && !issueDone );
-		SwayValue x = 1024;
+		SwayValue x = fromInteger(2 ** shiftBits);
 		if ( columnCnt < fromInteger(nIn) ) x = inputR.data[columnCnt];
 		weights.portA.request.put(BRAMRequest {write: False, responseOnWrite: False,
 			address: addressCnt, datain: 0});
@@ -95,7 +93,7 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 	endrule
 
 	// [STAGE 3] Wide accumulation, then one rounded output per row.
-	rule process4;
+	rule process4 ( computeOn );
 		let item = productQ.first;
 		productQ.deq;
 		Vector#(no, SwayValue) nextOutput = outputR;
@@ -105,13 +103,14 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 			accR[i] <= sum;
 			Bit#(9) row = item.meta.row + fromInteger(i);
 			if ( item.meta.lastCol && row < fromInteger(nOut) ) begin
-				nextOutput[row] = swayRound(sum);
+				nextOutput[row] = swayRound(sum, shiftBits);
 			end
 		end
 		mulCnt <= mulCnt + 4;
 		if ( item.meta.lastCol ) begin
 			outputR <= nextOutput;
 			if ( item.meta.row + 4 >= fromInteger(nOut) ) begin
+				inputQ.deq;
 				outputQ.enq(SwayFrame {first: inputR.first, tag: inputR.tag, data: nextOutput});
 				computeOn <= False;
 			end
@@ -129,5 +128,29 @@ module mkSwayLinear#(String weightFile)(SwayVectorIfc#(ni, no));
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,
 		mulCount: mulCnt, inputEmptyCycles: emptyCnt, outputFullCycles: blockedCnt};
+endmodule
+// Fixed elaboration boundaries keep Bluesim compilation bounded; datapaths unchanged.
+(* synthesize *)
+module mkSwayInputProjection(SwayVectorIfc#(64, 256));
+	let engine <- mkSwayLinear("data/in_proj.hex", 13);
+	return engine;
+endmodule
+
+(* synthesize *)
+module mkSwayParameterProjection(SwayVectorIfc#(128, 36));
+	let engine <- mkSwayLinear("data/x_proj.hex", 13);
+	return engine;
+endmodule
+
+(* synthesize *)
+module mkSwayDeltaProjection(SwayVectorIfc#(4, 128));
+	let engine <- mkSwayLinear("data/dt_proj.hex", 13);
+	return engine;
+endmodule
+
+(* synthesize *)
+module mkSwayOutputProjection(SwayVectorIfc#(128, 64));
+	let engine <- mkSwayLinear("data/out_proj.hex", 11);
+	return engine;
 endmodule
 endpackage

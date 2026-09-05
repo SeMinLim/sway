@@ -7,7 +7,10 @@ typedef 64 SwayDim;
 typedef 128 SwayInner;
 typedef 16 SwayState;
 typedef 4 SwayRank;
-Integer swayFraction = 10;
+// Fixed-point fractional bits by tensor; all storage words are signed16.
+Integer swayInputFraction = 8;
+Integer swayWeightFraction = 13;
+Integer swayOutputFraction = 7;
 
 typedef struct {
 	Bool first;
@@ -55,9 +58,9 @@ function SwayValue swaySaturate(SwayAcc x);
 	return y;
 endfunction
 
-function SwayValue swayRound(SwayAcc x);
-	// Arithmetic shift, round toward negative infinity, then saturate.
-	return swaySaturate(x >> swayFraction);
+function SwayValue swayRound(SwayAcc x, Integer shiftBits);
+	// Arithmetic shift (floor) followed by signed saturation.
+	return swaySaturate(x >> shiftBits);
 endfunction
 
 function Int#(32) swayProduct(SwayValue a, SwayValue b);
@@ -66,8 +69,8 @@ function Int#(32) swayProduct(SwayValue a, SwayValue b);
 	return aa * bb;
 endfunction
 
-function SwayValue swayMul(SwayValue a, SwayValue b);
-	return swayRound(signExtend(swayProduct(a, b)));
+function SwayValue swayMul(SwayValue a, SwayValue b, Integer shiftBits);
+	return swayRound(signExtend(swayProduct(a, b)), shiftBits);
 endfunction
 
 function SwayValue swayAdd(SwayValue a, SwayValue b);

@@ -11,6 +11,10 @@ concurrency:
   cancel-in-progress: true
 jobs:
   validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        check: [fixture, upstream, hardware]
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
@@ -31,6 +35,7 @@ jobs:
           bash sway/observation_1/scripts/install_bsc.sh "$RUNNER_TEMP/bsc"
           echo "$RUNNER_TEMP/bsc/bin" >> "$GITHUB_PATH"
       - uses: YosysHQ/setup-oss-cad-suite@c7845bc0d335c8076aa22047e85972caa8a916df
+        if: matrix.check == 'hardware'
         with:
           version: '2026-09-01'
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -38,27 +43,24 @@ jobs:
         run: |
           cp -a sway/observation_1 blueyosys/projects/sway_observation_1
           mkdir -p reports
-          { bsc -v; yosys -V; nextpnr-ecp5 --version; } > reports/tools.log 2>&1
-      - name: Fixture equivalence, reset and backpressure
+          bsc -v > reports/tools.log 2>&1
+      - name: Reference equivalence, reset and backpressure
+        if: matrix.check != 'hardware'
         run: |
           set -o pipefail
-          make -C blueyosys/projects/sway_observation_1 test DATA_MODE=fixture 2>&1 | tee reports/fixture-build.log
-          cp blueyosys/projects/sway_observation_1/simulation.log reports/fixture-simulation.log
-          cp blueyosys/projects/sway_observation_1/data/manifest.json reports/fixture-manifest.json
-      - name: Public KWS example equivalence
-        run: |
-          set -o pipefail
-          make -C blueyosys/projects/sway_observation_1 test 2>&1 | tee reports/upstream-build.log
-          cp blueyosys/projects/sway_observation_1/simulation.log reports/upstream-simulation.log
-          cp blueyosys/projects/sway_observation_1/data/manifest.json reports/upstream-manifest.json
+          make -C blueyosys/projects/sway_observation_1 test DATA_MODE=${{ matrix.check }} 2>&1 | tee reports/simulation-build.log
+          cp blueyosys/projects/sway_observation_1/simulation.log reports/simulation.log
+          cp blueyosys/projects/sway_observation_1/data/manifest.json reports/manifest.json
       - name: Synthesize and route using blueYosys
+        if: matrix.check == 'hardware'
         run: |
           set -o pipefail
+          { yosys -V; nextpnr-ecp5 --version; } >> reports/tools.log 2>&1
           make -C blueyosys/projects/sway_observation_1 synth 2>&1 | tee reports/hardware-build.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: observation-1-build-${{ github.sha }}
+          name: observation-1-${{ matrix.check }}-${{ github.sha }}
           path: |
             reports/
             blueyosys/projects/sway_observation_1/build/

@@ -18,12 +18,14 @@ module mkTbSway(Empty);
 
 	rule clockTick;
 		cycleCnt <= cycleCnt + 1;
+	endrule
+	rule observeOverlap;
 		let active = dut.activeStages;
 		if ( (active & (active - 1)) != 0 ) overlapSeen <= True;
-		if ( cycleCnt > 10000000 ) begin
-			$display("SWAY_FAIL watchdog sent=%0d received=%0d", sentCnt, receivedCnt);
-			$finish(1);
-		end
+	endrule
+	rule watchdog ( cycleCnt > 10000000 );
+		$display("SWAY_FAIL watchdog sent=%0d received=%0d", sentCnt, receivedCnt);
+		$finish(1);
 	endrule
 	// Two identical sequences without a global reset test per-sequence state reset.
 	// Periodic source bubbles and sink stalls test FIFO readiness propagation.
