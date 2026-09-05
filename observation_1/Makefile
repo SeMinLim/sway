@@ -15,6 +15,7 @@ NEEDS_INOUT_FIX := 0
 BSIM_CXXFLAGS := -Xc++ -O0
 BSIM_CPPFILES :=
 DATA_MODE ?= upstream
+BSC_RUNTIME_DIR ?= $(shell $(BSC) -help 2>/dev/null | sed -n 's/^Bluespec directory: //p')/Verilog
 
 ifeq ($(wildcard $(ROOTDIR)/build.mk),)
 $(error blueYosys not found at $(ROOTDIR). Set ROOTDIR=/absolute/path/to/blueyosys)
@@ -28,9 +29,11 @@ data:
 	cd $(PROJECT_DIR) && python3 reference/prepare.py $(if $(filter fixture,$(DATA_MODE)),--fixture,)
 
 # netlist runs from build/, while Bluesim runs from PROJECT_DIR.
-# Explicit dependency prevents prepare from removing the link afterwards.
+# Explicit dependency prevents prepare from removing these files afterwards.
 link-data: verilog
 	ln -sfn $(PROJECT_DIR)/data $(BUILD_DIR)/data
+	@test -f "$(BSC_RUNTIME_DIR)/BRAM1Load.v" || { echo 'Set BSC_RUNTIME_DIR to the compiler lib/Verilog directory' >&2; exit 2; }
+	cp $(BSC_RUNTIME_DIR)/BRAM*.v $(BUILD_DIR)/
 netlist: link-data
 
 # Fail on simulator errors or absent PASS, not just on tee's return status.
