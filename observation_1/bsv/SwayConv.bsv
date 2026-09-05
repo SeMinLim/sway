@@ -78,7 +78,10 @@ module mkSwayConv(SwayConvIfc);
 			sum = sum + signExtend(swayProduct(h[k], w[k]));
 		end
 		sum = sum + signExtend(swayProduct(x, w[3]));
-		Vector#(3, SwayValue) nextHistory = vec(h[1], h[2], x);
+		Vector#(3, SwayValue) nextHistory = newVector;
+		nextHistory[0] = h[1];
+		nextHistory[1] = h[2];
+		nextHistory[2] = x;
 		history.portB.request.put(BRAMRequest {write: True, responseOnWrite: False,
 			address: ch, datain: pack(nextHistory)});
 		activation.put(swayRound(sum));

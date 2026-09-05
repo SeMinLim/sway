@@ -73,8 +73,15 @@ module mkSwayBaseline(SwayBaselineIfc);
 		return x;
 	endmethod
 	method Vector#(7, SwayStats) stats;
-		return vec(inputProjection.stats, convolution.stats, parameterProjection.stats,
-			deltaProjection.stats, softplus.stats, scan.stats, outputProjection.stats);
+		Vector#(7, SwayStats) result = newVector;
+		result[0] = inputProjection.stats;
+		result[1] = convolution.stats;
+		result[2] = parameterProjection.stats;
+		result[3] = deltaProjection.stats;
+		result[4] = softplus.stats;
+		result[5] = scan.stats;
+		result[6] = outputProjection.stats;
+		return result;
 	endmethod
 	method Bit#(7) activeStages;
 		return {pack(outputProjection.busy), pack(scan.busy), pack(softplus.busy),
