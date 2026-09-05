@@ -1,0 +1,31 @@
+name: Pinned offline build environment
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/build_environment.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: SeMinLim/blueyosys
+          ref: 15836908675784f36a7614085d418da6f77be65f
+          persist-credentials: false
+          path: blueyosys
+      - name: Package pinned public build inputs
+        run: |
+          mkdir -p environment
+          curl -fL --retry 3 https://github.com/B-Lang-org/bsc/releases/download/2026.01/bsc-2026.01-debian-12.13.tar.gz -o environment/bsc.tar.gz
+          echo '9da36623e301ae14ba5e670cb98d11c99277faa915025ccb7615de3ec14002c3  environment/bsc.tar.gz' | sha256sum -c
+          tar --exclude=.git -czf environment/blueyosys.tar.gz -C blueyosys .
+          printf '%s\n' 'BSC 2026.01 Debian12.13, upstream license included in archive' 'blueYosys 15836908675784f36a7614085d418da6f77be65f' > environment/VERSIONS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sway-offline-build-environment
+          path: environment/
+          retention-days: 7
