@@ -42,7 +42,6 @@ endinterface
 (* synthesize *)
 module mkSwayScan(SwayScanIfc);
 	FIFOF#(SwayScanFrame) inputQ <- mkSizedFIFOF(1);
-	// Reuse the result vector as the output holding buffer.
 	Reg#(Bool) outputReadyOn <- mkReg(False);
 	Reg#(Bool) outputFirstR <- mkReg(False);
 	Reg#(Bit#(16)) outputTagR <- mkReg(0);
@@ -62,7 +61,7 @@ module mkSwayScan(SwayScanIfc);
 	stateCfg.latency = 1;
 	BRAM2Port#(Bit#(11), SwayValue) stateMemory <- mkBRAM2Server(stateCfg);
 	let inputR = inputQ.first;
-	Reg#(Vector#(128, SwayValue)) outputR <- mkRegU;
+	Vector#(128, Reg#(SwayValue)) outputBuffer <- replicateM(mkRegU);
 	Reg#(Bit#(12)) issueCnt <- mkReg(0);
 	Reg#(Bool) computeOn <- mkReg(False);
 	Reg#(SwayAcc) sumR <- mkReg(0);
@@ -149,9 +148,10 @@ module mkSwayScan(SwayScanIfc);
 		sumR <= sum;
 		mulCnt <= mulCnt + (mode == 15 ? 7 : 6);
 		if ( mode == 15 ) begin
-			Vector#(128, SwayValue) nextOutput = outputR;
-			nextOutput[ch] = swayMul(swayRound(sum, 12), item.meta.gate, 13);
-			outputR <= nextOutput;
+			let y = swayMul(swayRound(sum, 12), item.meta.gate, 13);
+			for ( Integer i = 0; i < 128; i = i + 1 ) begin
+				if ( ch == fromInteger(i) ) outputBuffer[i] <= y;
+			end
 			if ( ch == 127 ) begin
 				inputQ.deq;
 				outputFirstR <= inputR.meta.inputFrame.first;
@@ -166,7 +166,7 @@ module mkSwayScan(SwayScanIfc);
 	endmethod
 	method ActionValue#(SwayFrame#(128)) get if ( outputReadyOn );
 		outputReadyOn <= False;
-		return SwayFrame {first: outputFirstR, tag: outputTagR, data: outputR};
+		return SwayFrame {first: outputFirstR, tag: outputTagR, data: readVReg(outputBuffer)};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,

@@ -52,14 +52,13 @@ endmodule
 
 module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 	FIFOF#(SwayFrame#(n)) inputQ <- mkSizedFIFOF(1);
-	// Reuse the result vector as the output holding buffer.
 	Reg#(Bool) outputReadyOn <- mkReg(False);
 	Reg#(Bool) outputFirstR <- mkReg(False);
 	Reg#(Bit#(16)) outputTagR <- mkReg(0);
 	FIFO#(Bit#(9)) indexQ <- mkSizedFIFO(4);
 	SwayLutIfc lut <- mkSwayLut(filename);
 	let inputR = inputQ.first;
-	Reg#(Vector#(n, SwayValue)) outputR <- mkRegU;
+	Vector#(n, Reg#(SwayValue)) outputBuffer <- replicateM(mkRegU);
 	Reg#(Bit#(9)) issueCnt <- mkReg(0);
 	Reg#(Bool) computeOn <- mkReg(False);
 	Reg#(Bit#(64)) cycleCnt <- mkReg(0);
@@ -85,9 +84,9 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 		let y <- lut.get;
 		let idx = indexQ.first;
 		indexQ.deq;
-		Vector#(n, SwayValue) nextOutput = outputR;
-		nextOutput[idx] = y;
-		outputR <= nextOutput;
+		for ( Integer i = 0; i < valueOf(n); i = i + 1 ) begin
+			if ( idx == fromInteger(i) ) outputBuffer[i] <= y;
+		end
 		if ( idx == fromInteger(valueOf(n) - 1) ) begin
 			inputQ.deq;
 			outputFirstR <= inputR.first;
@@ -101,12 +100,13 @@ module mkSwayActivation#(String filename)(SwayVectorIfc#(n, n));
 	endmethod
 	method ActionValue#(SwayFrame#(n)) get if ( outputReadyOn );
 		outputReadyOn <= False;
-		return SwayFrame {first: outputFirstR, tag: outputTagR, data: outputR};
+		return SwayFrame {first: outputFirstR, tag: outputTagR, data: readVReg(outputBuffer)};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,
 		mulCount: 0, inputEmptyCycles: emptyCnt, outputFullCycles: blockedCnt};
 endmodule
+
 (* synthesize *)
 module mkSwaySoftplus(SwayVectorIfc#(128, 128));
 	let engine <- mkSwayActivation("data/softplus.hex");

@@ -17,7 +17,6 @@ endinterface
 (* synthesize *)
 module mkSwayConv(SwayConvIfc);
 	FIFOF#(SwayFrame#(256)) inputQ <- mkSizedFIFOF(1);
-	// Reuse the result vector as the output holding buffer.
 	Reg#(Bool) outputReadyOn <- mkReg(False);
 	Reg#(Bool) outputFirstR <- mkReg(False);
 	Reg#(Bit#(16)) outputTagR <- mkReg(0);
@@ -35,8 +34,8 @@ module mkSwayConv(SwayConvIfc);
 	histCfg.latency = 1;
 	BRAM2Port#(Bit#(7), Bit#(48)) history <- mkBRAM2Server(histCfg);
 	let inputR = inputQ.first;
-	Reg#(Vector#(128, SwayValue)) xR <- mkRegU;
-	Reg#(Vector#(128, SwayValue)) gateR <- mkRegU;
+	Vector#(128, Reg#(SwayValue)) xBuffer <- replicateM(mkRegU);
+	Vector#(128, Reg#(SwayValue)) gateBuffer <- replicateM(mkRegU);
 	Reg#(Bit#(8)) issueCnt <- mkReg(0);
 	Reg#(Bool) computeOn <- mkReg(False);
 	Reg#(Bit#(64)) cycleCnt <- mkReg(0);
@@ -92,18 +91,18 @@ module mkSwayConv(SwayConvIfc);
 		resultQ.enq(ch);
 		mulCnt <= mulCnt + 4;
 	endrule
-	// [STAGE 3] Pair the two independent activation results.
+	// [STAGE 3] Pair the activation results, with one static channel write enable.
 	rule process4 ( computeOn );
 		let x <- activation.get;
 		let gate <- gateActivation.get;
 		let ch = resultQ.first;
 		resultQ.deq;
-		Vector#(128, SwayValue) nextX = xR;
-		Vector#(128, SwayValue) nextGate = gateR;
-		nextX[ch] = x;
-		nextGate[ch] = gate;
-		xR <= nextX;
-		gateR <= nextGate;
+		for ( Integer i = 0; i < 128; i = i + 1 ) begin
+			if ( ch == fromInteger(i) ) begin
+				xBuffer[i] <= x;
+				gateBuffer[i] <= gate;
+			end
+		end
 		if ( ch == 127 ) begin
 			inputQ.deq;
 			outputFirstR <= inputR.first;
@@ -117,7 +116,8 @@ module mkSwayConv(SwayConvIfc);
 	endmethod
 	method ActionValue#(SwayConvFrame) get if ( outputReadyOn );
 		outputReadyOn <= False;
-		return SwayConvFrame {first: outputFirstR, tag: outputTagR, x: xR, gate: gateR};
+		return SwayConvFrame {first: outputFirstR, tag: outputTagR,
+			x: readVReg(xBuffer), gate: readVReg(gateBuffer)};
 	endmethod
 	method Bool busy = computeOn;
 	method SwayStats stats = SwayStats {cycles: cycleCnt, busyCycles: busyCnt,
