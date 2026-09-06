@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
+.SHELLFLAGS := -e -o pipefail -c
 .NOTPARALLEL:
 PROJECT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PROJECT_NAME := sway_observation_1
@@ -16,14 +17,16 @@ BSIM_CXXFLAGS := -Xc++ -O0
 BSIM_CPPFILES :=
 DATA_MODE ?= upstream
 BSC_RUNTIME_DIR ?= $(shell $(BSC) -help 2>/dev/null | sed -n 's/^Bluespec directory: //p')/Verilog
+# Reuse blueYosys runsim and its standard logs; keep validation in POST_RUN.
+POST_RUN := grep -q '^SWAY_PASS ' system.log && ! grep -q 'SWAY_FAIL' system.log output.log
 
 ifeq ($(wildcard $(ROOTDIR)/build.mk),)
 $(error blueYosys not found at $(ROOTDIR). Set ROOTDIR=/absolute/path/to/blueyosys)
 endif
 include $(ROOTDIR)/build.mk
 
-.PHONY: data link-data test
-# blueYosys owns BSV compilation, synthesis, P&R and bitstream generation.
+.PHONY: data link-data
+# blueYosys owns BSV compilation, simulation, synthesis, P&R and bitstream generation.
 prepare bsim: data
 data:
 	cd $(PROJECT_DIR) && python3 reference/prepare.py $(if $(filter fixture,$(DATA_MODE)),--fixture,)
@@ -35,9 +38,3 @@ link-data: verilog
 	@test -f "$(BSC_RUNTIME_DIR)/BRAM1Load.v" || { echo 'Set BSC_RUNTIME_DIR to the compiler lib/Verilog directory' >&2; exit 2; }
 	cp $(BSC_RUNTIME_DIR)/BRAM*.v $(BUILD_DIR)/
 netlist: link-data
-
-# Fail on simulator errors or absent PASS, not just on tee's return status.
-test: bsim
-	cd $(PROJECT_DIR) && set -o pipefail; $(BSIM_DIR)/bsim 2>&1 | tee simulation.log
-	@grep -q 'SWAY_PASS' $(PROJECT_DIR)/simulation.log
-	@! grep -q 'SWAY_FAIL' $(PROJECT_DIR)/simulation.log

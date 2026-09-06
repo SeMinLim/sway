@@ -6,20 +6,22 @@ The same project is mirrored at [blueyosys/projects/sway_observation_1](https://
 
 ## Build
 
+Use the existing commands in the blueYosys README's **How to build** section.
+
 With blueYosys checked out separately:
 
 ```sh
-make -C observation_1 test ROOTDIR=/absolute/path/to/blueyosys
-make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys
+make -C observation_1 runsim ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
+make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
 ```
 
 Inside blueYosys:
 
 ```sh
-make test PROJECT=sway_observation_1
-make synth PROJECT=sway_observation_1
+make runsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make synth PROJECT=sway_observation_1 BOARD=ulx3s-85f
 ```
 
 The baseline implements the pinned MambaLite-Micro KWS Mamba block with token-overlapped stages inspired by eMamba. It is not the original eMamba RTL or a full KWS application. The fixed-point implementation has a matched reference and self-checking Bluesim testbench. Task accuracy, board operation and Observation 1's architectural conclusions are separate validations, not implied by source publication.
 
-CI compiles/tests and uploads logs only. It never commits or pushes generated files.
+Task-created GitHub Actions workflow files have been removed. Build and run locally with the documented blueYosys commands.

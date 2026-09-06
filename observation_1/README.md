@@ -8,22 +8,27 @@ This is an **eMamba-inspired reimplementation** of token-overlapped staged execu
 
 Prerequisites: Bluespec/Bluesim, Yosys, nextpnr-ecp5, ecppack, GNU Make/G++, Python 3 and NumPy. The pinned build reference is blueYosys `15836908675784f36a7614085d418da6f77be65f`.
 
+Use the existing commands documented in the blueYosys README's **How to build** section:
+
 ```sh
 cd blueyosys
-make test PROJECT=sway_observation_1 DATA_MODE=fixture
-make test PROJECT=sway_observation_1
-make pnr PROJECT=sway_observation_1
-make synth PROJECT=sway_observation_1
+make bsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make runsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make netlist PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make pnr PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make synth PROJECT=sway_observation_1 BOARD=ulx3s-85f
 ```
+
+These commands are independent entry points: `runsim` compiles and runs Bluesim, while `synth` runs the complete hardware flow through bitstream generation. There is no project-specific `test` target. To use synthetic implementation-test data, pass `DATA_MODE=fixture` to `bsim` or `runsim`.
 
 The identical project in `sway/observation_1` runs with:
 
 ```sh
-make -C observation_1 test ROOTDIR=/absolute/path/to/blueyosys
-make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys
+make -C observation_1 runsim ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
+make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
 ```
 
-The Makefile includes blueYosys `build.mk` for every HDL build stage. Generated files stay in ignored `build/`, `bsim/`, and `data/`. Default data preparation downloads and verifies the pinned public weights and example input. Network failure is an error, never a silent synthetic fallback. For offline use, place the verified `mamba_weights.h` and `sample_input.h` in `data/upstream/`. `DATA_MODE=fixture` is explicitly synthetic implementation-test data. Bluesim uses host C++ `-O0` to bound compiler memory; this has no effect on RTL cycles or hardware synthesis.
+The Makefile includes blueYosys `build.mk` for every HDL build stage and uses its existing `runsim` recipe and `POST_RUN` hook. Simulation output is written to `system.log` and stderr to `output.log`. A nonzero simulator exit, a missing `SWAY_PASS` marker, or a `SWAY_FAIL` marker makes `runsim` fail. Generated files stay in ignored `build/`, `bsim/`, and `data/`. Default data preparation downloads and verifies the pinned public weights and example input. Network failure is an error, never a silent synthetic fallback. For offline use, place the verified `mamba_weights.h` and `sample_input.h` in `data/upstream/`. `DATA_MODE=fixture` is explicitly synthetic implementation-test data. Bluesim uses host C++ `-O0` to bound compiler memory; this has no effect on RTL cycles or hardware synthesis.
 
 ## Datapath
 
@@ -45,9 +50,9 @@ Storage values and weights are signed16; linear accumulators are signed48. The n
 
 This is **not FP32-equivalent or accuracy-qualified**. `data/manifest.json` reports numerical error against a floating-point reference and state saturation counts. HDL tests use the identical fixed-point reference. Format selection and one public example do not establish KWS test-set accuracy. The MFCC frontend, application-level 40-to-64 projection, pooling and classifier are outside the kernel. No normalization/residual wrapper exists inside the pinned `Mamba_Forward` boundary, so none is silently added.
 
-## Tests and instrumentation
+## Simulation and instrumentation
 
-`test` compares all 12,800 values in two consecutive 100-token sequences. It checks reset, tags, source bubbles, prolonged sink backpressure, concurrent active stages, and a watchdog. Missing PASS is failure. Testbench cycle counting is separated from traffic and watchdog rules to avoid scheduling dependencies.
+`runsim` executes the self-checking testbench, which compares all 12,800 values in two consecutive 100-token sequences. It checks reset, tags, source bubbles, prolonged sink backpressure, concurrent active stages, and a watchdog. Missing PASS is failure. Testbench cycle counting is separated from traffic and watchdog rules to avoid scheduling dependencies.
 
 `SWAY_TOKEN` records output cycles. `SWAY_STAGE` reports cycles, busy cycles, completed multiplication count, idle-with-empty-input cycles and output-queue-full occupancy. Occupancy is not asserted to be a producer stall. Overlapping stage cycles must not be summed as total latency. Stress-test cycles are not a no-stall throughput headline. Unused profiling methods may be removed by synthesis in the board wrapper.
 
