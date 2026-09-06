@@ -6,7 +6,7 @@ This is an **eMamba-inspired reimplementation** of token-overlapped staged execu
 
 ## Run with blueYosys
 
-Prerequisites: Bluespec/Bluesim, Yosys, nextpnr-ecp5, ecppack, GNU Make/G++, Python 3 and NumPy. The pinned build reference is blueYosys `15836908675784f36a7614085d418da6f77be65f`.
+Prerequisites: Bluespec/Bluesim, Yosys, nextpnr-ecp5, ecppack, GNU Make/G++, Python 3 and NumPy. The original build reference was blueYosys `15836908675784f36a7614085d418da6f77be65f`. Hardware builds now require the ULX3S PLL correction in blueYosys: `boards/ulx3s/rtl/pll_fastclk.v` must use `CLKFB_DIV=5` with `INT_OP` feedback. This gives a 500 MHz VCO and 125/100/25 MHz outputs from the 25 MHz input. Update blueYosys as well as Sway; the old pinned board file is not valid for hardware builds.
 
 Use the existing commands documented in the blueYosys README's **How to build** section:
 
@@ -43,6 +43,8 @@ The Makefile includes blueYosys `build.mk` for every HDL build stage and uses it
 ```
 
 Engines have separate controllers and SRAM and overlap different tokens. FIFO contents retain the active input token until completion; no redundant copy of that input is required. Metadata FIFOs align x/z, B/C and delta. Backpressure is propagated. `first=1` clears the sequence history logically in convolution and scan, without resetting the device. Fixed synthesis boundaries keep compiler memory bounded without changing the datapaths.
+
+Convolution now separates channel selection (registered 8:1 -> 4:1 -> 4:1), SRAM operand collection, four parallel products, two levels of 48-bit tap reduction, bias addition, fixed-point conversion, and paired SiLU requests with non-bypass FIFOs. Channel and gate metadata move with the arithmetic. The input frame remains held until channel 127 retires, after all history writes and earlier results. Weights, four-tap parallelism, numerical formats, shift and saturation are unchanged. The extra pipeline latency changes cycle counts, so regenerate profiling results after this correction. The 100 MHz timing target is unchanged; neither this retiming nor the PLL correction establishes timing closure without a fresh P&R result.
 
 ## Numerical contract
 
