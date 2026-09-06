@@ -6,6 +6,7 @@ import Uart::*;
 import PLL::*;
 import SwayTypes::*;
 import SwayBaseline::*;
+import SwaySerializer::*;
 
 interface SwayTopIfc;
 	(* always_ready *) method Bit#(1) ftdi_rxd;
@@ -28,9 +29,7 @@ module mkTop#(Clock clk_25mhz)(SwayTopIfc);
 	Reg#(Bit#(8)) rxCnt <- mkReg(0, clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
 	Reg#(Bit#(8)) lowR <- mkReg(0, clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
 	Reg#(SwayFrame#(64)) rxFrame <- mkRegU(clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
-	Reg#(SwayFrame#(64)) txFrame <- mkRegU(clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
-	Reg#(Bit#(8)) txCnt <- mkReg(0, clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
-	Reg#(Bool) sendOn <- mkReg(False, clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
+	SwaySerializerIfc serializer <- mkSwaySerializer(clocked_by pll.clk_100mhz, reset_by pll.rst_100mhz);
 	rule uartIn;
 		let x <- uart.user.get;
 		rxQ.enq(x);
@@ -53,25 +52,13 @@ module mkTop#(Clock clk_25mhz)(SwayTopIfc);
 			rxCnt <= 0;
 		end else rxCnt <= rxCnt + 1;
 	endrule
-	rule collect ( !sendOn );
+	rule collect;
 		let x <- core.get;
-		txFrame <= x;
-		txCnt <= 0;
-		sendOn <= True;
+		serializer.put(x);
 	endrule
-	rule serialize ( sendOn );
-		Bit#(8) x = 0;
-		if ( txCnt == 0 ) x = zeroExtend(pack(txFrame.first));
-		else if ( txCnt == 1 ) x = txFrame.tag[7:0];
-		else if ( txCnt == 2 ) x = txFrame.tag[15:8];
-		else begin
-			Bit#(6) index = truncate((txCnt - 3) >> 1);
-			Bit#(16) wordR = pack(txFrame.data[index]);
-			x = txCnt[0] == 1 ? wordR[7:0] : wordR[15:8];
-		end
+	rule serialize;
+		let x <- serializer.get;
 		txQ.enq(x);
-		if ( txCnt == 130 ) sendOn <= False;
-		else txCnt <= txCnt + 1;
 	endrule
 	rule uartOut;
 		uart.user.send(txQ.first);

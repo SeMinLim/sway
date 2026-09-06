@@ -95,6 +95,7 @@ module mkSwayConv(SwayConvIfc);
 	FIFO#(SwayConvSum) sumQ <- mkFIFO;
 	FIFO#(SwayConvActivation) activationQ <- mkFIFO;
 	FIFO#(Bit#(7)) resultQ <- mkSizedFIFO(4);
+	FIFO#(SwayConvActivation) completedQ <- mkFIFO;
 	SwayLutIfc activation <- mkSwayLut("data/silu.hex");
 	SwayLutIfc gateActivation <- mkSwayLut("data/gate_silu.hex");
 	BRAM_Configure cfg = defaultValue;
@@ -269,16 +270,25 @@ module mkSwayConv(SwayConvIfc);
 		resultQ.enq(item.channel);
 	endrule
 
-	// [STAGE 12] Retire in order. Channel 127 implies all earlier work drained.
+	// [STAGE 12] Capture paired SRAM responses before wide result distribution.
 	rule process12 ( computeOn );
 		let x <- activation.get;
 		let gate <- gateActivation.get;
 		let ch = resultQ.first;
 		resultQ.deq;
+		completedQ.enq(SwayConvActivation {channel: ch, x: x, gate: gate});
+	endrule
+
+	// [STAGE 13] Registered results drive the channel write decoder.
+	// Retire the frame only after both outputs of channel 127 are stored.
+	rule process13 ( computeOn );
+		let item = completedQ.first;
+		completedQ.deq;
+		let ch = item.channel;
 		for ( Integer i = 0; i < 128; i = i + 1 ) begin
 			if ( ch == fromInteger(i) ) begin
-				xBuffer[i] <= x;
-				gateBuffer[i] <= gate;
+				xBuffer[i] <= item.x;
+				gateBuffer[i] <= item.gate;
 			end
 		end
 		if ( ch == 127 ) begin
