@@ -1,27 +1,23 @@
 # Sway
 
-ECP5 selective-SSM accelerator research. The current deliverable is the [Observation 1 baseline](observation_1/README.md), written in Bluespec SystemVerilog.
+Selective state-space model (SSM) accelerator research for ECP5-class FPGAs, implemented in Bluespec SystemVerilog with [blueYosys](https://github.com/SeMinLim/blueyosys).
 
-The same project is mirrored at [blueyosys/projects/sway_observation_1](https://github.com/SeMinLim/blueyosys/tree/main/projects/sway_observation_1). All project source files must remain identical between these directories. Publishing rules are in [AGENTS.md](AGENTS.md).
+## Current implementation
 
-## Build
+[Observation 1](observation_1/README.md) contains one baseline accelerator, a fixed-point software reference, and a self-checking testbench. It implements the MambaLite-Micro keyword-spotting Mamba block using eMamba-inspired token-overlapped stages, not the complete keyword-spotting application.
 
-Use the existing commands in the blueYosys README's **How to build** section.
+The project is mirrored in [blueyosys/projects/sway_observation_1](https://github.com/SeMinLim/blueyosys/tree/main/projects/sway_observation_1).
 
-With blueYosys checked out separately:
+## Build and run
+
+Install the blueYosys tools and Python NumPy. From this repository, point `ROOTDIR` to your blueYosys checkout:
 
 ```sh
 make -C observation_1 runsim ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
+make -C observation_1 pnr ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
 make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
 ```
 
-Inside blueYosys:
+`runsim` checks the fixed-point implementation; `pnr` checks placement, routing, and timing; `synth` builds through bitstream generation. See the [project README](observation_1/README.md) for configuration, data preparation, and output files.
 
-```sh
-make runsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
-make synth PROJECT=sway_observation_1 BOARD=ulx3s-85f
-```
-
-The baseline implements the pinned MambaLite-Micro KWS Mamba block with token-overlapped stages inspired by eMamba. It is not the original eMamba RTL or a full KWS application. The fixed-point implementation has a matched reference and self-checking Bluesim testbench. Task accuracy, board operation and Observation 1's architectural conclusions are separate validations, not implied by source publication.
-
-Task-created GitHub Actions workflow files have been removed. Build and run locally with the documented blueYosys commands.
+**Status:** 100 MHz timing closure, board operation, and keyword-spotting accuracy remain unverified. Development rules are in [AGENTS.md](AGENTS.md).

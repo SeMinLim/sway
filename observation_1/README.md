@@ -1,76 +1,69 @@
-# Sway Observation 1 baseline
+# Observation 1: Selective-SSM Baseline
 
-One Bluespec accelerator implements the MambaLite-Micro **Mamba block**, not the complete KWS application. Source: commit `44d51fce0f17ddadb6111c5e5554d1f7f6c67aff`, `examples/mambakws-any-10`. Batch 1, 100 tokens, dimension 64, inner dimension 128, state dimension 16, causal convolution width 4, delta rank 4.
+A Bluespec baseline for characterizing compact selective-SSM execution on ULX3S-85F. It implements the MambaLite-Micro keyword-spotting (KWS) Mamba block with eMamba-inspired token-overlapped stages. It is neither the original eMamba RTL nor a complete KWS application.
 
-This is an **eMamba-inspired reimplementation** of token-overlapped staged execution (Section 4.4), not the authors' RTL, quantization, or approximation-aware training. No architectural bottleneck or task-accuracy conclusion is claimed here.
+## Configuration
 
-## Run with blueYosys
+| Item | Setting |
+| --- | --- |
+| FPGA | ECP5-85F; 100 MHz target |
+| Input | Batch 1; 100 tokens; 64 values per token |
+| Model / inner dimension | 64 / 128 |
+| State dimension / delta rank / convolution width | 16 / 4 / 4 |
+| Arithmetic | Signed16 weights, activations, and state; signed48 linear accumulators |
 
-Prerequisites: Bluespec/Bluesim, Yosys, nextpnr-ecp5, ecppack, GNU Make/G++, Python 3 and NumPy. The original build reference was blueYosys `15836908675784f36a7614085d418da6f77be65f`. Hardware builds now require the ULX3S PLL correction in blueYosys: `boards/ulx3s/rtl/pll_fastclk.v` must use `CLKFB_DIV=5` with `INT_OP` feedback. This gives a 500 MHz VCO and 125/100/25 MHz outputs from the 25 MHz input. Update blueYosys as well as Sway; the old pinned board file is not valid for hardware builds.
-
-Use the existing commands documented in the blueYosys README's **How to build** section:
-
-```sh
-cd blueyosys
-make bsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
-make runsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
-make netlist PROJECT=sway_observation_1 BOARD=ulx3s-85f
-make pnr PROJECT=sway_observation_1 BOARD=ulx3s-85f
-make synth PROJECT=sway_observation_1 BOARD=ulx3s-85f
-```
-
-These commands are independent entry points: `runsim` compiles and runs Bluesim, while `synth` runs the complete hardware flow through bitstream generation. There is no project-specific `test` target. To use synthetic implementation-test data, pass `DATA_MODE=fixture` to `bsim` or `runsim`.
-
-The identical project in `sway/observation_1` runs with:
-
-```sh
-make -C observation_1 runsim ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
-make -C observation_1 synth ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f
-```
-
-The Makefile includes blueYosys `build.mk` for every HDL build stage and uses its existing `runsim` recipe and `POST_RUN` hook. Simulation output is written to `system.log` and stderr to `output.log`. A nonzero simulator exit, a missing `SWAY_PASS` marker, or a `SWAY_FAIL` marker makes `runsim` fail. Generated files stay in ignored `build/`, `bsim/`, and `data/`. Default data preparation downloads and verifies the pinned public weights and example input. Network failure is an error, never a silent synthetic fallback. For offline use, place the verified `mamba_weights.h` and `sample_input.h` in `data/upstream/`. `DATA_MODE=fixture` is explicitly synthetic implementation-test data. Bluesim uses host C++ `-O0` to bound compiler memory; this has no effect on RTL cycles or hardware synthesis.
+Fractional bits vary by tensor; see `config/model.json`. Conversion uses arithmetic shifts and signed16 saturation. The initial softplus format saturates below 1 and is not FP32-equivalent.
 
 ## Datapath
 
 ```text
-64 -> input projection (4 lanes)
-   -> causal depthwise convolution + x/z SiLU
-   -> parameter projection (4 lanes, delta-rank/B/C)
-   -> delta projection (4 lanes) -> softplus
-   -> diagonal selective scan (pipelined, one mode per cycle)
-   -> C reduction + D skip + z gate
-   -> output projection (4 lanes) -> 64
+Input projection -> Causal convolution + SiLU
+    -> Parameter projection -> Delta projection + Softplus
+    -> Selective scan + C reduction + D skip + Gating
+    -> Output projection
 ```
 
-Engines have separate controllers and SRAM and overlap different tokens. FIFO contents retain the active input token until completion; no redundant copy of that input is required. Metadata FIFOs align x/z, B/C and delta. Backpressure is propagated. `first=1` clears the sequence history logically in convolution and scan, without resetting the device. Fixed synthesis boundaries keep compiler memory bounded without changing the datapaths.
+Projection engines use four lanes. Independent stages use SRAM and FIFOs to overlap different tokens while propagating backpressure. Set `first=1` on the first token of each sequence to reset convolution history and recurrent state. Audio preprocessing, pooling, and classification are outside the kernel.
 
-Convolution now separates channel selection (registered 8:1 -> 4:1 -> 4:1), SRAM operand collection, four parallel products, two levels of 48-bit tap reduction, bias addition, fixed-point conversion, and paired SiLU requests with non-bypass FIFOs. Channel and gate metadata move with the arithmetic. The input frame remains held until channel 127 retires, after all history writes and earlier results. Weights, four-tap parallelism, numerical formats, shift and saturation are unchanged. The extra pipeline latency changes cycle counts, so regenerate profiling results after this correction. The 100 MHz timing target is unchanged; neither this retiming nor the PLL correction establishes timing closure without a fresh P&R result.
+## Build and run
 
-Scan now registers channel selection at 8:1 -> 4:1 -> 4:1 boundaries and B/C mode selection at two 4:1 boundaries. Constants, state and decay SRAM responses are captured before multiplication. Products, fixed-point conversions, retained-state addition, second saturation, SRAM writeback, 48-bit readout reduction, gating and output-buffer writes are separate rules joined by non-bypass FIFOs. The retained-state product is shifted and saturated before injection is added; that sum is saturated again before writeback. Its signed17 adder holds the exact sum of two signed16 operands; model precision and the signed48 readout accumulator are unchanged. The input token is released only after the final gated channel retires, so the next token cannot overtake state writeback. Regenerate cycle measurements after retiming. No clock constraint is relaxed.
+Requirements: Bluespec/Bluesim, Yosys, nextpnr-ecp5, ecppack, GNU Make/G++, and Python 3 with NumPy. Use an updated [blueYosys](https://github.com/SeMinLim/blueyosys#how-to-build) checkout containing the ULX3S PLL correction.
 
-## Numerical contract
+From the blueYosys repository root:
 
-Storage values and weights are signed16; linear accumulators are signed48. The number of fractional bits is **per tensor**, listed in `config/model.json`, not one uniform Q format. In particular, the interface uses 8 fractional bits on input and 7 on output; recurrent state uses 12; linear weights use 13. Every reduction shifts toward negative infinity and saturates signed16. SiLU, gate SiLU, softplus, and decay use independent 4096-entry SRAM tables. Decay has nearest 1/256 resolution on [-16,0]; the other lookup grids are specified in the config. Static `A=-exp(A_log)` is exported offline. Softplus output saturates below 1 in this initial profile.
+```sh
+make runsim PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make pnr PROJECT=sway_observation_1 BOARD=ulx3s-85f
+make synth PROJECT=sway_observation_1 BOARD=ulx3s-85f
+```
 
-This is **not FP32-equivalent or accuracy-qualified**. `data/manifest.json` reports numerical error against a floating-point reference and state saturation counts. HDL tests use the identical fixed-point reference. Format selection and one public example do not establish KWS test-set accuracy. The MFCC frontend, application-level 40-to-64 projection, pooling and classifier are outside the kernel. No normalization/residual wrapper exists inside the pinned `Mamba_Forward` boundary, so none is silently added.
+These are independent commands: `runsim` compiles and runs Bluesim, `pnr` builds through placement and routing, and `synth` builds through bitstream generation.
 
-## Simulation and instrumentation
+From the Sway repository, use `make -C observation_1 <command> ROOTDIR=/absolute/path/to/blueyosys BOARD=ulx3s-85f` with the same commands.
 
-`runsim` executes the self-checking testbench, which compares all 12,800 values in two consecutive 100-token sequences. It checks reset, tags, source bubbles, prolonged sink backpressure, concurrent active stages, and a watchdog. Missing PASS is failure. Testbench cycle counting is separated from traffic and watchdog rules to avoid scheduling dependencies.
+Data preparation downloads and verifies pinned model weights and example input. For offline use, place the verified `mamba_weights.h` and `sample_input.h` in `data/upstream/`. Add `DATA_MODE=fixture` to `runsim` for synthetic test data; download failures never silently select fixture mode.
 
-The scan retiming was separately checked with BSC 2026.01 using blueYosys `runsim` and `verilog` entry points in a local module harness. The original scan RTL (blob `818e5fb6ab37bc48deea5b260524abc4f99bdf86`) and the retimed RTL both matched independently computed Python fixed-point outputs for 64 synthetic frames, 8,192 output values and 131,072 diagonal state updates. Cases included seven sequence resets, tag wraparound, input gaps, prolonged output backpressure, small values and signed16 boundaries. Scan-module compilation, Bluesim regression and Verilog generation passed. The full Mamba-block regression, Yosys synthesis and place-and-route were not rerun for this patch; 100 MHz timing closure remains unverified. These checks do not establish task accuracy.
+## Files and results
 
-`SWAY_TOKEN` records output cycles. `SWAY_STAGE` reports cycles, busy cycles, completed multiplication count, idle-with-empty-input cycles and output-queue-full occupancy. Occupancy is not asserted to be a producer stall. Overlapping stage cycles must not be summed as total latency. Stress-test cycles are not a no-stall throughput headline. Unused profiling methods may be removed by synthesis in the board wrapper.
+| Location | Contents |
+| --- | --- |
+| `bsv/` | Accelerator stages and UART debug wrapper |
+| `reference/prepare.py` | Weight, input, lookup-table, and reference-output generation |
+| `sim/TbSway.bsv` | Self-checking Bluesim testbench |
+| `system.log`, `output.log` | Simulation output and errors |
+| `data/manifest.json` | Data provenance and numerical-error summary |
+| `build/mkTop.utilization.rpt` | Resource and timing summary |
+| `build/mkTop.nextpnr.log` | Full placement-and-routing log |
 
-The UART wrapper reuses blueYosys ULX3S clocks/UART/constraints. Packets are 131 bytes: flags (bit0=first), 16-bit little-endian tag, and 64 signed16 little-endian values. It is only debug transport, not a CRC-protected or flow-controlled production protocol. It does not define kernel throughput.
+The testbench compares 12,800 values across two 100-token sequences and checks sequence reset, tags, and backpressure. Success requires `SWAY_PASS` and no `SWAY_FAIL`.
 
-Simulation, synthesis, routed timing, physical-board operation, and task accuracy are separate checks. Successful commands and saved logs, not this README, establish each build result.
+`SWAY_TOKEN` records output cycles; `SWAY_STAGE` reports stage counters. The testbench deliberately stalls traffic, so these cycles are not no-stall throughput measurements. Stage activity overlaps and must not be summed as total latency.
+
+**Status:** Fixed-point agreement does not establish KWS accuracy. The 100 MHz timing target and physical-board operation remain unverified. UART is debug transport, not a kernel-throughput benchmark.
 
 ## Sources
 
-- MambaLite-Micro: https://arxiv.org/abs/2509.05488
-- Model source: https://github.com/Whiten-Rock/MambaLite-Micro/tree/44d51fce0f17ddadb6111c5e5554d1f7f6c67aff
-- eMamba: https://arxiv.org/abs/2508.10370
-- blueYosys: https://github.com/SeMinLim/blueyosys
+- [MambaLite-Micro](https://arxiv.org/abs/2509.05488) and its pinned [model source](https://github.com/Whiten-Rock/MambaLite-Micro/tree/44d51fce0f17ddadb6111c5e5554d1f7f6c67aff), `examples/mambakws-any-10`.
+- [eMamba](https://arxiv.org/abs/2508.10370), Section 4.4, for the token-overlapped execution principle.
 
-Downloaded upstream model headers retain their original MIT license and copyright. This hardware independently implements the model equations.
+Downloaded model headers retain their original MIT license and copyright.
