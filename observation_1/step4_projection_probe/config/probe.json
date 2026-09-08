@@ -1,0 +1,44 @@
+{
+  "scope": "RadMamba-UoG20 4-to-16 delta-projection diagnostic slice; not the repository KWS baseline",
+  "tokens": 7,
+  "input_features": 4,
+  "output_features": 16,
+  "apot_tile": [
+    4,
+    4
+  ],
+  "feature_fraction_bits": 18,
+  "weight_encoding": "4-bit APoT",
+  "quantized_activation_bits": 8,
+  "input_sram": {
+    "banks": 4,
+    "width_bits": 32,
+    "depth": 1024
+  },
+  "weight_sram": {
+    "banks": 4,
+    "width_bits": 16,
+    "depth": 1024
+  },
+  "input_slots": 2,
+  "reciprocal": "low32(floor(2^36/scale_raw)), zero-scale explicitly guarded",
+  "scope_end": "APoT partial sums; excludes output scale/bias/softplus/encoder tail",
+  "fixtures": "synthetic unit tests; not trained weights or radar samples",
+  "source_archive_sha256": "922f5146399c2f2ec1308ef7f3bb3b8dc5039e519f4adf887b63ac06ab2bfa4e",
+  "upstream": [
+    {
+      "repo": "lab-emi/AIRHAR",
+      "commit": "d49e2c7ed7365e4d2d1724e5d3e4f2dfffc6f6c0"
+    },
+    {
+      "repo": "shengzhelyu65/ViM-Q-FCCM-2026",
+      "commit": "e894efaf190ef621eabd078f0364b72a4903eeb6"
+    }
+  ],
+  "integration_changes": [
+    "blueYosys build.mk instead of standalone run_rtl.sh",
+    "selectable Icarus generated-Verilog or Bluesim backend with correctly labeled results",
+    "synthetic fixtures generated locally, no downloads or committed generated logs",
+    "added GetPut import and renamed local configuration binding; arithmetic unchanged"
+  ]
+}
