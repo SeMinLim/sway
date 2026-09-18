@@ -1,0 +1,154 @@
+---------------------------------------------------------------------
+[STEP 1] Loading official MARS train and validation arrays
+[STEP 2] Training 15717 parameters on 24066 frames
+Epoch   1 | train MSE 0.546113 m2 | val MAE 14.7230 cm | val RMSE 17.9478 cm | 6.42 s *
+Epoch   2 | train MSE 0.021164 m2 | val MAE 11.3693 cm | val RMSE 14.4219 cm | 6.19 s *
+Epoch   3 | train MSE 0.017445 m2 | val MAE 9.4170 cm | val RMSE 12.5087 cm | 5.64 s *
+Epoch   4 | train MSE 0.016364 m2 | val MAE 9.3518 cm | val RMSE 12.2977 cm | 5.89 s *
+Epoch   5 | train MSE 0.015760 m2 | val MAE 9.2048 cm | val RMSE 12.0489 cm | 6.14 s *
+Epoch   6 | train MSE 0.015355 m2 | val MAE 9.0074 cm | val RMSE 11.9994 cm | 6.14 s *
+Epoch   7 | train MSE 0.015030 m2 | val MAE 8.9760 cm | val RMSE 11.7453 cm | 6.14 s *
+Epoch   8 | train MSE 0.014862 m2 | val MAE 8.9196 cm | val RMSE 11.6802 cm | 6.54 s *
+Epoch   9 | train MSE 0.014751 m2 | val MAE 8.6904 cm | val RMSE 11.5252 cm | 6.29 s *
+Epoch  10 | train MSE 0.014604 m2 | val MAE 9.1858 cm | val RMSE 11.7941 cm | 6.23 s
+Epoch  11 | train MSE 0.014534 m2 | val MAE 9.1756 cm | val RMSE 11.7982 cm | 6.24 s
+Epoch  12 | train MSE 0.014670 m2 | val MAE 9.0445 cm | val RMSE 11.9037 cm | 6.35 s
+Epoch  13 | train MSE 0.014429 m2 | val MAE 8.5794 cm | val RMSE 11.4619 cm | 6.33 s *
+Epoch  14 | train MSE 0.014250 m2 | val MAE 9.2052 cm | val RMSE 11.7759 cm | 6.33 s
+Epoch  15 | train MSE 0.014201 m2 | val MAE 8.6786 cm | val RMSE 11.4048 cm | 6.15 s *
+Epoch  16 | train MSE 0.014090 m2 | val MAE 8.3644 cm | val RMSE 11.1393 cm | 6.57 s *
+Epoch  17 | train MSE 0.013857 m2 | val MAE 8.4162 cm | val RMSE 11.2179 cm | 6.46 s
+Epoch  18 | train MSE 0.013830 m2 | val MAE 8.3509 cm | val RMSE 11.1193 cm | 6.40 s *
+Epoch  19 | train MSE 0.013687 m2 | val MAE 8.3037 cm | val RMSE 11.1675 cm | 6.42 s
+Epoch  20 | train MSE 0.013576 m2 | val MAE 8.5852 cm | val RMSE 11.1853 cm | 5.98 s
+Epoch  21 | train MSE 0.013461 m2 | val MAE 8.5093 cm | val RMSE 11.2500 cm | 5.82 s
+Epoch  22 | train MSE 0.013377 m2 | val MAE 8.1704 cm | val RMSE 10.9683 cm | 6.17 s *
+Epoch  23 | train MSE 0.013270 m2 | val MAE 8.3202 cm | val RMSE 11.0295 cm | 5.85 s
+Epoch  24 | train MSE 0.013154 m2 | val MAE 8.4250 cm | val RMSE 11.1221 cm | 6.33 s
+Epoch  25 | train MSE 0.013062 m2 | val MAE 8.7168 cm | val RMSE 11.2379 cm | 6.00 s
+Epoch  26 | train MSE 0.013138 m2 | val MAE 8.0163 cm | val RMSE 10.8228 cm | 6.02 s *
+Epoch  27 | train MSE 0.012848 m2 | val MAE 8.0053 cm | val RMSE 10.7811 cm | 6.31 s *
+Epoch  28 | train MSE 0.012778 m2 | val MAE 8.1345 cm | val RMSE 10.7575 cm | 6.24 s *
+Epoch  29 | train MSE 0.012641 m2 | val MAE 8.1685 cm | val RMSE 10.7989 cm | 5.85 s
+Epoch  30 | train MSE 0.012566 m2 | val MAE 8.4741 cm | val RMSE 10.9825 cm | 6.23 s
+Epoch  31 | train MSE 0.012522 m2 | val MAE 8.0124 cm | val RMSE 10.6431 cm | 6.22 s *
+Epoch  32 | train MSE 0.012287 m2 | val MAE 8.7876 cm | val RMSE 11.3419 cm | 6.23 s
+Epoch  33 | train MSE 0.012198 m2 | val MAE 7.7926 cm | val RMSE 10.3764 cm | 6.38 s *
+Epoch  34 | train MSE 0.012001 m2 | val MAE 7.8291 cm | val RMSE 10.3590 cm | 6.07 s *
+Epoch  35 | train MSE 0.011903 m2 | val MAE 8.8457 cm | val RMSE 11.2811 cm | 5.96 s
+Epoch  36 | train MSE 0.012163 m2 | val MAE 7.8022 cm | val RMSE 10.3555 cm | 6.15 s *
+Epoch  37 | train MSE 0.011785 m2 | val MAE 8.0648 cm | val RMSE 10.6874 cm | 6.50 s
+Epoch  38 | train MSE 0.011873 m2 | val MAE 7.7526 cm | val RMSE 10.3109 cm | 6.15 s *
+Epoch  39 | train MSE 0.011689 m2 | val MAE 7.5843 cm | val RMSE 10.1405 cm | 6.23 s *
+Epoch  40 | train MSE 0.011618 m2 | val MAE 7.6597 cm | val RMSE 10.2624 cm | 6.34 s
+Epoch  41 | train MSE 0.011598 m2 | val MAE 7.6140 cm | val RMSE 10.1740 cm | 5.99 s
+Epoch  42 | train MSE 0.011478 m2 | val MAE 9.1461 cm | val RMSE 11.6648 cm | 5.53 s
+Epoch  43 | train MSE 0.012114 m2 | val MAE 7.6818 cm | val RMSE 10.2229 cm | 5.64 s
+Epoch  44 | train MSE 0.011582 m2 | val MAE 7.7168 cm | val RMSE 10.1990 cm | 6.68 s
+Epoch  45 | train MSE 0.011438 m2 | val MAE 7.7086 cm | val RMSE 10.1621 cm | 6.63 s
+Epoch  46 | train MSE 0.011348 m2 | val MAE 7.5341 cm | val RMSE 10.0243 cm | 6.30 s *
+Epoch  47 | train MSE 0.011252 m2 | val MAE 7.7396 cm | val RMSE 10.2644 cm | 6.49 s
+Epoch  48 | train MSE 0.011283 m2 | val MAE 7.5162 cm | val RMSE 9.9914 cm | 5.70 s *
+Epoch  49 | train MSE 0.011165 m2 | val MAE 7.5768 cm | val RMSE 10.0314 cm | 6.08 s
+Epoch  50 | train MSE 0.011218 m2 | val MAE 8.9884 cm | val RMSE 11.4201 cm | 6.24 s
+Epoch  51 | train MSE 0.011510 m2 | val MAE 7.4157 cm | val RMSE 9.9251 cm | 6.30 s *
+Epoch  52 | train MSE 0.011083 m2 | val MAE 8.2443 cm | val RMSE 10.6533 cm | 6.10 s
+Epoch  53 | train MSE 0.011160 m2 | val MAE 7.8154 cm | val RMSE 10.2427 cm | 6.77 s
+Epoch  54 | train MSE 0.011059 m2 | val MAE 8.1853 cm | val RMSE 10.6240 cm | 6.41 s
+Epoch  55 | train MSE 0.011055 m2 | val MAE 7.6476 cm | val RMSE 10.0702 cm | 6.17 s
+Epoch  56 | train MSE 0.010822 m2 | val MAE 8.0600 cm | val RMSE 10.5512 cm | 6.21 s
+Epoch  57 | train MSE 0.010942 m2 | val MAE 7.2256 cm | val RMSE 9.7322 cm | 6.48 s *
+Epoch  58 | train MSE 0.010625 m2 | val MAE 7.5531 cm | val RMSE 10.0552 cm | 5.98 s
+Epoch  59 | train MSE 0.010667 m2 | val MAE 7.4697 cm | val RMSE 9.8991 cm | 6.02 s
+Epoch  60 | train MSE 0.010626 m2 | val MAE 7.3739 cm | val RMSE 9.8303 cm | 6.01 s
+Epoch  61 | train MSE 0.010574 m2 | val MAE 7.5352 cm | val RMSE 9.9252 cm | 6.03 s
+Epoch  62 | train MSE 0.010563 m2 | val MAE 8.7437 cm | val RMSE 11.1984 cm | 6.29 s
+Epoch  63 | train MSE 0.011032 m2 | val MAE 7.3813 cm | val RMSE 9.7838 cm | 7.35 s
+Epoch  64 | train MSE 0.010511 m2 | val MAE 7.3964 cm | val RMSE 9.8848 cm | 8.05 s
+Epoch  65 | train MSE 0.010428 m2 | val MAE 7.4575 cm | val RMSE 9.9302 cm | 8.34 s
+Epoch  66 | train MSE 0.010429 m2 | val MAE 8.2256 cm | val RMSE 10.6969 cm | 7.66 s
+Epoch  67 | train MSE 0.010500 m2 | val MAE 7.1515 cm | val RMSE 9.5479 cm | 6.58 s *
+Epoch  68 | train MSE 0.010183 m2 | val MAE 7.1040 cm | val RMSE 9.5081 cm | 6.54 s *
+Epoch  69 | train MSE 0.010111 m2 | val MAE 7.0313 cm | val RMSE 9.5176 cm | 6.45 s
+Epoch  70 | train MSE 0.010115 m2 | val MAE 7.0179 cm | val RMSE 9.5239 cm | 6.45 s
+Epoch  71 | train MSE 0.010099 m2 | val MAE 7.0105 cm | val RMSE 9.4724 cm | 6.45 s *
+Epoch  72 | train MSE 0.010079 m2 | val MAE 6.9869 cm | val RMSE 9.4419 cm | 7.07 s *
+Epoch  73 | train MSE 0.010007 m2 | val MAE 7.2089 cm | val RMSE 9.5550 cm | 6.32 s
+Epoch  74 | train MSE 0.010105 m2 | val MAE 7.0842 cm | val RMSE 9.5064 cm | 6.37 s
+Epoch  75 | train MSE 0.010003 m2 | val MAE 7.0409 cm | val RMSE 9.4911 cm | 6.35 s
+Epoch  76 | train MSE 0.009988 m2 | val MAE 6.9789 cm | val RMSE 9.3899 cm | 6.50 s *
+Epoch  77 | train MSE 0.009890 m2 | val MAE 7.0916 cm | val RMSE 9.4610 cm | 6.74 s
+Epoch  78 | train MSE 0.009907 m2 | val MAE 6.9527 cm | val RMSE 9.4375 cm | 6.25 s
+Epoch  79 | train MSE 0.009924 m2 | val MAE 6.9590 cm | val RMSE 9.4166 cm | 6.18 s
+Epoch  80 | train MSE 0.009903 m2 | val MAE 7.1738 cm | val RMSE 9.5488 cm | 6.14 s
+Epoch  81 | train MSE 0.009883 m2 | val MAE 7.1182 cm | val RMSE 9.4708 cm | 6.65 s
+Epoch  82 | train MSE 0.009862 m2 | val MAE 6.9068 cm | val RMSE 9.3496 cm | 5.92 s *
+Epoch  83 | train MSE 0.009770 m2 | val MAE 7.0762 cm | val RMSE 9.4187 cm | 6.03 s
+Epoch  84 | train MSE 0.009791 m2 | val MAE 6.9547 cm | val RMSE 9.3348 cm | 6.27 s *
+Epoch  85 | train MSE 0.009723 m2 | val MAE 7.1294 cm | val RMSE 9.6172 cm | 6.42 s
+Epoch  86 | train MSE 0.009836 m2 | val MAE 7.9279 cm | val RMSE 10.4275 cm | 6.35 s
+Epoch  87 | train MSE 0.010101 m2 | val MAE 6.9384 cm | val RMSE 9.3537 cm | 6.17 s
+Epoch  88 | train MSE 0.009684 m2 | val MAE 7.1538 cm | val RMSE 9.5158 cm | 6.25 s
+Epoch  89 | train MSE 0.009696 m2 | val MAE 7.0913 cm | val RMSE 9.4579 cm | 6.48 s
+Epoch  90 | train MSE 0.009658 m2 | val MAE 7.0596 cm | val RMSE 9.4214 cm | 6.17 s
+Epoch  91 | train MSE 0.009750 m2 | val MAE 7.0160 cm | val RMSE 9.3565 cm | 6.11 s
+Epoch  92 | train MSE 0.009648 m2 | val MAE 7.7511 cm | val RMSE 10.0141 cm | 6.05 s
+Epoch  93 | train MSE 0.009877 m2 | val MAE 7.1090 cm | val RMSE 9.5160 cm | 5.76 s
+Epoch  94 | train MSE 0.009716 m2 | val MAE 6.8392 cm | val RMSE 9.2212 cm | 5.91 s *
+Epoch  95 | train MSE 0.009501 m2 | val MAE 6.8568 cm | val RMSE 9.2542 cm | 6.91 s
+Epoch  96 | train MSE 0.009527 m2 | val MAE 6.8277 cm | val RMSE 9.2051 cm | 6.06 s *
+Epoch  97 | train MSE 0.009464 m2 | val MAE 6.9010 cm | val RMSE 9.2727 cm | 5.74 s
+Epoch  98 | train MSE 0.009476 m2 | val MAE 6.9191 cm | val RMSE 9.2814 cm | 5.80 s
+Epoch  99 | train MSE 0.009448 m2 | val MAE 6.8312 cm | val RMSE 9.1948 cm | 5.82 s *
+Epoch 100 | train MSE 0.009418 m2 | val MAE 7.0153 cm | val RMSE 9.3375 cm | 6.34 s
+Epoch 101 | train MSE 0.009489 m2 | val MAE 6.7738 cm | val RMSE 9.2187 cm | 6.71 s
+Epoch 102 | train MSE 0.009447 m2 | val MAE 6.7853 cm | val RMSE 9.1854 cm | 6.73 s *
+Epoch 103 | train MSE 0.009403 m2 | val MAE 6.7766 cm | val RMSE 9.1553 cm | 6.33 s *
+Epoch 104 | train MSE 0.009382 m2 | val MAE 6.9590 cm | val RMSE 9.2970 cm | 6.67 s
+Epoch 105 | train MSE 0.009403 m2 | val MAE 6.7719 cm | val RMSE 9.1566 cm | 6.46 s
+Epoch 106 | train MSE 0.009354 m2 | val MAE 6.8256 cm | val RMSE 9.1901 cm | 6.40 s
+Epoch 107 | train MSE 0.009376 m2 | val MAE 6.7859 cm | val RMSE 9.1700 cm | 6.52 s
+Epoch 108 | train MSE 0.009339 m2 | val MAE 6.8493 cm | val RMSE 9.2176 cm | 6.00 s
+Epoch 109 | train MSE 0.009336 m2 | val MAE 6.9524 cm | val RMSE 9.3185 cm | 6.37 s
+Epoch 110 | train MSE 0.009383 m2 | val MAE 6.7969 cm | val RMSE 9.1401 cm | 6.54 s *
+Epoch 111 | train MSE 0.009299 m2 | val MAE 6.7418 cm | val RMSE 9.1666 cm | 6.22 s
+Epoch 112 | train MSE 0.009316 m2 | val MAE 6.7786 cm | val RMSE 9.1267 cm | 6.15 s *
+Epoch 113 | train MSE 0.009291 m2 | val MAE 6.7223 cm | val RMSE 9.1140 cm | 6.21 s *
+Epoch 114 | train MSE 0.009267 m2 | val MAE 6.7915 cm | val RMSE 9.2160 cm | 6.15 s
+Epoch 115 | train MSE 0.009301 m2 | val MAE 7.0068 cm | val RMSE 9.3315 cm | 6.32 s
+Epoch 116 | train MSE 0.009327 m2 | val MAE 6.8647 cm | val RMSE 9.2298 cm | 6.62 s
+Epoch 117 | train MSE 0.009262 m2 | val MAE 6.7288 cm | val RMSE 9.0889 cm | 6.25 s *
+Epoch 118 | train MSE 0.009217 m2 | val MAE 6.7459 cm | val RMSE 9.1349 cm | 6.06 s
+Epoch 119 | train MSE 0.009246 m2 | val MAE 6.7471 cm | val RMSE 9.1304 cm | 5.49 s
+Epoch 120 | train MSE 0.009252 m2 | val MAE 6.8494 cm | val RMSE 9.1697 cm | 5.77 s
+Epoch 121 | train MSE 0.009244 m2 | val MAE 6.7648 cm | val RMSE 9.1304 cm | 5.99 s
+Epoch 122 | train MSE 0.009184 m2 | val MAE 6.7036 cm | val RMSE 9.1260 cm | 6.39 s
+Epoch 123 | train MSE 0.009186 m2 | val MAE 6.7107 cm | val RMSE 9.0788 cm | 6.18 s *
+Epoch 124 | train MSE 0.009139 m2 | val MAE 6.7000 cm | val RMSE 9.0845 cm | 6.23 s
+Epoch 125 | train MSE 0.009151 m2 | val MAE 6.7335 cm | val RMSE 9.0814 cm | 6.41 s
+Epoch 126 | train MSE 0.009178 m2 | val MAE 6.7698 cm | val RMSE 9.0843 cm | 5.99 s
+Epoch 127 | train MSE 0.009113 m2 | val MAE 6.6546 cm | val RMSE 9.0606 cm | 6.33 s *
+Epoch 128 | train MSE 0.009144 m2 | val MAE 6.7182 cm | val RMSE 9.0547 cm | 6.03 s *
+Epoch 129 | train MSE 0.009101 m2 | val MAE 6.6769 cm | val RMSE 9.0399 cm | 6.18 s *
+Epoch 130 | train MSE 0.009051 m2 | val MAE 6.8807 cm | val RMSE 9.2207 cm | 6.42 s
+Epoch 131 | train MSE 0.009072 m2 | val MAE 6.9855 cm | val RMSE 9.3148 cm | 6.41 s
+Epoch 132 | train MSE 0.009293 m2 | val MAE 6.6631 cm | val RMSE 9.0327 cm | 6.12 s *
+Epoch 133 | train MSE 0.009041 m2 | val MAE 6.7846 cm | val RMSE 9.1016 cm | 6.57 s
+Epoch 134 | train MSE 0.009021 m2 | val MAE 6.6381 cm | val RMSE 9.0018 cm | 6.13 s *
+Epoch 135 | train MSE 0.009015 m2 | val MAE 6.6383 cm | val RMSE 9.0078 cm | 6.25 s
+Epoch 136 | train MSE 0.008978 m2 | val MAE 6.6036 cm | val RMSE 9.0017 cm | 6.19 s *
+Epoch 137 | train MSE 0.008992 m2 | val MAE 7.0072 cm | val RMSE 9.2890 cm | 6.12 s
+Epoch 138 | train MSE 0.009036 m2 | val MAE 6.6368 cm | val RMSE 9.0019 cm | 6.22 s
+Epoch 139 | train MSE 0.008950 m2 | val MAE 6.6664 cm | val RMSE 9.0533 cm | 6.02 s
+Epoch 140 | train MSE 0.009048 m2 | val MAE 6.6613 cm | val RMSE 8.9937 cm | 6.23 s *
+Epoch 141 | train MSE 0.008921 m2 | val MAE 6.6348 cm | val RMSE 8.9793 cm | 6.29 s *
+Epoch 142 | train MSE 0.008906 m2 | val MAE 6.6409 cm | val RMSE 8.9732 cm | 6.53 s *
+Epoch 143 | train MSE 0.008906 m2 | val MAE 6.6216 cm | val RMSE 8.9487 cm | 6.39 s *
+Epoch 144 | train MSE 0.008880 m2 | val MAE 6.5947 cm | val RMSE 8.9535 cm | 5.68 s
+Epoch 145 | train MSE 0.008884 m2 | val MAE 6.8891 cm | val RMSE 9.1824 cm | 6.01 s
+Epoch 146 | train MSE 0.009002 m2 | val MAE 6.6579 cm | val RMSE 9.0253 cm | 6.34 s
+Epoch 147 | train MSE 0.008881 m2 | val MAE 6.6471 cm | val RMSE 8.9593 cm | 6.28 s
+Epoch 148 | train MSE 0.008832 m2 | val MAE 6.6065 cm | val RMSE 8.9315 cm | 6.34 s *
+Epoch 149 | train MSE 0.008835 m2 | val MAE 6.7270 cm | val RMSE 9.0140 cm | 6.25 s
+Epoch 150 | train MSE 0.008856 m2 | val MAE 6.6031 cm | val RMSE 8.9515 cm | 5.99 s
+[STEP 3] Best checkpoint saved: sw/results/mars_seed20260917/best.pt, validation RMSE 8.9315 cm

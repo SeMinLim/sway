@@ -1,0 +1,102 @@
+{
+  "dataset": "MARS: mmWave-based Assistive Rehabilitation System for Smart Healthcare",
+  "repository": "https://github.com/SizheAn/MARS",
+  "commit": "dc902822f864ca0d5df90d559d53d3cd919d3c7c",
+  "license": "MIT",
+  "source_readme": "https://github.com/SizheAn/MARS/blob/dc902822f864ca0d5df90d559d53d3cd919d3c7c/README.md",
+  "source_evaluation_code": "https://github.com/SizheAn/MARS/blob/dc902822f864ca0d5df90d559d53d3cd919d3c7c/MARS_model.py",
+  "split_protocol": "Use the six published feature arrays unchanged; no resplitting.",
+  "split_frames": {
+    "train": 24066,
+    "validate": 8033,
+    "test": 7984
+  },
+  "total_frames": 40083,
+  "split_discrepancy": "Published arrays have approximately 60/20/20 train/validation/test proportions. eMamba arXiv:2508.10370v1 Section 5.1 describes 64/16/20. The exact eMamba split indices are not supplied; these are the original MARS splits.",
+  "input_layout": "NHWC: [frames, 8, 8, 5]",
+  "input_channels": [
+    "x",
+    "y",
+    "z",
+    "Doppler velocity",
+    "intensity"
+  ],
+  "label_layout": "[frames, 57]; x[0:19], y[19:38], z[38:57]",
+  "label_units": "metres; multiply coordinate errors by 100 to report centimetres",
+  "preprocessing": "Use upstream feature values unchanged; float32 conversion at model input only.",
+  "rmse_convention": "Original MARS result table averages 57 per-coordinate RMSE values, each computed over frames. This differs from pooled RMSE over all frames and coordinates.",
+  "files": {
+    "featuremap_train.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/featuremap_train.npy",
+      "bytes": 61609088,
+      "sha256": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+      "shape": [
+        24066,
+        8,
+        8,
+        5
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    },
+    "featuremap_validate.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/featuremap_validate.npy",
+      "bytes": 20564608,
+      "sha256": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+      "shape": [
+        8033,
+        8,
+        8,
+        5
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    },
+    "featuremap_test.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/featuremap_test.npy",
+      "bytes": 20439168,
+      "sha256": "331551d42039e97a0afc260029d605dec29f4a0d11ede65e4c1328c49cb5c145",
+      "shape": [
+        7984,
+        8,
+        8,
+        5
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    },
+    "labels_train.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/labels_train.npy",
+      "bytes": 10974224,
+      "sha256": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+      "shape": [
+        24066,
+        57
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    },
+    "labels_validate.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/labels_validate.npy",
+      "bytes": 3663176,
+      "sha256": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da",
+      "shape": [
+        8033,
+        57
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    },
+    "labels_test.npy": {
+      "source_url": "https://raw.githubusercontent.com/SizheAn/MARS/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature/labels_test.npy",
+      "bytes": 3640832,
+      "sha256": "a1f29ebee5d5b4a63810997e9eda811af97bd222dcf4d4766777ccaea1b256e8",
+      "shape": [
+        7984,
+        57
+      ],
+      "dtype": "float64",
+      "all_finite": true
+    }
+  }
+}
