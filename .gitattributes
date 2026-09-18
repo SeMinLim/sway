@@ -1,5 +1,0 @@
-*.bin binary
-*.pt binary
-*.npy binary
-*.npz binary
-*.csv text eol=lf
