@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "blueyosys": {
+    "repository": "https://github.com/SeMinLim/blueyosys",
+    "commit": "3ea0afea56c7c73b8ed59ec0edd256c409466788"
+  },
+  "tools": {
+    "bsc": "2026.01 (build 9bd39e6f)",
+    "yosys": "0.69+75 (f0b945f63-dirty)",
+    "nextpnr_ecp5": "0.11.1-30-g3e53a0bf",
+    "iverilog": "14.0 (devel) (s20260301-474-g5591c2dde-dirty)"
+  },
+  "configuration": {
+    "model_dimension": 20,
+    "inner_dimension": 40,
+    "state_dimension": 8,
+    "tokens_per_frame": 16,
+    "blocks": 2,
+    "linear_lanes": 4,
+    "normalization_lanes": 2,
+    "convolution_lanes": 2,
+    "scan_lanes": 2,
+    "state_banks_per_block": 2,
+    "state_bank_shape": [
+      160,
+      17
+    ],
+    "board": "ulx3s-85f",
+    "target_kernel_clock_mhz": 100
+  },
+  "source_sha256": {
+    "hw/Makefile": "8e7bc4ff7505ec38b0b006bc5da2c2e5ea518b3d5a3f0bed12c61aef42354940",
+    "hw/bsv/SwayBaseline.bsv": "7aa997e2a1e679273138cc720e0c47ce8364e0599897e488c9ab06ecb092865c",
+    "hw/bsv/SwayBlock.bsv": "2c2653e70dd58f094be0348d392b6e37711bcc0750344253ac117b484d70fdf4",
+    "hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "hw/bsv/SwayLinear.bsv": "18400370202cfb9f30ba79591fb9f57d8af1183aabe0832f7ef3789495274ae9",
+    "hw/bsv/SwayNorm.bsv": "db60df465acb0ebc0c21cc60d000b1a375a089b4d0bb6d4070f27e1b88bb1653",
+    "hw/bsv/SwayScan.bsv": "c53a29328e263930a5d19acb802f6a941d3fe2f22c708947a78fcf69f2ab1964",
+    "hw/bsv/SwayTypes.bsv": "5bc14e0d45f364956f1253d98377eb458b11ca287326e089c62b597118f05c97",
+    "hw/bsv/Top.bsv": "23419a90b878894663151e600ad87afa92f0c4d2e824c778210219f432e2df45",
+    "hw/sim/TbSway.bsv": "1c64af40cf5031e4210363e6fb07afe1d0969d82e516ee2cc263dfa5fd2823a3",
+    "hw/reference/check_sim.py": "8ad7c2fc3956453b71d2f997505124fffea34f04b22affbb2b1054217fbd56ab",
+    "hw/reference/generate.py": "2a43d10650d36897d043f32548c4338e19ee682e4a799a57cafbefa75333fb29",
+    "hw/reference/integer_model.py": "4eca544d80f1e5d625782575915bf0a474340c4d37fb19eb36752aab85df30e0",
+    "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "hw/generated/SwayParameters.bsv": "da05d827d85ceafa3b0c6c794ee02fb6ef07818c03fefa1712e1d7af6d54e817"
+  },
+  "simulation": {
+    "bluesim": {
+      "status": "pass",
+      "report": "hw/results/bluesim.json",
+      "command": "make -C hw runsim"
+    },
+    "iverilog": {
+      "status": "pass",
+      "report": "hw/results/iverilog.json",
+      "command": "make -C hw runsim SIM_BACKEND=iverilog"
+    },
+    "frames_per_backend": 14,
+    "outputs_per_backend": 798,
+    "identical_transcript_sha256": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
+    "scope": "Fixed-checkpoint fixtures with source bubbles, prolonged sink stalls, and repeated frames. Full-test accuracy is evaluated by the integer software reference, not full-test RTL simulation."
+  },
+  "synthesis": {
+    "status": "pass",
+    "report": "hw/results/yosys.json",
+    "cells": {
+      "CCU2C": 8506,
+      "DP16KD": 4,
+      "EHXPLLL": 1,
+      "L6MUX21": 962,
+      "LUT4": 49454,
+      "MULT18X18D": 113,
+      "PFUMX": 7475,
+      "TRELLIS_DPR16X4": 252,
+      "TRELLIS_FF": 50535
+    }
+  },
+  "place_and_route": {
+    "command": "make -C hw synth",
+    "make_exit_code": 130,
+    "placement_status": "completed",
+    "routing_status": "stopped_before_completion",
+    "stop_reason": "Full routing was optional for the requested baseline implementation; functional simulation, synthesis and legal placement completed, while the placement timing estimate already missed the default 100 MHz target.",
+    "report": "hw/results/nextpnr_partial.log",
+    "packed_resources": {
+      "TRELLIS_COMB": {
+        "used": 70060,
+        "available": 83640
+      },
+      "TRELLIS_FF": {
+        "used": 50535,
+        "available": 83640
+      },
+      "MULT18X18D": {
+        "used": 113,
+        "available": 156
+      },
+      "DP16KD": {
+        "used": 4,
+        "available": 208
+      }
+    },
+    "timing": {
+      "stage": "post-placement estimate, before routing completion",
+      "kernel_target_mhz": 100.0,
+      "kernel_estimate_mhz": 18.4,
+      "kernel_constraint_met": false,
+      "uart_target_mhz": 25.0,
+      "uart_estimate_mhz": 115.13,
+      "scope": "These are placement timing estimates, not routed Fmax or measured board performance."
+    },
+    "constraint_notes": "Pinned board LPF references unused pll_clk_100mhz/125mhz names. nextpnr derived the actual core clock constraint as 100.0 MHz from the instantiated PLL."
+  },
+  "board_test": {
+    "status": "not_run"
+  },
+  "evidence_sha256": {
+    "hw/results/bluesim.json": "ff29e96c2397106c3a3828fbc6d30a18d2f2eb8b12e3237d92d90067ef895245",
+    "hw/results/bluesim.log": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
+    "hw/results/iverilog.json": "24be32e288aad4d15d3d93e8545dffced0c4732b437b52165a81f0f544061d21",
+    "hw/results/iverilog.log": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
+    "hw/results/nextpnr_partial.log": "68597825fa42ac2bdd66cc872f39297d44db7324495bc0cbf33e90602b95c2d6",
+    "hw/results/yosys.json": "b7efe1d746d03a682f5047f98c340e2bf1619fd402371fb272911d4b4976f923",
+    "hw/results/yosys.rpt": "fc146f12c391e94778f8710c849b5c43f966e57cddef582e4fbcb0ada076cd75"
+  },
+  "bitstream": {
+    "status": "not_generated",
+    "reason": "Routing was stopped and 100 MHz timing closure is not established."
+  }
+}
