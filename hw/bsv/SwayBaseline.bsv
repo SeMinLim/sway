@@ -2,69 +2,141 @@ package SwayBaseline;
 
 import Vector::*;
 import FIFO::*;
-import FIFOF::*;
+import RegFile::*;
 
 import SwayTypes::*;
+import SwayReset::*;
 import SwayParameters::*;
 import SwayLinear::*;
+import SwayHeadLinear::*;
 import SwayBlock::*;
 
 // Fixed-weight MARS graph. Each affine/normalization/scan stage has its own
 // engine. FIFOs permit adjacent tokens and independent frames to overlap.
 module mkSwayBaseline(SwayIfc);
-	FIFO#(Int#(8)) inputQ <- mkSizedFIFO(32);
-	FIFO#(Int#(8)) outputQ <- mkSizedFIFO(32);
-	FIFO#(Vector#(320, Int#(8))) frameQ <- mkFIFO1;
-	Reg#(Vector#(320, Int#(8))) inputR <- mkRegU;
-	Reg#(Bit#(9)) inputCnt <- mkReg(0);
+	LocalResetIfc localReset <- mkSwayLocalReset;
+	FIFO#(Int#(8)) inputQ <- mkSizedFIFO(32, reset_by localReset.rst);
+	FIFO#(Int#(8)) outputQ <- mkSizedFIFO(32, reset_by localReset.rst);
+	RegFile#(Bit#(10), Int#(8)) frameMemory <- mkRegFileFull;
+	FIFO#(Bit#(1)) freeBankQ <- mkFIFO(reset_by localReset.rst);
+	FIFO#(Bit#(1)) readyBankQ <- mkFIFO(reset_by localReset.rst);
+	FIFO#(Tuple2#(Bit#(10), Bit#(5))) patchAddressQ <- mkFIFO(reset_by localReset.rst);
+	FIFO#(Tuple2#(Int#(8), Bit#(5))) patchByteQ <- mkFIFO(reset_by localReset.rst);
+	FIFO#(Token#(20)) patchTokenQ <- mkFIFO1(reset_by localReset.rst);
+	Reg#(Bit#(1)) initializeCnt <- mkReg(0, reset_by localReset.rst);
+	Reg#(Bool) banksInitialized <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bit#(1)) writeBankR <- mkReg(0, reset_by localReset.rst);
+	Reg#(Bit#(1)) readBankR <- mkReg(0, reset_by localReset.rst);
+	Reg#(Bool) fillOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bit#(9)) inputCnt <- mkReg(0, reset_by localReset.rst);
 
 	LinearIfc#(20, 20) embedding <- mkSwayLinear(0);
 	BlockIfc block0 <- mkSwayBlock(0);
 	BlockIfc block1 <- mkSwayBlock(1);
-	LinearIfc#(320, 20) headHidden <- mkSwayLinear(9);
+	LinearIfc#(20, 20) headHidden <- mkSwayHeadLinear;
 	LinearIfc#(20, 57) headOutput <- mkSwayLinear(10);
 
-	Reg#(Vector#(320, Int#(8))) frameR <- mkRegU;
-	Reg#(Bool) patchOn <- mkReg(False);
-	Reg#(Bit#(4)) patchCnt <- mkReg(0);
-	Vector#(16, Reg#(Vector#(20, Int#(8)))) headR <- replicateM(mkRegU);
+	Reg#(Bool) patchOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bool) patchPrepareOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bool) patchIssueOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bit#(4)) patchCnt <- mkReg(0, reset_by localReset.rst);
+	Reg#(Bit#(5)) patchElementCnt <- mkReg(0, reset_by localReset.rst);
+	Reg#(Bit#(9)) patchBaseR <- mkRegU;
+	Reg#(Vector#(20, Int#(8))) patchR <- mkRegU;
 	Reg#(Vector#(57, Int#(8))) resultR <- mkRegU;
-	Reg#(Bool) outputOn <- mkReg(False);
-	Reg#(Bit#(6)) outputCnt <- mkReg(0);
+	Reg#(Bool) outputOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bit#(6)) outputCnt <- mkReg(0, reset_by localReset.rst);
 
 	//------------------------------------------------------------------------------------
-	// [STAGE 1] Collect one HWC frame and form row-major 2x2x5 patches.
+	// [STAGE 1] Two RAM banks retain complete HWC frames. A bank is reused
+	// only after its last patch is retained in a separate token register/FIFO.
 	//------------------------------------------------------------------------------------
-	rule process1;
-		Vector#(320, Int#(8)) nextInput = inputR;
-		nextInput[inputCnt] = inputQ.first;
+	rule initializeBanks ( !banksInitialized );
+		freeBankQ.enq(initializeCnt);
+		initializeCnt <= 1;
+		if ( initializeCnt == 1 ) banksInitialized <= True;
+	endrule
+
+	rule process1_1 ( banksInitialized && !fillOn );
+		writeBankR <= freeBankQ.first;
+		freeBankQ.deq;
+		inputCnt <= 0;
+		fillOn <= True;
+	endrule
+
+	rule process1_2 ( fillOn );
+		frameMemory.upd({writeBankR, inputCnt}, inputQ.first);
 		inputQ.deq;
-		inputR <= nextInput;
 		if ( inputCnt == 319 ) begin
-			frameQ.enq(nextInput);
-			inputCnt <= 0;
+			readyBankQ.enq(writeBankR);
+			fillOn <= False;
 		end else inputCnt <= inputCnt + 1;
 	endrule
 
 	rule process2 ( !patchOn );
-		frameR <= frameQ.first;
-		frameQ.deq;
+		readBankR <= readyBankQ.first;
+		readyBankQ.deq;
 		patchCnt <= 0;
+		patchElementCnt <= 0;
+		patchPrepareOn <= True;
+		patchIssueOn <= False;
 		patchOn <= True;
 	endrule
 
-	rule process3 ( patchOn );
-		Vector#(16, Vector#(20, Int#(8))) patches = newVector;
+	// Patch selection and byte-address addition terminate at separate registers.
+	rule process3Prepare ( patchOn && patchPrepareOn && !patchIssueOn );
+		Vector#(16, Bit#(9)) base = newVector;
 		for ( Integer p = 0; p < 16; p = p + 1 ) begin
-			for ( Integer i = 0; i < 20; i = i + 1 ) begin
-				Integer address = (2 * (p / 4) + i / 10) * 40
-					+ (2 * (p % 4) + (i / 5) % 2) * 5 + i % 5;
-				patches[p][i] = requant(signExtend(frameR[address]), nodeScale("input"), nodeScale("patches"));
-			end
+			base[p] = fromInteger((p / 4) * 80 + (p % 4) * 10);
 		end
-		embedding.put(Token { index: patchCnt, data: patches[patchCnt] });
-		if ( patchCnt == 15 ) patchOn <= False;
-		else patchCnt <= patchCnt + 1;
+		patchBaseR <= base[patchCnt];
+		patchPrepareOn <= False;
+		patchIssueOn <= True;
+	endrule
+
+	rule process3_1 ( patchOn && patchIssueOn && !patchPrepareOn );
+		Bit#(9) offset = zeroExtend(patchElementCnt) + (patchElementCnt >= 10 ? 30 : 0);
+		Bit#(9) address = patchBaseR + offset;
+		patchAddressQ.enq(tuple2({readBankR, address}, patchElementCnt));
+		if ( patchElementCnt == 19 ) patchIssueOn <= False;
+		else patchElementCnt <= patchElementCnt + 1;
+	endrule
+
+	rule process3_2;
+		let value = patchAddressQ.first;
+		patchAddressQ.deq;
+		patchByteQ.enq(tuple2(frameMemory.sub(tpl_1(value)), tpl_2(value)));
+	endrule
+
+	rule process3_3 ( patchOn && tpl_2(patchByteQ.first) != 19 );
+		let value = patchByteQ.first;
+		patchByteQ.deq;
+		Vector#(20, Int#(8)) patch = patchR;
+		patch[tpl_2(value)] = requant(signExtend(tpl_1(value)), nodeScale("input"), nodeScale("patches"));
+		patchR <= patch;
+	endrule
+
+	rule process3Last ( banksInitialized && patchOn && !patchIssueOn && !patchPrepareOn
+		&& tpl_2(patchByteQ.first) == 19 );
+		let value = patchByteQ.first;
+		patchByteQ.deq;
+		Vector#(20, Int#(8)) patch = patchR;
+		patch[19] = requant(signExtend(tpl_1(value)), nodeScale("input"), nodeScale("patches"));
+		patchTokenQ.enq(Token { index: patchCnt, data: patch });
+		if ( patchCnt == 15 ) begin
+			freeBankQ.enq(readBankR);
+			patchOn <= False;
+		end else begin
+			patchCnt <= patchCnt + 1;
+			patchElementCnt <= 0;
+			patchPrepareOn <= True;
+		end
+	endrule
+
+	// This occupied bit cuts embedding readiness out of RAM address/control paths.
+	rule process3Embed;
+		embedding.put(patchTokenQ.first);
+		patchTokenQ.deq;
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -90,17 +162,7 @@ module mkSwayBaseline(SwayIfc);
 			token[i] = requant(signExtend(value.data[i]),
 				blockScale(1, "residual"), nodeScale("headInput"));
 		end
-		headR[value.index] <= token;
-		if ( value.index == 15 ) begin
-			Vector#(320, Int#(8)) flattened = newVector;
-			for ( Integer p = 0; p < 16; p = p + 1 ) begin
-				Vector#(20, Int#(8)) stored = p == 15 ? token : headR[p];
-				for ( Integer i = 0; i < 20; i = i + 1 ) begin
-					flattened[p * 20 + i] = stored[i];
-				end
-			end
-			headHidden.put(Token { index: 0, data: flattened });
-		end
+		headHidden.put(Token { index: value.index, data: token });
 	endrule
 
 	rule process7;
@@ -120,16 +182,22 @@ module mkSwayBaseline(SwayIfc);
 	endrule
 
 	rule process9 ( outputOn );
-		outputQ.enq(resultR[outputCnt]);
+		outputQ.enq(resultR[0]);
+		Vector#(57, Int#(8)) shifted = newVector;
+		for ( Integer i = 0; i < 56; i = i + 1 ) begin
+			shifted[i] = resultR[i + 1];
+		end
+		shifted[56] = 0;
+		resultR <= shifted;
 		if ( outputCnt == 56 ) outputOn <= False;
 		else outputCnt <= outputCnt + 1;
 	endrule
 
-	method Action put(Int#(8) value);
+	method Action put(Int#(8) value) if ( localReset.ready );
 		inputQ.enq(value);
 	endmethod
 
-	method ActionValue#(Int#(8)) get;
+	method ActionValue#(Int#(8)) get if ( localReset.ready );
 		let value = outputQ.first;
 		outputQ.deq;
 		return value;

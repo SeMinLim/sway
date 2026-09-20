@@ -5,6 +5,8 @@ import FIFO::*;
 
 import SwayTypes::*;
 import SwayParameters::*;
+import SwayReset::*;
+import SwayLookup::*;
 import SwayLinear::*;
 import SwayNorm::*;
 import SwayScan::*;
@@ -14,9 +16,92 @@ typedef 20 ConvGroups;
 
 typedef struct {
 	Bit#(5) group;
+	Bool zeroHistory;
+} ConvAddress deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Vector#(4, Int#(8))) samples;
+	Vector#(ConvLanes, Vector#(4, Int#(8))) weights;
+	Vector#(ConvLanes, Int#(8)) bias;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvOperands deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Vector#(4, Int#(13))) low;
+	Vector#(ConvLanes, Vector#(4, Int#(12))) high;
+	Vector#(ConvLanes, Int#(8)) bias;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvPartialProducts deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Vector#(4, Int#(16))) products;
+	Vector#(ConvLanes, Int#(8)) bias;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvProducts deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Vector#(2, Int#(17))) pairs;
+	Vector#(ConvLanes, Int#(8)) bias;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvPairs deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
 	Vector#(ConvLanes, Int#(18)) sum;
+	Vector#(ConvLanes, Int#(8)) bias;
 	Vector#(ConvLanes, Int#(8)) gate;
 } ConvPartial deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(19)) sum;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvAccumulated deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(8)) x;
+	Vector#(ConvLanes, Int#(8)) gate;
+} ConvActivated deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Bit#(4)) xHigh;
+	Vector#(ConvLanes, Bit#(4)) gateHigh;
+	Vector#(ConvLanes, Vector#(16, Int#(8))) xTable;
+	Vector#(ConvLanes, Vector#(16, Int#(8))) gateTable;
+} ConvLookup deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(8)) x;
+	Vector#(ConvLanes, Int#(8)) gate;
+} GateOperands deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(13)) low;
+	Vector#(ConvLanes, Int#(12)) high;
+} GatePartialProducts deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(16)) products;
+} GateProducts deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(5) group;
+	Vector#(ConvLanes, Int#(8)) values;
+} GateResults deriving (Bits, Eq, FShow);
+
+typedef struct {
+	Bit#(4) index;
+	Vector#(20, Int#(10)) values;
+} ResidualSums deriving (Bits, Eq, FShow);
 
 typedef struct {
 	Bit#(4) index;
@@ -25,6 +110,7 @@ typedef struct {
 } StateParameters deriving (Bits, Eq, FShow);
 
 module mkSwayBlock#(Integer blockId)(BlockIfc);
+	LocalResetIfc localReset <- mkSwayLocalReset;
 	Integer firstLinear = 1 + blockId * 4;
 	Integer inExp = blockScale(blockId, "in");
 	Integer convInputExp = blockScale(blockId, "convInput");
@@ -36,7 +122,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	Integer residualInputExp = blockId == 0 ? nodeScale("embedding") : blockScale(blockId - 1, "residual");
 	Integer outExp = blockScale(blockId, "out");
 	Integer residualAccumulatorExp = residualInputExp < outExp ? residualInputExp : outExp;
+	// Four INT8 products need 18 bits; aligned bias needs 11 bits for this export.
+	if ( convProductExp != convAccumulatorExp || convBiasExp - convAccumulatorExp > 3 || residualInputExp - residualAccumulatorExp > 1 || outExp - residualAccumulatorExp > 1 ) begin
+		error("SwayBlock fixed-point bounds do not cover this quantization profile");
+	end
 
+	// Child engines derive sibling reset leaves from the unchanged root reset.
 	NormIfc normalization <- mkSwayNorm(blockId);
 	LinearIfc#(20, 80) inputProjection <- mkSwayLinear(firstLinear);
 	LinearIfc#(40, 18) stateProjection <- mkSwayLinear(firstLinear + 1);
@@ -44,30 +135,47 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	LinearIfc#(40, 20) outputProjection <- mkSwayLinear(firstLinear + 3);
 	ScanIfc scan <- mkSwayScan(blockId);
 
-	FIFO#(Token#(20)) inputQ <- mkFIFO1;
+	FIFO#(Token#(20)) inputQ <- mkFIFO1(reset_by localReset.rst);
 	// Four residual slots allow tokens to occupy independent downstream engines.
-	FIFO#(Token#(20)) residualQ <- mkSizedFIFO(4);
-	FIFO#(Token#(20)) outputQ <- mkFIFO1;
-	FIFO#(Token#(80)) expandedQ <- mkFIFO1;
-	FIFO#(ConvPartial) convolvedQ <- mkFIFO;
-	FIFO#(Token#(40)) activatedQ <- mkFIFO1;
-	FIFO#(Token#(40)) xDelayQ <- mkFIFO1;
-	FIFO#(Token#(40)) gateDelayQ <- mkSizedFIFO(4);
-	FIFO#(StateParameters) stateParameterQ <- mkFIFO1;
+	FIFO#(Token#(20)) residualQ <- mkSizedFIFO(4, reset_by localReset.rst);
+	FIFO#(Token#(20)) outputQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(Token#(80)) expandedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvAddress) convAddressQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvOperands) convSelectedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvOperands) convOperandQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvPartialProducts) convPartialProductQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvProducts) convProductQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvPairs) convPairQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvPartial) convolvedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvAccumulated) convAccumulatedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvActivated) convQuantizedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvLookup) convLookupQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ConvActivated) convActivatedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(GateOperands) gateOperandQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(GatePartialProducts) gatePartialProductQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(GateProducts) gateProductQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(GateResults) gateResultQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(ResidualSums) residualSumQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(Token#(40)) activatedQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(Token#(40)) xDelayQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(Token#(40)) gateDelayQ <- mkSizedFIFO(4, reset_by localReset.rst);
+	FIFO#(StateParameters) stateParameterQ <- mkFIFO1(reset_by localReset.rst);
 
-	// Three causal samples per channel, banked across the two convolution lanes.
-	Vector#(3, Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8))))) historyR <- replicateM(replicateM(replicateM(mkReg(0))));
+	// Token zero initializes all three causal samples before any later token reads them.
+	Vector#(3, Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8))))) historyR <- replicateM(replicateM(replicateM(mkRegU)));
 	Reg#(Token#(80)) expandedR <- mkRegU;
-	Reg#(Vector#(40, Int#(8))) activatedR <- mkRegU;
-	Reg#(Vector#(40, Int#(8))) gateR <- mkRegU;
-	Reg#(Bit#(5)) convGroupCnt <- mkReg(0);
-	Reg#(Bool) convolutionOn <- mkReg(False);
+	Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8)))) activatedR <- replicateM(replicateM(mkRegU));
+	Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8)))) gateR <- replicateM(replicateM(mkRegU));
+	Reg#(Bit#(5)) convGroupCnt <- mkRegU;
+	Reg#(Bool) convolutionOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bool) convEmitOn <- mkReg(False, reset_by localReset.rst);
 
 	Reg#(Token#(40)) scannedR <- mkRegU;
 	Reg#(Token#(40)) delayedGateR <- mkRegU;
-	Reg#(Vector#(40, Int#(8))) gatedR <- mkRegU;
-	Reg#(Bit#(5)) gateGroupCnt <- mkReg(0);
-	Reg#(Bool) gatingOn <- mkReg(False);
+	Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8)))) gatedR <- replicateM(replicateM(mkRegU));
+	Reg#(Bit#(5)) gateGroupCnt <- mkRegU;
+	Reg#(Bool) gatingOn <- mkReg(False, reset_by localReset.rst);
+	Reg#(Bool) gateEmitOn <- mkReg(False, reset_by localReset.rst);
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
@@ -102,54 +210,193 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		convolutionOn <= True;
 	endrule
 
-	rule process4_2 ( convolutionOn && convGroupCnt < fromInteger(valueOf(ConvGroups)) );
-		ConvPartial value = unpack(0);
-		value.group = convGroupCnt;
-		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
-			Bit#(6) channel = (zeroExtend(convGroupCnt) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
-			Bit#(7) gateChannel = zeroExtend(channel) + fromInteger(valueOf(InnerDim));
-			Int#(8) inputValue = requant(signExtend(expandedR.data[channel]), inExp, convInputExp);
-			Vector#(4, Int#(8)) samples = newVector;
-			for ( Integer tap = 0; tap < 3; tap = tap + 1 ) begin
-				samples[tap] = expandedR.index == 0 ? 0 : historyR[tap][lane][convGroupCnt];
-			end
-			samples[3] = inputValue;
-			Vector#(4, Int#(16)) products = newVector;
-			for ( Integer tap = 0; tap < 4; tap = tap + 1 ) begin
-				products[tap] = signExtend(samples[tap]) * signExtend(convWeight(blockId, tap, channel));
-			end
-			Int#(17) firstSum = signExtend(products[0]) + signExtend(products[1]);
-			Int#(17) secondSum = signExtend(products[2]) + signExtend(products[3]);
-			value.sum[lane] = signExtend(firstSum) + signExtend(secondSum);
-			value.gate[lane] = requant(signExtend(expandedR.data[gateChannel]), inExp, gateInputExp);
-			historyR[0][lane][convGroupCnt] <= samples[1];
-			historyR[1][lane][convGroupCnt] <= samples[2];
-			historyR[2][lane][convGroupCnt] <= samples[3];
-		end
-		convolvedQ.enq(value);
+	rule process4_2_1 ( convolutionOn && convGroupCnt < fromInteger(valueOf(ConvGroups)) );
+		convAddressQ.enq(ConvAddress {group: convGroupCnt, zeroHistory: expandedR.index == 0});
 		convGroupCnt <= convGroupCnt + 1;
 	endrule
 
-	rule process4_3 ( convolutionOn );
-		let value = convolvedQ.first;
-		convolvedQ.deq;
-		Vector#(40, Int#(8)) x = activatedR;
-		Vector#(40, Int#(8)) gate = gateR;
+	rule process4_2_2 ( convolutionOn );
+		let address = convAddressQ.first;
+		convAddressQ.deq;
+		ConvOperands value = unpack(0);
+		value.group = address.group;
 		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
-			Bit#(6) channel = (zeroExtend(value.group) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
-			Int#(64) accumulator = shiftRound(signExtend(value.sum[lane]), convProductExp, convAccumulatorExp);
-			accumulator = accumulator + shiftRound(signExtend(convBias(blockId, channel)), convBiasExp, convAccumulatorExp);
-			Int#(8) convolved = requant(accumulator, convAccumulatorExp, blockScale(blockId, "conv"));
-			x[channel] = nonlinearLookup(blockId * 3, convolved);
-			gate[channel] = nonlinearLookup(blockId * 3 + 1, value.gate[lane]);
+			Bit#(6) channel = {address.group, fromInteger(lane)};
+			Vector#(ConvGroups, Int#(8)) xBank = newVector;
+			Vector#(ConvGroups, Int#(8)) gateBank = newVector;
+			for ( Integer group = 0; group < valueOf(ConvGroups); group = group + 1 ) begin
+				xBank[group] = expandedR.data[group * valueOf(ConvLanes) + lane];
+				gateBank[group] = expandedR.data[valueOf(InnerDim) + group * valueOf(ConvLanes) + lane];
+			end
+			for ( Integer tap = 0; tap < 3; tap = tap + 1 ) begin
+				value.samples[lane][tap] = address.zeroHistory ? 0 : historyR[tap][lane][address.group];
+			end
+			value.samples[lane][3] = xBank[address.group];
+			for ( Integer tap = 0; tap < 4; tap = tap + 1 ) begin
+				value.weights[lane][tap] = convWeight(blockId, tap, channel);
+			end
+			value.bias[lane] = convBias(blockId, channel);
+			value.gate[lane] = gateBank[address.group];
 		end
-		activatedR <= x;
-		gateR <= gate;
+		convSelectedQ.enq(value);
+	endrule
+
+	rule process4_2_3 ( convolutionOn );
+		ConvOperands value = convSelectedQ.first;
+		convSelectedQ.deq;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.samples[lane][3] = requant(signExtend(value.samples[lane][3]), inExp, convInputExp);
+			value.gate[lane] = requant(signExtend(value.gate[lane]), inExp, gateInputExp);
+			historyR[0][lane][value.group] <= value.samples[lane][1];
+			historyR[1][lane][value.group] <= value.samples[lane][2];
+			historyR[2][lane][value.group] <= value.samples[lane][3];
+		end
+		convOperandQ.enq(value);
+	endrule
+
+	rule process4_3_1;
+		let inputValue = convOperandQ.first;
+		convOperandQ.deq;
+		ConvPartialProducts value = unpack(0);
+		value.group = inputValue.group;
+		value.bias = inputValue.bias;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			for ( Integer tap = 0; tap < 4; tap = tap + 1 ) begin
+				Bit#(8) sampleBits = pack(inputValue.samples[lane][tap]);
+				Int#(5) low = unpack(zeroExtend(sampleBits[3:0]));
+				Int#(4) high = unpack(sampleBits[7:4]);
+				value.low[lane][tap] = signExtend(low) * signExtend(inputValue.weights[lane][tap]);
+				value.high[lane][tap] = signExtend(high) * signExtend(inputValue.weights[lane][tap]);
+			end
+		end
+		convPartialProductQ.enq(value);
+	endrule
+
+	rule process4_3_2;
+		let inputValue = convPartialProductQ.first;
+		convPartialProductQ.deq;
+		ConvProducts value = unpack(0);
+		value.group = inputValue.group;
+		value.bias = inputValue.bias;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			for ( Integer tap = 0; tap < 4; tap = tap + 1 ) begin
+				Int#(16) high = signExtend(inputValue.high[lane][tap]);
+				value.products[lane][tap] = signExtend(inputValue.low[lane][tap]) + (high << 4);
+			end
+		end
+		convProductQ.enq(value);
+	endrule
+
+	rule process4_4;
+		let inputValue = convProductQ.first;
+		convProductQ.deq;
+		ConvPairs value = unpack(0);
+		value.group = inputValue.group;
+		value.bias = inputValue.bias;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.pairs[lane][0] = signExtend(inputValue.products[lane][0]) + signExtend(inputValue.products[lane][1]);
+			value.pairs[lane][1] = signExtend(inputValue.products[lane][2]) + signExtend(inputValue.products[lane][3]);
+		end
+		convPairQ.enq(value);
+	endrule
+
+	rule process4_5;
+		let inputValue = convPairQ.first;
+		convPairQ.deq;
+		ConvPartial value = unpack(0);
+		value.group = inputValue.group;
+		value.bias = inputValue.bias;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.sum[lane] = signExtend(inputValue.pairs[lane][0]) + signExtend(inputValue.pairs[lane][1]);
+		end
+		convolvedQ.enq(value);
+	endrule
+
+	rule process4_6;
+		let inputValue = convolvedQ.first;
+		convolvedQ.deq;
+		ConvAccumulated value = unpack(0);
+		value.group = inputValue.group;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			Int#(19) bias = signExtend(inputValue.bias[lane]);
+			bias = bias << (convBiasExp - convAccumulatorExp);
+			value.sum[lane] = signExtend(inputValue.sum[lane]) + bias;
+		end
+		convAccumulatedQ.enq(value);
+	endrule
+
+	rule process4_7;
+		let inputValue = convAccumulatedQ.first;
+		convAccumulatedQ.deq;
+		ConvActivated value = unpack(0);
+		value.group = inputValue.group;
+		value.gate = inputValue.gate;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.x[lane] = requant(signExtend(inputValue.sum[lane]), convAccumulatorExp, blockScale(blockId, "conv"));
+		end
+		convQuantizedQ.enq(value);
+	endrule
+
+	rule process4_8_1;
+		let inputValue = convQuantizedQ.first;
+		convQuantizedQ.deq;
+		ConvLookup value = unpack(0);
+		value.group = inputValue.group;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			Bit#(8) xBits = pack(inputValue.x[lane]);
+			Bit#(8) gateBits = pack(inputValue.gate[lane]);
+			value.xHigh[lane] = xBits[7:4];
+			value.gateHigh[lane] = gateBits[7:4];
+			value.xTable[lane] = nonlinearCandidates(blockId * 3, xBits[3:0]);
+			value.gateTable[lane] = nonlinearCandidates(blockId * 3 + 1, gateBits[3:0]);
+		end
+		convLookupQ.enq(value);
+	endrule
+
+	rule process4_8_2;
+		let inputValue = convLookupQ.first;
+		convLookupQ.deq;
+		ConvActivated value = unpack(0);
+		value.group = inputValue.group;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.x[lane] = inputValue.xTable[lane][inputValue.xHigh[lane]];
+			value.gate[lane] = inputValue.gateTable[lane][inputValue.gateHigh[lane]];
+		end
+		convActivatedQ.enq(value);
+	endrule
+
+	rule process4_9 ( convolutionOn && !convEmitOn );
+		let value = convActivatedQ.first;
+		convActivatedQ.deq;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			activatedR[lane][value.group] <= value.x[lane];
+			gateR[lane][value.group] <= value.gate[lane];
+		end
 		if ( value.group == fromInteger(valueOf(ConvGroups) - 1) ) begin
-			activatedQ.enq(Token {index: expandedR.index, data: x});
-			gateDelayQ.enq(Token {index: expandedR.index, data: gate});
-			convolutionOn <= False;
+			convEmitOn <= True;
 		end
+	endrule
+
+	// Emit only after the last pair has been stored. Wide output enables depend
+	// on a registered completion flag rather than last-group decode and FIFO readiness.
+	rule process4_10 ( convolutionOn && convEmitOn );
+		Vector#(40, Int#(8)) x = newVector;
+		Vector#(40, Int#(8)) gate = newVector;
+		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+			Integer lane = channel % valueOf(ConvLanes);
+			Integer group = channel / valueOf(ConvLanes);
+			x[channel] = activatedR[lane][group];
+			gate[channel] = gateR[lane][group];
+		end
+		activatedQ.enq(Token {index: expandedR.index, data: x});
+		gateDelayQ.enq(Token {index: expandedR.index, data: gate});
+		convEmitOn <= False;
+		convolutionOn <= False;
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -206,20 +453,77 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		gatingOn <= True;
 	endrule
 
-	rule process9 ( gatingOn );
-		Vector#(40, Int#(8)) result = gatedR;
+	rule process9_1 ( gatingOn && gateGroupCnt < fromInteger(valueOf(ConvGroups)) );
+		GateOperands value = unpack(0);
+		value.group = gateGroupCnt;
 		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
-			Bit#(6) channel = (zeroExtend(gateGroupCnt) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
-			Int#(16) product = signExtend(scannedR.data[channel]) * signExtend(delayedGateR.data[channel]);
-			result[channel] = requant(signExtend(product), blockScale(blockId, "ssmY") + blockScale(blockId, "gate"), blockScale(blockId, "gated"));
+			Bit#(6) channel = {gateGroupCnt, fromInteger(lane)};
+			value.x[lane] = scannedR.data[channel];
+			value.gate[lane] = delayedGateR.data[channel];
 		end
-		gatedR <= result;
-		if ( gateGroupCnt == fromInteger(valueOf(ConvGroups) - 1) ) begin
-			outputProjection.put(Token {index: scannedR.index, data: result});
-			gatingOn <= False;
-		end else begin
-			gateGroupCnt <= gateGroupCnt + 1;
+		gateOperandQ.enq(value);
+		gateGroupCnt <= gateGroupCnt + 1;
+	endrule
+
+	rule process9_2_1;
+		let inputValue = gateOperandQ.first;
+		gateOperandQ.deq;
+		GatePartialProducts value = unpack(0);
+		value.group = inputValue.group;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			Bit#(8) xBits = pack(inputValue.x[lane]);
+			Int#(5) low = unpack(zeroExtend(xBits[3:0]));
+			Int#(4) high = unpack(xBits[7:4]);
+			value.low[lane] = signExtend(low) * signExtend(inputValue.gate[lane]);
+			value.high[lane] = signExtend(high) * signExtend(inputValue.gate[lane]);
 		end
+		gatePartialProductQ.enq(value);
+	endrule
+
+	rule process9_2_2;
+		let inputValue = gatePartialProductQ.first;
+		gatePartialProductQ.deq;
+		GateProducts value = unpack(0);
+		value.group = inputValue.group;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			Int#(16) high = signExtend(inputValue.high[lane]);
+			value.products[lane] = signExtend(inputValue.low[lane]) + (high << 4);
+		end
+		gateProductQ.enq(value);
+	endrule
+
+	rule process9_3;
+		let inputValue = gateProductQ.first;
+		gateProductQ.deq;
+		GateResults value = unpack(0);
+		value.group = inputValue.group;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			value.values[lane] = requant(signExtend(inputValue.products[lane]), blockScale(blockId, "ssmY") + blockScale(blockId, "gate"), blockScale(blockId, "gated"));
+		end
+		gateResultQ.enq(value);
+	endrule
+
+	rule process9_4 ( gatingOn && !gateEmitOn );
+		let value = gateResultQ.first;
+		gateResultQ.deq;
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			gatedR[lane][value.group] <= value.values[lane];
+		end
+		if ( value.group == fromInteger(valueOf(ConvGroups) - 1) ) begin
+			gateEmitOn <= True;
+		end
+	endrule
+
+	rule process9_5 ( gatingOn && gateEmitOn );
+		Vector#(40, Int#(8)) result = newVector;
+		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+			Integer lane = channel % valueOf(ConvLanes);
+			Integer group = channel / valueOf(ConvLanes);
+			result[channel] = gatedR[lane][group];
+		end
+		outputProjection.put(Token {index: scannedR.index, data: result});
+		gateEmitOn <= False;
+		gatingOn <= False;
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -230,16 +534,29 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		let projected <- outputProjection.get;
 		let residual = residualQ.first;
 		residualQ.deq;
-		Vector#(20, Int#(8)) result = newVector;
+		ResidualSums value = unpack(0);
+		value.index = projected.index;
 		for ( Integer channel = 0; channel < valueOf(ModelDim); channel = channel + 1 ) begin
-			Int#(64) accumulator = shiftRound(signExtend(projected.data[channel]), outExp, residualAccumulatorExp);
-			accumulator = accumulator + shiftRound(signExtend(residual.data[channel]), residualInputExp, residualAccumulatorExp);
-			result[channel] = requant(accumulator, residualAccumulatorExp, blockScale(blockId, "residual"));
+			Int#(10) a = signExtend(projected.data[channel]);
+			Int#(10) b = signExtend(residual.data[channel]);
+			a = a << (outExp - residualAccumulatorExp);
+			b = b << (residualInputExp - residualAccumulatorExp);
+			value.values[channel] = a + b;
 		end
-		outputQ.enq(Token {index: projected.index, data: result});
+		residualSumQ.enq(value);
 	endrule
 
-	method Action put(Token#(20) value);
+	rule process11;
+		let value = residualSumQ.first;
+		residualSumQ.deq;
+		Vector#(20, Int#(8)) result = newVector;
+		for ( Integer channel = 0; channel < valueOf(ModelDim); channel = channel + 1 ) begin
+			result[channel] = requant(signExtend(value.values[channel]), residualAccumulatorExp, blockScale(blockId, "residual"));
+		end
+		outputQ.enq(Token {index: value.index, data: result});
+	endrule
+
+	method Action put(Token#(20) value) if ( localReset.ready );
 		inputQ.enq(value);
 	endmethod
 

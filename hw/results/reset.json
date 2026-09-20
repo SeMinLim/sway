@@ -1,0 +1,84 @@
+{
+  "status": "pass",
+  "scope": "Functional reset behavior and BSIM/FPGA leaf-latency agreement; not routed timing or board measurement",
+  "rtl_backend": "Icarus Verilog with installed BSC SyncResetA and Yosys TRELLIS_FF primitive models",
+  "checks": {
+    "asynchronous_assertion": true,
+    "root_release_edges": 2,
+    "leaf_release_edges": 2,
+    "total_release_edges": 4,
+    "clock_domains_mhz": [
+      100,
+      25
+    ],
+    "reset_episodes_per_domain": 2,
+    "ready_low_during_reset": true,
+    "ready_asserts_with_leaf_release": true,
+    "bsim_exact_leaf_release_edges": 2
+  },
+  "rtl_log": "hw/results/reset.log",
+  "rtl_log_sha256": "2a72333e6853853eb3a862c0f8782b83324832c1b35872710df5078319718c76",
+  "bluesim_stdout": "SWAY_RESET_BSIM_PASS leaf_edges=2 ready=direct",
+  "source_sha256": {
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayReset.bsv": "73de2c88ceb119d24ad4dd335538923f5f2484048368d26d1c17e9b15a167f7c",
+    "rtl/SwayReset.v": "6850c175449b41206167176b506562b6ca6e2bad51a5a5d333860f02e5ebd60d",
+    "sim/TestLocalReset.v": "1c08aa2037833f4bb4366908b61ad544585bdea2908f8647867aa67f6aece6a4",
+    "sim/TbLocalReset.bsv": "53b970ef3d7ee9afdd807665580ffcaf86d38f33bacee110c6c72cb50a06e6db",
+    "bsc_runtime/SyncResetA.v": "b950607e990775635067ca060368f00617b54858c6433e7de788e95357612a8f",
+    "yosys_primitive/common_sim.vh": "3d55fcb1b659f9a99e081d0e8cd3e0a74fb8d659644103db9ad10b04a64ce75d"
+  },
+  "executed_commands": [
+    [
+      "/workspace/scratch/dc01b9aab8c7/toolchains/oss-cad-suite/bin/iverilog",
+      "-g2012",
+      "-I",
+      "/workspace/scratch/dc01b9aab8c7/toolchains/oss-cad-suite/share/yosys/lattice",
+      "-s",
+      "TestLocalReset",
+      "-o",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/reset.vvp",
+      "sim/TestLocalReset.v",
+      "rtl/SwayReset.v",
+      "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/SyncResetA.v",
+      "/workspace/scratch/dc01b9aab8c7/toolchains/oss-cad-suite/share/yosys/lattice/common_sim.vh"
+    ],
+    [
+      "/workspace/scratch/dc01b9aab8c7/toolchains/oss-cad-suite/bin/vvp",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/reset.vvp"
+    ],
+    [
+      "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/bin/bsc",
+      "-D",
+      "BSIM",
+      "-sim",
+      "-u",
+      "-bdir",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim",
+      "-simdir",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim",
+      "-p",
+      "+:bsv",
+      "-g",
+      "mkTbLocalReset",
+      "sim/TbLocalReset.bsv"
+    ],
+    [
+      "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/bin/bsc",
+      "-D",
+      "BSIM",
+      "-sim",
+      "-e",
+      "mkTbLocalReset",
+      "-bdir",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim",
+      "-simdir",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim",
+      "-o",
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim/check"
+    ],
+    [
+      "/workspace/scratch/dc01b9aab8c7/reset_validation/repo_check/bsim/check"
+    ]
+  ]
+}

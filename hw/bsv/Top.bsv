@@ -6,6 +6,7 @@ import SwayClock::*;
 
 import SwayTypes::*;
 import SwayBaseline::*;
+import SwayReset::*;
 
 interface SwayTopIfc;
 	(* always_ready *) method Bit#(1) ftdi_rxd;
@@ -20,9 +21,10 @@ endinterface
 (* no_default_clock, no_default_reset *)
 module mkTop#(Clock clk_25mhz)(SwayTopIfc);
 	SwayClockIfc clocks <- mkSwayClock(clk_25mhz);
+	LocalResetIfc txReset <- mkSwayLocalReset(clocked_by clocks.clk100, reset_by clocks.rst100);
 	UartIfc uart <- mkUart(217, clocked_by clk_25mhz, reset_by clocks.rst25);
 	SyncFIFOIfc#(Bit#(8)) rxQ <- mkSyncFIFO(16, clk_25mhz, clocks.rst25, clocks.clk100);
-	SyncFIFOIfc#(Bit#(8)) txQ <- mkSyncFIFO(16, clocks.clk100, clocks.rst100, clk_25mhz);
+	SyncFIFOIfc#(Bit#(8)) txQ <- mkSyncFIFO(16, clocks.clk100, txReset.rst, clk_25mhz);
 	SwayIfc core <- mkSwayBaseline(clocked_by clocks.clk100, reset_by clocks.rst100);
 
 	rule uartInput;
@@ -35,7 +37,7 @@ module mkTop#(Clock clk_25mhz)(SwayTopIfc);
 		rxQ.deq;
 	endrule
 
-	rule process2;
+	rule process2 ( txReset.ready );
 		let value <- core.get;
 		txQ.enq(pack(value));
 	endrule

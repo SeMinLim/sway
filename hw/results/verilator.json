@@ -1,0 +1,213 @@
+{
+  "status": "pass",
+  "evidence": "generated-Verilog simulation (Verilator, native coefficient BVI behavioral model)",
+  "frames_checked": 14,
+  "scalar_outputs_checked": 798,
+  "input_words": 4480,
+  "finish_cycle": 240833,
+  "post_completion_drain_cycles": 2048,
+  "source_bubbles": "cycles modulo 17 equal to 0 or 1",
+  "sink_stalls": "8192 cycles after each first output, plus cycles modulo 11 equal to 0",
+  "repeated_frame_pairs_checked": [
+    [
+      0,
+      12
+    ],
+    [
+      0,
+      13
+    ]
+  ],
+  "timing_scope": "testbench cycles include deliberate source and sink stalls; not unstalled kernel performance",
+  "input_sha256": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
+  "expected_sha256": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192",
+  "log_sha256": "167f4a686c81953939828e7a71d1c5c1de0ea659cbb008ba0fc7ba3e57b0b06e",
+  "sway_records_sha256": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+  "frames": [
+    {
+      "frame": 0,
+      "input_first_cycle": 2,
+      "input_last_cycle": 363,
+      "output_first_cycle": 25235,
+      "output_last_cycle": 33489,
+      "first_input_to_last_output_cycles": 33487,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 1,
+      "input_first_cycle": 364,
+      "input_last_cycle": 725,
+      "output_first_cycle": 41027,
+      "output_last_cycle": 49281,
+      "first_input_to_last_output_cycles": 48917,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 2,
+      "input_first_cycle": 726,
+      "input_last_cycle": 10757,
+      "output_first_cycle": 56819,
+      "output_last_cycle": 65072,
+      "first_input_to_last_output_cycles": 64346,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 3,
+      "input_first_cycle": 10758,
+      "input_last_cycle": 26549,
+      "output_first_cycle": 72612,
+      "output_last_cycle": 80866,
+      "first_input_to_last_output_cycles": 70108,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 4,
+      "input_first_cycle": 26550,
+      "input_last_cycle": 42341,
+      "output_first_cycle": 88403,
+      "output_last_cycle": 96656,
+      "first_input_to_last_output_cycles": 70106,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 5,
+      "input_first_cycle": 42342,
+      "input_last_cycle": 58133,
+      "output_first_cycle": 104195,
+      "output_last_cycle": 112448,
+      "first_input_to_last_output_cycles": 70106,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 6,
+      "input_first_cycle": 58134,
+      "input_last_cycle": 73925,
+      "output_first_cycle": 119987,
+      "output_last_cycle": 128241,
+      "first_input_to_last_output_cycles": 70107,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 7,
+      "input_first_cycle": 73926,
+      "input_last_cycle": 89717,
+      "output_first_cycle": 135779,
+      "output_last_cycle": 144032,
+      "first_input_to_last_output_cycles": 70106,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 8,
+      "input_first_cycle": 89718,
+      "input_last_cycle": 105509,
+      "output_first_cycle": 151571,
+      "output_last_cycle": 159825,
+      "first_input_to_last_output_cycles": 70107,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 9,
+      "input_first_cycle": 105510,
+      "input_last_cycle": 121301,
+      "output_first_cycle": 167363,
+      "output_last_cycle": 175617,
+      "first_input_to_last_output_cycles": 70107,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 10,
+      "input_first_cycle": 121302,
+      "input_last_cycle": 137093,
+      "output_first_cycle": 183155,
+      "output_last_cycle": 191408,
+      "first_input_to_last_output_cycles": 70106,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 11,
+      "input_first_cycle": 137094,
+      "input_last_cycle": 152885,
+      "output_first_cycle": 198947,
+      "output_last_cycle": 207201,
+      "first_input_to_last_output_cycles": 70107,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 12,
+      "input_first_cycle": 152886,
+      "input_last_cycle": 168678,
+      "output_first_cycle": 214739,
+      "output_last_cycle": 222993,
+      "first_input_to_last_output_cycles": 70107,
+      "sink_pause_cycles": 8192
+    },
+    {
+      "frame": 13,
+      "input_first_cycle": 168679,
+      "input_last_cycle": 184471,
+      "output_first_cycle": 230531,
+      "output_last_cycle": 238784,
+      "first_input_to_last_output_cycles": 70105,
+      "sink_pause_cycles": 8192
+    }
+  ],
+  "backend": "verilator",
+  "verilator_version": "Verilator 5.053 devel rev v5.052-119-g014c9820d (mod)",
+  "build_seconds": 46.09957020299771,
+  "runtime_seconds": 1.9399220999985118,
+  "build_command": [
+    "/workspace/scratch/dc01b9aab8c7/toolchains/oss-cad-suite/bin/verilator",
+    "--binary",
+    "--timing",
+    "--top-module",
+    "main",
+    "-Wno-fatal",
+    "-j",
+    "4",
+    "-DSWAY_ROM_BEHAVIORAL",
+    "-DTOP=mkTbSway",
+    "-I.",
+    "-y",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog",
+    "+libext+.v",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/main.v",
+    "mkTbSway.v",
+    "SwayCoeffRom.v"
+  ],
+  "run_command": [
+    "/workspace/scratch/dc01b9aab8c7/sway/hw/verilator/run-6as1qxb4/obj_dir/Vmain"
+  ],
+  "working_directory": "/workspace/scratch/dc01b9aab8c7/sway/hw/verilator/run-6as1qxb4",
+  "source_paths": {
+    "mkTbSway.v": "/workspace/scratch/dc01b9aab8c7/sway/hw/verilator/run-ltlggjfm/mkTbSway.v",
+    "SwayCoeffRom.v": "/workspace/scratch/dc01b9aab8c7/sway/hw/rtl/SwayCoeffRom.v",
+    "SwayCoeffRomInit.vh": "/workspace/scratch/dc01b9aab8c7/sway/hw/generated/SwayCoeffRomInit.vh",
+    "generated/test_input.hex": "/workspace/scratch/dc01b9aab8c7/sway/hw/generated/test_input.hex",
+    "generated/test_expected.hex": "/workspace/scratch/dc01b9aab8c7/sway/hw/generated/test_expected.hex"
+  },
+  "source_sha256": {
+    "mkTbSway.v": "7b5bd83770456fba5190b8ff02e1edac085d57a0392488e06cb1a9375255695c",
+    "SwayCoeffRom.v": "dd8de8834ed3b4a619f61ffe6a93792006a28629a9b7ce5b45c5cf3dff7ac4ae",
+    "SwayCoeffRomInit.vh": "8f944b4e1863801b69f90cc4df9139fb1b107020e7b8af727001ec2610a3bc4f",
+    "generated/test_input.hex": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
+    "generated/test_expected.hex": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192"
+  },
+  "bsc_runtime_sha256": {
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/FIFO1.v": "407cdce6b37ade0beb22d59a308d05a5c29a0bcb98f29d028505dd08086b1e34",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/FIFO2.v": "bae0481cc69aabde2254b50e3d80bf0a7b6af6ccf27cd981c4b1154c7a848384",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/RegFile.v": "7de616d2aff8b2411994abadf3876aba8bd64e753741c73d2c0ea19fff0a7db8",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/RegFileLoad.v": "71555757cdf742b318e363d9c7cc68f9d35b51db7a7b02c88a39e9d238a6fe9e",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/ResetToBool.v": "421b9ef46f2f90fa27f9d0d3a6e539a9b1ab3f57ae1ef8be50df167425c3f22c",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/SizedFIFO.v": "81c228fe5eac8ef039c61eb484bbe83497bc6847bee30d8778a2df880cc991d8",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/SyncResetA.v": "b950607e990775635067ca060368f00617b54858c6433e7de788e95357612a8f",
+    "/workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog/main.v": "181132cca24dd4af60ec664a7a51579d265de7af2865e1b1e84be3733b5c9f16"
+  },
+  "runner_sha256": "ddb64a9e19166974d7c6196afcfbab7208e0ca63b90599bae85d311a5af7051f",
+  "checker_sha256": "ee34de1cba3bdc25635dbc5b232a56ae63f1b974dcd972892e15b431ad1fbfd6",
+  "executable_sha256": "5e8a8440c1c58f05684a1cb3fc816f1b772c544202653490b8169ed4e9e577da",
+  "build_log_sha256": "fb928f369ef6fa0e09ef907a60a58e3e25997b8ccb319facb0ea660d92bccc4c",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "native_coefficient_banks": 44,
+  "clock_reset_model": "Unmodified BSC Verilog/main.v and runtime with --timing",
+  "model_scope": "Generated kernel Verilog with native coefficient BVI behavioral ROM; two-state simulation. Icarus four-state verification, FPGA primitive reset tests and physical timing are distinct checks."
+}

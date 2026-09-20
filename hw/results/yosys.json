@@ -3,52 +3,50 @@
    "invocation": "stat -json -top mkTop ",
    "modules": {
       "\\mkTop": {
-         "num_wires":         74739,
-         "num_wire_bits":     178296,
-         "num_pub_wires":     74739,
-         "num_pub_wire_bits": 178296,
+         "num_wires":         42160,
+         "num_wire_bits":     129211,
+         "num_pub_wires":     42160,
+         "num_pub_wire_bits": 129211,
          "num_ports":         4,
          "num_port_bits":     11,
          "num_memories":      0,
          "num_memory_bits":   0,
          "num_processes":     0,
-         "num_cells":         117302,
+         "num_cells":         82426,
          "num_submodules":       0,
          "num_cells_by_type": {
-            "CCU2C": 8506,
-            "DP16KD": 4,
+            "CCU2C": 4534,
+            "DP16KD": 49,
             "EHXPLLL": 1,
-            "L6MUX21": 962,
-            "LUT4": 49454,
-            "MULT18X18D": 113,
-            "PFUMX": 7475,
-            "TRELLIS_DPR16X4": 252,
-            "TRELLIS_FF": 50535
+            "L6MUX21": 33,
+            "LUT4": 29383,
+            "PFUMX": 1474,
+            "TRELLIS_DPR16X4": 501,
+            "TRELLIS_FF": 46451
          }
       }
    },
       "design": {
-         "num_wires":         74739,
-         "num_wire_bits":     178296,
-         "num_pub_wires":     74739,
-         "num_pub_wire_bits": 178296,
+         "num_wires":         42160,
+         "num_wire_bits":     129211,
+         "num_pub_wires":     42160,
+         "num_pub_wire_bits": 129211,
          "num_ports":         4,
          "num_port_bits":     11,
          "num_memories":      0,
          "num_memory_bits":   0,
          "num_processes":     0,
-         "num_cells":         117302,
+         "num_cells":         82426,
          "num_submodules":       0,
          "num_cells_by_type": {
-            "CCU2C": 8506,
-            "DP16KD": 4,
+            "CCU2C": 4534,
+            "DP16KD": 49,
             "EHXPLLL": 1,
-            "L6MUX21": 962,
-            "LUT4": 49454,
-            "MULT18X18D": 113,
-            "PFUMX": 7475,
-            "TRELLIS_DPR16X4": 252,
-            "TRELLIS_FF": 50535
+            "L6MUX21": 33,
+            "LUT4": 29383,
+            "PFUMX": 1474,
+            "TRELLIS_DPR16X4": 501,
+            "TRELLIS_FF": 46451
          }
       }
 }

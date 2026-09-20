@@ -1,5 +1,6 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
+  "candidate": "v10",
   "blueyosys": {
     "repository": "https://github.com/SeMinLim/blueyosys",
     "commit": "3ea0afea56c7c73b8ed59ec0edd256c409466788"
@@ -8,7 +9,9 @@
     "bsc": "2026.01 (build 9bd39e6f)",
     "yosys": "0.69+75 (f0b945f63-dirty)",
     "nextpnr_ecp5": "0.11.1-30-g3e53a0bf",
-    "iverilog": "14.0 (devel) (s20260301-474-g5591c2dde-dirty)"
+    "iverilog": "14.0 (devel) (s20260301-474-g5591c2dde-dirty)",
+    "ecppack": "1.4-82-g3afe7b5",
+    "verilator": "Verilator 5.053 devel rev v5.052-119-g014c9820d (mod)"
   },
   "configuration": {
     "model_dimension": 20,
@@ -29,23 +32,100 @@
     "target_kernel_clock_mhz": 100
   },
   "source_sha256": {
-    "hw/Makefile": "8e7bc4ff7505ec38b0b006bc5da2c2e5ea518b3d5a3f0bed12c61aef42354940",
-    "hw/bsv/SwayBaseline.bsv": "7aa997e2a1e679273138cc720e0c47ce8364e0599897e488c9ab06ecb092865c",
-    "hw/bsv/SwayBlock.bsv": "2c2653e70dd58f094be0348d392b6e37711bcc0750344253ac117b484d70fdf4",
+    "hw/Makefile": "bafeee4ecab415b14fd49371b22354841cb55c6cf8d9a9380e3bd8999b15de1e",
+    "hw/bsv/SwayBaseline.bsv": "5392f818042330cfa5f7e882cab48df49df0a3971deb46ae5bed81a21691dccc",
+    "hw/bsv/SwayBlock.bsv": "0eeac6ce065a28b2b719ea6b14199f3f9f8349c5b10917bc3cca766691bdbd9f",
     "hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
-    "hw/bsv/SwayLinear.bsv": "18400370202cfb9f30ba79591fb9f57d8af1183aabe0832f7ef3789495274ae9",
-    "hw/bsv/SwayNorm.bsv": "db60df465acb0ebc0c21cc60d000b1a375a089b4d0bb6d4070f27e1b88bb1653",
-    "hw/bsv/SwayScan.bsv": "c53a29328e263930a5d19acb802f6a941d3fe2f22c708947a78fcf69f2ab1964",
-    "hw/bsv/SwayTypes.bsv": "5bc14e0d45f364956f1253d98377eb458b11ca287326e089c62b597118f05c97",
-    "hw/bsv/Top.bsv": "23419a90b878894663151e600ad87afa92f0c4d2e824c778210219f432e2df45",
-    "hw/sim/TbSway.bsv": "1c64af40cf5031e4210363e6fb07afe1d0969d82e516ee2cc263dfa5fd2823a3",
-    "hw/reference/check_sim.py": "8ad7c2fc3956453b71d2f997505124fffea34f04b22affbb2b1054217fbd56ab",
-    "hw/reference/generate.py": "2a43d10650d36897d043f32548c4338e19ee682e4a799a57cafbefa75333fb29",
-    "hw/reference/integer_model.py": "4eca544d80f1e5d625782575915bf0a474340c4d37fb19eb36752aab85df30e0",
+    "hw/bsv/SwayCoeffRom.bsv": "7ccb02126476af94269e682a7576e5591224702398154a36cca95406f9982ee7",
+    "hw/bsv/SwayHeadLinear.bsv": "2d562abd5a5844911135b74cf34bf2702992234796c1f43d524b3e32cb2de908",
+    "hw/bsv/SwayLinear.bsv": "dc51bbd6ca49ff88692c9cea28ae6b67d1267a16f89915758c3b01c43543818e",
+    "hw/bsv/SwayLookup.bsv": "3ebdb3a553b2babba840a304a0e48a0a7690a8dae289050539d9f368d92464ae",
+    "hw/bsv/SwayNorm.bsv": "8ab8daea1ac6c7db6cb303eb8e7cf0ea49a3be1defa64593cd8149b3ccd41686",
+    "hw/bsv/SwayReset.bsv": "73de2c88ceb119d24ad4dd335538923f5f2484048368d26d1c17e9b15a167f7c",
+    "hw/bsv/SwayScan.bsv": "936c1215e9573e56574055d789b24c81c3ea24a86687c764c35f405e96f80409",
+    "hw/bsv/SwayTypes.bsv": "26a5fca585f7297de5e88566544c7016fe81ba8fe64cc35f6347e6b1d9d0f8c0",
+    "hw/bsv/Top.bsv": "968f214eb4c3ace35361cbefb6bac8c197bc62de7207a596ab8547e404241147",
     "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
-    "hw/generated/SwayParameters.bsv": "da05d827d85ceafa3b0c6c794ee02fb6ef07818c03fefa1712e1d7af6d54e817"
+    "hw/generated/SwayCoeffRomInit.vh": "8f944b4e1863801b69f90cc4df9139fb1b107020e7b8af727001ec2610a3bc4f",
+    "hw/generated/SwayParameters.bsv": "7ed824b6d8ad86e50a0d7c217bcf17d51b92dbeac3152a4ed3da3be1ba292689",
+    "hw/generated/linear_l0_lane0.hex": "4daeba329aada85b91a65b22e300cdfd03d4c8c1a415a1dc33530a72110494e3",
+    "hw/generated/linear_l0_lane1.hex": "9d98a00ae8a05f02e90c7af9bf45f01ad150c9503f1af42c07d5e90bc73f4558",
+    "hw/generated/linear_l0_lane2.hex": "8e332292097bfc30d7230026974c54e7d67ec4201b77ddcf067c00363233e2ea",
+    "hw/generated/linear_l0_lane3.hex": "ac0c6f0d5cb67a30a3ed6891fdce329c47ed7f009c4126b00d1aabd125b68a1d",
+    "hw/generated/linear_l10_lane0.hex": "72158b488f58298f4c25d58694df237c2dbad13667aaa1f927b2eb7a14c2269d",
+    "hw/generated/linear_l10_lane1.hex": "94a1655251c80163a56997711afc75282e484591d75a93dc8ccb0ff9a8311752",
+    "hw/generated/linear_l10_lane2.hex": "7c43fcdb186387c1caf7be15a142d8fd09e3e2317db7cad844c322cf3bc4be82",
+    "hw/generated/linear_l10_lane3.hex": "f66741138e8bd42b0056ffd1c3620ad2042ee0aa451d04f24f141b384d6b3423",
+    "hw/generated/linear_l1_lane0.hex": "dbadce3dff8aefd0aba9b12a7f95bf2a9a506334a9ee68abd1fd468be522ca98",
+    "hw/generated/linear_l1_lane1.hex": "270658e151c028b9172c0eb3f04f5e1bfdd1f5565b13b2ef07014cfcbd89b953",
+    "hw/generated/linear_l1_lane2.hex": "3b494ef6224cdfb1dc3fcc1dc260790565b5285c2cc351ad0435d9dd4d1a62c2",
+    "hw/generated/linear_l1_lane3.hex": "2bf67c479e04299c5905c8c464c091a0c6b8692c3aabd6de3f04b565de6a3c8d",
+    "hw/generated/linear_l2_lane0.hex": "639ed91f79bdd25da91e7b98b92ff6d4c0e012635d46dbebfe393cd51764ed05",
+    "hw/generated/linear_l2_lane1.hex": "c1364512a478755b29eb7ce816acc13a4b13ea318318ebe649053b916088764e",
+    "hw/generated/linear_l2_lane2.hex": "0a08afd265d94e7ed84cce01a8363eadc947297997f4e5d22f4d2044e210bbd4",
+    "hw/generated/linear_l2_lane3.hex": "888e7d57b022f003c9b5c5bf14f0554bde352a042ad733920a3b3267636e727b",
+    "hw/generated/linear_l3_lane0.hex": "66c3ecd1ca899c551453fc0550bbf92d602baa75e8caa87c0629ea784c932560",
+    "hw/generated/linear_l3_lane1.hex": "6a835e2b5ddc085390a9b66ad079e0902dc2f3e6bdd12ceec5714762181ca241",
+    "hw/generated/linear_l3_lane2.hex": "3036e907c7ff770d2cfc00da00322a8cdfe0815ea66b91a9e5c7e3180a36bcb1",
+    "hw/generated/linear_l3_lane3.hex": "446eaba09a0125149564499af846a92782d631f28fa46ce95c987f85f9a0f686",
+    "hw/generated/linear_l4_lane0.hex": "987468e1de90b1b9b5a745da33af9fc4ad4f19226080065559d490df432c87eb",
+    "hw/generated/linear_l4_lane1.hex": "4f0557969ddcc39db97d065d810209376458ce0e39aba976c7e03af628cd9705",
+    "hw/generated/linear_l4_lane2.hex": "8c70d07c2057480321a9d459528b17790c747a40aa23333932f6a9b4a6e01235",
+    "hw/generated/linear_l4_lane3.hex": "5ca2c7fbcd30db25a549239fd4c9bb6840e58ac7e862af34ccdf7f656b94a5d0",
+    "hw/generated/linear_l5_lane0.hex": "a20208325df63146ddefd44fdbf6e153edf535daa965aebcfff906bdf359bfc4",
+    "hw/generated/linear_l5_lane1.hex": "4cd4087aaea01f52dd574e85b864636b665fb770e8542a91c3c737feed2732fd",
+    "hw/generated/linear_l5_lane2.hex": "4e1f2779685f941324662ac098bc75a184056452806e4d73410e1a5309043f25",
+    "hw/generated/linear_l5_lane3.hex": "6d642b4141c88ecc0cf3585b465523535dca323650ce4667b7e881e5c2b5d698",
+    "hw/generated/linear_l6_lane0.hex": "8c963e2576423c8d4e68e8ca46c0c1f214d2b89bc76d6579108a6b24c8530c0f",
+    "hw/generated/linear_l6_lane1.hex": "d4773022284a57ff13e019a7dd50b8e362cd42b366952f6636d474609e7f0b7f",
+    "hw/generated/linear_l6_lane2.hex": "d2f7251f24d9147812d78f70786dc7176a3d53cc883fa60587d7ddfe31db8d77",
+    "hw/generated/linear_l6_lane3.hex": "02b10eec1007e8a603cb7ddcf857379905517abb51c4eb14c8334d2ae60b353d",
+    "hw/generated/linear_l7_lane0.hex": "b4a4c99032f3049ac9aa83ff251fa0ad72057d0cf007d1ac77e50cded3103ef0",
+    "hw/generated/linear_l7_lane1.hex": "903449e7b929f44e4fa74704cb28b868b222da84aad993b75c40260b11bc49b8",
+    "hw/generated/linear_l7_lane2.hex": "52465946a519723dadde2b24aec338c01b457d7be17220f92657904d6ce3bf2b",
+    "hw/generated/linear_l7_lane3.hex": "3c7442e3cabaf27e53be4e3873939585cee41f339bae1ac59be3435198804c78",
+    "hw/generated/linear_l8_lane0.hex": "173c8026661bfa9c59bdca78f15dad09620be7c6f350ab7ca760464351334d45",
+    "hw/generated/linear_l8_lane1.hex": "edf8fb66d014699742e924bd075f9720540ff2c2a574b55383d214ff2099c6a5",
+    "hw/generated/linear_l8_lane2.hex": "d1afcbe194791801b7cb3345c599643c1572732a5d2fc8c0228b09ba534ea09f",
+    "hw/generated/linear_l8_lane3.hex": "572ad9007360170b5be94822b629f569b2b5afc546bc767895f1bbe83908f6c5",
+    "hw/generated/linear_l9_lane0.hex": "ad8a08873627da8b6622e9d1865d1638f5152c5662a68c1b974e5fde1c57ce29",
+    "hw/generated/linear_l9_lane1.hex": "0a067d7dfa37255ece16aea4c15873ce39451b7f599b2449af245ea6f138c3be",
+    "hw/generated/linear_l9_lane2.hex": "2dc14699020797ce99d9524d397da18740566a3f2619d76adce0803a764465e6",
+    "hw/generated/linear_l9_lane3.hex": "cd1df13d901493213d9106bd25af81d8300294a4e59d28cb7cb738624e9310f5",
+    "hw/generated/reference_report.json": "7125965034d15d4d73f7ac5bdaab50a8e1734cfc0aeabd73b9818ab7f19104da",
+    "hw/generated/test_expected.hex": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192",
+    "hw/generated/test_input.hex": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
+    "hw/reference/check_control_replication.py": "279c8c87164e2fd6a37aa9a9585b49b9704860e30fa688c4b38acfa8a53bc455",
+    "hw/reference/check_native_rom.py": "a073b5e6210fbaf76b39f4f84c5cbdd5a6a49be2cf7757f5ca75b1a2bc30a961",
+    "hw/reference/check_sim.py": "ee34de1cba3bdc25635dbc5b232a56ae63f1b974dcd972892e15b431ad1fbfd6",
+    "hw/reference/check_timing.py": "3e05099ca0b10a3abe377e67b49700952ae4e0bb8546fdf0ee07e53a2c45dda6",
+    "hw/reference/generate.py": "a3f606b5bc3754654fb757b6997cf714fd0272f97af1fdf79fdc684760438d4b",
+    "hw/reference/generate_native_rom.py": "1082949014887c69ae4fb02042b7c60b4246fdba3046bcae783d4287acd96567",
+    "hw/reference/integer_model.py": "4eca544d80f1e5d625782575915bf0a474340c4d37fb19eb36752aab85df30e0",
+    "hw/reference/replicate_controls.py": "6a5a93ae31d2ccbc1a9f6d418e719a831c4a60b7ef39730e8cf5c1caebd51504",
+    "hw/reference/run_verilator.py": "ddb64a9e19166974d7c6196afcfbab7208e0ca63b90599bae85d311a5af7051f",
+    "hw/reference/test_check_timing.py": "6542f14a549db0a1020a506da92caf1c585897704043feaa6a791885335dcf14",
+    "hw/reference/test_control_replication.py": "b9f5fff141277da073202e28930d4bae72264d8ee87654e8ee23a169f3cd5a56",
+    "hw/rtl/SwayCoeffRom.v": "dd8de8834ed3b4a619f61ffe6a93792006a28629a9b7ce5b45c5cf3dff7ac4ae",
+    "hw/rtl/SwayReset.v": "6850c175449b41206167176b506562b6ca6e2bad51a5a5d333860f02e5ebd60d",
+    "hw/sim/TbLocalReset.bsv": "53b970ef3d7ee9afdd807665580ffcaf86d38f33bacee110c6c72cb50a06e6db",
+    "hw/sim/TbSway.bsv": "1c64af40cf5031e4210363e6fb07afe1d0969d82e516ee2cc263dfa5fd2823a3",
+    "hw/sim/TestLocalReset.v": "1c08aa2037833f4bb4366908b61ad544585bdea2908f8647867aa67f6aece6a4"
   },
+  "candidate_source_snapshot_sha256": "078e970d6a80152c7505348b15176147e4cce502345d6afa53d45d3227d6d8d9",
+  "design_build_candidate": "v9",
+  "design_build_snapshot_sha256": "0937a979df2d267e0b33731831a4a76f3395e8d48a296ee1b1eb3b42ec4c6fc7",
   "simulation": {
+    "candidate": "v9",
+    "source_snapshot_sha256": "0937a979df2d267e0b33731831a4a76f3395e8d48a296ee1b1eb3b42ec4c6fc7",
+    "reused_for_routing_candidate": true,
+    "reuse_proof": {
+      "identical_design_source_sets_and_hashes": true,
+      "design_source_files_checked": 66,
+      "simulation_makefile_sha256": "3dc8d1a452d9ceae4f2776f349d31b6e1d584248b19a8b3b238ff4cde51ba121",
+      "routing_makefile_sha256": "bafeee4ecab415b14fd49371b22354841cb55c6cf8d9a9380e3bd8999b15de1e",
+      "makefile_change": "Added only --tmg-ripup to BOARD_PNR_FLAGS; complete prior-file hash reconstructed and verified."
+    },
     "bluesim": {
       "status": "pass",
       "report": "hw/results/bluesim.json",
@@ -54,78 +134,174 @@
     "iverilog": {
       "status": "pass",
       "report": "hw/results/iverilog.json",
-      "command": "make -C hw runsim SIM_BACKEND=iverilog"
+      "working_directory": "hw",
+      "commands": [
+        "set -e -o pipefail; vvp -i -N verilator-rtl/bsim 2> /workspace/scratch/dc01b9aab8c7/v9_iverilog_sim.stderr.log | tee /workspace/scratch/dc01b9aab8c7/v9_iverilog_sim.log",
+        "python3 reference/check_sim.py /workspace/scratch/dc01b9aab8c7/v9_iverilog_sim.log --output results/iverilog.json --backend iverilog --stderr /workspace/scratch/dc01b9aab8c7/v9_iverilog_sim.stderr.log",
+        "cp /workspace/scratch/dc01b9aab8c7/v9_iverilog_sim.log results/iverilog.log"
+      ],
+      "reproduction_command": "make -C hw runsim SIM_BACKEND=iverilog BSIM_DIR=\"$PWD/hw/iverilog\"",
+      "generated_testbench_sha256": "7b5bd83770456fba5190b8ff02e1edac085d57a0392488e06cb1a9375255695c",
+      "compiled_testbench_sha256": "251fc08ab846745b1d05ddb333270cdeac92ba455abdce1a5a68cae493755a6b",
+      "coefficient_rom_model": "Native BVI interface with an explicit two-cycle behavioral model of ECP5 OUTREG ROM; native INITVAL/port configuration audited separately after synthesis.",
+      "semantics": "Four-state event-driven generated-Verilog simulation."
+    },
+    "verilator": {
+      "status": "pass",
+      "report": "hw/results/verilator.json",
+      "command": "python3 hw/reference/run_verilator.py --rtl /workspace/scratch/dc01b9aab8c7/sway/hw/verilator/run-ltlggjfm/mkTbSway.v --build-dir /workspace/scratch/dc01b9aab8c7/sway/hw/verilator --results-dir /workspace/scratch/dc01b9aab8c7/sway/hw/results --bsc-runtime /workspace/scratch/dc01b9aab8c7/toolchains/bsc-2026.01-ubuntu-24.04/lib/Verilog --jobs 4",
+      "reproduction_command": "make -C hw check-verilator",
+      "generated_testbench_sha256": "7b5bd83770456fba5190b8ff02e1edac085d57a0392488e06cb1a9375255695c",
+      "semantics": "Generated kernel Verilog with native coefficient BVI behavioral ROM; two-state simulation. Icarus four-state verification, FPGA primitive reset tests and physical timing are distinct checks."
     },
     "frames_per_backend": 14,
     "outputs_per_backend": 798,
-    "identical_transcript_sha256": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
-    "scope": "Fixed-checkpoint fixtures with source bubbles, prolonged sink stalls, and repeated frames. Full-test accuracy is evaluated by the integer software reference, not full-test RTL simulation."
+    "finish_cycle": 240833,
+    "identical_sway_records_sha256": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+    "raw_log_sha256": {
+      "bluesim": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+      "iverilog": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+      "verilator": "167f4a686c81953939828e7a71d1c5c1de0ea659cbb008ba0fc7ba3e57b0b06e"
+    },
+    "scope": "Fixed-checkpoint fixtures with source bubbles, prolonged sink stalls and repeated frames. Normalized SWAY records include scalar values and every event cycle; raw diagnostics are retained. Full-test accuracy is evaluated by the integer software reference, not full-test RTL simulation."
+  },
+  "arithmetic": {
+    "status": "pass",
+    "report": "hw/results/arithmetic.json",
+    "note": "Actual BSV requant/clip boundary verification; matching source hash checked."
+  },
+  "reset": {
+    "status": "pass",
+    "report": "hw/results/reset.json",
+    "command": "make -C hw check-reset",
+    "packed_structure_report": "hw/results/reset_structure.json",
+    "distribution": "Equal-depth, separately preserved two-FF leaves under the synchronized root; ordinary fabric routing, not global reset nets.",
+    "compiler_note": "G0043 warnings at sibling leaf interfaces reflect distinct BSV reset objects. Leaves share the same root/clock/release depth; public inputs are guarded by leaf readiness."
   },
   "synthesis": {
+    "candidate": "v9",
+    "reused_for_routing_candidate": true,
+    "preparation_commands": [
+      "make -C hw netlist",
+      "python3 hw/reference/replicate_controls.py --input hw/build/mkTop.json --output hw/build/mkTop.physical.json --manifest hw/results/control_replication.json --top mkTop --cap 64",
+      "python3 hw/reference/check_control_replication.py --input hw/build/mkTop.json --output hw/build/mkTop.physical.json --manifest hw/results/control_replication.json --report hw/results/control_replication_audit.json"
+    ],
     "status": "pass",
     "report": "hw/results/yosys.json",
     "cells": {
-      "CCU2C": 8506,
-      "DP16KD": 4,
+      "CCU2C": 4534,
+      "DP16KD": 49,
       "EHXPLLL": 1,
-      "L6MUX21": 962,
-      "LUT4": 49454,
-      "MULT18X18D": 113,
-      "PFUMX": 7475,
-      "TRELLIS_DPR16X4": 252,
-      "TRELLIS_FF": 50535
+      "L6MUX21": 33,
+      "LUT4": 29383,
+      "PFUMX": 1474,
+      "TRELLIS_DPR16X4": 501,
+      "TRELLIS_FF": 46451
+    },
+    "netlist_sha256": "bdc530f259c8df7cdbedc8c41d24c8df0a214c580bfede8d4c69adc6024fb0da",
+    "physical_netlist_sha256": "c49f124beb6a9ed184596bf06e414c2db2763f4bdb113a88556ce8b31a661d0e",
+    "generated_top_sha256": "f737942c5ccbdb5de6f9f4c36f29e7be368e4dce58b3c65f3dfe8b65d9e51630",
+    "multiplier_mapping": "Standard synth_ecp5 -nodsp; registered partial products in LUT fabric.",
+    "native_coefficient_rom": {
+      "status": "pass",
+      "report": "hw/results/native_rom.json"
+    },
+    "control_replication": {
+      "report": "hw/results/control_replication.json",
+      "audit": "hw/results/control_replication_audit.json",
+      "fanout_cap": 64,
+      "cloned_cell_types": {
+        "LUT4": 523,
+        "PFUMX": 36
+      },
+      "transform_sha256": "6a5a93ae31d2ccbc1a9f6d418e719a831c4a60b7ef39730e8cf5c1caebd51504",
+      "auditor_sha256": "279c8c87164e2fd6a37aa9a9585b49b9704860e30fa688c4b38acfa8a53bc455",
+      "scope": "Exact combinational duplication; sequential state and cycle boundaries unchanged. Registered driver boundaries remain unchanged and are explicitly recorded in the manifest."
     }
   },
   "place_and_route": {
-    "command": "make -C hw synth",
-    "make_exit_code": 130,
+    "input_preparation_candidate": "v9",
+    "resynthesis_for_routing_candidate": false,
+    "preparation_note": "Reused the unchanged netlist synthesized and independently audited during v9; the audited physical SHA256 was verified before launch and again during finalization.",
+    "command": "nextpnr-ecp5 --json hw/build/mkTop.physical.json --textcfg hw/build/mkTop.config --lpf hw/build/ulx3s.lpf --report hw/build/mkTop.nextpnr.json --log hw/build/mkTop.nextpnr.log --85k --package CABGA381 --router router1 --placer-heap-cell-placement-timeout 0 --tmg-ripup --write ../timing_route_v10/routed.json --sdf ../timing_route_v10/routed.sdf",
+    "timing_ripup_enabled": true,
+    "working_directory": ".",
+    "reproduction_command": "make -C hw synth",
+    "completion_evidence": "Completed routing marker and Program finished normally in the checked nextpnr log.",
     "placement_status": "completed",
-    "routing_status": "stopped_before_completion",
-    "stop_reason": "Full routing was optional for the requested baseline implementation; functional simulation, synthesis and legal placement completed, while the placement timing estimate already missed the default 100 MHz target.",
-    "report": "hw/results/nextpnr_partial.log",
+    "routing_status": "completed",
+    "report": "hw/results/nextpnr.json",
+    "log": "hw/results/nextpnr.log",
+    "timing_gate": "hw/results/timing.json",
+    "constraint_sha256": "93db29a950de4064ed124a09b8175ea9034bab8c6ef50f849167a42bd04c8bea",
+    "routed_netlist_sha256": "340214c80057e90e85e0d5b11fb1749956703044d56deb4a4d9061af73286b43",
+    "routed_sdf_sha256": "217ea657ff418673e797072bce4e8c644dae5a53c5cbfaaa7680c399cb812df5",
+    "routed_configuration_sha256": "0388819600cb09f35e84414101594d6485da2b7aec2e21f1c06d611d1ab06d6d",
     "packed_resources": {
       "TRELLIS_COMB": {
-        "used": 70060,
-        "available": 83640
+        "available": 83640,
+        "used": 44898
       },
       "TRELLIS_FF": {
-        "used": 50535,
-        "available": 83640
+        "available": 83640,
+        "used": 46451
       },
       "MULT18X18D": {
-        "used": 113,
-        "available": 156
+        "available": 156,
+        "used": 0
       },
       "DP16KD": {
-        "used": 4,
-        "available": 208
+        "available": 208,
+        "used": 49
       }
     },
     "timing": {
-      "stage": "post-placement estimate, before routing completion",
-      "kernel_target_mhz": 100.0,
-      "kernel_estimate_mhz": 18.4,
-      "kernel_constraint_met": false,
-      "uart_target_mhz": 25.0,
-      "uart_estimate_mhz": 115.13,
-      "scope": "These are placement timing estimates, not routed Fmax or measured board performance."
+      "CLK_clk_25mhz": {
+        "net": "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+        "achieved_mhz": 108.96807098388672,
+        "constraint_mhz": 25.0
+      },
+      "clocks_coreReset.CLK": {
+        "net": "$glbnet$clocks_coreReset.CLK",
+        "achieved_mhz": 101.49193572998047,
+        "constraint_mhz": 100.0
+      }
     },
-    "constraint_notes": "Pinned board LPF references unused pll_clk_100mhz/125mhz names. nextpnr derived the actual core clock constraint as 100.0 MHz from the instantiated PLL."
+    "constraint_notes": "Pinned board LPF references unused pll_clk_100mhz/125mhz names. nextpnr derives the actual core clock as 100 MHz from the PLL. No timing-allow-fail, reduced clock constraint or additional false-path exception was used."
+  },
+  "bitstream": {
+    "status": "generated",
+    "path": "hw/results/sway_mars_ulx3s85f.bit",
+    "sha256": "2c2e01cedd834c95b2bd93d81f9a2ea0a68d92c1d744a44d0bab3259a59818dd",
+    "bytes": 2041307,
+    "target": "ULX3S-85F / LFE5U-85F / CABGA381",
+    "idcode": "0x41113043"
   },
   "board_test": {
     "status": "not_run"
   },
   "evidence_sha256": {
-    "hw/results/bluesim.json": "ff29e96c2397106c3a3828fbc6d30a18d2f2eb8b12e3237d92d90067ef895245",
-    "hw/results/bluesim.log": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
-    "hw/results/iverilog.json": "24be32e288aad4d15d3d93e8545dffced0c4732b437b52165a81f0f544061d21",
-    "hw/results/iverilog.log": "8b1ed200a8471ec4c1e980b7c8b424dc992b1c5710ee9969e848caf743fef61f",
-    "hw/results/nextpnr_partial.log": "68597825fa42ac2bdd66cc872f39297d44db7324495bc0cbf33e90602b95c2d6",
-    "hw/results/yosys.json": "b7efe1d746d03a682f5047f98c340e2bf1619fd402371fb272911d4b4976f923",
-    "hw/results/yosys.rpt": "fc146f12c391e94778f8710c849b5c43f966e57cddef582e4fbcb0ada076cd75"
-  },
-  "bitstream": {
-    "status": "not_generated",
-    "reason": "Routing was stopped and 100 MHz timing closure is not established."
+    "hw/results/bluesim.json": "33883e200c866209d7dd5038ddf076b7489c5e94df253afeb0fe1f8d7366f3e0",
+    "hw/results/bluesim.log": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+    "hw/results/iverilog.json": "004c225436de924ad27752427bb037087eac6852d6b893cc0f728f324649114c",
+    "hw/results/iverilog.log": "8ec082345c286fc56cac3a154ff7f8c67c4cf1eebbb36f0e684c64c79d38ecf2",
+    "hw/results/iverilog.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "hw/results/verilator.json": "7d72b04ec556a3c4e10d70fcb21f86a0c84dd0169a8a0eb28a13ca5d4e03666f",
+    "hw/results/verilator.log": "167f4a686c81953939828e7a71d1c5c1de0ea659cbb008ba0fc7ba3e57b0b06e",
+    "hw/results/verilator.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "hw/results/verilator.build.log": "fb928f369ef6fa0e09ef907a60a58e3e25997b8ccb319facb0ea660d92bccc4c",
+    "hw/results/arithmetic.json": "54777471b81d4363b79ecf3d9486ef53987187f9aaab63b88fa6efc0535532a7",
+    "hw/results/reset.json": "96e9afc5b95c5e4a86ef26792ffbf1ab0b42c78fe5fee8bbfb87496a2037218a",
+    "hw/results/reset.log": "2a72333e6853853eb3a862c0f8782b83324832c1b35872710df5078319718c76",
+    "hw/results/reset_bluesim.log": "ad28a276a29eb0d9d02b733f4da2f20282bf5e6fe22032faeda58269bb5c8128",
+    "hw/results/reset_structure.json": "b4fa5d515397976464d0d5de9d5fb83cf9ac5f501987f4a8ec8f10da1c194939",
+    "hw/results/native_rom.json": "2c3e4707dbf0bd296cf78ef38410ab78ce23e592ff59933b2963fad164265789",
+    "hw/results/control_replication.json": "6f3266f508190180b840ebd900d014f885d9f0155dd70079ea81a8c703bf4733",
+    "hw/results/control_replication_audit.json": "d2a766fe92aacb1d73fc7fc06cf20c76cfc8edda23879dd5db6e1a2b979e744e",
+    "hw/results/nextpnr.json": "69a9736dbdcff0b120443703717b9142c2927cc4510d64ecbc2c3ea66fb9fdd8",
+    "hw/results/nextpnr.log": "0e80b223686ca83d1f07e5c1e454ed8b9c36ba1e77aa9941c682d240eea3a6bb",
+    "hw/results/yosys.json": "91ef46aaf6aa590bf8426b7c74be8e500eb1a6bf598ca53ce84d6e6332a38977",
+    "hw/results/yosys.rpt": "d95274736d74a020e59fdcfffb45a76405080c8f0f159d7ca3ab8278617d959b",
+    "hw/results/timing.json": "4702eea3a2ebd80cd41d73c226f29d6c2f8cf834c0a4a237f96d27d21392d6b4"
   }
 }

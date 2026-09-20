@@ -23,6 +23,13 @@ def read_hex(path: Path) -> list[int]:
 
 def check_log(log_path: Path, input_path: Path, expected_path: Path,
               backend: str, stderr_path: Path | None = None) -> dict:
+    evidence = {
+        "bluesim": "BSV Bluesim simulation",
+        "iverilog": "generated-Verilog simulation",
+        "verilator": "generated-Verilog simulation (Verilator, native coefficient BVI behavioral model)",
+    }
+    if backend not in evidence:
+        raise ValueError(f"Unsupported simulation backend: {backend}")
     inputs = read_hex(input_path)
     expected = read_hex(expected_path)
     if not inputs or len(inputs) % 320:
@@ -128,7 +135,7 @@ def check_log(log_path: Path, input_path: Path, expected_path: Path,
 
     return {
         "status": "pass",
-        "evidence": "generated-Verilog simulation" if backend == "iverilog" else "BSV Bluesim simulation",
+        "evidence": evidence[backend],
         "frames_checked": frames,
         "scalar_outputs_checked": len(expected),
         "input_words": len(inputs),
@@ -141,6 +148,9 @@ def check_log(log_path: Path, input_path: Path, expected_path: Path,
         "input_sha256": hashlib.sha256(input_path.read_bytes()).hexdigest(),
         "expected_sha256": hashlib.sha256(expected_path.read_bytes()).hexdigest(),
         "log_sha256": hashlib.sha256(log_path.read_bytes()).hexdigest(),
+        "sway_records_sha256": hashlib.sha256("".join(
+            line + "\n" for line in log_text.splitlines() if line.startswith("SWAY_")
+        ).encode()).hexdigest(),
         "frames": frame_results,
     }
 
@@ -152,7 +162,7 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=Path("generated/test_input.hex"))
     parser.add_argument("--expected", type=Path, default=Path("generated/test_expected.hex"))
     parser.add_argument("--output", type=Path, default=Path("results/simulation.json"))
-    parser.add_argument("--backend", choices=["bluesim", "iverilog"], default="bluesim")
+    parser.add_argument("--backend", choices=["bluesim", "iverilog", "verilator"], default="bluesim")
     parser.add_argument("--stderr", type=Path)
     args = parser.parse_args()
     if (args.log is None) == (args.log_option is None):

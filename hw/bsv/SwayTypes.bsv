@@ -58,11 +58,15 @@ function Int#(64) shiftRound(Int#(64) value, Integer fromExp, Integer toExp);
 endfunction
 
 function Int#(8) clip8(Int#(64) value);
-	return value > 127 ? 127 : (value < -128 ? -128 : truncate(value));
+	Bit#(64) bits = pack(value);
+	Bool fits = bits[63:7] == 0 || bits[63:7] == '1;
+	return fits ? truncate(value) : (bits[63] == 0 ? 127 : -128);
 endfunction
 
 function Int#(24) clip24(Int#(64) value);
-	return value > 8388607 ? 8388607 : (value < -8388608 ? -8388608 : truncate(value));
+	Bit#(64) bits = pack(value);
+	Bool fits = bits[63:23] == 0 || bits[63:23] == '1;
+	return fits ? truncate(value) : (bits[63] == 0 ? 8388607 : -8388608);
 endfunction
 
 function Int#(8) requant(Int#(64) value, Integer fromExp, Integer toExp);
@@ -72,18 +76,18 @@ function Int#(8) requant(Int#(64) value, Integer fromExp, Integer toExp);
 	end else begin
 		Integer shift = toExp - fromExp;
 		Int#(64) floorValue = value >> shift;
-		Bit#(64) remainder = pack(value) & fromInteger((2 ** shift) - 1);
-		Bit#(64) half = fromInteger(2 ** (shift - 1));
+		Bit#(64) valueBits = pack(value);
 		Bit#(64) quotientBits = pack(floorValue);
-		Bool increment = remainder > half || (remainder == half && quotientBits[0] == 1);
-		// Clamp before the increment. The remaining quotient fits in nine bits;
-		// arithmetic-floor rounding also handles negative ties without a wide negate.
-		if ( floorValue >= 127 ) result = 127;
-		else if ( floorValue <= -129 ) result = -128;
+		Bool sticky = (valueBits & fromInteger((2 ** (shift - 1)) - 1)) != 0;
+		Bool increment = valueBits[shift - 1] == 1 && (sticky || quotientBits[0] == 1);
+		Bool fits = quotientBits[63:7] == 0 || quotientBits[63:7] == '1;
+		// Sign-extension checks are reduction trees, not wide carry-chain compares.
+		// An out-of-range floor quotient saturates even after its possible +1.
+		if ( !fits ) result = quotientBits[63] == 0 ? 127 : -128;
+		else if ( quotientBits[7:0] == 8'h7f ) result = 127;
 		else begin
-			Int#(9) rounded = truncate(floorValue);
-			if ( increment ) rounded = rounded + 1;
-			result = truncate(rounded);
+			Bit#(8) rounded = quotientBits[7:0] + zeroExtend(pack(increment));
+			result = unpack(rounded);
 		end
 	end
 	return result;
