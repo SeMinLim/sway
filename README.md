@@ -156,3 +156,68 @@ These spans include queues and downstream backpressure; they are not pure comput
 All 3,648 scalar outputs match the integer reference, all 5,248 boundary records pass ordering and causality checks, and every original performance record, including input/output cycles, matches the uninstrumented run. Compiler schedule comparison preserves the predicates, blockers, and relative execution order of all 490 original rules; only the independent profiling tick is added. The profile checker passes 12 tests covering corrupt records, changed cycles, missing transactions, causality, stale reports, and schedule changes. These are simulation observations, not board measurements.
 
 [Summary](hw/results/profile/bluesim/summary.json), [raw boundary log](hw/results/profile/bluesim/stream.log), and [paired stage cycles](hw/results/profile/bluesim/stages.csv) retain all measurements and source hashes. The [reference schedule](hw/results/perf/bluesim/stream.sched) and [profile schedule](hw/results/profile/bluesim/stream.sched) retain the scheduling evidence.
+
+## Block0 internal profile
+
+**Block0's 20→80 input projection sets the observed 987-cycle token acceptance interval.** Its four output lanes process 20 output groups, each requiring 20 operand issues. The trace identifies two costs: alternate-cycle issue through ordinary one-entry FIFOs, and draining the last product before starting the next output group. Input starvation and downstream output waiting do not extend this interval in the measured run. The kernel frame interval remains `16 × 987 = 15,792` cycles.
+
+```sh
+make -C hw block-profile BLUEYOSYS=/absolute/path/to/blueyosys
+make -C hw check-block-profile-parser BLUEYOSYS=/absolute/path/to/blueyosys
+# Optional figure regeneration; requires matplotlib.
+(cd hw && python3 reference/plot_block_profile.py)
+```
+
+`block-profile` reuses the same unstalled 64-frame driver, with `SWAY_PROFILE` and `SWAY_BLOCK_PROFILE` enabled only in a separate simulation build. Its reference is the boundary profile at `618034a6e70761bac378942cc133dfd771c8ef61`. Run `perf-stream` and `profile` first when changing the baseline or simulator. This result uses BSC/Bluesim 2026.01 and the pinned blueyosys revision above.
+
+Only Block0 receives new internal observations. Existing transfer rules record its normalization, input projection, convolution, state projection, delta projection, selective scan, gating, output projection, and residual boundaries. The normalization output enqueue distinguishes result readiness from downstream acceptance. Within the input projection, each existing rule updates its own simulation counter when it fires. Token lifecycle events and per-token firing counts cover all 1,024 tokens; detailed rule timestamps cover frame 8, token 0. Functional guards, FIFO types and depths, arithmetic, weights, and board-build flags are unchanged.
+
+The following accepted-to-transferred spans are constant for frames 8–55, with 768 token pairs per row. They include queue effects and are not independent engine service intervals.
+
+| Block0 span | Cycles |
+|---|---:|
+| Block input acceptance → normalization acceptance | 986 |
+| Normalization acceptance → output enqueue | 493 |
+| Normalization output enqueue → input-projection acceptance | 986 |
+| Input-projection acceptance → result transfer | 987 |
+| Convolution start → activated output enqueue | 51 |
+| State-projection acceptance → delta-projection acceptance | 452 |
+| Delta-projection acceptance → scan acceptance | 137 |
+| Scan acceptance → gating acceptance | 343 |
+| Gating acceptance → output-projection acceptance | 44 |
+| Output-projection acceptance → residual acceptance | 452 |
+| Residual acceptance → Block0 output enqueue | 1 |
+| Block0 output enqueue → Block1 acceptance | 1 |
+
+Two additional one-cycle handoffs connect the input-projection result to convolution start, and the activated convolution output to state-projection acceptance. Normalization's 493-cycle span can include a blocked output queue; it is not a pure normalization compute time. The long input and normalization waits are consistent with backpressure from input projection. Stage residence alone is not the bottleneck test.
+
+For every subsequent token, its normalized input is already ready before the preceding input-projection result is emitted: 582 cycles early for the first transition, then 985 cycles early for the remaining 1,022 transitions. The retained input FIFO accepts the next token exactly one cycle after that emit, its first available cycle. Every projection result is consumed one cycle after emit, on the same cycle the next token is accepted when one follows. Every Block0 output is also transferred to Block1 one cycle after enqueue. In the detailed sample, the final collect is followed by emit in one cycle. These observations locate the measured spacing inside the input-projection execution rather than in missing input or downstream output blockage.
+
+The detailed sample accepts its token at cycle 127,343 and the next at 128,330. Taking the first acceptance as cycle zero:
+
+- Output group 0 issues operands at cycles 5, 7, …, 43. Its last accumulation occurs at 50, restart at 51, the next group starts at 52, its input chunk loads at 53, and its first operand issues at 54. Successive groups' first issues are exactly 49 cycles apart.
+- Each operand's issue → ROM request → response → multiply → combine → accumulation has observed delays of 1, 3, 1, 1, and 1 cycles. The 3-cycle request-to-response span is the interface observation, not a separate claim about physical BRAM latency.
+- The last group issues its final operand at 974, accumulates it at 981, then bias/add/round/collect execute at 982/983/984/985. The result emits at 986; the next token is accepted at 987.
+
+![Measured Block0 input-projection rule firings](hw/results/block_profile/bluesim/timeline.svg)
+
+[`SwayLinear.bsv`](hw/bsv/SwayLinear.bsv) uses ordinary `mkFIFO1` queues for issue commands and the operand/product pipeline. A full one-entry queue cannot accept its replacement on the cycle it is dequeued, so issue and dispatch alternate. The trace confirms a two-cycle issue interval within each group. After the final issue, `process3Last` waits for the returned final product, then `process3Restart`, `process1Group`, and `process2Chunk` run before the next issue. The final issue of one group and the first of the next are 11 cycles apart, leaving ten intervening cycles without a new issue. Loading the second 16-element input chunk fits into the existing alternate-cycle gap and adds no extra issue gap in this sample.
+
+The 987 cycle slots from this token's acceptance, inclusive, to the next acceptance, exclusive, partition exactly as follows:
+
+| Cycle-slot category | Cycles |
+|---|---:|
+| Before the first operand issue | 5 |
+| Operand issue firings, 20 inputs × 20 output groups | 400 |
+| Nonissue slots within groups, 19 × 20 | 380 |
+| Nonissue slots between groups, 10 × 19 | 190 |
+| After the final issue through completion and input-slot release | 12 |
+| **Total** | **987** |
+
+The operand issue fraction is `400 / 987 = 40.53%`. Each issue supplies four output lanes, for 1,600 scalar products per token. This fraction describes this engine's issue slots, not FPGA utilization or total idle time: response, multiply, accumulation, and output work overlap some nonissue slots. All 1,024 tokens have 400 read, dispatch, response, multiply, and combine firings, plus 380 ordinary and 20 final accumulations, 20 group starts, and 40 chunk loads. The detailed trace accounts for the observed 987 cycles without an unexplained gap.
+
+Validation passes all 3,648 integer-reference output comparisons, 13,312 internal boundary records, 5,120 token lifecycle records, 9,216 counter records, and 2,560 detailed rule events. Removing the new records reproduces every previous scalar and boundary transaction, including cycles, exactly. Compiler schedule comparison preserves the predicates, blockers, and relative execution order of all 491 pre-existing rules; only four unconditional observer clocks are added. The checker passes 11 focused tests for malformed or missing events, altered counters/cycles, causality, stale reports, and schedule changes.
+
+This identifies the observed Block0 input-projection constraint in the current ECP5 implementation. It does not measure Block1's independent capacity or establish an intrinsic eMamba architecture limit. These are simulation measurements; no optimization or new board measurement is included.
+
+[Summary](hw/results/block_profile/bluesim/summary.json), [raw log](hw/results/block_profile/bluesim/stream.log), [stage spans](hw/results/block_profile/bluesim/stages.csv), [detailed sample](hw/results/block_profile/bluesim/sample.csv), and [compiler schedule](hw/results/block_profile/bluesim/stream.sched) retain the evidence and source hashes. The [checker](hw/reference/check_block_profile.py) regenerates the numerical reports, and the [plot script](hw/reference/plot_block_profile.py) regenerates the figure from the validated sample.

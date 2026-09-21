@@ -69,6 +69,37 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	Reg#(Bool) issueOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bool) emitOn <- mkReg(False, reset_by localReset.rst);
 
+`ifdef SWAY_BLOCK_PROFILE
+
+	// Simulation-only counters are written by their owning rule.
+	// Detailed firings cover frame 8, token 0 after the pipeline has filled.
+	Integer profileDetailOrdinal = 128;
+	Reg#(UInt#(64)) profileLinearCycleCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileCaptureCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileStartCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileGroupCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileChunkCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileReadCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileDispatchCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileResponseCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileMultiplyCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileCombineCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileAccumulateCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileLastCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileRestartCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileBiasCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileAddCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileRoundCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileCollectCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileEmitCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileGetCnt <- mkReg(0);
+	if ( layerId == 1 ) begin
+		rule profileLinearCycle;
+			profileLinearCycleCnt <= profileLinearCycleCnt + 1;
+		endrule
+	end
+`endif
+
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
 	// The source backend retains the token and provides one 16-byte chunk per read.
@@ -78,11 +109,27 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	rule process1Capture ( !activeOn );
 		let index <- source.getStart;
 		startQ.enq(index);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileCaptureCnt <= profileCaptureCnt + 1;
+			$display("SWAY_LINEAR_EVENT,capture,%0d,%0d,%0d,%0d,%0d",
+				profileCaptureCnt, index, profileLinearCycleCnt, -1, -1);
+		end
+`endif
+
 	endrule
 
 	// Source readiness and last-product backpressure stop at command registers.
 	rule process1;
 		indexR <= startQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileStartCnt <= profileStartCnt + 1;
+			$display("SWAY_LINEAR_EVENT,start,%0d,%0d,%0d,%0d,%0d",
+				profileStartCnt, startQ.first, profileLinearCycleCnt, -1, -1);
+		end
+`endif
+
 		startQ.deq;
 		addressCnt <= 0;
 		groupStartQ.enq(0);
@@ -92,6 +139,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 
 	rule process1Group;
 		let group = groupStartQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileGroupCnt <= profileGroupCnt + 1;
+			if ( profileGroupCnt % fromInteger(groupNum) == fromInteger(groupNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,group,%0d,%0d,%0d",
+					profileGroupCnt / fromInteger(groupNum), profileLinearCycleCnt, profileGroupCnt + 1);
+			end
+			if ( profileGroupCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,group,%0d,%0d,%0d,%0d,%0d",
+					profileGroupCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, group, -1);
+			end
+		end
+`endif
+
 		groupCnt <= group;
 		hasNextGroupR <= group != fromInteger(groupNum - 1);
 		groupStartQ.deq;
@@ -103,6 +164,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// chunkLoadOn and issueOn are mutually exclusive throughout a group.
 	rule process2Chunk ( chunkLoadOn );
 		chunkR <= source.readChunk(chunkCnt);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileChunkCnt <= profileChunkCnt + 1;
+			if ( profileChunkCnt % fromInteger(groupNum * ((inputNum + 15) / 16)) == fromInteger(groupNum * ((inputNum + 15) / 16) - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,chunk,%0d,%0d,%0d",
+					profileChunkCnt / fromInteger(groupNum * ((inputNum + 15) / 16)), profileLinearCycleCnt, profileChunkCnt + 1);
+			end
+			if ( profileChunkCnt / fromInteger(groupNum * ((inputNum + 15) / 16)) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,chunk,%0d,%0d,%0d,%0d,%0d",
+					profileChunkCnt / fromInteger(groupNum * ((inputNum + 15) / 16)), indexR, profileLinearCycleCnt, groupCnt, chunkCnt);
+			end
+		end
+`endif
+
 		chunkLoadOn <= False;
 		issueOn <= True;
 	endrule
@@ -111,6 +186,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	rule process2Read ( issueOn );
 		Bit#(4) offset = truncate(inputCnt);
 		Bool lastInput = inputCnt == fromInteger(inputNum - 1);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileReadCnt <= profileReadCnt + 1;
+			if ( profileReadCnt % fromInteger(groupNum * inputNum) == fromInteger(groupNum * inputNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,read,%0d,%0d,%0d",
+					profileReadCnt / fromInteger(groupNum * inputNum), profileLinearCycleCnt, profileReadCnt + 1);
+			end
+			if ( profileReadCnt / fromInteger(groupNum * inputNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,read,%0d,%0d,%0d,%0d,%0d",
+					profileReadCnt / fromInteger(groupNum * inputNum), indexR, profileLinearCycleCnt, groupCnt, inputCnt);
+			end
+		end
+`endif
+
 		issueCommandQ.enq(tuple3(truncate(addressCnt), chunkR[offset], lastInput));
 		addressCnt <= addressCnt + 1;
 		if ( lastInput ) begin
@@ -129,6 +218,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// The selected x and last flag remain stable even if the next chunk loads.
 	rule process2Dispatch;
 		let command = issueCommandQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileDispatchCnt <= profileDispatchCnt + 1;
+			if ( profileDispatchCnt % fromInteger(groupNum * inputNum) == fromInteger(groupNum * inputNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,dispatch,%0d,%0d,%0d",
+					profileDispatchCnt / fromInteger(groupNum * inputNum), profileLinearCycleCnt, profileDispatchCnt + 1);
+			end
+			if ( profileDispatchCnt / fromInteger(groupNum * inputNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,dispatch,%0d,%0d,%0d,%0d,%0d",
+					profileDispatchCnt / fromInteger(groupNum * inputNum), indexR, profileLinearCycleCnt, tpl_1(command) / fromInteger(inputNum), tpl_1(command) % fromInteger(inputNum));
+			end
+		end
+`endif
+
 		issueCommandQ.deq;
 		for ( Integer lane = 0; lane < 4; lane = lane + 1 ) begin
 			weightR[lane].request(tpl_1(command));
@@ -138,6 +241,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 
 	// All four responses advance together with their queued x/last metadata.
 	rule process2Response;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileResponseCnt <= profileResponseCnt + 1;
+			if ( profileResponseCnt % fromInteger(groupNum * inputNum) == fromInteger(groupNum * inputNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,response,%0d,%0d,%0d",
+					profileResponseCnt / fromInteger(groupNum * inputNum), profileLinearCycleCnt, profileResponseCnt + 1);
+			end
+			if ( profileResponseCnt / fromInteger(groupNum * inputNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,response,%0d,%0d,%0d,%0d,%0d",
+					profileResponseCnt / fromInteger(groupNum * inputNum), indexR, profileLinearCycleCnt, (profileResponseCnt / fromInteger(inputNum)) % fromInteger(groupNum), profileResponseCnt % fromInteger(inputNum));
+			end
+		end
+`endif
+
 		Vector#(4, Int#(8)) weights = newVector;
 		for ( Integer lane = 0; lane < 4; lane = lane + 1 ) begin
 			let weight <- weightR[lane].response;
@@ -149,6 +266,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	endrule
 
 	rule process2Multiply;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileMultiplyCnt <= profileMultiplyCnt + 1;
+			if ( profileMultiplyCnt % fromInteger(groupNum * inputNum) == fromInteger(groupNum * inputNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,multiply,%0d,%0d,%0d",
+					profileMultiplyCnt / fromInteger(groupNum * inputNum), profileLinearCycleCnt, profileMultiplyCnt + 1);
+			end
+			if ( profileMultiplyCnt / fromInteger(groupNum * inputNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,multiply,%0d,%0d,%0d,%0d,%0d",
+					profileMultiplyCnt / fromInteger(groupNum * inputNum), indexR, profileLinearCycleCnt, (profileMultiplyCnt / fromInteger(inputNum)) % fromInteger(groupNum), profileMultiplyCnt % fromInteger(inputNum));
+			end
+		end
+`endif
+
 		let value = operandQ.first;
 		operandQ.deq;
 		Bit#(8) inputBits = pack(tpl_1(value));
@@ -166,6 +297,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// x = unsigned(x[3:0]) + 16 * signed(x[7:4]), including negative INT8 x.
 	// Register the two small products before the exact signed 16-bit addition.
 	rule process2Combine;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileCombineCnt <= profileCombineCnt + 1;
+			if ( profileCombineCnt % fromInteger(groupNum * inputNum) == fromInteger(groupNum * inputNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,combine,%0d,%0d,%0d",
+					profileCombineCnt / fromInteger(groupNum * inputNum), profileLinearCycleCnt, profileCombineCnt + 1);
+			end
+			if ( profileCombineCnt / fromInteger(groupNum * inputNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,combine,%0d,%0d,%0d,%0d,%0d",
+					profileCombineCnt / fromInteger(groupNum * inputNum), indexR, profileLinearCycleCnt, (profileCombineCnt / fromInteger(inputNum)) % fromInteger(groupNum), profileCombineCnt % fromInteger(inputNum));
+			end
+		end
+`endif
+
 		let value = partialQ.first;
 		partialQ.deq;
 		Vector#(4, Int#(16)) products = newVector;
@@ -181,6 +326,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// 320 signed INT8 products have absolute sum <=5242880, fitting signed 24 bits.
 	//------------------------------------------------------------------------------------
 	rule process3 ( !tpl_2(productQ.first) );
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileAccumulateCnt <= profileAccumulateCnt + 1;
+			if ( profileAccumulateCnt % fromInteger(groupNum * (inputNum - 1)) == fromInteger(groupNum * (inputNum - 1) - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,accumulate,%0d,%0d,%0d",
+					profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)), profileLinearCycleCnt, profileAccumulateCnt + 1);
+			end
+			if ( profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,accumulate,%0d,%0d,%0d,%0d,%0d",
+					profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)), indexR, profileLinearCycleCnt, groupCnt, profileAccumulateCnt % fromInteger(inputNum - 1));
+			end
+		end
+`endif
+
 		let value = productQ.first;
 		productQ.deq;
 		Vector#(4, Int#(24)) sums = newVector;
@@ -192,6 +351,20 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 
 	// A returned last product proves the complete group was issued and drained.
 	rule process3Last ( tpl_2(productQ.first) );
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileLastCnt <= profileLastCnt + 1;
+			if ( profileLastCnt % fromInteger(groupNum) == fromInteger(groupNum - 1) ) begin
+				$display("SWAY_LINEAR_COUNT,last,%0d,%0d,%0d",
+					profileLastCnt / fromInteger(groupNum), profileLinearCycleCnt, profileLastCnt + 1);
+			end
+			if ( profileLastCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,last,%0d,%0d,%0d,%0d,%0d",
+					profileLastCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, groupCnt, inputNum - 1);
+			end
+		end
+`endif
+
 		let value = productQ.first;
 		productQ.deq;
 		Vector#(4, Int#(24)) sums = newVector;
@@ -207,6 +380,16 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// start-command arbitration lies on the final accumulation/clear rule.
 	rule process3Restart;
 		let completed = groupDoneQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileRestartCnt <= profileRestartCnt + 1;
+			if ( profileRestartCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,restart,%0d,%0d,%0d,%0d,%0d",
+					profileRestartCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileRestartCnt % fromInteger(groupNum), -1);
+			end
+		end
+`endif
+
 		groupDoneQ.deq;
 		if ( tpl_2(completed) ) begin
 			groupStartQ.enq(tpl_1(completed));
@@ -218,6 +401,16 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	// Bias read, aligned addition, and final INT8 rounding have separate registers.
 	//------------------------------------------------------------------------------------
 	rule process4Bias;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileBiasCnt <= profileBiasCnt + 1;
+			if ( profileBiasCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,bias,%0d,%0d,%0d,%0d,%0d",
+					profileBiasCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileBiasCnt % fromInteger(groupNum), -1);
+			end
+		end
+`endif
+
 		let value = sumQ.first;
 		sumQ.deq;
 		Vector#(4, Int#(32)) sums = newVector;
@@ -233,6 +426,16 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	endrule
 
 	rule process5Add;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileAddCnt <= profileAddCnt + 1;
+			if ( profileAddCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,add,%0d,%0d,%0d,%0d,%0d",
+					profileAddCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileAddCnt % fromInteger(groupNum), -1);
+			end
+		end
+`endif
+
 		let value = biasQ.first;
 		biasQ.deq;
 		Vector#(4, Int#(32)) affine = newVector;
@@ -243,6 +446,16 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	endrule
 
 	rule process6Round;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileRoundCnt <= profileRoundCnt + 1;
+			if ( profileRoundCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,round,%0d,%0d,%0d,%0d,%0d",
+					profileRoundCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileRoundCnt % fromInteger(groupNum), -1);
+			end
+		end
+`endif
+
 		let value = affineQ.first;
 		affineQ.deq;
 		Vector#(4, Int#(8)) result = newVector;
@@ -254,6 +467,16 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 
 	// Static row enables replace four cascaded dynamic writes to one vector register.
 	rule process7Collect ( activeOn && !emitOn );
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileCollectCnt <= profileCollectCnt + 1;
+			if ( profileCollectCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				$display("SWAY_LINEAR_EVENT,collect,%0d,%0d,%0d,%0d,%0d",
+					profileCollectCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileCollectCnt % fromInteger(groupNum), -1);
+			end
+		end
+`endif
+
 		let value = resultQ.first;
 		resultQ.deq;
 		for ( Integer row = 0; row < outputNum; row = row + 1 ) begin
@@ -267,6 +490,14 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	endrule
 
 	rule process8Emit ( activeOn && emitOn );
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileEmitCnt <= profileEmitCnt + 1;
+			$display("SWAY_LINEAR_EVENT,emit,%0d,%0d,%0d,%0d,%0d",
+				profileEmitCnt, indexR, profileLinearCycleCnt, -1, -1);
+		end
+`endif
+
 		outputQ.enq(Token { index: indexR, data: readVReg(outputR) });
 		source.finish;
 		emitOn <= False;
@@ -275,6 +506,14 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 
 	method ActionValue#(Token#(m)) get;
 		let value = outputQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profileGetCnt <= profileGetCnt + 1;
+			$display("SWAY_LINEAR_EVENT,get,%0d,%0d,%0d,%0d,%0d",
+				profileGetCnt, value.index, profileLinearCycleCnt, -1, -1);
+		end
+`endif
+
 		outputQ.deq;
 		return value;
 	endmethod
@@ -287,6 +526,16 @@ module mkSwayLinear#(Integer layerId)(LinearIfc#(n, m));
 	Integer chunkNum = (inputNum + 15) / 16;
 	LocalResetIfc localReset <- mkSwayLocalReset;
 	FIFO#(Token#(n)) inputQ <- mkFIFO1(reset_by localReset.rst);
+`ifdef SWAY_BLOCK_PROFILE
+	Reg#(UInt#(64)) profileLinearPutCycleCnt <- mkReg(0);
+	Reg#(UInt#(32)) profilePutCnt <- mkReg(0);
+	if ( layerId == 1 ) begin
+		rule profileLinearPutCycle;
+			profileLinearPutCycleCnt <= profileLinearPutCycleCnt + 1;
+		endrule
+	end
+`endif
+
 
 	LinearSourceIfc source = interface LinearSourceIfc;
 		method ActionValue#(Bit#(4)) getStart;
@@ -317,6 +566,14 @@ module mkSwayLinear#(Integer layerId)(LinearIfc#(n, m));
 
 	method Action put(Token#(n) value) if ( localReset.ready );
 		inputQ.enq(value);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( layerId == 1 ) begin
+			profilePutCnt <= profilePutCnt + 1;
+			$display("SWAY_LINEAR_EVENT,put,%0d,%0d,%0d,%0d,%0d",
+				profilePutCnt, value.index, profileLinearPutCycleCnt, -1, -1);
+		end
+`endif
+
 	endmethod
 
 	method ActionValue#(Token#(m)) get;

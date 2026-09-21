@@ -57,3 +57,29 @@ profile:
 
 check-profile-parser:
 	cd "$(PROJECT_DIR)/reference" && $(PYTHON) -m unittest -v test_check_profile.py
+
+# Block0 internals, with the previous kernel-boundary observations retained.
+BLOCK_PROFILE_ROOT ?= $(PROJECT_DIR)/block-profile/$(SIM_BACKEND)
+BLOCK_PROFILE_RESULTS ?= $(PROJECT_DIR)/results/block_profile/$(SIM_BACKEND)
+
+.PHONY: block-profile check-block-profile-parser
+
+block-profile:
+	test -f "$(PROFILE_RESULTS)/stream.log" && test -f "$(PROFILE_RESULTS)/stream.stderr.log" && test -f "$(PROFILE_RESULTS)/stream.sched"
+	mkdir -p "$(BLOCK_PROFILE_RESULTS)"
+	rm -f "$(BLOCK_PROFILE_RESULTS)/summary.json" "$(BLOCK_PROFILE_RESULTS)/stages.csv" "$(BLOCK_PROFILE_RESULTS)/sample.csv" "$(BLOCK_PROFILE_RESULTS)/stream.log" "$(BLOCK_PROFILE_RESULTS)/stream.stderr.log" "$(BLOCK_PROFILE_RESULTS)/stream.sched"
+	$(MAKE) -C "$(PROJECT_DIR)" bsim SIM_BACKEND=$(SIM_BACKEND) \
+		BSCFLAGS_COMMON="$(BSCFLAGS_COMMON) -D SWAY_PROFILE -D SWAY_BLOCK_PROFILE" \
+		BSIM_TOP_SOURCE="$(PROJECT_DIR)/sim/TbSwayPerf.bsv" BSIM_TOP_MODULE=mkTbSwayPerf \
+		BSIM_DIR="$(BLOCK_PROFILE_ROOT)/stream"
+	cp "$(BLOCK_PROFILE_ROOT)/stream/mkTbSwayPerf.sched" "$(BLOCK_PROFILE_RESULTS)/stream.sched"
+	cd "$(PROJECT_DIR)" && $(PERF_RUNNER) "$(BLOCK_PROFILE_ROOT)/stream/bsim" 2> "$(BLOCK_PROFILE_RESULTS)/stream.stderr.log" | tee "$(BLOCK_PROFILE_RESULTS)/stream.log"
+	cd "$(PROJECT_DIR)" && $(PYTHON) reference/check_block_profile.py \
+		--log "$(BLOCK_PROFILE_RESULTS)/stream.log" --stderr "$(BLOCK_PROFILE_RESULTS)/stream.stderr.log" \
+		--baseline-log "$(PROFILE_RESULTS)/stream.log" --baseline-stderr "$(PROFILE_RESULTS)/stream.stderr.log" \
+		--baseline-schedule "$(PROFILE_RESULTS)/stream.sched" --schedule "$(BLOCK_PROFILE_RESULTS)/stream.sched" \
+		--backend "$(SIM_BACKEND)" --output "$(BLOCK_PROFILE_RESULTS)/summary.json" \
+		--stages "$(BLOCK_PROFILE_RESULTS)/stages.csv" --sample "$(BLOCK_PROFILE_RESULTS)/sample.csv"
+
+check-block-profile-parser:
+	cd "$(PROJECT_DIR)/reference" && $(PYTHON) -m unittest -v test_check_block_profile.py

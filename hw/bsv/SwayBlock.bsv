@@ -177,6 +177,29 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	Reg#(Bool) gatingOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bool) gateEmitOn <- mkReg(False, reset_by localReset.rst);
 
+`ifdef SWAY_BLOCK_PROFILE
+	// Only Block0 emits observations. Root reset keeps cycle stamps aligned with
+	// the kernel testbench. Each boundary owns its counter; datapath rules never read it.
+	Reg#(UInt#(64)) blockProfileCycleCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileNormFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileInProjFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileExpandedFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileConvStartFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileConvOutFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileStateProjFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileDeltaProjFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileScanFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileGateFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileOutProjFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileResidualFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileReadyFrameCnt <- mkReg(0);
+	if ( blockId == 0 ) begin
+		rule blockProfileTick;
+			blockProfileCycleCnt <= blockProfileCycleCnt + 1;
+		endrule
+	end
+`endif
+
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
 	// Normalize and expand, preserving the original token on the residual branch.
@@ -185,17 +208,35 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		let value = inputQ.first;
 		inputQ.deq;
 		normalization.put(value);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,norm_in,%0d,%0d,%0d", blockProfileNormFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileNormFrameCnt <= blockProfileNormFrameCnt + 1;
+		end
+`endif
 		residualQ.enq(value);
 	endrule
 
 	rule process2;
 		let value <- normalization.get;
 		inputProjection.put(value);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,inproj_in,%0d,%0d,%0d", blockProfileInProjFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileInProjFrameCnt <= blockProfileInProjFrameCnt + 1;
+		end
+`endif
 	endrule
 
 	rule process3;
 		let value <- inputProjection.get;
 		expandedQ.enq(value);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,inproj_out,%0d,%0d,%0d", blockProfileExpandedFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileExpandedFrameCnt <= blockProfileExpandedFrameCnt + 1;
+		end
+`endif
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -205,6 +246,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	//------------------------------------------------------------------------------------
 	rule process4_1 ( !convolutionOn );
 		expandedR <= expandedQ.first;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,conv_start,%0d,%0d,%0d", blockProfileConvStartFrameCnt, expandedQ.first.index, blockProfileCycleCnt);
+			if ( expandedQ.first.index == 15 ) blockProfileConvStartFrameCnt <= blockProfileConvStartFrameCnt + 1;
+		end
+`endif
 		expandedQ.deq;
 		convGroupCnt <= 0;
 		convolutionOn <= True;
@@ -394,6 +441,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			gate[channel] = gateR[lane][group];
 		end
 		activatedQ.enq(Token {index: expandedR.index, data: x});
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,conv_out,%0d,%0d,%0d", blockProfileConvOutFrameCnt, expandedR.index, blockProfileCycleCnt);
+			if ( expandedR.index == 15 ) blockProfileConvOutFrameCnt <= blockProfileConvOutFrameCnt + 1;
+		end
+`endif
 		gateDelayQ.enq(Token {index: expandedR.index, data: gate});
 		convEmitOn <= False;
 		convolutionOn <= False;
@@ -407,6 +460,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		let value = activatedQ.first;
 		activatedQ.deq;
 		stateProjection.put(value);
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,stateproj_in,%0d,%0d,%0d", blockProfileStateProjFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileStateProjFrameCnt <= blockProfileStateProjFrameCnt + 1;
+		end
+`endif
 		xDelayQ.enq(value);
 	endrule
 
@@ -423,6 +482,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			parameters.c[lane] = requant(signExtend(value.data[2 + valueOf(StateDim) + lane]), projectionExp, blockScale(blockId, "C"));
 		end
 		deltaProjection.put(Token {index: value.index, data: deltaInput});
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,deltaproj_in,%0d,%0d,%0d", blockProfileDeltaProjFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileDeltaProjFrameCnt <= blockProfileDeltaProjFrameCnt + 1;
+		end
+`endif
 		stateParameterQ.enq(parameters);
 	endrule
 
@@ -438,6 +503,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			positiveDelta[channel] = requant(signExtend(reluValue), blockScale(blockId, "deltaProjection"), blockScale(blockId, "delta"));
 		end
 		scan.put(ScanToken {index: x.index, x: x.data, delta: positiveDelta, b: parameters.b, c: parameters.c});
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,scan_in,%0d,%0d,%0d", blockProfileScanFrameCnt, x.index, blockProfileCycleCnt);
+			if ( x.index == 15 ) blockProfileScanFrameCnt <= blockProfileScanFrameCnt + 1;
+		end
+`endif
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -446,6 +517,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	//------------------------------------------------------------------------------------
 	rule process8 ( !gatingOn );
 		let value <- scan.get;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,gate_in,%0d,%0d,%0d", blockProfileGateFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileGateFrameCnt <= blockProfileGateFrameCnt + 1;
+		end
+`endif
 		scannedR <= value;
 		delayedGateR <= gateDelayQ.first;
 		gateDelayQ.deq;
@@ -522,6 +599,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			result[channel] = gatedR[lane][group];
 		end
 		outputProjection.put(Token {index: scannedR.index, data: result});
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,outproj_in,%0d,%0d,%0d", blockProfileOutProjFrameCnt, scannedR.index, blockProfileCycleCnt);
+			if ( scannedR.index == 15 ) blockProfileOutProjFrameCnt <= blockProfileOutProjFrameCnt + 1;
+		end
+`endif
 		gateEmitOn <= False;
 		gatingOn <= False;
 	endrule
@@ -532,6 +615,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	//------------------------------------------------------------------------------------
 	rule process10;
 		let projected <- outputProjection.get;
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,residual_in,%0d,%0d,%0d", blockProfileResidualFrameCnt, projected.index, blockProfileCycleCnt);
+			if ( projected.index == 15 ) blockProfileResidualFrameCnt <= blockProfileResidualFrameCnt + 1;
+		end
+`endif
 		let residual = residualQ.first;
 		residualQ.deq;
 		ResidualSums value = unpack(0);
@@ -554,6 +643,12 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			result[channel] = requant(signExtend(value.values[channel]), residualAccumulatorExp, blockScale(blockId, "residual"));
 		end
 		outputQ.enq(Token {index: value.index, data: result});
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,block_ready,%0d,%0d,%0d", blockProfileReadyFrameCnt, value.index, blockProfileCycleCnt);
+			if ( value.index == 15 ) blockProfileReadyFrameCnt <= blockProfileReadyFrameCnt + 1;
+		end
+`endif
 	endrule
 
 	method Action put(Token#(20) value) if ( localReset.ready );

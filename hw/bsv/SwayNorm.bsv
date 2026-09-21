@@ -96,6 +96,18 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 	Reg#(Bool) roundOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bool) emitOn <- mkReg(False, reset_by localReset.rst);
 
+`ifdef SWAY_BLOCK_PROFILE
+	// Endpoint-only observation distinguishes ready normalization data from
+	// waiting for the input-projection engine to accept it.
+	Reg#(UInt#(64)) blockProfileCycleCnt <- mkReg(0);
+	Reg#(UInt#(32)) blockProfileFrameCnt <- mkReg(0);
+	if ( blockId == 0 ) begin
+		rule blockProfileTick;
+			blockProfileCycleCnt <= blockProfileCycleCnt + 1;
+		endrule
+	end
+`endif
+
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
 	// The input queue retains the token while channel statistics are accumulated.
@@ -364,6 +376,12 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 
 	rule process13Emit ( activeOn && emitOn );
 		outputQ.enq(Token { index: indexR, data: readVReg(outputR) });
+`ifdef SWAY_BLOCK_PROFILE
+		if ( blockId == 0 ) begin
+			$display("SWAY_BLOCK,norm_ready,%0d,%0d,%0d", blockProfileFrameCnt, indexR, blockProfileCycleCnt);
+			if ( indexR == 15 ) blockProfileFrameCnt <= blockProfileFrameCnt + 1;
+		end
+`endif
 		inputQ.deq;
 		emitOn <= False;
 		activeOn <= False;
