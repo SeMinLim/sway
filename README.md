@@ -116,3 +116,43 @@ Measured with BSC/Bluesim 2026.01 and the pinned blueyosys revision above:
 The resulting kernel throughput is `100,000,000 / 15,792 = 6,332.32 frames/s`. The isolated run uses fixture 0; the 64-frame run cycles through all 14 checked-in fixtures. All 57 isolated outputs and 3,648 stream outputs match the integer reference. The selected 47 intervals have identical minimum, mean, and maximum values; all 63 observed stream intervals are also 15,792 cycles. These are simulation measurements and configured-clock conversions, not physical-board measurements.
 
 [The measured summary](hw/results/perf/bluesim/summary.json), [isolated-frame log](hw/results/perf/bluesim/single.log), and [64-frame log](hw/results/perf/bluesim/stream.log) retain transaction cycles and source/fixture hashes. The checker also passes its 18 synthetic-transcript unit tests. The performance Icarus target invokes `vvp` from `PATH`, including when Icarus is installed outside `/usr/bin`.
+
+## Pipeline boundary profile
+
+```sh
+make -C hw profile BLUEYOSYS=/absolute/path/to/blueyosys
+make -C hw check-profile-parser BLUEYOSYS=/absolute/path/to/blueyosys
+```
+
+`profile` reuses the unstalled 64-frame performance driver and enables `SWAY_PROFILE` only in its separate simulation build. The existing forwarding rules record `boundary,frame,token,cycle` when a transfer succeeds: patch creation, embedding input, Block0 input, Block1 input, hidden-head input, output-head input, and serializer input. Each boundary has its own frame counter; token positions remain 0–15, while each head result has index 0 once per frame. The profiling clock shares the testbench's reset origin. No engine internals, functional FIFOs, arithmetic, weights, or board-build flags are changed.
+
+The reference is the uninstrumented performance run at `cb97a81aaae04c14a96f5cb7b1c27d040193b9b9`. Its log and compiler schedule are checked in. `perf-stream` also saves its schedule for subsequent comparisons. For another simulator or a changed baseline, run `perf-stream` with the same settings before `profile`; the checker requires matching reference logs and schedules. This profile result uses BSC/Bluesim 2026.01 and blueyosys `3ea0afea56c7c73b8ed59ec0edd256c409466788`.
+
+**The first persistent widening to 987 cycles/token is observed at Block0's output.** Startup distinguishes this from upstream throttling: embedding initially delivers tokens to Block0 every 252 cycles, whereas Block0 delivers its first and subsequent tokens every 987 cycles. Block1 preserves that spacing.
+
+| Boundary | Frame 0, token 0 cycle | Token 1 cycle | Token 2 cycle | Steady token interval (cycles) |
+|---|---:|---:|---:|---:|
+| Embedding → Block0 | 601 | 853 | 1,105 | 987 |
+| Block0 → Block1 | 3,477 | 4,464 | 5,451 | 987 |
+| Block1 → hidden head | 6,353 | 7,340 | 8,327 | 987 |
+
+In frames 8–55, every token boundary, including patch creation and embedding input, has identical min/mean/max spacing of 987 cycles. The head results and kernel completions remain 15,792 cycles apart, equal to `16 × 987`; the downstream boundaries show no additional spacing increase. Block0 is therefore the first limiting candidate identified by these boundary records. A forwarding event requires both producer output and consumer readiness, so this does not establish Block0 as the unique bottleneck, identify an internal engine, or measure Block1's independent maximum rate.
+
+The paired transaction spans below are constant in frames 8–55. Token rows contain 768 pairs each; frame rows contain 48 pairs each.
+
+| Measured span | Unit | Cycles |
+|---|---|---:|
+| Patch ready → embedding acceptance | Token | 986 |
+| Embedding acceptance → Block0 acceptance | Token | 1,972 |
+| Block0 acceptance → Block1 acceptance | Token | 4,935 |
+| Block1 acceptance → hidden-head acceptance | Token | 2,876 |
+| Hidden head, first-token acceptance → result transfer | Frame | 18,098 |
+| Hidden head, last-token acceptance → result transfer | Frame | 3,293 |
+| Output-head acceptance → serializer acceptance | Frame | 742 |
+| Serializer acceptance → final scalar reception | Frame | 58 |
+
+These spans include queues and downstream backpressure; they are not pure computation times and must not be added as a kernel latency breakdown. The hidden-head first-token span includes `15 × 987 = 14,805` cycles collecting tokens. Its 18,098-cycle span is therefore not a frame service interval. Block0's first token takes 2,876 cycles from acceptance to delivery, compared with 4,935 under saturation; choosing the largest residence alone would confuse accumulated waiting with processing cost.
+
+All 3,648 scalar outputs match the integer reference, all 5,248 boundary records pass ordering and causality checks, and every original performance record, including input/output cycles, matches the uninstrumented run. Compiler schedule comparison preserves the predicates, blockers, and relative execution order of all 490 original rules; only the independent profiling tick is added. The profile checker passes 12 tests covering corrupt records, changed cycles, missing transactions, causality, stale reports, and schedule changes. These are simulation observations, not board measurements.
+
+[Summary](hw/results/profile/bluesim/summary.json), [raw boundary log](hw/results/profile/bluesim/stream.log), and [paired stage cycles](hw/results/profile/bluesim/stages.csv) retain all measurements and source hashes. The [reference schedule](hw/results/perf/bluesim/stream.sched) and [profile schedule](hw/results/profile/bluesim/stream.sched) retain the scheduling evidence.

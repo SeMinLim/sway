@@ -47,6 +47,23 @@ module mkSwayBaseline(SwayIfc);
 	Reg#(Bool) outputOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bit#(6)) outputCnt <- mkReg(0, reset_by localReset.rst);
 
+`ifdef SWAY_PROFILE
+	// Simulation-only observations. The root reset matches TbSwayPerf's clock origin.
+	// Each boundary owns its frame counter; no functional rule reads these counters.
+	Reg#(UInt#(64)) profileCycleCnt <- mkReg(0);
+	Reg#(UInt#(32)) profilePatchFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileEmbeddingFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileBlock0FrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileBlock1FrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileHeadFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileHeadOutputFrameCnt <- mkReg(0);
+	Reg#(UInt#(32)) profileSerializeFrameCnt <- mkReg(0);
+
+	rule profileTick;
+		profileCycleCnt <= profileCycleCnt + 1;
+	endrule
+`endif
+
 	//------------------------------------------------------------------------------------
 	// [STAGE 1] Two RAM banks retain complete HWC frames. A bank is reused
 	// only after its last patch is retained in a separate token register/FIFO.
@@ -123,6 +140,10 @@ module mkSwayBaseline(SwayIfc);
 		Vector#(20, Int#(8)) patch = patchR;
 		patch[19] = requant(signExtend(tpl_1(value)), nodeScale("input"), nodeScale("patches"));
 		patchTokenQ.enq(Token { index: patchCnt, data: patch });
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,patch_ready,%0d,%0d,%0d", profilePatchFrameCnt, patchCnt, profileCycleCnt);
+		if ( patchCnt == 15 ) profilePatchFrameCnt <= profilePatchFrameCnt + 1;
+`endif
 		if ( patchCnt == 15 ) begin
 			freeBankQ.enq(readBankR);
 			patchOn <= False;
@@ -136,6 +157,10 @@ module mkSwayBaseline(SwayIfc);
 	// This occupied bit cuts embedding readiness out of RAM address/control paths.
 	rule process3Embed;
 		embedding.put(patchTokenQ.first);
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,embedding_in,%0d,%0d,%0d", profileEmbeddingFrameCnt, patchTokenQ.first.index, profileCycleCnt);
+		if ( patchTokenQ.first.index == 15 ) profileEmbeddingFrameCnt <= profileEmbeddingFrameCnt + 1;
+`endif
 		patchTokenQ.deq;
 	endrule
 
@@ -145,11 +170,19 @@ module mkSwayBaseline(SwayIfc);
 	rule process4;
 		let value <- embedding.get;
 		block0.put(value);
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,block0_in,%0d,%0d,%0d", profileBlock0FrameCnt, value.index, profileCycleCnt);
+		if ( value.index == 15 ) profileBlock0FrameCnt <= profileBlock0FrameCnt + 1;
+`endif
 	endrule
 
 	rule process5;
 		let value <- block0.get;
 		block1.put(value);
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,block1_in,%0d,%0d,%0d", profileBlock1FrameCnt, value.index, profileCycleCnt);
+		if ( value.index == 15 ) profileBlock1FrameCnt <= profileBlock1FrameCnt + 1;
+`endif
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -163,6 +196,10 @@ module mkSwayBaseline(SwayIfc);
 				blockScale(1, "residual"), nodeScale("headInput"));
 		end
 		headHidden.put(Token { index: value.index, data: token });
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,head_in,%0d,%0d,%0d", profileHeadFrameCnt, value.index, profileCycleCnt);
+		if ( value.index == 15 ) profileHeadFrameCnt <= profileHeadFrameCnt + 1;
+`endif
 	endrule
 
 	rule process7;
@@ -172,10 +209,18 @@ module mkSwayBaseline(SwayIfc);
 			value.data[i] = requant(signExtend(relu), nodeScale("headHidden"), nodeScale("headActivation"));
 		end
 		headOutput.put(value);
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,head_output_in,%0d,%0d,%0d", profileHeadOutputFrameCnt, value.index, profileCycleCnt);
+		profileHeadOutputFrameCnt <= profileHeadOutputFrameCnt + 1;
+`endif
 	endrule
 
 	rule process8 ( !outputOn );
 		let value <- headOutput.get;
+`ifdef SWAY_PROFILE
+		$display("SWAY_PROFILE,serialize_in,%0d,%0d,%0d", profileSerializeFrameCnt, value.index, profileCycleCnt);
+		profileSerializeFrameCnt <= profileSerializeFrameCnt + 1;
+`endif
 		resultR <= value.data;
 		outputCnt <= 0;
 		outputOn <= True;

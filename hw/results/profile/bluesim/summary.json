@@ -1,0 +1,1307 @@
+{
+  "status": "pass",
+  "evidence": "Bluesim simulation of the baseline with boundary logging enabled",
+  "scope": "Kernel boundary transaction cycles; not board measurements or pure computation times",
+  "dut": "mkSwayBaseline",
+  "frames_checked": 64,
+  "scalar_outputs_checked": 3648,
+  "profile_transactions_checked": 5248,
+  "baseline_perf_records_exactly_equal": true,
+  "cycle_convention": "Output transaction cycle minus input transaction cycle, without +1; shared root-reset cycle origin",
+  "stage_span_interpretation": "Accepted-to-transferred spans include internal queues and downstream backpressure; overlapping spans must not be summed",
+  "head_hidden_interpretation": "First-token span includes collection of all 16 tokens; last-token span begins at acceptance of token 15, not at internal computation start",
+  "serializer_interpretation": "Acceptance of the 57-coordinate vector through the testbench's final scalar get, including output FIFO residence",
+  "steady_window": {
+    "first_frame": 8,
+    "last_frame": 55,
+    "policy": "Frames 8 through 55 of 64; distributions report observed variation without assuming convergence"
+  },
+  "stage_spans": {
+    "patch_queue": {
+      "all_frames_cycles": {
+        "count": 1024,
+        "min": 1,
+        "mean": 981.3271484375,
+        "max": 1479,
+        "histogram": {
+          "1": 1,
+          "230": 1,
+          "251": 4,
+          "389": 1,
+          "986": 1016,
+          "1479": 1
+        }
+      },
+      "first_frame_cycles": {
+        "count": 16,
+        "min": 1,
+        "mean": 686.9375,
+        "max": 1479,
+        "histogram": {
+          "1": 1,
+          "230": 1,
+          "251": 4,
+          "389": 1,
+          "986": 8,
+          "1479": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 768,
+        "min": 986,
+        "mean": 986.0,
+        "max": 986,
+        "histogram": {
+          "986": 768
+        }
+      }
+    },
+    "embedding": {
+      "all_frames_cycles": {
+        "count": 1024,
+        "min": 252,
+        "mean": 1964.4150390625,
+        "max": 2465,
+        "histogram": {
+          "252": 3,
+          "308": 1,
+          "640": 1,
+          "1868": 1,
+          "1972": 1017,
+          "2465": 1
+        }
+      },
+      "first_frame_cycles": {
+        "count": 16,
+        "min": 252,
+        "mean": 1486.5625,
+        "max": 2465,
+        "histogram": {
+          "252": 3,
+          "308": 1,
+          "640": 1,
+          "1868": 1,
+          "1972": 9,
+          "2465": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 768,
+        "min": 1972,
+        "mean": 1972.0,
+        "max": 1972,
+        "histogram": {
+          "1972": 768
+        }
+      }
+    },
+    "block0": {
+      "all_frames_cycles": {
+        "count": 1024,
+        "min": 2876,
+        "mean": 4931.6904296875,
+        "max": 5428,
+        "histogram": {
+          "2876": 1,
+          "3611": 1,
+          "4346": 1,
+          "4935": 1019,
+          "5025": 1,
+          "5428": 1
+        }
+      },
+      "first_frame_cycles": {
+        "count": 16,
+        "min": 2876,
+        "mean": 4723.1875,
+        "max": 5428,
+        "histogram": {
+          "2876": 1,
+          "3611": 1,
+          "4346": 1,
+          "4935": 11,
+          "5025": 1,
+          "5428": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 768,
+        "min": 4935,
+        "mean": 4935.0,
+        "max": 4935,
+        "histogram": {
+          "4935": 768
+        }
+      }
+    },
+    "block1": {
+      "all_frames_cycles": {
+        "count": 1024,
+        "min": 2876,
+        "mean": 2876.0,
+        "max": 2876,
+        "histogram": {
+          "2876": 1024
+        }
+      },
+      "first_frame_cycles": {
+        "count": 16,
+        "min": 2876,
+        "mean": 2876.0,
+        "max": 2876,
+        "histogram": {
+          "2876": 16
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 768,
+        "min": 2876,
+        "mean": 2876.0,
+        "max": 2876,
+        "histogram": {
+          "2876": 768
+        }
+      }
+    },
+    "head_hidden_first_token": {
+      "all_frames_cycles": {
+        "count": 64,
+        "min": 18098,
+        "mean": 18098.0,
+        "max": 18098,
+        "histogram": {
+          "18098": 64
+        }
+      },
+      "first_frame_cycles": {
+        "count": 1,
+        "min": 18098,
+        "mean": 18098.0,
+        "max": 18098,
+        "histogram": {
+          "18098": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 48,
+        "min": 18098,
+        "mean": 18098.0,
+        "max": 18098,
+        "histogram": {
+          "18098": 48
+        }
+      }
+    },
+    "head_hidden_last_token": {
+      "all_frames_cycles": {
+        "count": 64,
+        "min": 3293,
+        "mean": 3293.0,
+        "max": 3293,
+        "histogram": {
+          "3293": 64
+        }
+      },
+      "first_frame_cycles": {
+        "count": 1,
+        "min": 3293,
+        "mean": 3293.0,
+        "max": 3293,
+        "histogram": {
+          "3293": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 48,
+        "min": 3293,
+        "mean": 3293.0,
+        "max": 3293,
+        "histogram": {
+          "3293": 48
+        }
+      }
+    },
+    "head_output": {
+      "all_frames_cycles": {
+        "count": 64,
+        "min": 742,
+        "mean": 742.0,
+        "max": 742,
+        "histogram": {
+          "742": 64
+        }
+      },
+      "first_frame_cycles": {
+        "count": 1,
+        "min": 742,
+        "mean": 742.0,
+        "max": 742,
+        "histogram": {
+          "742": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 48,
+        "min": 742,
+        "mean": 742.0,
+        "max": 742,
+        "histogram": {
+          "742": 48
+        }
+      }
+    },
+    "serializer": {
+      "all_frames_cycles": {
+        "count": 64,
+        "min": 58,
+        "mean": 58.0,
+        "max": 58,
+        "histogram": {
+          "58": 64
+        }
+      },
+      "first_frame_cycles": {
+        "count": 1,
+        "min": 58,
+        "mean": 58.0,
+        "max": 58,
+        "histogram": {
+          "58": 1
+        }
+      },
+      "steady_frames_cycles": {
+        "count": 48,
+        "min": 58,
+        "mean": 58.0,
+        "max": 58,
+        "histogram": {
+          "58": 48
+        }
+      }
+    }
+  },
+  "boundaries": {
+    "patch_ready": {
+      "transactions": 1024,
+      "steady_transaction_intervals_cycles": {
+        "count": 767,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 767
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        10389,
+        26181,
+        41973,
+        57765,
+        73557,
+        89349,
+        105141,
+        120933,
+        136725,
+        152517,
+        168309,
+        184101,
+        199893,
+        215685,
+        231477,
+        247269,
+        263061,
+        278853,
+        294645,
+        310437,
+        326229,
+        342021,
+        357813,
+        373605,
+        389397,
+        405189,
+        420981,
+        436773,
+        452565,
+        468357,
+        484149,
+        499941,
+        515733,
+        531525,
+        547317,
+        563109,
+        578901,
+        594693,
+        610485,
+        626277,
+        642069,
+        657861,
+        673653,
+        689445,
+        705237,
+        721029,
+        736821,
+        752613,
+        768405,
+        784197,
+        799989,
+        815781,
+        831573,
+        847365,
+        863157,
+        878949,
+        894741,
+        910533,
+        926325,
+        942117,
+        957909,
+        973701,
+        989493,
+        1005285
+      ],
+      "first_frame_transaction_cycles": [
+        348,
+        371,
+        602,
+        854,
+        1106,
+        1358,
+        1610,
+        2000,
+        3480,
+        4467,
+        5454,
+        6441,
+        7428,
+        8415,
+        9402,
+        10389
+      ],
+      "first_frame_token_intervals_cycles": {
+        "count": 15,
+        "min": 23,
+        "mean": 669.4,
+        "max": 1480,
+        "histogram": {
+          "23": 1,
+          "231": 1,
+          "252": 4,
+          "390": 1,
+          "987": 7,
+          "1480": 1
+        }
+      },
+      "steady_within_frame_token_intervals_cycles": {
+        "count": 720,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 720
+        }
+      },
+      "steady_between_frame_token_intervals_cycles": {
+        "count": 47,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 47
+        }
+      }
+    },
+    "embedding_in": {
+      "transactions": 1024,
+      "steady_transaction_intervals_cycles": {
+        "count": 767,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 767
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        11375,
+        27167,
+        42959,
+        58751,
+        74543,
+        90335,
+        106127,
+        121919,
+        137711,
+        153503,
+        169295,
+        185087,
+        200879,
+        216671,
+        232463,
+        248255,
+        264047,
+        279839,
+        295631,
+        311423,
+        327215,
+        343007,
+        358799,
+        374591,
+        390383,
+        406175,
+        421967,
+        437759,
+        453551,
+        469343,
+        485135,
+        500927,
+        516719,
+        532511,
+        548303,
+        564095,
+        579887,
+        595679,
+        611471,
+        627263,
+        643055,
+        658847,
+        674639,
+        690431,
+        706223,
+        722015,
+        737807,
+        753599,
+        769391,
+        785183,
+        800975,
+        816767,
+        832559,
+        848351,
+        864143,
+        879935,
+        895727,
+        911519,
+        927311,
+        943103,
+        958895,
+        974687,
+        990479,
+        1006271
+      ],
+      "first_frame_transaction_cycles": [
+        349,
+        601,
+        853,
+        1105,
+        1357,
+        1609,
+        1999,
+        3479,
+        4466,
+        5453,
+        6440,
+        7427,
+        8414,
+        9401,
+        10388,
+        11375
+      ],
+      "first_frame_token_intervals_cycles": {
+        "count": 15,
+        "min": 252,
+        "mean": 735.0666666666667,
+        "max": 1480,
+        "histogram": {
+          "252": 5,
+          "390": 1,
+          "987": 8,
+          "1480": 1
+        }
+      },
+      "steady_within_frame_token_intervals_cycles": {
+        "count": 720,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 720
+        }
+      },
+      "steady_between_frame_token_intervals_cycles": {
+        "count": 47,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 47
+        }
+      }
+    },
+    "block0_in": {
+      "transactions": 1024,
+      "steady_transaction_intervals_cycles": {
+        "count": 767,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 767
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        13347,
+        29139,
+        44931,
+        60723,
+        76515,
+        92307,
+        108099,
+        123891,
+        139683,
+        155475,
+        171267,
+        187059,
+        202851,
+        218643,
+        234435,
+        250227,
+        266019,
+        281811,
+        297603,
+        313395,
+        329187,
+        344979,
+        360771,
+        376563,
+        392355,
+        408147,
+        423939,
+        439731,
+        455523,
+        471315,
+        487107,
+        502899,
+        518691,
+        534483,
+        550275,
+        566067,
+        581859,
+        597651,
+        613443,
+        629235,
+        645027,
+        660819,
+        676611,
+        692403,
+        708195,
+        723987,
+        739779,
+        755571,
+        771363,
+        787155,
+        802947,
+        818739,
+        834531,
+        850323,
+        866115,
+        881907,
+        897699,
+        913491,
+        929283,
+        945075,
+        960867,
+        976659,
+        992451,
+        1008243
+      ],
+      "first_frame_transaction_cycles": [
+        601,
+        853,
+        1105,
+        1413,
+        1997,
+        3477,
+        4464,
+        5451,
+        6438,
+        7425,
+        8412,
+        9399,
+        10386,
+        11373,
+        12360,
+        13347
+      ],
+      "first_frame_token_intervals_cycles": {
+        "count": 15,
+        "min": 252,
+        "mean": 849.7333333333333,
+        "max": 1480,
+        "histogram": {
+          "252": 2,
+          "308": 1,
+          "584": 1,
+          "987": 10,
+          "1480": 1
+        }
+      },
+      "steady_within_frame_token_intervals_cycles": {
+        "count": 720,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 720
+        }
+      },
+      "steady_between_frame_token_intervals_cycles": {
+        "count": 47,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 47
+        }
+      }
+    },
+    "block1_in": {
+      "transactions": 1024,
+      "steady_transaction_intervals_cycles": {
+        "count": 767,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 767
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        18282,
+        34074,
+        49866,
+        65658,
+        81450,
+        97242,
+        113034,
+        128826,
+        144618,
+        160410,
+        176202,
+        191994,
+        207786,
+        223578,
+        239370,
+        255162,
+        270954,
+        286746,
+        302538,
+        318330,
+        334122,
+        349914,
+        365706,
+        381498,
+        397290,
+        413082,
+        428874,
+        444666,
+        460458,
+        476250,
+        492042,
+        507834,
+        523626,
+        539418,
+        555210,
+        571002,
+        586794,
+        602586,
+        618378,
+        634170,
+        649962,
+        665754,
+        681546,
+        697338,
+        713130,
+        728922,
+        744714,
+        760506,
+        776298,
+        792090,
+        807882,
+        823674,
+        839466,
+        855258,
+        871050,
+        886842,
+        902634,
+        918426,
+        934218,
+        950010,
+        965802,
+        981594,
+        997386,
+        1013178
+      ],
+      "first_frame_transaction_cycles": [
+        3477,
+        4464,
+        5451,
+        6438,
+        7425,
+        8412,
+        9399,
+        10386,
+        11373,
+        12360,
+        13347,
+        14334,
+        15321,
+        16308,
+        17295,
+        18282
+      ],
+      "first_frame_token_intervals_cycles": {
+        "count": 15,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 15
+        }
+      },
+      "steady_within_frame_token_intervals_cycles": {
+        "count": 720,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 720
+        }
+      },
+      "steady_between_frame_token_intervals_cycles": {
+        "count": 47,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 47
+        }
+      }
+    },
+    "head_in": {
+      "transactions": 1024,
+      "steady_transaction_intervals_cycles": {
+        "count": 767,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 767
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        21158,
+        36950,
+        52742,
+        68534,
+        84326,
+        100118,
+        115910,
+        131702,
+        147494,
+        163286,
+        179078,
+        194870,
+        210662,
+        226454,
+        242246,
+        258038,
+        273830,
+        289622,
+        305414,
+        321206,
+        336998,
+        352790,
+        368582,
+        384374,
+        400166,
+        415958,
+        431750,
+        447542,
+        463334,
+        479126,
+        494918,
+        510710,
+        526502,
+        542294,
+        558086,
+        573878,
+        589670,
+        605462,
+        621254,
+        637046,
+        652838,
+        668630,
+        684422,
+        700214,
+        716006,
+        731798,
+        747590,
+        763382,
+        779174,
+        794966,
+        810758,
+        826550,
+        842342,
+        858134,
+        873926,
+        889718,
+        905510,
+        921302,
+        937094,
+        952886,
+        968678,
+        984470,
+        1000262,
+        1016054
+      ],
+      "first_frame_transaction_cycles": [
+        6353,
+        7340,
+        8327,
+        9314,
+        10301,
+        11288,
+        12275,
+        13262,
+        14249,
+        15236,
+        16223,
+        17210,
+        18197,
+        19184,
+        20171,
+        21158
+      ],
+      "first_frame_token_intervals_cycles": {
+        "count": 15,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 15
+        }
+      },
+      "steady_within_frame_token_intervals_cycles": {
+        "count": 720,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 720
+        }
+      },
+      "steady_between_frame_token_intervals_cycles": {
+        "count": 47,
+        "min": 987,
+        "mean": 987.0,
+        "max": 987,
+        "histogram": {
+          "987": 47
+        }
+      }
+    },
+    "head_output_in": {
+      "transactions": 64,
+      "steady_transaction_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        24451,
+        40243,
+        56035,
+        71827,
+        87619,
+        103411,
+        119203,
+        134995,
+        150787,
+        166579,
+        182371,
+        198163,
+        213955,
+        229747,
+        245539,
+        261331,
+        277123,
+        292915,
+        308707,
+        324499,
+        340291,
+        356083,
+        371875,
+        387667,
+        403459,
+        419251,
+        435043,
+        450835,
+        466627,
+        482419,
+        498211,
+        514003,
+        529795,
+        545587,
+        561379,
+        577171,
+        592963,
+        608755,
+        624547,
+        640339,
+        656131,
+        671923,
+        687715,
+        703507,
+        719299,
+        735091,
+        750883,
+        766675,
+        782467,
+        798259,
+        814051,
+        829843,
+        845635,
+        861427,
+        877219,
+        893011,
+        908803,
+        924595,
+        940387,
+        956179,
+        971971,
+        987763,
+        1003555,
+        1019347
+      ]
+    },
+    "serialize_in": {
+      "transactions": 64,
+      "steady_transaction_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "steady_frame_completion_intervals_cycles": {
+        "count": 47,
+        "min": 15792,
+        "mean": 15792.0,
+        "max": 15792,
+        "histogram": {
+          "15792": 47
+        }
+      },
+      "frame_completion_cycles": [
+        25193,
+        40985,
+        56777,
+        72569,
+        88361,
+        104153,
+        119945,
+        135737,
+        151529,
+        167321,
+        183113,
+        198905,
+        214697,
+        230489,
+        246281,
+        262073,
+        277865,
+        293657,
+        309449,
+        325241,
+        341033,
+        356825,
+        372617,
+        388409,
+        404201,
+        419993,
+        435785,
+        451577,
+        467369,
+        483161,
+        498953,
+        514745,
+        530537,
+        546329,
+        562121,
+        577913,
+        593705,
+        609497,
+        625289,
+        641081,
+        656873,
+        672665,
+        688457,
+        704249,
+        720041,
+        735833,
+        751625,
+        767417,
+        783209,
+        799001,
+        814793,
+        830585,
+        846377,
+        862169,
+        877961,
+        893753,
+        909545,
+        925337,
+        941129,
+        956921,
+        972713,
+        988505,
+        1004297,
+        1020089
+      ]
+    }
+  },
+  "kernel_output": {
+    "frame_completion_cycles": [
+      25251,
+      41043,
+      56835,
+      72627,
+      88419,
+      104211,
+      120003,
+      135795,
+      151587,
+      167379,
+      183171,
+      198963,
+      214755,
+      230547,
+      246339,
+      262131,
+      277923,
+      293715,
+      309507,
+      325299,
+      341091,
+      356883,
+      372675,
+      388467,
+      404259,
+      420051,
+      435843,
+      451635,
+      467427,
+      483219,
+      499011,
+      514803,
+      530595,
+      546387,
+      562179,
+      577971,
+      593763,
+      609555,
+      625347,
+      641139,
+      656931,
+      672723,
+      688515,
+      704307,
+      720099,
+      735891,
+      751683,
+      767475,
+      783267,
+      799059,
+      814851,
+      830643,
+      846435,
+      862227,
+      878019,
+      893811,
+      909603,
+      925395,
+      941187,
+      956979,
+      972771,
+      988563,
+      1004355,
+      1020147
+    ],
+    "all_frame_intervals_cycles": {
+      "count": 63,
+      "min": 15792,
+      "mean": 15792.0,
+      "max": 15792,
+      "histogram": {
+        "15792": 63
+      }
+    },
+    "steady_frame_intervals_cycles": {
+      "count": 47,
+      "min": 15792,
+      "mean": 15792.0,
+      "max": 15792,
+      "histogram": {
+        "15792": 47
+      }
+    }
+  },
+  "schedule_audit": {
+    "status": "pass",
+    "original_rules_checked": 490,
+    "added_rule": "test_dut_profileTick",
+    "original_predicates_and_blockers_equal": true,
+    "original_logical_execution_order_equal": true
+  },
+  "raw_event_log": "results/profile/bluesim/stream.log",
+  "stage_spans_csv": "results/profile/bluesim/stages.csv",
+  "evidence_sha256": {
+    "results/profile/bluesim/stream.log": "b0c929c86779c3360e89619b0676c834dc3974ae3871a86abdff7449aa11d3d9",
+    "results/profile/bluesim/stream.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/perf/bluesim/stream.log": "c2f63aa9c139d5c0e80f77e6ecf0eba3c05d73c9837bf8afc730aa30afde3add",
+    "results/perf/bluesim/stream.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "generated/test_input.hex": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
+    "generated/test_expected.hex": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192",
+    "results/perf/bluesim/stream.sched": "686507d27897e9366580cb37d6273d14198f9df2f7018e3dc8671abf011c3de7",
+    "results/profile/bluesim/stream.sched": "b543323d670fe998298eff1f42d9e1f0fc354ec99892ae1b4da06e3b5d82c969"
+  },
+  "source_sha256": {
+    "bsv/SwayBaseline.bsv": "55fea62983be88acacc1fa3b810c70fefc020392b5d9d196f5ee76689a21c3f7",
+    "bsv/SwayBlock.bsv": "0eeac6ce065a28b2b719ea6b14199f3f9f8349c5b10917bc3cca766691bdbd9f",
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayCoeffRom.bsv": "7ccb02126476af94269e682a7576e5591224702398154a36cca95406f9982ee7",
+    "bsv/SwayHeadLinear.bsv": "2d562abd5a5844911135b74cf34bf2702992234796c1f43d524b3e32cb2de908",
+    "bsv/SwayLinear.bsv": "dc51bbd6ca49ff88692c9cea28ae6b67d1267a16f89915758c3b01c43543818e",
+    "bsv/SwayLookup.bsv": "3ebdb3a553b2babba840a304a0e48a0a7690a8dae289050539d9f368d92464ae",
+    "bsv/SwayNorm.bsv": "8ab8daea1ac6c7db6cb303eb8e7cf0ea49a3be1defa64593cd8149b3ccd41686",
+    "bsv/SwayReset.bsv": "73de2c88ceb119d24ad4dd335538923f5f2484048368d26d1c17e9b15a167f7c",
+    "bsv/SwayScan.bsv": "936c1215e9573e56574055d789b24c81c3ea24a86687c764c35f405e96f80409",
+    "bsv/SwayTypes.bsv": "26a5fca585f7297de5e88566544c7016fe81ba8fe64cc35f6347e6b1d9d0f8c0",
+    "bsv/Top.bsv": "968f214eb4c3ace35361cbefb6bac8c197bc62de7207a596ab8547e404241147",
+    "rtl/SwayCoeffRom.v": "dd8de8834ed3b4a619f61ffe6a93792006a28629a9b7ce5b45c5cf3dff7ac4ae",
+    "rtl/SwayReset.v": "6850c175449b41206167176b506562b6ca6e2bad51a5a5d333860f02e5ebd60d",
+    "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "generated/SwayParameters.bsv": "7ed824b6d8ad86e50a0d7c217bcf17d51b92dbeac3152a4ed3da3be1ba292689",
+    "generated/SwayCoeffRomInit.vh": "8f944b4e1863801b69f90cc4df9139fb1b107020e7b8af727001ec2610a3bc4f",
+    "generated/linear_l0_lane0.hex": "4daeba329aada85b91a65b22e300cdfd03d4c8c1a415a1dc33530a72110494e3",
+    "generated/linear_l0_lane1.hex": "9d98a00ae8a05f02e90c7af9bf45f01ad150c9503f1af42c07d5e90bc73f4558",
+    "generated/linear_l0_lane2.hex": "8e332292097bfc30d7230026974c54e7d67ec4201b77ddcf067c00363233e2ea",
+    "generated/linear_l0_lane3.hex": "ac0c6f0d5cb67a30a3ed6891fdce329c47ed7f009c4126b00d1aabd125b68a1d",
+    "generated/linear_l10_lane0.hex": "72158b488f58298f4c25d58694df237c2dbad13667aaa1f927b2eb7a14c2269d",
+    "generated/linear_l10_lane1.hex": "94a1655251c80163a56997711afc75282e484591d75a93dc8ccb0ff9a8311752",
+    "generated/linear_l10_lane2.hex": "7c43fcdb186387c1caf7be15a142d8fd09e3e2317db7cad844c322cf3bc4be82",
+    "generated/linear_l10_lane3.hex": "f66741138e8bd42b0056ffd1c3620ad2042ee0aa451d04f24f141b384d6b3423",
+    "generated/linear_l1_lane0.hex": "dbadce3dff8aefd0aba9b12a7f95bf2a9a506334a9ee68abd1fd468be522ca98",
+    "generated/linear_l1_lane1.hex": "270658e151c028b9172c0eb3f04f5e1bfdd1f5565b13b2ef07014cfcbd89b953",
+    "generated/linear_l1_lane2.hex": "3b494ef6224cdfb1dc3fcc1dc260790565b5285c2cc351ad0435d9dd4d1a62c2",
+    "generated/linear_l1_lane3.hex": "2bf67c479e04299c5905c8c464c091a0c6b8692c3aabd6de3f04b565de6a3c8d",
+    "generated/linear_l2_lane0.hex": "639ed91f79bdd25da91e7b98b92ff6d4c0e012635d46dbebfe393cd51764ed05",
+    "generated/linear_l2_lane1.hex": "c1364512a478755b29eb7ce816acc13a4b13ea318318ebe649053b916088764e",
+    "generated/linear_l2_lane2.hex": "0a08afd265d94e7ed84cce01a8363eadc947297997f4e5d22f4d2044e210bbd4",
+    "generated/linear_l2_lane3.hex": "888e7d57b022f003c9b5c5bf14f0554bde352a042ad733920a3b3267636e727b",
+    "generated/linear_l3_lane0.hex": "66c3ecd1ca899c551453fc0550bbf92d602baa75e8caa87c0629ea784c932560",
+    "generated/linear_l3_lane1.hex": "6a835e2b5ddc085390a9b66ad079e0902dc2f3e6bdd12ceec5714762181ca241",
+    "generated/linear_l3_lane2.hex": "3036e907c7ff770d2cfc00da00322a8cdfe0815ea66b91a9e5c7e3180a36bcb1",
+    "generated/linear_l3_lane3.hex": "446eaba09a0125149564499af846a92782d631f28fa46ce95c987f85f9a0f686",
+    "generated/linear_l4_lane0.hex": "987468e1de90b1b9b5a745da33af9fc4ad4f19226080065559d490df432c87eb",
+    "generated/linear_l4_lane1.hex": "4f0557969ddcc39db97d065d810209376458ce0e39aba976c7e03af628cd9705",
+    "generated/linear_l4_lane2.hex": "8c70d07c2057480321a9d459528b17790c747a40aa23333932f6a9b4a6e01235",
+    "generated/linear_l4_lane3.hex": "5ca2c7fbcd30db25a549239fd4c9bb6840e58ac7e862af34ccdf7f656b94a5d0",
+    "generated/linear_l5_lane0.hex": "a20208325df63146ddefd44fdbf6e153edf535daa965aebcfff906bdf359bfc4",
+    "generated/linear_l5_lane1.hex": "4cd4087aaea01f52dd574e85b864636b665fb770e8542a91c3c737feed2732fd",
+    "generated/linear_l5_lane2.hex": "4e1f2779685f941324662ac098bc75a184056452806e4d73410e1a5309043f25",
+    "generated/linear_l5_lane3.hex": "6d642b4141c88ecc0cf3585b465523535dca323650ce4667b7e881e5c2b5d698",
+    "generated/linear_l6_lane0.hex": "8c963e2576423c8d4e68e8ca46c0c1f214d2b89bc76d6579108a6b24c8530c0f",
+    "generated/linear_l6_lane1.hex": "d4773022284a57ff13e019a7dd50b8e362cd42b366952f6636d474609e7f0b7f",
+    "generated/linear_l6_lane2.hex": "d2f7251f24d9147812d78f70786dc7176a3d53cc883fa60587d7ddfe31db8d77",
+    "generated/linear_l6_lane3.hex": "02b10eec1007e8a603cb7ddcf857379905517abb51c4eb14c8334d2ae60b353d",
+    "generated/linear_l7_lane0.hex": "b4a4c99032f3049ac9aa83ff251fa0ad72057d0cf007d1ac77e50cded3103ef0",
+    "generated/linear_l7_lane1.hex": "903449e7b929f44e4fa74704cb28b868b222da84aad993b75c40260b11bc49b8",
+    "generated/linear_l7_lane2.hex": "52465946a519723dadde2b24aec338c01b457d7be17220f92657904d6ce3bf2b",
+    "generated/linear_l7_lane3.hex": "3c7442e3cabaf27e53be4e3873939585cee41f339bae1ac59be3435198804c78",
+    "generated/linear_l8_lane0.hex": "173c8026661bfa9c59bdca78f15dad09620be7c6f350ab7ca760464351334d45",
+    "generated/linear_l8_lane1.hex": "edf8fb66d014699742e924bd075f9720540ff2c2a574b55383d214ff2099c6a5",
+    "generated/linear_l8_lane2.hex": "d1afcbe194791801b7cb3345c599643c1572732a5d2fc8c0228b09ba534ea09f",
+    "generated/linear_l8_lane3.hex": "572ad9007360170b5be94822b629f569b2b5afc546bc767895f1bbe83908f6c5",
+    "generated/linear_l9_lane0.hex": "ad8a08873627da8b6622e9d1865d1638f5152c5662a68c1b974e5fde1c57ce29",
+    "generated/linear_l9_lane1.hex": "0a067d7dfa37255ece16aea4c15873ce39451b7f599b2449af245ea6f138c3be",
+    "generated/linear_l9_lane2.hex": "2dc14699020797ce99d9524d397da18740566a3f2619d76adce0803a764465e6",
+    "generated/linear_l9_lane3.hex": "cd1df13d901493213d9106bd25af81d8300294a4e59d28cb7cb738624e9310f5",
+    "generated/test_expected.hex": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192",
+    "generated/test_input.hex": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
+    "sim/TbSwayPerf.bsv": "723fd14f73d13292a87e9a2dfd41f03d0512d83f224e710a519243844633c5d4",
+    "Makefile": "07cf3b1fc06560e0eefd93f8b9d89af08ecab70218824e6f4b718dd2e09fb12f",
+    "perf.mk": "fb00429b69d24e52e71aa1af03afecc64090fd2c33b06efe7d1a012dadeb2e67",
+    "reference/check_perf.py": "c8d225f054d9980b3918ff27712abf52ff5f5fc3fd1515a05b961c4765489b1e",
+    "reference/check_profile.py": "db297689f5a664389f04eb2f0a024a5084cf194430a3b8781ecb3eeaac8c5b03"
+  },
+  "stage_spans_csv_sha256": "97f0968d2b0dcd96f83c6c9bd6646c7e81e584188a54e8b4696dc761dfabf742"
+}
