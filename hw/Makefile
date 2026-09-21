@@ -4,11 +4,18 @@ SHELL := /bin/bash
 .NOTPARALLEL:
 PROJECT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PROJECT_NAME := sway_mars
-RESULTS_DIR ?= $(PROJECT_DIR)/results
 INPUT_PROJECTION_VARIANT ?= B0
 ifneq ($(filter $(INPUT_PROJECTION_VARIANT),B0 B1 B2),$(INPUT_PROJECTION_VARIANT))
 $(error INPUT_PROJECTION_VARIANT must be B0, B1, or B2)
 endif
+# Frozen B0/B1 packages preserve the RTL used by their measured builds. B2 uses
+# the current package; selecting only flags on that file changes generated RTL.
+VARIANT_SUFFIX := $(if $(filter B0,$(INPUT_PROJECTION_VARIANT)),,-$(INPUT_PROJECTION_VARIANT))
+LINEAR_VARIANT_PATH := $(if $(filter B0 B1,$(INPUT_PROJECTION_VARIANT)),$(PROJECT_DIR)/variants/$(INPUT_PROJECTION_VARIANT),)
+LINEAR_SOURCE := $(if $(LINEAR_VARIANT_PATH),$(LINEAR_VARIANT_PATH),$(PROJECT_DIR)/bsv)/SwayLinear.bsv
+RESULTS_DIR ?= $(PROJECT_DIR)/results$(VARIANT_SUFFIX)
+BUILD_DIR ?= $(PROJECT_DIR)/build$(VARIANT_SUFFIX)
+BSIM_DIR ?= $(PROJECT_DIR)/bsim$(VARIANT_SUFFIX)
 BLUEYOSYS ?= $(abspath $(PROJECT_DIR)/../../blueyosys)
 ROOTDIR := $(BLUEYOSYS)
 BOARD ?= ulx3s-85f
@@ -16,16 +23,16 @@ TOP_SOURCE := $(PROJECT_DIR)/bsv/Top.bsv
 TOP_MODULE := mkTop
 BSIM_TOP_SOURCE := $(PROJECT_DIR)/sim/TbSway.bsv
 BSIM_TOP_MODULE := mkTbSway
-EXTRA_BSV_PATHS := $(PROJECT_DIR)/bsv $(PROJECT_DIR)/generated $(PROJECT_DIR)/sim
+EXTRA_BSV_PATHS := $(LINEAR_VARIANT_PATH) $(PROJECT_DIR)/bsv $(PROJECT_DIR)/generated $(PROJECT_DIR)/sim
 NEEDS_INOUT_FIX := 0
 BSIM_CPPFILES :=
 BSIM_CXXFLAGS := -Xc++ -O1
 POST_RUN = $(PYTHON) reference/check_sim.py system.log --output $(RESULTS_DIR)/$(SIM_BACKEND).json --backend $(SIM_BACKEND) --stderr output.log && cp system.log $(RESULTS_DIR)/$(SIM_BACKEND).log
 BSC_RUNTIME_DIR ?= $(shell $(BSC) -help 2>/dev/null | sed -n 's/^Bluespec directory: //p')/Verilog
 YOSYS_DATA_DIR ?= $(shell yosys-config --datdir 2>/dev/null)
-RESET_SIM_DIR ?= $(PROJECT_DIR)/reset-sim
-VERILATOR_RTL_DIR ?= $(PROJECT_DIR)/verilator-rtl
-VERILATOR_SIM_DIR ?= $(PROJECT_DIR)/verilator
+RESET_SIM_DIR ?= $(PROJECT_DIR)/reset-sim$(VARIANT_SUFFIX)
+VERILATOR_RTL_DIR ?= $(PROJECT_DIR)/verilator-rtl$(VARIANT_SUFFIX)
+VERILATOR_SIM_DIR ?= $(PROJECT_DIR)/verilator$(VARIANT_SUFFIX)
 VERILATOR_JOBS ?= 4
 
 ifeq ($(wildcard $(ROOTDIR)/build.mk),)

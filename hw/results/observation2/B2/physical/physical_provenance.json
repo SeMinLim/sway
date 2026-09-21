@@ -1,0 +1,111 @@
+{
+  "variant": "B2",
+  "phase": "physical_audits_pass_route_running",
+  "captured_utc": "2026-09-21T15:14:51.040735+00:00",
+  "synthesis_log_sha256": "50c582c453aac92d59bee11b42da776fee1ffd538e0dfbc4934c4467c3051daa",
+  "build_files": {
+    "BRAM2.v": {
+      "bytes": 3809,
+      "sha256": "1644a962bd70d8155b50274a4f99ae73bd6e10cc366d9a4c50d1a548ad4bddda"
+    },
+    "ClockDiv.v": {
+      "bytes": 4592,
+      "sha256": "36966d220e82453e5ebb0c7ae68fc9888dc7aab59d8c77aaf06e22ea518dfd4e"
+    },
+    "FIFO1.v": {
+      "bytes": 3403,
+      "sha256": "2d51b68e9a7f6a7f4dc3a47cdd383d85a8519ca6a34ec93f2cf5ccc8b4418955"
+    },
+    "FIFO2.v": {
+      "bytes": 5618,
+      "sha256": "1f9fd7c208e38252743ca3db7139e9aad7c92be3ac27782015d1d6f5be6b5afd"
+    },
+    "MakeResetA.v": {
+      "bytes": 2832,
+      "sha256": "ed45d83a2aa5d1988e237a499928a1103ac15e4437e96729467ca5ec0c4f69fa"
+    },
+    "RegFile.v": {
+      "bytes": 3103,
+      "sha256": "7de616d2aff8b2411994abadf3876aba8bd64e753741c73d2c0ea19fff0a7db8"
+    },
+    "RegFileLoad.v": {
+      "bytes": 3017,
+      "sha256": "71555757cdf742b318e363d9c7cc68f9d35b51db7a7b02c88a39e9d238a6fe9e"
+    },
+    "ResetInverter.v": {
+      "bytes": 315,
+      "sha256": "34d4347e3c72294ec1bfd1e63f2faf6511c97750d4f4e3621bf2c39347647383"
+    },
+    "RevertReg.v": {
+      "bytes": 312,
+      "sha256": "a919dec21d4d6f1a0eac547e4f536dc3757abc8f9b71e843c40fba90b764c6dc"
+    },
+    "SizedFIFO.v": {
+      "bytes": 9906,
+      "sha256": "01c029aa4ca78625e316de58781489d1d85122861e405f15a8a6bf51023f18fb"
+    },
+    "SwayCoeffRom.v": {
+      "bytes": 4705,
+      "sha256": "dd8de8834ed3b4a619f61ffe6a93792006a28629a9b7ce5b45c5cf3dff7ac4ae"
+    },
+    "SwayCoeffRomInit.vh": {
+      "bytes": 204252,
+      "sha256": "8f944b4e1863801b69f90cc4df9139fb1b107020e7b8af727001ec2610a3bc4f"
+    },
+    "SwayReset.v": {
+      "bytes": 765,
+      "sha256": "6850c175449b41206167176b506562b6ca6e2bad51a5a5d333860f02e5ebd60d"
+    },
+    "SyncFIFO.v": {
+      "bytes": 13060,
+      "sha256": "4cf24a17d12abe55b99e2b024565e02fa35179c40dad9f46b44f0f0454c4d460"
+    },
+    "SyncResetA.v": {
+      "bytes": 2811,
+      "sha256": "ca89307c89636d0339d1b4d9fc51fe30087ead8d56381acc1c5219dded07150f"
+    },
+    "inout16.v": {
+      "bytes": 280,
+      "sha256": "5c49a121a64f3bde851e1c41185a68221a54e0e573e3617b38d10e04ddf9dda9"
+    },
+    "mkTop.json": {
+      "bytes": 101148390,
+      "sha256": "2bbfd854825233d0815e12c34affbd7dc332de250fbede7d841055c648f84fcb"
+    },
+    "mkTop.v": {
+      "bytes": 3132568,
+      "sha256": "6b15f2f94dfd30c555fc44c29a9182a693f1635029c6ad5ec5d81479facbab5f"
+    },
+    "mkTop.yosys.json": {
+      "bytes": 1541,
+      "sha256": "ea7695ec6fcc4b38c258ed0d61302c75668d48acfcb1edcd607dc47163982d0f"
+    },
+    "mkTop.yosys.rpt": {
+      "bytes": 409,
+      "sha256": "3df8adbf3c914316aa449ca485654838f6b512c27d0343ce5c7a9c4287956c04"
+    },
+    "mult18x18d.v": {
+      "bytes": 723,
+      "sha256": "1da78440b318046d064e57012b94d3b7e532f12e90e3cfea9ad9daa1ed4f83bc"
+    },
+    "pll_fastclk.v": {
+      "bytes": 1156,
+      "sha256": "70e772c23e0ad4148e3de60893862ca5b882441e0153a0651e3e05df5e75e10f"
+    },
+    "quantized_mult18x18d.v": {
+      "bytes": 3217,
+      "sha256": "f2012dd89083be4eb0df86a6aae339d62c4604f55826683bd133f89cf6cae325"
+    },
+    "sdram.v": {
+      "bytes": 4961,
+      "sha256": "180595941b3569f4ad42417c0063b7be2a7422703069a1528d222e18128867f6"
+    },
+    "ulx3s.lpf": {
+      "bytes": 23261,
+      "sha256": "93db29a950de4064ed124a09b8175ea9034bab8c6ef50f849167a42bd04c8bea"
+    }
+  },
+  "toolchain_record": "../../toolchain.json",
+  "frozen_verilog_record": "verilog.json",
+  "synthesis_command": "make -C hw netlist -o verilog INPUT_PROJECTION_VARIANT=B2 BUILD_DIR=<frozen B2 physical directory> RESULTS_DIR=<B2 physical results directory> BLUEYOSYS=<pinned toolchains/blueyosys> BSC_RUNTIME_DIR=<pinned toolchains/bsc-runtime/Verilog> PYTHON=<primary runtime python3>"
+}

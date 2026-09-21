@@ -1,0 +1,29 @@
+{
+  "variant": "B2",
+  "flow": "physical",
+  "status": "environment_interruption_no_timing_verdict",
+  "captured_utc": "2026-09-21T16:16:30.905111+00:00",
+  "reason": "Previous execution environment no longer has a live nextpnr process/session; preserved incomplete logs before resuming the exact same frozen netlist and route parameters.",
+  "interrupted_logs": {
+    "nextpnr.interrupted-20260921.log": {
+      "bytes": 37542,
+      "sha256": "8dc56fbc5db20ea80f6e167fd79e6edde3bf8c3eada12623103b09c71b59c8e4",
+      "last_mtime_utc": "2026-09-21T16:13:02.162821+00:00"
+    },
+    "route_build.interrupted-20260921.log": {
+      "bytes": 37622,
+      "sha256": "586aeae6ab783139f97ffb83bd0e080280f76523a6e1155b1a991e46b69910ba",
+      "last_mtime_utc": "2026-09-21T16:13:02.162821+00:00"
+    }
+  },
+  "physical_netlist_sha256": "96d39c64145fa911a5e035626e10347e082589840974ebc7613d81f2be9c26b3",
+  "restart_changes": {
+    "netlist": false,
+    "constraints": false,
+    "seed": false,
+    "toolchain": false,
+    "route_options": false
+  },
+  "seed": "default",
+  "completed_timing_attempts_before_restart": 0
+}

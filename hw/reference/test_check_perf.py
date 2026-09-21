@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import shutil
 from pathlib import Path
 import subprocess
@@ -174,10 +175,11 @@ class PerfCheckerTests(unittest.TestCase):
             root = Path(directory)
             (root / "reference").mkdir()
             (root / "sim").mkdir()
+            (root / "bsv").mkdir()
             script = root / "reference/check_perf.py"
             shutil.copyfile(Path(__file__).with_name("check_perf.py"), script)
             # Synthetic-only source placeholders exercise report provenance.
-            for name in ("Makefile", "perf.mk", "sim/TbSwayPerf.bsv"):
+            for name in ("Makefile", "perf.mk", "sim/TbSwayPerf.bsv", "bsv/SwayLinear.bsv"):
                 (root / name).write_text("synthetic checker test\n")
             (root / "input.hex").write_text("00\n" * (2 * 320))
             single, expected = transcript(1)
@@ -204,6 +206,7 @@ class PerfCheckerTests(unittest.TestCase):
             self.assertEqual(report["clock_mhz"], 100)
             self.assertEqual(report["metrics"]["steady_window"]["frames_per_second_at_configured_clock"], 100000)
             self.assertIn("sim/TbSwayPerf.bsv", report["source_sha256"])
+            self.assertIn("bsv/SwayLinear.bsv", report["source_sha256"])
             self.assertIn("not measured board performance", report["scope"])
             (root / "timing.json").write_text('{"status": "fail"}')
             result = subprocess.run(command, text=True, capture_output=True, check=False)
@@ -218,6 +221,22 @@ class PerfCheckerTests(unittest.TestCase):
             self.assertNotIn("frames_per_second_at_configured_clock", report["metrics"]["steady_window"])
             self.assertNotIn(str(root / "timing.json"), report["evidence_sha256"])
             self.assertNotIn("frames/s", result.stdout)
+            # A selected overlay must replace the current main package in the
+            # manifest, including when the overlay is outside the hardware tree.
+            for overlay in (root / "variants/B1/SwayLinear.bsv", root.parent / (root.name + "_overlay.bsv")):
+                with self.subTest(overlay=overlay):
+                    overlay.parent.mkdir(parents=True, exist_ok=True)
+                    overlay.write_text("different selected SwayLinear package\n")
+                    try:
+                        result = subprocess.run(command + ["--cycles-only", "--linear-source", str(overlay)],
+                                                text=True, capture_output=True, check=False)
+                        self.assertEqual(result.returncode, 0, result.stderr)
+                        manifest = json.loads((root / "summary.json").read_text())["source_sha256"]
+                        key = str(overlay.relative_to(root)) if overlay.is_relative_to(root) else str(overlay)
+                        self.assertEqual(manifest[key], hashlib.sha256(overlay.read_bytes()).hexdigest())
+                        self.assertNotIn("bsv/SwayLinear.bsv", manifest)
+                    finally:
+                        overlay.unlink()
 
     def test_failed_cli_removes_stale_summary(self):
         with tempfile.TemporaryDirectory() as directory:

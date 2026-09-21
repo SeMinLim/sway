@@ -1,5 +1,5 @@
 {
-  "status": "verilog_pass_physical_pending",
+  "status": "physical_timing_fail",
   "variant": "B1",
   "bsc_version": "2026.01 build 9bd39e6f",
   "blueyosys_commit": "3ea0afea56c7c73b8ed59ec0edd256c409466788",
@@ -10,9 +10,9 @@
   "source_hashes_file": "source_hashes.json",
   "source_hashes_sha256": "ca4a8e54e30ebdc61e14467da25f7f1dc1dc7b6d66d6e16574771f293367b286",
   "profile_identifiers_absent": true,
-  "synthesis_status": "not_run",
-  "routing_status": "not_run",
-  "timing_status": "not_measured",
-  "blocking_reason": "Required OSS CAD Suite binaries are absent; dependency download was interrupted when network approval was cancelled before a decision was returned.",
-  "working_directory": "/workspace/scratch/2dc194a6b0cd/sway_observation2"
+  "synthesis_status": "pass",
+  "routing_status": "completed",
+  "timing_status": "fail",
+  "working_directory": "/workspace/scratch/2dc194a6b0cd/sway_observation2",
+  "physical_toolchain_record": "../../toolchain.json"
 }

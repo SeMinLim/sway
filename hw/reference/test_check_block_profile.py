@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
+import json
 import subprocess
 import sys
 import tempfile
@@ -230,6 +232,28 @@ class BlockCheckerTests(unittest.TestCase):
                         actual.replace(next(iter(ADDED_RULES)), "unexpected_rule")):
             with self.assertRaises(AssertionError):
                 check_schedules(schedule(True), changed)
+
+    def test_cli_records_selected_linear_overlay(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            overlay = root / "SwayLinear.bsv"
+            overlay.write_text("selected internal-profile package\n")
+            for name, text in (("profile.log", self.text), ("baseline.log", self.baseline), ("perf.log", self.perf), ("stderr.log", "")):
+                (root / name).write_text(text)
+            (root / "input.hex").write_text("00\n" * (2 * 320))
+            (root / "expected.hex").write_text("".join(f"{value & 255:02x}\n" for value in self.expected))
+            result = subprocess.run([sys.executable, str(Path(__file__).with_name("check_block_profile.py")),
+                "--log", str(root / "profile.log"), "--stderr", str(root / "stderr.log"),
+                "--baseline-log", str(root / "baseline.log"), "--baseline-stderr", str(root / "stderr.log"),
+                "--perf-log", str(root / "perf.log"), "--perf-stderr", str(root / "stderr.log"),
+                "--input", str(root / "input.hex"), "--expected", str(root / "expected.hex"),
+                "--linear-source", str(overlay), "--output", str(root / "summary.json"),
+                "--stages", str(root / "stages.csv"), "--sample", str(root / "sample.csv")],
+                text=True, capture_output=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            manifest = json.loads((root / "summary.json").read_text())["source_sha256"]
+            self.assertEqual(manifest[str(overlay)], hashlib.sha256(overlay.read_bytes()).hexdigest())
+            self.assertNotIn("bsv/SwayLinear.bsv", manifest)
 
     def test_failed_cli_removes_stale_outputs(self):
         with tempfile.TemporaryDirectory() as directory:

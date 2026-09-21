@@ -34,6 +34,25 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def hardware_sources(hw_dir: Path, linear_source: Path) -> list[Path]:
+    """List hardware inputs with only the SwayLinear package actually compiled."""
+    unselected_linear = (hw_dir / "bsv/SwayLinear.bsv").resolve()
+    paths = [path for pattern in ("bsv/*.bsv", "rtl/*.v", "generated/*.bsv", "generated/*.vh", "generated/*.hex")
+             for path in sorted(hw_dir.glob(pattern)) if path.resolve() != unselected_linear]
+    paths.append(linear_source.resolve())
+    return paths
+
+
+def source_manifest(hw_dir: Path, paths: list[Path]) -> dict[str, str]:
+    result = {}
+    hw_dir = hw_dir.resolve()
+    for path in paths:
+        resolved = path.resolve()
+        name = str(resolved.relative_to(hw_dir)) if resolved.is_relative_to(hw_dir) else str(resolved)
+        result[name] = sha256(path)
+    return result
+
+
 def check_log(text: str, stderr: str, expected: list[int], fixture_frames: int,
               frames: int) -> dict:
     if frames <= 0 or fixture_frames <= 0 or len(expected) != fixture_frames * OUTPUT_WORDS:
@@ -146,6 +165,7 @@ def summarize(single: dict, stream: dict, clock_mhz: float | None = None) -> dic
 
 
 def main() -> None:
+    hw_dir = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--single-log", type=Path, required=True)
     parser.add_argument("--single-stderr", type=Path, required=True)
@@ -157,14 +177,16 @@ def main() -> None:
     parser.add_argument("--cycles-only", action="store_true",
                         help="Validate and report cycles without a timing report or clock-based conversion")
     parser.add_argument("--backend", choices=["bluesim", "iverilog"], required=True)
+    parser.add_argument("--linear-source", type=Path, default=hw_dir / "bsv/SwayLinear.bsv",
+                        help="SwayLinear package selected by the build, for source provenance")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     evidence_paths = [args.single_log, args.single_stderr, args.stream_log,
                       args.stream_stderr, args.input, args.expected]
     if not args.cycles_only:
         evidence_paths.append(args.timing)
-    if args.output.resolve() in {path.resolve() for path in evidence_paths + [args.timing]}:
-        parser.error("output must not overwrite a log, fixture, or timing report")
+    if args.output.resolve() in {path.resolve() for path in evidence_paths + [args.timing, args.linear_source]}:
+        parser.error("output must not overwrite a source, log, fixture, or timing report")
     # A failed rerun must never leave an earlier successful summary behind.
     args.output.unlink(missing_ok=True)
     try:
@@ -206,12 +228,10 @@ def main() -> None:
             "evidence_sha256": {str(path): sha256(path) for path in evidence_paths},
             "source_sha256": {},
         }
-        hw_dir = Path(__file__).resolve().parents[1]
-        for pattern in ("bsv/*.bsv", "rtl/*.v", "generated/*.bsv", "generated/*.vh", "generated/*.hex"):
-            for path in sorted(hw_dir.glob(pattern)):
-                result["source_sha256"][str(path.relative_to(hw_dir))] = sha256(path)
+        sources = hardware_sources(hw_dir, args.linear_source)
         for name in ("sim/TbSwayPerf.bsv", "Makefile", "perf.mk", "reference/check_perf.py"):
-            result["source_sha256"][name] = sha256(hw_dir / name)
+            sources.append(hw_dir / name)
+        result["source_sha256"] = source_manifest(hw_dir, sources)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=2) + "\n")
     except (OSError, ValueError, KeyError, TypeError, AssertionError) as error:

@@ -1,6 +1,6 @@
 # Isolated testbench builds and logs; never overwrite the stress-test evidence.
-PERF_ROOT ?= $(PROJECT_DIR)/perf/$(SIM_BACKEND)
-PERF_RESULTS ?= $(PROJECT_DIR)/results/perf/$(SIM_BACKEND)
+PERF_ROOT ?= $(PROJECT_DIR)/perf$(VARIANT_SUFFIX)/$(SIM_BACKEND)
+PERF_RESULTS ?= $(RESULTS_DIR)/perf/$(SIM_BACKEND)
 PERF_RUNNER := $(if $(filter iverilog,$(SIM_BACKEND)),vvp,)
 PERF_CHECK_FLAGS ?= $(if $(filter B1 B2,$(INPUT_PROJECTION_VARIANT)),--cycles-only,)
 
@@ -10,7 +10,7 @@ perf: perf-single perf-stream
 	cd "$(PROJECT_DIR)" && $(PYTHON) reference/check_perf.py \
 		--single-log "$(PERF_RESULTS)/single.log" --single-stderr "$(PERF_RESULTS)/single.stderr.log" \
 		--stream-log "$(PERF_RESULTS)/stream.log" --stream-stderr "$(PERF_RESULTS)/stream.stderr.log" \
-		--backend "$(SIM_BACKEND)" --output "$(PERF_RESULTS)/summary.json" $(PERF_CHECK_FLAGS)
+		--backend "$(SIM_BACKEND)" --linear-source "$(LINEAR_SOURCE)" --output "$(PERF_RESULTS)/summary.json" $(PERF_CHECK_FLAGS)
 
 perf-single:
 	mkdir -p "$(PERF_RESULTS)"
@@ -34,8 +34,8 @@ check-perf-parser:
 
 # Boundary profiling reuses the same unstalled 64-frame driver. SWAY_PROFILE is
 # enabled only in this isolated simulation build, never in the board build.
-PROFILE_ROOT ?= $(PROJECT_DIR)/profile/$(SIM_BACKEND)
-PROFILE_RESULTS ?= $(PROJECT_DIR)/results/profile/$(SIM_BACKEND)
+PROFILE_ROOT ?= $(PROJECT_DIR)/profile$(VARIANT_SUFFIX)/$(SIM_BACKEND)
+PROFILE_RESULTS ?= $(RESULTS_DIR)/profile/$(SIM_BACKEND)
 
 .PHONY: profile check-profile-parser
 
@@ -52,7 +52,7 @@ profile:
 	cd "$(PROJECT_DIR)" && $(PYTHON) reference/check_profile.py \
 		--log "$(PROFILE_RESULTS)/stream.log" --stderr "$(PROFILE_RESULTS)/stream.stderr.log" \
 		--baseline-log "$(PERF_RESULTS)/stream.log" --baseline-stderr "$(PERF_RESULTS)/stream.stderr.log" \
-		--backend "$(SIM_BACKEND)" \
+		--backend "$(SIM_BACKEND)" --linear-source "$(LINEAR_SOURCE)" \
 		--baseline-schedule "$(PERF_RESULTS)/stream.sched" --profile-schedule "$(PROFILE_RESULTS)/stream.sched" \
 		--output "$(PROFILE_RESULTS)/summary.json" --csv "$(PROFILE_RESULTS)/stages.csv"
 
@@ -60,8 +60,8 @@ check-profile-parser:
 	cd "$(PROJECT_DIR)/reference" && $(PYTHON) -m unittest -v test_check_profile.py
 
 # Block0 internals, with the previous kernel-boundary observations retained.
-BLOCK_PROFILE_ROOT ?= $(PROJECT_DIR)/block-profile/$(SIM_BACKEND)
-BLOCK_PROFILE_RESULTS ?= $(PROJECT_DIR)/results/block_profile/$(SIM_BACKEND)
+BLOCK_PROFILE_ROOT ?= $(PROJECT_DIR)/block-profile$(VARIANT_SUFFIX)/$(SIM_BACKEND)
+BLOCK_PROFILE_RESULTS ?= $(RESULTS_DIR)/block_profile/$(SIM_BACKEND)
 BLOCK_PROFILE_CHECK_FLAGS ?=
 
 .PHONY: block-profile check-block-profile-parser
@@ -81,7 +81,7 @@ block-profile:
 		--baseline-log "$(PROFILE_RESULTS)/stream.log" --baseline-stderr "$(PROFILE_RESULTS)/stream.stderr.log" \
 		--perf-log "$(PERF_RESULTS)/stream.log" --perf-stderr "$(PERF_RESULTS)/stream.stderr.log" \
 		--baseline-schedule "$(PROFILE_RESULTS)/stream.sched" --schedule "$(BLOCK_PROFILE_RESULTS)/stream.sched" \
-		--backend "$(SIM_BACKEND)" --output "$(BLOCK_PROFILE_RESULTS)/summary.json" \
+		--backend "$(SIM_BACKEND)" --linear-source "$(LINEAR_SOURCE)" --output "$(BLOCK_PROFILE_RESULTS)/summary.json" \
 		--stages "$(BLOCK_PROFILE_RESULTS)/stages.csv" --sample "$(BLOCK_PROFILE_RESULTS)/sample.csv" $(BLOCK_PROFILE_CHECK_FLAGS)
 
 check-block-profile-parser:

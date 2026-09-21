@@ -11,7 +11,7 @@ from pathlib import Path
 import re
 from statistics import fmean
 
-from check_perf import INPUT_WORDS, STREAM_FRAMES, TRIM_FRAMES, check_log, read_hex, sha256
+from check_perf import INPUT_WORDS, STREAM_FRAMES, TRIM_FRAMES, check_log, hardware_sources, read_hex, sha256, source_manifest
 
 TOKEN_BOUNDARIES = ("patch_ready", "embedding_in", "block0_in", "block1_in", "head_in")
 FRAME_BOUNDARIES = ("head_output_in", "serialize_in")
@@ -201,6 +201,7 @@ def check_profile(text: str, stderr: str, baseline_text: str, baseline_stderr: s
 
 
 def main() -> None:
+    hw_dir = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--log", type=Path, default=Path("results/profile/bluesim/stream.log"))
     parser.add_argument("--stderr", type=Path, default=Path("results/profile/bluesim/stream.stderr.log"))
@@ -209,6 +210,8 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=Path("generated/test_input.hex"))
     parser.add_argument("--expected", type=Path, default=Path("generated/test_expected.hex"))
     parser.add_argument("--backend", choices=("bluesim", "iverilog"), default="bluesim")
+    parser.add_argument("--linear-source", type=Path, default=hw_dir / "bsv/SwayLinear.bsv",
+                        help="SwayLinear package selected by the build, for source provenance")
     parser.add_argument("--baseline-schedule", type=Path)
     parser.add_argument("--profile-schedule", type=Path)
     parser.add_argument("--output", type=Path, default=Path("results/profile/bluesim/summary.json"))
@@ -216,10 +219,7 @@ def main() -> None:
     args = parser.parse_args()
     if (args.baseline_schedule is None) != (args.profile_schedule is None):
         parser.error("baseline-schedule and profile-schedule must be supplied together")
-    hw_dir = Path(__file__).resolve().parents[1]
-    source_paths = []
-    for pattern in ("bsv/*.bsv", "rtl/*.v", "generated/*.bsv", "generated/*.vh", "generated/*.hex"):
-        source_paths.extend(sorted(hw_dir.glob(pattern)))
+    source_paths = hardware_sources(hw_dir, args.linear_source)
     for name in ("sim/TbSwayPerf.bsv", "Makefile", "perf.mk", "reference/check_perf.py", "reference/check_profile.py"):
         source_paths.append(hw_dir / name)
     evidence_paths = [args.log, args.stderr, args.baseline_log, args.baseline_stderr, args.input, args.expected]
@@ -247,7 +247,7 @@ def main() -> None:
         result["raw_event_log"] = str(args.log)
         result["stage_spans_csv"] = str(args.csv)
         result["evidence_sha256"] = {str(path): sha256(path) for path in evidence_paths}
-        result["source_sha256"] = {str(path.relative_to(hw_dir)): sha256(path) for path in source_paths}
+        result["source_sha256"] = source_manifest(hw_dir, source_paths)
         args.csv.parent.mkdir(parents=True, exist_ok=True)
         with args.csv.open("w", newline="") as handle:
             writer = csv.DictWriter(handle, fieldnames=CSV_FIELDS)

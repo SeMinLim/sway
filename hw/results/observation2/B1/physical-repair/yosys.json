@@ -1,0 +1,53 @@
+{
+   "creator": "Yosys 0.69+75 (git sha1 f0b945f63-dirty, Release, Clang /usr/bin/clang++ 21.1.8)",
+   "invocation": "stat -json -top mkTop ",
+   "modules": {
+      "\\mkTop": {
+         "num_wires":         43854,
+         "num_wire_bits":     132447,
+         "num_pub_wires":     43854,
+         "num_pub_wire_bits": 132447,
+         "num_ports":         4,
+         "num_port_bits":     11,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         84587,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "CCU2C": 4534,
+            "DP16KD": 49,
+            "EHXPLLL": 1,
+            "L6MUX21": 35,
+            "LUT4": 30469,
+            "PFUMX": 2085,
+            "TRELLIS_DPR16X4": 501,
+            "TRELLIS_FF": 46913
+         }
+      }
+   },
+      "design": {
+         "num_wires":         43854,
+         "num_wire_bits":     132447,
+         "num_pub_wires":     43854,
+         "num_pub_wire_bits": 132447,
+         "num_ports":         4,
+         "num_port_bits":     11,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         84587,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "CCU2C": 4534,
+            "DP16KD": 49,
+            "EHXPLLL": 1,
+            "L6MUX21": 35,
+            "LUT4": 30469,
+            "PFUMX": 2085,
+            "TRELLIS_DPR16X4": 501,
+            "TRELLIS_FF": 46913
+         }
+      }
+}
+

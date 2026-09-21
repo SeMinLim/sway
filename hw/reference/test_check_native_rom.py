@@ -90,6 +90,137 @@ class TestFIFO2AddressProof(unittest.TestCase):
             cells[f"head_{i}"]["connections"]["CE"] = [900]
         check(self.data)
 
+    def test_yosys_string_constant_enable_without_ce_port_passes(self):
+        for i in range(11):
+            cell = self.data[0][f"head_{i}"]
+            cell["parameters"]["CEMUX"] = "1 "
+            del cell["connections"]["CE"]
+            del cell["port_directions"]["CE"]
+        check(self.data)
+
+    def mux_fixture(self, kind):
+        cells = self.data[0]
+        original = cells["head_data_0"]
+        a, b, c = [original["connections"][p][0] for p in "ABC"]
+        cells["mux_low"] = {
+            "type": "LUT4", "parameters": {"INIT": "1110111011101110"},
+            "connections": {"A": [b], "B": [c], "C": ["0"], "D": ["0"], "Z": [900]},
+            "port_directions": {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"}}
+        low, high, select = ("BLUT", "ALUT", "C0") if kind == "PFUMX" else ("D0", "D1", "SD")
+        cells["head_data_0"] = {
+            "type": kind, "parameters": {},
+            "connections": {low: [900], high: ["1"], select: [a], "Z": original["connections"]["Z"]},
+            "port_directions": {low: "input", high: "input", select: "input", "Z": "output"}}
+        return low, high
+
+    def test_native_mux_primitives_preserve_equations(self):
+        for kind in ("PFUMX", "L6MUX21"):
+            with self.subTest(kind=kind):
+                self.data = fixture()
+                self.mux_fixture(kind)
+                check(self.data)
+
+    def test_reversed_native_mux_selection_rejected(self):
+        for kind in ("PFUMX", "L6MUX21"):
+            with self.subTest(kind=kind):
+                self.data = fixture()
+                low, high = self.mux_fixture(kind)
+                connections = self.data[0]["head_data_0"]["connections"]
+                connections[low], connections[high] = connections[high], connections[low]
+                with self.assertRaisesRegex(ValueError, "next-state mismatch"):
+                    check(self.data)
+
+    def remove_aliases_with_guarded_controls(self):
+        cells, nets, command, *_ = self.data
+        for name, request, guard, output in (("enqueue_guard", 450, 402, 400),
+                                             ("dequeue_guard", 451, 403, 401)):
+            cells[name] = {
+                "type": "LUT4", "parameters": {"INIT": "1000100010001000"},
+                "connections": {"A": [request], "B": [guard], "C": ["0"], "D": ["0"], "Z": [output]},
+                "port_directions": {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"}}
+        for suffix in (".ENQ", ".DEQ", ".data0_reg"):
+            del nets[command + suffix]
+        for name, output, reset_value, fn in (
+            ("full_state", 402, "SET", lambda e, d, f, n: (not n) if e and not d else 1 if d and not e else f),
+            ("empty_state", 403, "RESET", lambda e, d, f, n: 1 if e and not d else (not f) if d and not e else n),
+        ):
+            incoming = output + 500
+            truth = sum(int(fn(*[(i >> shift) & 1 for shift in range(4)])) << i for i in range(16))
+            cells[name + "_next"] = {
+                "type": "LUT4", "parameters": {"INIT": f"{truth:016b}"},
+                "connections": {"A": [400], "B": [401], "C": [402], "D": [403], "Z": [incoming]},
+                "port_directions": {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"}}
+            cells[name] = {
+                "type": "TRELLIS_FF", "parameters": {"CLKMUX": "CLK", "CEMUX": "1 ", "LSRMUX": "LSR",
+                                                       "GSR": "DISABLED", "REGSET": reset_value, "SRMODE": "LSR_OVER_CE"},
+                "attributes": {"src": "BSC-2026.01/lib/Verilog/FIFO2.v:104.4-130.9"},
+                "connections": {"CLK": [404], "DI": [incoming], "LSR": [455], "Q": [output]},
+                "port_directions": {"CLK": "input", "DI": "input", "LSR": "input", "Q": "output"}}
+        # With guarded enqueue, ENQ implies FULL_N; synthesis can remove FULL_N
+        # from the ENQ && DEQ && FULL_N term without changing reachable behavior.
+        cells["d0di"]["parameters"]["INIT"] = f"{sum(int((i & 1) and (((i >> 1) & 1) or not ((i >> 3) & 1))) << i for i in range(16)):016b}"
+
+    def test_optimized_alias_recovery_with_proven_guards_passes(self):
+        self.remove_aliases_with_guarded_controls()
+        result = check(self.data)
+        self.assertTrue(result["control_aliases_recovered"])
+        self.assertTrue(result["occupancy_guard_implications_proven"])
+        self.assertEqual(result["truth_assignments_checked"], 792)
+        self.assertEqual(result["control_bits"]["ENQ"], 400)
+        self.assertEqual(result["control_bits"]["DEQ"], 401)
+        self.assertEqual(result["occupancy_identity_proof"]["transition_assignments_checked"], 9)
+
+    def test_recovered_controls_without_guard_implications_rejected(self):
+        for name in ("enqueue_guard", "dequeue_guard"):
+            with self.subTest(name=name):
+                self.data = fixture()
+                self.remove_aliases_with_guarded_controls()
+                self.data[0][name]["parameters"]["INIT"] = "1010101010101010"
+                with self.assertRaisesRegex(ValueError, "uniquely proven FIFO2 dequeue"):
+                    check(self.data)
+
+    def test_alias_recovery_does_not_mask_wrong_data_enable_clock_or_rom(self):
+        mutations = {
+            "data": lambda c, a: c["tail_0"]["connections"].update(DI=[101]),
+            "enable": lambda c, a: c["tail_1"]["connections"].update(CE=["1"]),
+            "clock": lambda c, a: c["head_0"]["connections"].update(CLK=[9999]),
+            "rom": lambda c, a: a.__setitem__(0, 100),
+            "head_logic": lambda c, a: c["head_data_1"]["parameters"].update(INIT="0" * 16),
+        }
+        for name, mutate in mutations.items():
+            with self.subTest(name=name):
+                self.data = fixture()
+                self.remove_aliases_with_guarded_controls()
+                mutate(self.data[0], self.data[4])
+                with self.assertRaises(ValueError):
+                    check(self.data)
+
+    def test_data_only_replacement_controls_rejected_against_occupancy(self):
+        for original, gates in ((401, ("d0di", "d0d1", "d0h")), (400, ("d0di", "d0h", "d1di"))):
+            with self.subTest(original=original):
+                self.data = fixture()
+                self.remove_aliases_with_guarded_controls()
+                cells = self.data[0]
+                cells["alternate_control"] = {
+                    "type": "LUT4", "parameters": {"INIT": "1000100010001000"},
+                    "connections": {"A": [original], "B": [452], "C": ["0"], "D": ["0"], "Z": [950]},
+                    "port_directions": {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"}}
+                for gate in gates:
+                    for port in "ABCD":
+                        if cells[gate]["connections"][port] == [original]:
+                            cells[gate]["connections"][port] = [950]
+                with self.assertRaisesRegex(ValueError, "uniquely proven FIFO2 dequeue"):
+                    check(self.data)
+
+    def test_recovered_occupancy_reset_or_transition_corruption_rejected(self):
+        for name, field in (("full_state", "REGSET"), ("empty_state_next", "INIT")):
+            with self.subTest(name=name):
+                self.data = fixture()
+                self.remove_aliases_with_guarded_controls()
+                self.data[0][name]["parameters"][field] = "RESET" if field == "REGSET" else "0" * 16
+                with self.assertRaisesRegex(ValueError, "uniquely proven FIFO2 dequeue"):
+                    check(self.data)
+
     def test_tail_wrong_counter_bit_rejected(self):
         self.data[0]["tail_0"]["connections"]["DI"] = [self.data[3][1]]
         with self.assertRaisesRegex(ValueError, "does not match the address counter"):

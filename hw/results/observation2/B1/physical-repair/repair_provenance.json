@@ -1,0 +1,87 @@
+{
+  "variant": "B1",
+  "attempt": "one_targeted_control_replication_repair",
+  "original_result": "../physical/physical_result.json",
+  "original_physical_netlist_sha256": "75dfa51abc8e7e75afa8a333b870c1c92700edd3a5f3c16ade442f07a5860a15",
+  "raw_netlist_sha256": "d24db55f078873afb88d8880c699e2116ed50f7d8e21f5ccd679487a8e8ec477",
+  "frozen_rtl_sha256": "a4d113afe950b6f3143e359795aac55bb53b5b36b898db2d2f2388b5d4452858",
+  "unchanged_base_replication_cap": 64,
+  "targeted_cap": 8,
+  "targeted_drivers": [
+    "core_block1_convAddressQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_3_LSR_LUT4_Z_1",
+    "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_7_LSR_LUT4_Z"
+  ],
+  "timing_constraint_mhz": 100,
+  "nextpnr_seed": "default (no explicit seed)",
+  "phase": "strict_audits_pass_route_running",
+  "static_proof_files": {
+    "hw/reference/replicate_controls.py": {
+      "bytes": 11973,
+      "sha256": "6a5a93ae31d2ccbc1a9f6d418e719a831c4a60b7ef39730e8cf5c1caebd51504"
+    },
+    "hw/reference/check_control_replication.py": {
+      "bytes": 7805,
+      "sha256": "279c8c87164e2fd6a37aa9a9585b49b9704860e30fa688c4b38acfa8a53bc455"
+    },
+    "hw/reference/replicate_critical_controls.py": {
+      "bytes": 6970,
+      "sha256": "54246f2e1be4795e39a54640d51fae5bee5702f2580d157410b466aa03573630"
+    },
+    "hw/reference/test_critical_control_replication.py": {
+      "bytes": 3827,
+      "sha256": "db4baa305610d7d47efe2b0e9a88653cc20741562b2a0d0bab918dbdc38e2133"
+    },
+    "hw/reference/check_native_rom.py": {
+      "bytes": 35052,
+      "sha256": "9b6cf5e303d16cffcd8b55526a014610d850d51825475b06704965dcc2f23538"
+    },
+    "hw/reference/check_timing.py": {
+      "bytes": 8403,
+      "sha256": "3e05099ca0b10a3abe377e67b49700952ae4e0bb8546fdf0ee07e53a2c45dda6"
+    },
+    "hw/results/observation2/toolchain.json": {
+      "bytes": 1310,
+      "sha256": "2c5bc2566a43e04b49b7033f18256f37967210fa6d9e70ce1fde9f9e3d5dadc4"
+    },
+    "hw/results/observation2/B1/physical/control_replication.json": {
+      "bytes": 178790,
+      "sha256": "b8cfb0a6ad9ed0edf28fb3912f391919c2de8c4fcbcb9e3f1c6d39a8bad70b00"
+    },
+    "hw/results/observation2/B1/physical/control_replication_audit.json": {
+      "bytes": 712,
+      "sha256": "282185ab81438760ddca7175e4fcceabb947675136334e21778fe3ad80816cd8"
+    },
+    "hw/results/observation2/B1/physical/native_rom.json": {
+      "bytes": 92671,
+      "sha256": "fcb2c90d69d854fb38cf3a54789bc4782213d4bdc26886366612c02fd3cdaa00"
+    },
+    "hw/results/observation2/B1/physical/verilog.json": {
+      "bytes": 1093,
+      "sha256": "27ff163c517f673c21168f470ef066e3e27980a0a41defe27cc46ba49ed1b8e2"
+    },
+    "hw/results/observation2/B1/physical/source_hashes.json": {
+      "bytes": 6602,
+      "sha256": "ca4a8e54e30ebdc61e14467da25f7f1dc1dc7b6d66d6e16574771f293367b286"
+    },
+    "hw/results/observation2/B1/physical/physical_result.json": {
+      "bytes": 1591,
+      "sha256": "a5dbb86c2d80c8defec5bc514cb12cd43b6bb9fa8e0ef3197ce52a55e99eb98e"
+    },
+    "hw/results/observation2/B1/physical-repair/critical_control_replication.json": {
+      "bytes": 3632,
+      "sha256": "bd0173acab0ad6355c9a265fec9b26dc2182109ebdd825020601f59517fbb976"
+    },
+    "hw/results/observation2/B1/physical-repair/critical_control_replication_audit.json": {
+      "bytes": 708,
+      "sha256": "7ff123b16f333d53126e7123bd31910b4a5e296d313bb1f914e7a3e8c450f8e8"
+    }
+  },
+  "repaired_physical_netlist_sha256": "b7a915f6d61d51019ff7b1bbaa86254bce67e80c6942dc98de374760e7964dce",
+  "captured_utc": "2026-09-21T16:05:48.377252+00:00",
+  "synthesis_repeated": false,
+  "simulation_repeated": false,
+  "equivalence_basis": "Unchanged structural checker proves original cap64 netlist plus nine truth-table-identical combinational LUT4 clones, with all sequential cells, clocks, resets, I/O, and initialization unchanged.",
+  "nextpnr_options": "--85k --package CABGA381 --router router1 --placer-heap-cell-placement-timeout 0 --tmg-ripup",
+  "route_attempt_count": 1
+}

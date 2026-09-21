@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
+import json
 import subprocess
 import sys
 import tempfile
@@ -138,6 +140,27 @@ class ProfileCheckerTests(unittest.TestCase):
                         original.replace("Rule: test_dut_profileTick\nPredicate: True", "Rule: test_dut_profileTick\nPredicate: enabled")):
             with self.subTest(changed=changed[-100:]), self.assertRaises(AssertionError):
                 check_schedules(schedule(), changed)
+
+    def test_cli_records_selected_linear_overlay(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            overlay = root / "SwayLinear.bsv"
+            overlay.write_text("selected boundary-profile package\n")
+            (root / "profile.log").write_text(self.text)
+            (root / "baseline.log").write_text(self.baseline)
+            (root / "stderr.log").write_text("")
+            (root / "input.hex").write_text("00\n" * (2 * 320))
+            (root / "expected.hex").write_text("".join(f"{value & 255:02x}\n" for value in self.expected))
+            result = subprocess.run([sys.executable, str(Path(__file__).with_name("check_profile.py")),
+                "--log", str(root / "profile.log"), "--stderr", str(root / "stderr.log"),
+                "--baseline-log", str(root / "baseline.log"), "--baseline-stderr", str(root / "stderr.log"),
+                "--input", str(root / "input.hex"), "--expected", str(root / "expected.hex"),
+                "--linear-source", str(overlay), "--output", str(root / "summary.json"),
+                "--csv", str(root / "stages.csv")], text=True, capture_output=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            manifest = json.loads((root / "summary.json").read_text())["source_sha256"]
+            self.assertEqual(manifest[str(overlay)], hashlib.sha256(overlay.read_bytes()).hexdigest())
+            self.assertNotIn("bsv/SwayLinear.bsv", manifest)
 
     def test_failed_cli_removes_stale_outputs(self):
         with tempfile.TemporaryDirectory() as directory:

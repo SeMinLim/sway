@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 import re
 
-from check_perf import INPUT_WORDS, STREAM_FRAMES, TRIM_FRAMES, read_hex, sha256
+from check_perf import INPUT_WORDS, STREAM_FRAMES, TRIM_FRAMES, hardware_sources, read_hex, sha256, source_manifest
 from check_profile import CSV_FIELDS, TOKENS, check_profile, distribution
 
 STAGES = ("norm_in", "norm_ready", "inproj_in", "inproj_out", "conv_start", "conv_out",
@@ -316,6 +316,7 @@ def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_std
 
 
 def main() -> None:
+    hw_dir = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     for name, default in (("log", "results/block_profile/bluesim/stream.log"), ("stderr", "results/block_profile/bluesim/stream.stderr.log"),
                           ("baseline-log", "results/profile/bluesim/stream.log"), ("baseline-stderr", "results/profile/bluesim/stream.stderr.log"),
@@ -328,13 +329,12 @@ def main() -> None:
     parser.add_argument("--schedule", type=Path)
     parser.add_argument("--group-overlap", action="store_true", help="Validate issue-overlapped groups with no process3Restart firings")
     parser.add_argument("--backend", choices=("bluesim", "iverilog"), default="bluesim")
+    parser.add_argument("--linear-source", type=Path, default=hw_dir / "bsv/SwayLinear.bsv",
+                        help="SwayLinear package selected by the build, for source provenance")
     args = parser.parse_args()
     if (args.baseline_schedule is None) != (args.schedule is None):
         parser.error("baseline-schedule and schedule must be supplied together")
-    hw_dir = Path(__file__).resolve().parents[1]
-    sources = []
-    for pattern in ("bsv/*.bsv", "rtl/*.v", "generated/*.bsv", "generated/*.vh", "generated/*.hex"):
-        sources.extend(sorted(hw_dir.glob(pattern)))
+    sources = hardware_sources(hw_dir, args.linear_source)
     sources.extend(hw_dir / name for name in ("sim/TbSwayPerf.bsv", "Makefile", "perf.mk", "reference/check_perf.py", "reference/check_profile.py", "reference/check_block_profile.py"))
     plot_source = hw_dir / "reference/plot_block_profile.py"
     if plot_source.exists():
@@ -359,7 +359,7 @@ def main() -> None:
             result["evidence"] = "Generated-Verilog/Icarus simulation with Block0 internal rule-firing instrumentation"
         result["raw_event_log"] = str(args.log)
         result["evidence_sha256"] = {str(path): sha256(path) for path in evidence}
-        result["source_sha256"] = {str(path.relative_to(hw_dir)): sha256(path) for path in sources}
+        result["source_sha256"] = source_manifest(hw_dir, sources)
         for path, rows, fields in ((args.stages, spans, CSV_FIELDS), (args.sample, sample, SAMPLE_FIELDS)):
             path.parent.mkdir(parents=True, exist_ok=True)
             with path.open("w", newline="") as handle:

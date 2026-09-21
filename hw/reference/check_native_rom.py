@@ -83,10 +83,14 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
     """Prove the FIFO2 address data equations, including mapped FF enables.
 
     The reference equations are the data0_reg/data1_reg assignments in BSC
-    2026.01 FIFO2.v. Every valuation of the seven data/control inputs is checked,
-    including occupancy combinations that cannot occur in a legal queue trace.
-    Unsupported mapping primitives or missing aliases fail closed. This proof
-    does not infer the occupancy controller's behavior from its signal names.
+    2026.01 FIFO2.v. With preserved aliases, all seven-input valuations are
+    checked. Optimized control recovery also proves ENQ implies FULL_N and DEQ
+    implies EMPTY_N, then checks every valuation satisfying those guards.
+    Unsupported mapping primitives or ambiguous control recovery fail closed.
+    When Yosys removes ENQ/DEQ aliases, their unique data-cone cut points must
+    satisfy the same seven-input equations; no gate names or bit IDs are used.
+    Recovered controls must also explain the actual occupancy FF transitions
+    and reset values, so a data-only replacement control cannot be accepted.
     """
     def named_bits(suffix: str, width: int) -> list:
         bits = nets.get(command_name + suffix, {}).get("bits")
@@ -94,14 +98,22 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
                 f"Missing {width}-bit FIFO2 net {command_name}{suffix}")
         return bits
 
-    head = named_bits(".data0_reg", 20)
+    head = nets.get(command_name + ".data0_reg", {}).get("bits")
+    if head is None:
+        # Whole-design optimization names the head FFs after native ROM ADDR.
+        # Their direct Q driver, FIFO2 origin, clock and data equations are
+        # independently checked below; an optional source alias adds a check.
+        head = [None] * 9 + actual_address
+    else:
+        require(isinstance(head, list) and len(head) == 20,
+                f"Malformed FIFO2 head alias {command_name}.data0_reg")
     tail = named_bits(".data1_reg", 20)
     require(head[9:20] == actual_address,
             f"{command_name} FIFO2 head does not drive the native ROM address")
-    controls = [named_bits("." + name, 1)[0]
-                for name in ("ENQ", "DEQ", "FULL_N", "EMPTY_N")]
-    require(all(type(bit) is int for bit in controls) and len(set(controls)) == 4,
-            f"{command_name} FIFO2 controls must be four distinct signals")
+    occupancy = [named_bits("." + name, 1)[0] for name in ("FULL_N", "EMPTY_N")]
+    aliases = [nets.get(command_name + "." + name, {}).get("bits") for name in ("ENQ", "DEQ")]
+    require(all(bits is None or isinstance(bits, list) and len(bits) == 1 for bits in aliases),
+            f"Malformed FIFO2 ENQ/DEQ aliases in {command_name}")
     proven_cells = set()
     register_names = []
     head_enables = []
@@ -119,11 +131,17 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
         parameters = cell.get("parameters", {})
         for parameter, expected in {"CLKMUX": "CLK", "LSRMUX": "LSR", "GSR": "DISABLED"}.items():
             require(parameters.get(parameter) == expected, f"{name}.{parameter} must be {expected}")
-        require(parameters.get("CEMUX") in ("CE", "1"), f"{name}.CEMUX must be CE or 1")
+        # Yosys JSON appends a space to distinguish the string "1" from bits.
+        require(parameters.get("CEMUX") in ("CE", "1", "1 "), f"{name}.CEMUX must be CE or 1")
         require(one_connection(cell, "CLK", name) == clock, f"{name}.CLK does not match the expected core clock")
         require(one_connection(cell, "LSR", name) == "0", f"{name} data reset must be disabled")
         proven_cells.add(name)
         return name, cell
+
+    def enable_bit(name: str, cell: dict):
+        if cell["parameters"]["CEMUX"] in ("1", "1 "):
+            return "1"
+        return one_connection(cell, "CE", name)
 
     def combinational(bit, values: dict, active: set):
         if bit in ("0", "1"):
@@ -136,22 +154,31 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
         require(len(sources) == 1, f"{command_name} unproven FIFO2 address input {bit}")
         name, port = sources[0]
         cell = cells[name]
-        require(port == "Z" and cell.get("type") == "LUT4",
+        kind = cell.get("type")
+        require(port == "Z" and kind in ("LUT4", "PFUMX", "L6MUX21"),
                 f"{name} unsupported FIFO2 address logic {cell.get('type')}.{port}")
-        require(set(cell.get("connections", {})) == {"A", "B", "C", "D", "Z"},
-                f"{name} malformed LUT4 ports")
-        require(cell.get("port_directions") == {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"},
-                f"{name} malformed LUT4 directions")
-        table = binary_parameter(cell.get("parameters", {}), "INIT", 16)
+        inputs = {"LUT4": ("A", "B", "C", "D"), "PFUMX": ("BLUT", "ALUT", "C0"),
+                  "L6MUX21": ("D0", "D1", "SD")}[kind]
+        require(set(cell.get("connections", {})) == set(inputs) | {"Z"},
+                f"{name} malformed {kind} ports")
+        require(cell.get("port_directions") == {**{p: "input" for p in inputs}, "Z": "output"},
+                f"{name} malformed {kind} directions")
         active.add(bit)
-        index = sum(combinational(one_connection(cell, p, name), values, active) << shift
-                    for shift, p in enumerate("ABCD"))
+        operands = [combinational(one_connection(cell, p, name), values, active) for p in inputs]
         active.remove(bit)
         proven_cells.add(name)
-        values[bit] = (table >> index) & 1
+        if kind == "LUT4":
+            table = binary_parameter(cell.get("parameters", {}), "INIT", 16)
+            index = sum(value << shift for shift, value in enumerate(operands))
+            values[bit] = (table >> index) & 1
+        else:
+            # Yosys ecp5/common_sim.vh: PFUMX=C0?ALUT:BLUT;
+            # L6MUX21=SD?D1:D0. Both input cones are proven above.
+            require(not cell.get("parameters", {}), f"{name} unexpected {kind} parameters")
+            values[bit] = operands[1] if operands[2] else operands[0]
         return values[bit]
 
-    for index in range(11):
+    def prove_bit(index: int, controls: list, guarded: bool = False):
         head_name, head_cell = data_register(head[index + 9], "head")
         tail_name, tail_cell = data_register(tail[index + 9], "tail")
         require(one_connection(tail_cell, "DI", tail_name) == address[index],
@@ -160,6 +187,8 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
         require(all(type(bit) is int for bit in leaves) and len(set(leaves)) == 7,
                 f"{command_name} address bit {index} aliases unrelated FIFO2 data/control")
         for data, old_head, old_tail, enq, deq, not_full, not_empty in itertools.product((0, 1), repeat=7):
+            if guarded and ((enq and not not_full) or (deq and not not_empty)):
+                continue
             values = dict(zip(leaves, (data, old_head, old_tail, enq, deq, not_full, not_empty)))
             d0di = (enq and not not_empty) or (enq and deq and not_full)
             d0d1 = deq and not not_full
@@ -168,21 +197,176 @@ def fifo2_address_path(cells: dict, nets: dict, drivers: dict, command_name: str
             expected_tail = data if enq and not_empty else old_tail
             for name, cell, previous, expected in ((head_name, head_cell, old_head, expected_head),
                                                      (tail_name, tail_cell, old_tail, expected_tail)):
-                enable = 1 if cell["parameters"]["CEMUX"] == "1" else combinational(one_connection(cell, "CE", name), values, set())
+                enable = combinational(enable_bit(name, cell), values, set())
                 # Check the DI cone even when CE is false, so hidden unproven
                 # signals cannot escape provenance checks through a dead branch.
                 incoming = combinational(one_connection(cell, "DI", name), values, set())
                 actual = incoming if enable else previous
                 require(actual == expected, f"{name} FIFO2 next-state mismatch for address bit {index}, inputs={tuple(values[b] for b in leaves)}")
+        return head_name, tail_name, enable_bit(head_name, head_cell), enable_bit(tail_name, tail_cell)
+
+    def proves_guard(control: int, guard: int) -> bool:
+        # A conservative Boolean-domain evaluation: every unproven input can
+        # independently be 0 or 1. A singleton zero output therefore proves the
+        # implication even when the upstream controller cone is not audited.
+        memo = {guard: {0}}
+        active = set()
+
+        def domain(bit):
+            if bit in ("0", "1"):
+                return {int(bit)}
+            if bit in memo:
+                return memo[bit]
+            if bit in active or len(drivers.get(bit, [])) != 1:
+                return {0, 1}
+            name, port = drivers[bit][0]
+            cell = cells[name]
+            kind = cell.get("type")
+            inputs = {"LUT4": ("A", "B", "C", "D"), "PFUMX": ("BLUT", "ALUT", "C0"),
+                      "L6MUX21": ("D0", "D1", "SD")}.get(kind)
+            if port != "Z" or inputs is None:
+                return {0, 1}
+            require(set(cell.get("connections", {})) == set(inputs) | {"Z"},
+                    f"{name} malformed guard logic ports")
+            require(cell.get("port_directions") == {**{p: "input" for p in inputs}, "Z": "output"},
+                    f"{name} malformed guard logic directions")
+            active.add(bit)
+            combinations = itertools.product(*(domain(one_connection(cell, p, name)) for p in inputs))
+            if kind == "LUT4":
+                table = binary_parameter(cell.get("parameters", {}), "INIT", 16)
+                result = {(table >> sum(value << shift for shift, value in enumerate(values))) & 1
+                          for values in combinations}
+            else:
+                require(not cell.get("parameters", {}), f"{name} unexpected guard mux parameters")
+                result = {values[1] if values[2] else values[0] for values in combinations}
+            active.remove(bit)
+            memo[bit] = result
+            return result
+
+        return domain(control) == {0}
+
+    def prove_occupancy(controls: list) -> dict:
+        registers = []
+        resets = []
+        for bit, reset_value in zip(occupancy, ("SET", "RESET")):
+            sources = drivers.get(bit, [])
+            require(len(sources) == 1, f"{command_name} occupancy must have exactly one driver")
+            name, port = sources[0]
+            cell = cells[name]
+            require(cell.get("type") == "TRELLIS_FF" and port == "Q",
+                    f"{name} occupancy must be a direct TRELLIS_FF Q output")
+            require("FIFO2.v:" in cell.get("attributes", {}).get("src", ""),
+                    f"{name} is not a mapped FIFO2 occupancy register")
+            parameters = cell.get("parameters", {})
+            for parameter, expected in {"CLKMUX": "CLK", "LSRMUX": "LSR", "GSR": "DISABLED",
+                                        "REGSET": reset_value}.items():
+                require(parameters.get(parameter) == expected, f"{name}.{parameter} must be {expected}")
+            require(parameters.get("SRMODE", "LSR_OVER_CE") == "LSR_OVER_CE",
+                    f"{name} occupancy reset must be synchronous with reset priority")
+            require(parameters.get("LSRMODE", "LSR") == "LSR", f"{name} unsupported occupancy preload")
+            require(parameters.get("CEMUX") in ("CE", "1", "1 "), f"{name} unsupported occupancy enable")
+            require(one_connection(cell, "CLK", name) == clock, f"{name}.CLK does not match the expected core clock")
+            resets.append(one_connection(cell, "LSR", name))
+            registers.append((name, cell))
+            proven_cells.add(name)
+        require(resets[0] == resets[1] and type(resets[0]) is int and resets[0] not in controls,
+                f"{command_name} occupancy registers must share one independent reset signal")
+        for enq, deq, not_full, not_empty in itertools.product((0, 1), repeat=4):
+            if (enq and not not_full) or (deq and not not_empty):
+                continue
+            values = {**dict(zip(controls, (enq, deq, not_full, not_empty))), resets[0]: 0}
+            expected_full = int(not not_empty) if enq and not deq else 1 if deq and not enq else not_full
+            expected_empty = 1 if enq and not deq else int(not not_full) if deq and not enq else not_empty
+            for (name, cell), previous, expected in zip(registers, (not_full, not_empty), (expected_full, expected_empty)):
+                enable = combinational(enable_bit(name, cell), values, set())
+                incoming = combinational(one_connection(cell, "DI", name), values, set())
+                require((incoming if enable else previous) == expected,
+                        f"{name} recovered control does not match FIFO2 occupancy transition")
+        return {"registers": [name for name, _ in registers], "reset_bit": resets[0],
+                "transition_assignments_checked": 9}
+
+    def cone_candidates(bit, stops: set, found: set):
+        if type(bit) is not int or bit in stops or bit in found:
+            return
+        found.add(bit)
+        sources = drivers.get(bit, [])
+        if len(sources) != 1:
+            return
+        name, port = sources[0]
+        cell = cells[name]
+        if port != "Z" or cell.get("type") not in ("LUT4", "PFUMX", "L6MUX21"):
+            return
+        for port, direction in cell.get("port_directions", {}).items():
+            if direction == "input":
+                cone_candidates(one_connection(cell, port, name), stops, found)
+
+    recovered = not all(bits is not None for bits in aliases)
+    if recovered:
+        # ENQ is independently constrained by tail.CE = ENQ && EMPTY_N.
+        # Find the unique missing DEQ cut by proving the complete first-bit
+        # data equations, then prove that same control pair for all 11 bits.
+        tail_name, tail_cell = data_register(tail[9], "tail")
+        tail_ce = enable_bit(tail_name, tail_cell)
+        enq_candidates = set()
+        cone_candidates(tail_ce, set(occupancy), enq_candidates)
+        if aliases[0] is not None:
+            enq_candidates = {aliases[0][0]}
+        enqueues = []
+        for candidate in sorted(enq_candidates):
+            saved = proven_cells.copy()
+            try:
+                for enq, not_empty in itertools.product((0, 1), repeat=2):
+                    require(combinational(tail_ce, {candidate: enq, occupancy[1]: not_empty}, set()) == (enq and not_empty),
+                            "Candidate is not FIFO2 enqueue")
+                enqueues.append(candidate)
+            except ValueError:
+                pass
+            proven_cells.clear()
+            proven_cells.update(saved)
+        require(len(enqueues) == 1, f"{command_name} requires one uniquely proven FIFO2 enqueue control")
+        enq = enqueues[0]
+        head_name, head_cell = data_register(head[9], "head")
+        deq_candidates = set()
+        stops = {address[0], head[9], tail[9], enq, *occupancy}
+        for bit in (one_connection(head_cell, "DI", head_name), enable_bit(head_name, head_cell)):
+            cone_candidates(bit, stops, deq_candidates)
+        if aliases[1] is not None:
+            deq_candidates = {aliases[1][0]}
+        dequeues = []
+        for candidate in sorted(deq_candidates):
+            saved = proven_cells.copy()
+            try:
+                require(proves_guard(enq, occupancy[0]) and proves_guard(candidate, occupancy[1]),
+                        "Recovered FIFO2 controls do not imply their occupancy guards")
+                prove_bit(0, [enq, candidate, *occupancy], guarded=True)
+                prove_occupancy([enq, candidate, *occupancy])
+                dequeues.append(candidate)
+            except ValueError:
+                pass
+            proven_cells.clear()
+            proven_cells.update(saved)
+        require(len(dequeues) == 1, f"{command_name} requires one uniquely proven FIFO2 dequeue control")
+        controls = [enq, dequeues[0], *occupancy]
+    else:
+        controls = [aliases[0][0], aliases[1][0], *occupancy]
+    require(all(type(bit) is int for bit in controls) and len(set(controls)) == 4,
+            f"{command_name} FIFO2 controls must be four distinct signals")
+    occupancy_proof = prove_occupancy(controls) if recovered else None
+    for index in range(11):
+        head_name, tail_name, head_enable, tail_enable = prove_bit(index, controls, guarded=recovered)
         register_names.extend((head_name, tail_name))
-        head_enables.append(one_connection(head_cell, "CE", head_name))
-        tail_enables.append(one_connection(tail_cell, "CE", tail_name))
+        head_enables.append(head_enable)
+        tail_enables.append(tail_enable)
     require(len(set(register_names)) == 22, f"{command_name} requires exactly 22 distinct address data registers")
     require(len(set(head_enables)) == 1 and len(set(tail_enables)) == 1,
             f"{command_name} FIFO2 address register enables differ within one queue slot")
     return {"registers": register_names, "proven_cells": proven_cells,
             "head_enable": head_enables[0], "tail_enable": tail_enables[0],
-            "truth_assignments_checked": 11 * 128,
+            "control_bits": dict(zip(("ENQ", "DEQ", "FULL_N", "EMPTY_N"), controls)),
+            "control_aliases_recovered": recovered,
+            "occupancy_guard_implications_proven": recovered,
+            "occupancy_identity_proof": occupancy_proof,
+            "truth_assignments_checked": 11 * (72 if recovered else 128),
             "mapping": "command.D_IN19:9 = addressCnt10:0; FIFO2 head/tail next-state truth tables; head.Q=ADA13:3; ADA2:0=0"}
 
 
@@ -306,6 +490,10 @@ def check_native_rom(netlist_path: Path, reference_path: Path, generated: Path, 
             engine_enables[layer] = proof["head_enable"]
             fifo2_engines[layer] = {"engine": ENGINES[layer], "address_registers_checked": len(address_cells),
                                     "truth_assignments_checked": proof["truth_assignments_checked"],
+                                    "control_bits": proof["control_bits"],
+                                    "control_aliases_recovered": proof["control_aliases_recovered"],
+                                    "occupancy_guard_implications_proven": proof["occupancy_guard_implications_proven"],
+                                    "occupancy_identity_proof": proof["occupancy_identity_proof"],
                                     "tail_register_enable_bit": proof["tail_enable"]}
         for bit, output_bit in enumerate(actual_address if not fifo2 else []):
             output_drivers = drivers.get(output_bit, [])

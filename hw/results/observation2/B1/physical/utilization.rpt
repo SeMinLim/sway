@@ -1,0 +1,47 @@
+blueYosys Resource Utilization Report
+======================================
+Project:    sway_mars
+Board:      ulx3s-85f
+Top module: mkTop
+
+Yosys post-synthesis cell statistics
+------------------------------------
+Total cells: 84587
+
+Cell type                               Count
+---------------------------------- ----------
+TRELLIS_FF                              46913
+LUT4                                    30469
+CCU2C                                    4534
+PFUMX                                    2085
+TRELLIS_DPR16X4                           501
+DP16KD                                     49
+L6MUX21                                    35
+EHXPLLL                                     1
+
+nextpnr post-pack device utilization
+------------------------------------
+Only resources with non-zero use are listed.
+
+Resource                           Used    Available      Usage
+---------------------------- ---------- ------------ ----------
+DCCA                                  2           56      3.57%
+DP16KD                               49          208     23.56%
+EHXPLLL                               1            4     25.00%
+TRELLIS_COMB                      45987        83640     54.98%
+TRELLIS_FF                        46913        83640     56.09%
+TRELLIS_IO                           11          365      3.01%
+TRELLIS_RAMW                        501        10455      4.79%
+
+Clock timing
+------------
+
+Clock                                                          Achieved       Target       Margin   Status
+---------------------------------------------------------- ------------ ------------ ------------ --------
+$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN                           112.50 MHz     25.00 MHz    +87.50 MHz     PASS
+$glbnet$clocks_coreReset.CLK                                   92.19 MHz    100.00 MHz     -7.81 MHz     FAIL
+
+Machine-readable source reports
+-------------------------------
+Yosys:   /workspace/scratch/2dc194a6b0cd/sway_observation2/hw/observation2-build/B1/physical/mkTop.yosys.json
+nextpnr: /workspace/scratch/2dc194a6b0cd/sway_observation2/hw/results/observation2/B1/physical/nextpnr.json
