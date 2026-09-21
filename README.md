@@ -55,6 +55,8 @@ The eMamba paper reports FP32/INT8 RMSE of 7.85/8.83 cm. Those are published ref
 
 ## MARS hardware baseline
 
+The default build remains B0. The baseline measurements below describe B0; the [Observation 2 comparison](#observation-2-fifo-and-group-scheduling) records the B1/B2 simulation improvements and outstanding physical validation.
+
 `hw/` implements the complete fixed-weight MARS inference graph in Bluespec: patch embedding, two selective-SSM blocks, and the regression head. It retains separate layer engines and token pipelining through FIFOs. Affine engines have four output lanes; normalization, depthwise convolution, and gating use two lanes; the scan processes two states of one channel per issue. Affine weights use four initialized ROM banks per layer. Two frame RAM banks feed the patch serializer; each block's recurrent state uses two 160×17 RAM banks. This is our ECP5-folded baseline, not the eMamba authors' RTL.
 
 The kernel uses the existing trained INT8 weights and calibration scales. Normalization computes an exact rational result with ties-to-even rounding; SiLU and exponential ROMs enumerate the existing quantized piecewise functions. Each frame starts with zero convolution history and zero SSM state. Current state is signed INT24; its output is computed before arithmetic right-shifting by seven bits into signed INT17 storage.
@@ -221,3 +223,71 @@ Validation passes all 3,648 integer-reference output comparisons, 13,312 interna
 This identifies the observed Block0 input-projection constraint in the current ECP5 implementation. It does not measure Block1's independent capacity or establish an intrinsic eMamba architecture limit. These are simulation measurements; no optimization or new board measurement is included.
 
 [Summary](hw/results/block_profile/bluesim/summary.json), [raw log](hw/results/block_profile/bluesim/stream.log), [stage spans](hw/results/block_profile/bluesim/stages.csv), [detailed sample](hw/results/block_profile/bluesim/sample.csv), and [compiler schedule](hw/results/block_profile/bluesim/stream.sched) retain the evidence and source hashes. The [checker](hw/reference/check_block_profile.py) regenerates the numerical reports, and the [plot script](hw/reference/plot_block_profile.py) regenerates the figure from the validated sample.
+
+## Observation 2: FIFO and group scheduling
+
+**Simulation confirms that ordinary FIFO and scheduling changes reduce the two identified costs. ECP5 resource use and 100 MHz timing for B1/B2 remain unmeasured, so Observation 2 is not yet complete.** Only three configurations are compared, in order: B0 unchanged; B1 with two-entry `issueCommandQ`, `operandQ`, `partialQ`, and `productQ`; B2 with those FIFOs plus issue-driven preparation of the next output group. The changes apply to both Block0 and Block1 input projections, layer IDs 1 and 5. The model, weights, precision, four arithmetic lanes, ROM banks and four reserved response slots, other projections, scan, and synthesis conditions are unchanged.
+
+B2 separates `groupCnt` on the issue side from `completionGroupCnt` on the accumulation side. The final operand issue queues the next group start. FIFO ordering and the existing last-operand flag preserve completion order; only consumption of the final product clears the accumulator and advances its destination group. Starting another group cannot overwrite the outstanding group's sum or destination. No additional arithmetic lane or accumulator is introduced.
+
+All cycle values below are simulation measurements. Internal measurements refer to the existing Block0 probe; both blocks receive the same implementation change. Steady input intervals use frames 8–55, and detailed operand/group intervals use frame 8, token 0.
+
+| Measurement | B0: baseline | B1: FIFO | B2: FIFO + group overlap |
+|---|---:|---:|---:|
+| Input projection, accepted token → result transfer (cycles) | 987 | 627 | 475 |
+| Actual successive input-projection acceptance intervals (cycles) | 987 | 627, 633 | 590, 592 |
+| Operand issue interval within a group (cycles) | 2 | 1; one 2-cycle gap/group | 1; one 2-cycle gap/group |
+| Successive groups' first operand issues (cycles) | 49 | 31 | 23 |
+| Nonissue cycles at each group boundary | 10 | 10 | 2 |
+| Isolated kernel frame latency (cycles) | 25,249 | 19,147 | 18,276 |
+| Continuous kernel frame completion interval (cycles/frame) | 15,792 | 10,056 | 9,448 |
+| Packed logic, `TRELLIS_COMB` | 44,898 | Not measured | Not measured |
+| Raw synthesis `LUT4` | 29,383 | Not measured | Not measured |
+| Flip-flops, `TRELLIS_FF` | 46,451 | Not measured | Not measured |
+| SRAM: `DP16KD` / `TRELLIS_DPR16X4` cells | 49 / 501 | Not measured | Not measured |
+| DSP, `MULT18X18D` | 0 | Not measured | Not measured |
+| Core post-route Fmax / 100 MHz constraint | 101.49 MHz / PASS | Not measured | Not measured |
+
+B1 removes alternate-cycle issue. The second input-chunk load now creates one visible bubble per group, so the measured completion is 627 cycles, rather than `987 - 380 = 607`. Its sample partitions as `5 startup + 400 issues + 20 within-group nonissues + 190 between-group nonissues + 12 completion = 627`. The native-ROM stress run confirms that the existing bounded response-slot implementation supports the changed schedule.
+
+B2 starts the next group's first issue four cycles before the previous group's last accumulation, while accumulation remains ordered. Its intrinsic accepted-to-result span is `5 + 400 + 20 + 38 + 12 = 475` cycles. Group-boundary nonissue slots fall from 190 to 38 per token. The remaining second-chunk and group preparation gaps are measured costs of this implementation.
+
+The integrated kernel does not accept a new B2 token every 475 cycles. The unchanged four-entry `SwayBlock.residualQ` allocates a slot at `norm_in` and releases it at `residual_in`. In both B1 and B2, all 1,020 observed pairs satisfy `norm_in[i+4] = residual_in[i] + 1`. Steady slot residence is 2,513 cycles in B1 and 2,361 in B2, producing four-token periods of 2,514 and 2,362 cycles, and frame intervals `4 × 2,514 = 10,056` and `4 × 2,362 = 9,448`. B1 acceptance repeats 627/627/627/633; B2 repeats 590/590/590/592. The existing one-entry `xDelayQ`, allocated at `stateproj_in` and released at `scan_in`, has a measured residence of `452 + 137 = 589` cycles and cannot be reused on the dequeue cycle. This unchanged control path therefore imposes a 590-cycle minimum interval; residual-slot reuse adds two cycles per four tokens in B2. These constraints explain the exposed downstream limit, without identifying residual buffering alone as the unique cause. The B2 detailed sample includes 115 cycles of additional waiting after result transfer before its next acceptance; that waiting must not be counted as input-projection computation. The explanation uses existing Block0 observations; residual buffering and other stages were left unchanged.
+
+For each changed configuration, all 57 isolated-frame outputs and 3,648 continuous-run outputs match the integer reference. All 63 continuous frame intervals are identical. The existing stress driver, including input bubbles and an 8,192-cycle output stall per frame, passes all 798 outputs in Bluesim and native-ROM Verilator. Both backends produce identical values and event cycles: completion at cycle 160,164 for B1 and 151,390 for B2. Each native simulation checks 44 ROM banks. These stress totals include deliberate stalls and are not throughput measurements.
+
+Profiling noninterference compares each configuration with its own uninstrumented run. All input/output and prior boundary records, including their cycles, match exactly. The B1 boundary/internal checks preserve all 490/491 existing rules, respectively; B2 preserves 488/489. Predicates, blockers, and relative execution order are unchanged within each comparison. No check requires B1/B2 to match B0's 987 cycles or its schedule. The performance/profile checkers and focused FIFO2 address-audit tests pass 56 unit tests. The new FIFO2 audit verifies mapped address-data next-state logic; compatibility with actual B1/B2 synthesized netlists remains unvalidated.
+
+The B0 physical artifacts and hashes were rechecked against the existing validation manifest. B1/B2 compile to Verilog with profiling disabled, but synthesis and routing could not run: the required Yosys/nextpnr/ecppack toolset is absent, and its official dependency download stopped with `network approval was cancelled before a decision was returned`. This is an environment blocker, not an FPGA timing failure. The preserved conditions are ULX3S-85F/CABGA381, `synth_ecp5 -nodsp`, control replication cap 64, nextpnr `router1`, `--placer-heap-cell-placement-timeout 0`, `--tmg-ripup`, and the existing 100 MHz core/25 MHz UART constraints. B1/B2 have no clock-based throughput claims. Packed `TRELLIS_COMB` and raw `LUT4` are distinct resource counts.
+
+**Current conclusion:** the observed alternate-cycle loss and repeated group drain can be substantially reduced within the existing engine. Unchanged downstream control and buffering now limit integrated simulation throughput. Whether these improvements fit ECP5 resources and close timing is still unresolved; these results establish neither physical infeasibility nor a need for a new Sway architecture. B0 remains the default pending that check. A configuration that passes physical validation should become the improved baseline. Any timing failure must first be traced to the changed paths and checked with limited conventional register/buffer adjustments before drawing a structural conclusion.
+
+Evidence: [B1 performance](hw/results/observation2/B1/perf/summary.json), [B1 internal profile](hw/results/observation2/B1/block-profile/summary.json), [B2 performance](hw/results/observation2/B2/perf/summary.json), and [B2 internal profile](hw/results/observation2/B2/block-profile/summary.json). Their directories include raw logs, schedules and CSVs; adjacent `profile/` and `stress/` directories contain noninterference and backpressure reports. [B1 physical status](hw/results/observation2/B1/physical/verilog.json) and [B2 physical status](hw/results/observation2/B2/physical/verilog.json) record generated-Verilog hashes and pending steps. The exact measured B1 hardware source is retained as a [patch](hw/results/observation2/B1/source.patch) against `8c143e560e4753d17429be0af4f0a8eca8ed2223`; B2 uses the current `SwayLinear.bsv`. Build-time source hashes are retained in each report.
+
+To reproduce a selected configuration from the repository root, use separate build and result directories. Set `obs_variant=B1` or `B2` below; use `B0` for the unchanged branch. Run performance before boundary and internal profiling:
+
+```sh
+obs_variant=B2
+obs_hw="$(pwd)/hw"
+obs_build="$obs_hw/observation2-build/$obs_variant"
+obs_results="$obs_hw/results/observation2/$obs_variant"
+make -C "$obs_hw" perf profile block-profile \
+  BLUEYOSYS=/absolute/path/to/blueyosys INPUT_PROJECTION_VARIANT="$obs_variant" \
+  PERF_ROOT="$obs_build/perf" PERF_RESULTS="$obs_results/perf" \
+  PROFILE_ROOT="$obs_build/profile" PROFILE_RESULTS="$obs_results/profile" \
+  BLOCK_PROFILE_ROOT="$obs_build/block-profile" BLOCK_PROFILE_RESULTS="$obs_results/block-profile" \
+  PERF_CHECK_FLAGS=--cycles-only
+make -C "$obs_hw" runsim \
+  BLUEYOSYS=/absolute/path/to/blueyosys INPUT_PROJECTION_VARIANT="$obs_variant" \
+  BSIM_DIR="$obs_build/stress/bluesim" RESULTS_DIR="$obs_results/stress"
+make -C "$obs_hw" check-verilator \
+  BLUEYOSYS=/absolute/path/to/blueyosys INPUT_PROJECTION_VARIANT="$obs_variant" \
+  VERILATOR_RTL_DIR="$obs_build/stress/rtl" VERILATOR_SIM_DIR="$obs_build/stress/verilator" \
+  RESULTS_DIR="$obs_results/stress"
+# Pending: run only after the matching physical tools are available.
+make -C "$obs_hw" synth \
+  BLUEYOSYS=/absolute/path/to/blueyosys INPUT_PROJECTION_VARIANT="$obs_variant" \
+  BUILD_DIR="$obs_build/physical" RESULTS_DIR="$obs_results/physical"
+```
+
+For a clock conversion after successful routing, rerun `check_perf.py` with that same configuration's `--timing "$obs_results/physical/timing.json"` and omit `--cycles-only`. B0's timing report cannot establish B1/B2 timing.

@@ -1,0 +1,18 @@
+{
+  "status": "verilog_pass_physical_pending",
+  "variant": "B1",
+  "bsc_version": "2026.01 build 9bd39e6f",
+  "blueyosys_commit": "3ea0afea56c7c73b8ed59ec0edd256c409466788",
+  "command": "make -C hw verilog INPUT_PROJECTION_VARIANT=B1 BUILD_DIR=/workspace/scratch/2dc194a6b0cd/sway_observation2/hw/observation2-build/B1/physical RESULTS_DIR=/workspace/scratch/2dc194a6b0cd/sway_observation2/hw/results/observation2/B1/physical BLUEYOSYS=/workspace/scratch/dc01b9aab8c7/blueyosys",
+  "generated_top_sha256": "a4d113afe950b6f3143e359795aac55bb53b5b36b898db2d2f2388b5d4452858",
+  "generated_top_bytes": 3124075,
+  "compile_log_sha256": "667b2ece01e50b054e7282d019383d21be8274c59d4dcdc7b4c7dbcf78a99bb6",
+  "source_hashes_file": "source_hashes.json",
+  "source_hashes_sha256": "ca4a8e54e30ebdc61e14467da25f7f1dc1dc7b6d66d6e16574771f293367b286",
+  "profile_identifiers_absent": true,
+  "synthesis_status": "not_run",
+  "routing_status": "not_run",
+  "timing_status": "not_measured",
+  "blocking_reason": "Required OSS CAD Suite binaries are absent; dependency download was interrupted when network approval was cancelled before a decision was returned.",
+  "working_directory": "/workspace/scratch/2dc194a6b0cd/sway_observation2"
+}

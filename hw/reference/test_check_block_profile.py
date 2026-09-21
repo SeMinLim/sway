@@ -44,7 +44,7 @@ def chronological(text: str) -> str:
     return "\n".join(sorted(text.splitlines(), key=cycle_of)) + "\n"
 
 
-def synthetic_block_transcript() -> tuple[str, str, str, list[int]]:
+def synthetic_block_transcript(group_overlap=False) -> tuple[str, str, str, list[int]]:
     profile, perf, expected = profile_transcript()
     profile, perf = scale_transcript(profile), scale_transcript(perf)
     outer = {}
@@ -67,11 +67,13 @@ def synthetic_block_transcript() -> tuple[str, str, str, list[int]]:
             lines.append(f"SWAY_LINEAR_EVENT,{name},{ordinal},{token},{cycle},-1,-1")
         for name, count, offset in zip(COUNT_NAMES, (400, 400, 400, 400, 400, 380, 20, 20, 40),
                                        (955, 956, 958, 959, 960, 959, 961, 915, 948)):
+            if group_overlap:
+                offset -= 19 * 6
             lines.append(f"SWAY_LINEAR_COUNT,{name},{ordinal},{put + offset},{(ordinal + 1) * count}")
         if ordinal != SAMPLE:
             continue
         for group in range(20):
-            first = put + 5 + group * 48
+            first = put + 5 + group * (42 if group_overlap else 48)
             def add(name, cycle, item=-1):
                 lines.append(f"SWAY_LINEAR_EVENT,{name},{ordinal},{token},{cycle},{group},{item}")
             add("group", first - 2)
@@ -84,6 +86,8 @@ def synthetic_block_transcript() -> tuple[str, str, str, list[int]]:
                 add("last" if item == 19 else "accumulate", read + 6, item)
             last = first + 44
             for name, offset in (("restart", 1), ("bias", 1), ("add", 2), ("round", 3), ("collect", 4)):
+                if name == "restart" and group_overlap:
+                    continue
                 add(name, last + offset)
     return chronological("\n".join(lines)), profile, perf, expected
 
@@ -124,6 +128,34 @@ class BlockCheckerTests(unittest.TestCase):
         self.assertFalse(result["flow_evidence"]["retained_input_refilled_at_first_possible_cycle_all_tokens"])
         self.assertTrue(result["flow_evidence"]["linear_output_consumed_next_cycle_all_tokens"])
         self.assertEqual(sum(row["event"] == "put" for row in sample), 1)
+        self.assertEqual(measured["accepted_to_emit_cycles"], 966)
+        self.assertEqual(measured["next_put_after_emit_cycles"], 5034)
+        self.assertEqual(result["input_projection_lifecycle"]["accepted_to_emit"]["steady_frames_cycles"]["histogram"], {"966": 768})
+        residual_slots = result["flow_evidence"]["residual_slots"]
+        self.assertEqual(residual_slots["capacity"], 4)
+        self.assertEqual(residual_slots["release_to_reuse_pairs"], 1020)
+        self.assertFalse(residual_slots["reused_cycle_after_release_all_pairs"])
+        self.assertEqual(residual_slots["steady_residence_cycles"]["count"], 768)
+
+    def test_overlap_allows_issue_before_previous_group_completes(self):
+        text, baseline, perf, expected = synthetic_block_transcript(group_overlap=True)
+        result, _, _ = check_block_profile(text, "", baseline, "", perf, "", expected, 2, group_overlap=True)
+        self.assertEqual(result["group_scheduling"], "issue-overlapped")
+        self.assertEqual(result["sample_input_projection"]["last_accumulate_to_next_group_read_cycles"]["histogram"], {"-2": 19})
+        with self.assertRaisesRegex(AssertionError, "restart firing"):
+            check_block_profile(text, "", baseline, "", perf, "", expected, 2)
+        with self.assertRaisesRegex(AssertionError, "restart firing"):
+            check_block_profile(self.text, "", self.baseline, "", self.perf, "", self.expected, 2, group_overlap=True)
+
+    def test_overlap_rejects_interleaved_accumulations(self):
+        text, baseline, perf, expected = synthetic_block_transcript(group_overlap=True)
+        line = next(line for line in text.splitlines() if line.startswith("SWAY_LINEAR_EVENT,last,128,") and line.endswith(",0,19"))
+        next_accumulate = next(line for line in text.splitlines() if line.startswith("SWAY_LINEAR_EVENT,accumulate,128,") and line.endswith(",1,0"))
+        fields = line.split(",")
+        fields[4] = next_accumulate.split(",")[4]
+        changed = chronological(text.replace(line, ",".join(fields)))
+        with self.assertRaisesRegex(AssertionError, "Next group accumulation preceded"):
+            check_block_profile(changed, "", baseline, "", perf, "", expected, 2, group_overlap=True)
 
     def test_missing_duplicate_reordered_stage(self):
         line = self.first("SWAY_BLOCK,inproj_in,0,0,")

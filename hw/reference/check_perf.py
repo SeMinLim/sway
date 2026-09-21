@@ -110,10 +110,10 @@ def check_log(text: str, stderr: str, expected: list[int], fixture_frames: int,
             "frames": records}
 
 
-def summarize(single: dict, stream: dict, clock_mhz: float) -> dict:
+def summarize(single: dict, stream: dict, clock_mhz: float | None = None) -> dict:
     if len(single["frames"]) != 1 or len(stream["frames"]) != STREAM_FRAMES:
         raise ValueError("Expected one isolated frame and a 64-frame stream")
-    if not 0 < clock_mhz < float("inf"):
+    if clock_mhz is not None and not 0 < clock_mhz < float("inf"):
         raise ValueError("Clock frequency must be finite and positive")
     latency = single["frames"][0]["first_input_to_last_output_cycles"]
     completions = [frame["output_last_cycle"] for frame in stream["frames"]]
@@ -123,9 +123,8 @@ def summarize(single: dict, stream: dict, clock_mhz: float) -> dict:
     mean_cycles = fmean(intervals)
     if min(all_intervals) <= 0:
         raise ValueError("Completion intervals must be positive")
-    return {
+    result = {
         "single_frame_latency_cycles": latency,
-        "single_frame_latency_us_at_configured_clock": latency / clock_mhz,
         "continuous_frame_intervals_cycles": all_intervals,
         "steady_window": {
             "first_completion_frame": TRIM_FRAMES,
@@ -137,10 +136,13 @@ def summarize(single: dict, stream: dict, clock_mhz: float) -> dict:
             "max_cycles": max(intervals),
             "stddev_cycles": pstdev(intervals),
             "constant_interval_observed": len(set(intervals)) == 1,
-            "mean_interval_us_at_configured_clock": mean_cycles / clock_mhz,
-            "frames_per_second_at_configured_clock": clock_mhz * 1e6 / mean_cycles,
         },
     }
+    if clock_mhz is not None:
+        result["single_frame_latency_us_at_configured_clock"] = latency / clock_mhz
+        result["steady_window"]["mean_interval_us_at_configured_clock"] = mean_cycles / clock_mhz
+        result["steady_window"]["frames_per_second_at_configured_clock"] = clock_mhz * 1e6 / mean_cycles
+    return result
 
 
 def main() -> None:
@@ -152,12 +154,16 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=Path("generated/test_input.hex"))
     parser.add_argument("--expected", type=Path, default=Path("generated/test_expected.hex"))
     parser.add_argument("--timing", type=Path, default=Path("results/timing.json"))
+    parser.add_argument("--cycles-only", action="store_true",
+                        help="Validate and report cycles without a timing report or clock-based conversion")
     parser.add_argument("--backend", choices=["bluesim", "iverilog"], required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     evidence_paths = [args.single_log, args.single_stderr, args.stream_log,
-                      args.stream_stderr, args.input, args.expected, args.timing]
-    if args.output.resolve() in {path.resolve() for path in evidence_paths}:
+                      args.stream_stderr, args.input, args.expected]
+    if not args.cycles_only:
+        evidence_paths.append(args.timing)
+    if args.output.resolve() in {path.resolve() for path in evidence_paths + [args.timing]}:
         parser.error("output must not overwrite a log, fixture, or timing report")
     # A failed rerun must never leave an earlier successful summary behind.
     args.output.unlink(missing_ok=True)
@@ -167,11 +173,13 @@ def main() -> None:
         if len(inputs) % INPUT_WORDS:
             raise ValueError("Input fixture must contain complete 320-byte frames")
         fixture_frames = len(inputs) // INPUT_WORDS
-        timing = json.loads(args.timing.read_text())
-        if timing.get("status") != "pass" or timing.get("all_reported_clocks_pass") is not True:
-            raise ValueError("Configured-clock conversion requires a passing timing report")
-        clock_mhz = float(timing["core_pll_derived_mhz"])
-        # Never use achieved_mhz (the timing limit) as the operating clock.
+        clock_mhz = None
+        if not args.cycles_only:
+            timing = json.loads(args.timing.read_text())
+            if timing.get("status") != "pass" or timing.get("all_reported_clocks_pass") is not True:
+                raise ValueError("Configured-clock conversion requires a passing timing report")
+            # Never use achieved_mhz (the timing limit) as the operating clock.
+            clock_mhz = float(timing["core_pll_derived_mhz"])
         single = check_log(args.single_log.read_text(), args.single_stderr.read_text(),
                            expected, fixture_frames, 1)
         stream = check_log(args.stream_log.read_text(), args.stream_stderr.read_text(),
@@ -180,7 +188,9 @@ def main() -> None:
         result = {
             "status": "pass",
             "evidence": "Bluesim simulation" if args.backend == "bluesim" else "generated-Verilog/Icarus simulation",
-            "scope": "Kernel transaction cycles; time and throughput derived at the configured clock, not measured board performance",
+            "scope": ("Kernel transaction cycles only; timing and clock-based throughput are not established"
+                      if args.cycles_only else
+                      "Kernel transaction cycles; time and throughput derived at the configured clock, not measured board performance"),
             "dut": "mkSwayBaseline",
             "source": "One byte attempted each cycle while input remains; only DUT readiness throttles acceptance",
             "sink": "A get is attempted every cycle; no artificial pauses",
@@ -210,7 +220,8 @@ def main() -> None:
     print(f"SWAY_PERF_CHECK_PASS single_outputs={single['scalar_outputs_checked']} stream_outputs={stream['scalar_outputs_checked']}")
     print(f"Single-frame latency: {metrics['single_frame_latency_cycles']} cycles")
     print(f"Frame interval: mean={window['mean_cycles']:.3f}, min={window['min_cycles']}, max={window['max_cycles']} cycles")
-    print(f"Derived throughput at {clock_mhz:g} MHz: {window['frames_per_second_at_configured_clock']:.3f} frames/s (not board measured)")
+    if clock_mhz is not None:
+        print(f"Derived throughput at {clock_mhz:g} MHz: {window['frames_per_second_at_configured_clock']:.3f} frames/s (not board measured)")
 
 
 if __name__ == "__main__":

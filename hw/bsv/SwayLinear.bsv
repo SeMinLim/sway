@@ -32,16 +32,46 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	staticAssert(productExp - commonExp <= 6 && (!layerHasBias(layerId) || biasExp - commonExp <= 20),
 		"Affine aligned sum exceeds the signed 32-bit accumulator bound");
 
+	Bool inputFifo2 = False;
+`ifdef SWAY_INPUT_FIFO2
+	inputFifo2 = layerId == 1 || layerId == 5;
+`endif
+	Bool overlapGroups = False;
+`ifdef SWAY_INPUT_OVERLAP
+	overlapGroups = layerId == 1 || layerId == 5;
+`endif
+	staticAssert(!overlapGroups || inputFifo2, "Input group overlap requires SWAY_INPUT_FIFO2");
+
 	LocalResetIfc localReset <- mkSwayLocalReset;
 
 	FIFO#(Token#(m)) outputQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Bit#(4)) startQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Bit#(5)) groupStartQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Tuple2#(Bit#(5), Bool)) groupDoneQ <- mkFIFO1(reset_by localReset.rst);
-	FIFO#(Tuple3#(Bit#(11), Int#(8), Bool)) issueCommandQ <- mkFIFO1(reset_by localReset.rst);
-	FIFO#(Tuple3#(Int#(8), Vector#(4, Int#(8)), Bool)) operandQ <- mkFIFO1(reset_by localReset.rst);
-	FIFO#(Tuple3#(Vector#(4, Int#(13)), Vector#(4, Int#(12)), Bool)) partialQ <- mkFIFO1(reset_by localReset.rst);
-	FIFO#(Tuple2#(Vector#(4, Int#(16)), Bool)) productQ <- mkFIFO1(reset_by localReset.rst);
+	FIFO#(Tuple3#(Bit#(11), Int#(8), Bool)) issueCommandQ;
+	if ( inputFifo2 ) begin
+		issueCommandQ <- mkSizedFIFO(2, reset_by localReset.rst);
+	end else begin
+		issueCommandQ <- mkFIFO1(reset_by localReset.rst);
+	end
+	FIFO#(Tuple3#(Int#(8), Vector#(4, Int#(8)), Bool)) operandQ;
+	if ( inputFifo2 ) begin
+		operandQ <- mkSizedFIFO(2, reset_by localReset.rst);
+	end else begin
+		operandQ <- mkFIFO1(reset_by localReset.rst);
+	end
+	FIFO#(Tuple3#(Vector#(4, Int#(13)), Vector#(4, Int#(12)), Bool)) partialQ;
+	if ( inputFifo2 ) begin
+		partialQ <- mkSizedFIFO(2, reset_by localReset.rst);
+	end else begin
+		partialQ <- mkFIFO1(reset_by localReset.rst);
+	end
+	FIFO#(Tuple2#(Vector#(4, Int#(16)), Bool)) productQ;
+	if ( inputFifo2 ) begin
+		productQ <- mkSizedFIFO(2, reset_by localReset.rst);
+	end else begin
+		productQ <- mkFIFO1(reset_by localReset.rst);
+	end
 	FIFO#(Tuple2#(Vector#(4, Int#(24)), Bit#(5))) sumQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Tuple3#(Vector#(4, Int#(32)), Vector#(4, Int#(32)), Bit#(5))) biasQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Tuple2#(Vector#(4, Int#(32)), Bit#(5))) affineQ <- mkFIFO1(reset_by localReset.rst);
@@ -63,6 +93,8 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 	Reg#(Bit#(13)) addressCnt <- mkRegU;
 	Reg#(Bit#(5)) chunkCnt <- mkRegU;
 	Reg#(Bit#(5)) groupCnt <- mkRegU;
+	// FIFO order and the last flag advance completion independently of issue.
+	Reg#(Bit#(5)) completionGroupCnt <- mkRegU;
 	Reg#(Bool) hasNextGroupR <- mkRegU;
 	Reg#(Bool) activeOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bool) chunkLoadOn <- mkReg(False, reset_by localReset.rst);
@@ -133,6 +165,9 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 		startQ.deq;
 		addressCnt <= 0;
 		groupStartQ.enq(0);
+		if ( overlapGroups ) begin
+			completionGroupCnt <= 0;
+		end
 		sumR <= replicate(0);
 		activeOn <= True;
 	endrule
@@ -204,6 +239,10 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 		addressCnt <= addressCnt + 1;
 		if ( lastInput ) begin
 			issueOn <= False;
+			// The next group can load while this group's products drain.
+			if ( overlapGroups && hasNextGroupR ) begin
+				groupStartQ.enq(groupCnt + 1);
+			end
 		end else begin
 			inputCnt <= inputCnt + 1;
 			if ( offset == 15 ) begin
@@ -334,8 +373,10 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 					profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)), profileLinearCycleCnt, profileAccumulateCnt + 1);
 			end
 			if ( profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)) == fromInteger(profileDetailOrdinal) ) begin
+				Bit#(5) profileGroup = overlapGroups ?
+					truncate(pack((profileAccumulateCnt / fromInteger(inputNum - 1)) % fromInteger(groupNum))) : groupCnt;
 				$display("SWAY_LINEAR_EVENT,accumulate,%0d,%0d,%0d,%0d,%0d",
-					profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)), indexR, profileLinearCycleCnt, groupCnt, profileAccumulateCnt % fromInteger(inputNum - 1));
+					profileAccumulateCnt / fromInteger(groupNum * (inputNum - 1)), indexR, profileLinearCycleCnt, profileGroup, profileAccumulateCnt % fromInteger(inputNum - 1));
 			end
 		end
 `endif
@@ -359,8 +400,10 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 					profileLastCnt / fromInteger(groupNum), profileLinearCycleCnt, profileLastCnt + 1);
 			end
 			if ( profileLastCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+				Bit#(5) profileGroup = overlapGroups ?
+					truncate(pack(profileLastCnt % fromInteger(groupNum))) : groupCnt;
 				$display("SWAY_LINEAR_EVENT,last,%0d,%0d,%0d,%0d,%0d",
-					profileLastCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, groupCnt, inputNum - 1);
+					profileLastCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileGroup, inputNum - 1);
 			end
 		end
 `endif
@@ -371,30 +414,38 @@ module mkSwayLinearEngine#(Integer layerId, Integer inputNum, LinearSourceIfc so
 		for ( Integer lane = 0; lane < 4; lane = lane + 1 ) begin
 			sums[lane] = sumR[lane] + signExtend(tpl_1(value)[lane]);
 		end
-		sumQ.enq(tuple2(sums, groupCnt));
+		Bit#(5) completedGroup = overlapGroups ? completionGroupCnt : groupCnt;
+		sumQ.enq(tuple2(sums, completedGroup));
+		// Clear only when the final product is consumed, never at issue restart.
 		sumR <= replicate(0);
-		groupDoneQ.enq(tuple2(groupCnt + 1, hasNextGroupR));
+		if ( overlapGroups ) begin
+			completionGroupCnt <= completionGroupCnt + 1;
+		end else begin
+			groupDoneQ.enq(tuple2(groupCnt + 1, hasNextGroupR));
+		end
 	endrule
 
-	// Group comparison is registered when the group starts. Neither it nor
-	// start-command arbitration lies on the final accumulation/clear rule.
-	rule process3Restart;
-		let completed = groupDoneQ.first;
+	if ( !overlapGroups ) begin
+		// Group comparison is registered when the group starts. Neither it nor
+		// start-command arbitration lies on the final accumulation/clear rule.
+		rule process3Restart;
+			let completed = groupDoneQ.first;
 `ifdef SWAY_BLOCK_PROFILE
-		if ( layerId == 1 ) begin
-			profileRestartCnt <= profileRestartCnt + 1;
-			if ( profileRestartCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
-				$display("SWAY_LINEAR_EVENT,restart,%0d,%0d,%0d,%0d,%0d",
-					profileRestartCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileRestartCnt % fromInteger(groupNum), -1);
+			if ( layerId == 1 ) begin
+				profileRestartCnt <= profileRestartCnt + 1;
+				if ( profileRestartCnt / fromInteger(groupNum) == fromInteger(profileDetailOrdinal) ) begin
+					$display("SWAY_LINEAR_EVENT,restart,%0d,%0d,%0d,%0d,%0d",
+						profileRestartCnt / fromInteger(groupNum), indexR, profileLinearCycleCnt, profileRestartCnt % fromInteger(groupNum), -1);
+				end
 			end
-		end
 `endif
 
-		groupDoneQ.deq;
-		if ( tpl_2(completed) ) begin
-			groupStartQ.enq(tpl_1(completed));
-		end
-	endrule
+			groupDoneQ.deq;
+			if ( tpl_2(completed) ) begin
+				groupStartQ.enq(tpl_1(completed));
+			end
+		endrule
+	end
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 3]

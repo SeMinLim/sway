@@ -21,6 +21,7 @@ COUNT_NAMES = ("read", "dispatch", "response", "multiply", "combine", "accumulat
 INPUTS = 20
 GROUPS = 20
 CHUNKS = 2
+RESIDUAL_CAPACITY = 4  # SwayBlock.residualQ, allocated at norm_in and released at residual_in.
 SAMPLE = 128
 TOTAL = STREAM_FRAMES * TOKENS
 SAMPLE_FIELDS = ("event", "ordinal", "token", "cycle", "group", "item")
@@ -119,10 +120,12 @@ def parse_records(text: str) -> tuple[str, dict, dict, dict, dict]:
     return "\n".join(filtered), stages, token_events, detail, counts
 
 
-def validate_detail(detail: dict, token_events: dict) -> dict:
+def validate_detail(detail: dict, token_events: dict, group_overlap: bool = False) -> dict:
     wanted = {}
     for name in DETAIL_EVENTS:
-        if name in ("read", "dispatch", "response", "multiply", "combine"):
+        if name == "restart" and group_overlap:
+            pairs = []
+        elif name in ("read", "dispatch", "response", "multiply", "combine"):
             pairs = [(group, item) for group in range(GROUPS) for item in range(INPUTS)]
         elif name == "accumulate":
             pairs = [(group, item) for group in range(GROUPS) for item in range(INPUTS - 1)]
@@ -156,10 +159,19 @@ def validate_detail(detail: dict, token_events: dict) -> dict:
         require(group_cycle < chunk0 < first_read, "Invalid group startup ordering")
         require(wanted["read"][(group, 15)] < chunk1 < wanted["read"][(group, 16)], "Invalid second-chunk ordering")
         last = wanted["last"][(group, INPUTS - 1)]
-        restart = wanted["restart"][(group, -1)]
-        require(restart > last, "Restart preceded last accumulation")
+        accumulations = [wanted["accumulate"][(group, item)] for item in range(INPUTS - 1)] + [last]
+        require(all(b > a for a, b in zip(accumulations, accumulations[1:])), "Accumulation order changed within group")
+        if group_overlap:
+            if group + 1 < GROUPS:
+                require(wanted["group"][(group + 1, -1)] > wanted["read"][(group, INPUTS - 1)],
+                        "Next group started before prior operand issue completed")
+        else:
+            restart = wanted["restart"][(group, -1)]
+            require(restart > last, "Restart preceded last accumulation")
+            if group + 1 < GROUPS:
+                require(wanted["group"][(group + 1, -1)] > restart, "Group started before restart")
         if group + 1 < GROUPS:
-            require(wanted["group"][(group + 1, -1)] > restart, "Group started before restart")
+            require(wanted["accumulate"][(group + 1, 0)] > last, "Next group accumulation preceded prior group completion")
         post = [wanted[name][(group, -1)] for name in ("bias", "add", "round", "collect")]
         require(all(b > a for a, b in zip([last] + post, post)), "Invalid bias-to-collect ordering")
     require(wanted["group"][(0, -1)] > token_events["start"][SAMPLE], "First group preceded start")
@@ -178,6 +190,9 @@ def validate_detail(detail: dict, token_events: dict) -> dict:
     require(sum(partition.values()) == next_put - put, "Service-cycle partition does not cover interval")
     return {"frame": SAMPLE // TOKENS, "token": SAMPLE % TOKENS,
             "put_cycle": put, "next_put_cycle": next_put, "service_interval_cycles": next_put - put,
+            "service_interval_interpretation": "Observed put-to-next-put interval; includes any input or downstream wait after this token completes",
+            "accepted_to_emit_cycles": token_events["emit"][SAMPLE] - put,
+            "next_put_after_emit_cycles": next_put - token_events["emit"][SAMPLE],
             "cycle_partition": partition,
             "cycle_partition_convention": "Disjoint cycle slots [put, next put); issue slots contain process2Read firings, all other slots are classified by their position",
             "read_issue_fraction": len(reads) / (next_put - put),
@@ -191,7 +206,8 @@ def validate_detail(detail: dict, token_events: dict) -> dict:
 
 
 def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_stderr: str,
-                        perf_text: str, perf_stderr: str, expected: list[int], fixture_frames: int) -> tuple[dict, list, list]:
+                        perf_text: str, perf_stderr: str, expected: list[int], fixture_frames: int,
+                        group_overlap: bool = False) -> tuple[dict, list, list]:
     require("SWAY_BLOCK" not in stderr and "SWAY_LINEAR" not in stderr, "Block instrumentation or failure on stderr")
     filtered, stages, linear, detail, counts = parse_records(text)
     old_records = lambda value: [line for line in value.splitlines() if line.startswith("SWAY_")]
@@ -218,7 +234,7 @@ def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_std
         require(all(b > a for a, b in zip(pipeline, pipeline[1:])), "Noncausal linear token events")
         if ordinal:
             require(linear["put"][ordinal] > linear["emit"][ordinal - 1], "Retained-input slot reused before prior emit")
-    sample = validate_detail(detail, linear)
+    sample = validate_detail(detail, linear, group_overlap)
     spans = []
     pairs = (("block_input_queue", "block0_in", "norm_in"), ("normalization_to_ready", "norm_in", "norm_ready"),
              ("normalization_output_wait", "norm_ready", "inproj_in"), ("input_projection", "inproj_in", "inproj_out"),
@@ -245,10 +261,19 @@ def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_std
     for name, cycles in stages.items():
         selected = cycles[first * TOKENS:(last + 1) * TOKENS]
         boundary_summary[name] = {"transactions": len(cycles), "steady_token_intervals_cycles": distribution([b - a for a, b in zip(selected, selected[1:])])}
+    lifecycle_summary = {}
+    for name, before, after in (("accepted_to_emit", "put", "emit"), ("capture_to_emit", "capture", "emit"),
+                                ("start_to_emit", "start", "emit"), ("emit_to_get", "emit", "get")):
+        values = [end - begin for begin, end in zip(linear[before], linear[after])]
+        lifecycle_summary[name] = {"all_frames_cycles": distribution(values),
+                                   "steady_frames_cycles": distribution(values[first * TOKENS:(last + 1) * TOKENS])}
     refill = [linear["put"][i] - linear["emit"][i - 1] for i in range(1, TOTAL)]
     norm_lead = [linear["emit"][i - 1] - stages["norm_ready"][i] for i in range(1, TOTAL)]
     get_delay = [get - emit for emit, get in zip(linear["emit"], linear["get"])]
     outer_delay = [end - start for start, end in zip(stages["block_ready"], outer["block1_in"])]
+    residual_refill = [stages["norm_in"][i + RESIDUAL_CAPACITY] - stages["residual_in"][i]
+                       for i in range(TOTAL - RESIDUAL_CAPACITY)]
+    residual_residence = [end - begin for begin, end in zip(stages["norm_in"], stages["residual_in"])]
     evidence = {"next_put_after_previous_emit_cycles": distribution(refill),
                 "next_norm_ready_before_previous_emit_cycles": distribution(norm_lead),
                 "emit_to_get_cycles": distribution(get_delay),
@@ -258,9 +283,15 @@ def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_std
                 "linear_output_consumed_next_cycle_all_tokens": all(x == 1 for x in get_delay),
                 "previous_output_consumed_before_next_token_start_all_tokens": all(linear["get"][i - 1] < linear["start"][i] for i in range(1, TOTAL)),
                 "block_output_consumed_next_cycle_all_tokens": all(x == 1 for x in outer_delay),
-                "sample_emit_one_cycle_after_final_collect": sample["last_collect_to_emit_cycles"] == 1}
+                "sample_emit_one_cycle_after_final_collect": sample["last_collect_to_emit_cycles"] == 1,
+                "residual_slots": {"capacity": RESIDUAL_CAPACITY, "release_to_reuse_pairs": len(residual_refill),
+                                   "release_to_reuse_cycles": distribution(residual_refill),
+                                   "reused_cycle_after_release_all_pairs": all(value == 1 for value in residual_refill),
+                                   "steady_residence_cycles": distribution(residual_residence[first * TOKENS:(last + 1) * TOKENS]),
+                                   "interpretation": "norm_in[i+4] minus residual_in[i] observes residualQ slot reuse; norm_in-to-residual_in is slot residence, not a standalone stage latency"}}
     result = {"status": "pass", "evidence": "Bluesim simulation with Block0 internal rule-firing instrumentation",
-              "scope": "Current ECP5 baseline and repeated checked-in fixtures; no board measurement or architecture modification",
+              "scope": "Selected ECP5 input-projection FIFO/scheduling configuration and repeated checked-in fixtures; no board measurement",
+              "group_scheduling": "issue-overlapped" if group_overlap else "completion-driven",
               "dut": "mkSwayBaseline.block0", "frames_checked": STREAM_FRAMES,
               "scalar_outputs_checked": previous["scalar_outputs_checked"],
               "baseline_sway_records_exactly_equal": True,
@@ -272,6 +303,8 @@ def check_block_profile(text: str, stderr: str, baseline_text: str, baseline_std
               "cycle_convention": "Shared root-reset origin; elapsed cycles are endpoint subtraction, without +1",
               "stage_span_interpretation": "Accepted-to-transferred spans include queues and downstream backpressure; overlapping spans must not be summed",
               "stage_spans": stage_summary, "boundaries": boundary_summary,
+              "input_projection_lifecycle": lifecycle_summary,
+              "lifecycle_interpretation": "Accepted-to-emit is token completion latency, including output enqueue backpressure; it is distinct from successive accepted-token intervals",
               "input_projection_rule_firings_per_token": dict(zip(COUNT_NAMES, factor)),
               "accumulate_count_interpretation": "380 process3 normal accumulations plus 20 process3Last final accumulations = 400 accumulated four-lane product vectors per token",
               "sample_input_projection": sample, "flow_evidence": evidence,
@@ -293,6 +326,7 @@ def main() -> None:
         parser.add_argument("--" + name, type=Path, default=Path(default))
     parser.add_argument("--baseline-schedule", type=Path)
     parser.add_argument("--schedule", type=Path)
+    parser.add_argument("--group-overlap", action="store_true", help="Validate issue-overlapped groups with no process3Restart firings")
     parser.add_argument("--backend", choices=("bluesim", "iverilog"), default="bluesim")
     args = parser.parse_args()
     if (args.baseline_schedule is None) != (args.schedule is None):
@@ -319,7 +353,7 @@ def main() -> None:
         require(len(inputs) % INPUT_WORDS == 0, "Incomplete input fixture")
         result, spans, sample = check_block_profile(args.log.read_text(), args.stderr.read_text(),
             args.baseline_log.read_text(), args.baseline_stderr.read_text(), args.perf_log.read_text(),
-            args.perf_stderr.read_text(), read_hex(args.expected), len(inputs) // INPUT_WORDS)
+            args.perf_stderr.read_text(), read_hex(args.expected), len(inputs) // INPUT_WORDS, args.group_overlap)
         result["schedule_audit"] = check_schedules(args.baseline_schedule.read_text(), args.schedule.read_text()) if args.schedule else {"status": "not_requested"}
         if args.backend == "iverilog":
             result["evidence"] = "Generated-Verilog/Icarus simulation with Block0 internal rule-firing instrumentation"

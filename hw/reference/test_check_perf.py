@@ -60,6 +60,17 @@ class PerfCheckerTests(unittest.TestCase):
         changed = check_log(text.replace("2615,2048", "5574,5000"), "", expected, 2, 1)
         self.assertEqual(original["frames"], changed["frames"])
 
+    def test_cycles_only_has_no_clock_conversion(self):
+        single_text, expected = transcript(1)
+        stream_text, _ = transcript(64)
+        result = summarize(check_log(single_text, "", expected, 2, 1),
+                           check_log(stream_text, "", expected, 2, 64))
+        self.assertEqual(result["single_frame_latency_cycles"], 556)
+        self.assertEqual(result["steady_window"]["mean_cycles"], 1000)
+        self.assertNotIn("single_frame_latency_us_at_configured_clock", result)
+        self.assertNotIn("frames_per_second_at_configured_clock", result["steady_window"])
+        self.assertNotIn("mean_interval_us_at_configured_clock", result["steady_window"])
+
     def test_window_ignores_head_and_tail_and_reports_variation(self):
         text, expected = transcript(1)
         single = check_log(text, "", expected, 2, 1)
@@ -198,6 +209,15 @@ class PerfCheckerTests(unittest.TestCase):
             result = subprocess.run(command, text=True, capture_output=True, check=False)
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse((root / "summary.json").exists())
+            (root / "timing.json").unlink()
+            result = subprocess.run(command + ["--cycles-only"], text=True, capture_output=True, check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads((root / "summary.json").read_text())
+            self.assertIsNone(report["clock_mhz"])
+            self.assertEqual(report["metrics"]["steady_window"]["mean_cycles"], 1000)
+            self.assertNotIn("frames_per_second_at_configured_clock", report["metrics"]["steady_window"])
+            self.assertNotIn(str(root / "timing.json"), report["evidence_sha256"])
+            self.assertNotIn("frames/s", result.stdout)
 
     def test_failed_cli_removes_stale_summary(self):
         with tempfile.TemporaryDirectory() as directory:
