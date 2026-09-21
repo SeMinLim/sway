@@ -106,4 +106,13 @@ make -C hw check-perf-parser BLUEYOSYS=/absolute/path/to/blueyosys
 
 Logs and `summary.json` are generated in `hw/results/perf/<backend>/`; builds use `hw/perf/<backend>/`. Existing stress tests, logs, synthesis settings, and weights are unchanged. Single-frame latency is the last output cycle minus the first accepted input cycle. Throughput uses completion intervals between frames 8 and 55 (47 intervals), reports min/mean/max and variation, and does not assume those intervals have converged. Input acceptance, internal stalls, and 57-byte output serialization are included; reset, UART, host processing, and the final 2,048-cycle drain are excluded. Time and frames/s use the configured 100 MHz from `timing.json`, not its 101.49 MHz timing limit, and are derived from simulation rather than board measurements.
 
-The checker has synthetic-transcript unit tests. No performance measurements from this new testbench are claimed until its simulations have run successfully.
+Measured with BSC/Bluesim 2026.01 and the pinned blueyosys revision above:
+
+| Kernel metric | Simulation cycles | Derived time at 100 MHz |
+|---|---:|---:|
+| Isolated frame latency, first accepted input to 57th output | 25,249 | 252.49 µs |
+| Continuous frame completion interval | 15,792 | 157.92 µs/frame |
+
+The resulting kernel throughput is `100,000,000 / 15,792 = 6,332.32 frames/s`. The isolated run uses fixture 0; the 64-frame run cycles through all 14 checked-in fixtures. All 57 isolated outputs and 3,648 stream outputs match the integer reference. The selected 47 intervals have identical minimum, mean, and maximum values; all 63 observed stream intervals are also 15,792 cycles. These are simulation measurements and configured-clock conversions, not physical-board measurements.
+
+[The measured summary](hw/results/perf/bluesim/summary.json), [isolated-frame log](hw/results/perf/bluesim/single.log), and [64-frame log](hw/results/perf/bluesim/stream.log) retain transaction cycles and source/fixture hashes. The checker also passes its 18 synthetic-transcript unit tests. The performance Icarus target invokes `vvp` from `PATH`, including when Icarus is installed outside `/usr/bin`.

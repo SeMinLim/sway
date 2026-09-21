@@ -1,6 +1,7 @@
 # Isolated testbench builds and logs; never overwrite the stress-test evidence.
 PERF_ROOT ?= $(PROJECT_DIR)/perf/$(SIM_BACKEND)
 PERF_RESULTS ?= $(PROJECT_DIR)/results/perf/$(SIM_BACKEND)
+PERF_RUNNER := $(if $(filter iverilog,$(SIM_BACKEND)),vvp,)
 
 .PHONY: perf perf-single perf-stream check-perf-parser
 
@@ -16,7 +17,7 @@ perf-single:
 	$(MAKE) -C "$(PROJECT_DIR)" bsim SIM_BACKEND=$(SIM_BACKEND) \
 		BSIM_TOP_SOURCE="$(PROJECT_DIR)/sim/TbSwayPerf.bsv" BSIM_TOP_MODULE=mkTbSwayPerfSingle \
 		BSIM_DIR="$(PERF_ROOT)/single"
-	cd "$(PROJECT_DIR)" && "$(PERF_ROOT)/single/bsim" 2> "$(PERF_RESULTS)/single.stderr.log" | tee "$(PERF_RESULTS)/single.log"
+	cd "$(PROJECT_DIR)" && $(PERF_RUNNER) "$(PERF_ROOT)/single/bsim" 2> "$(PERF_RESULTS)/single.stderr.log" | tee "$(PERF_RESULTS)/single.log"
 
 perf-stream:
 	mkdir -p "$(PERF_RESULTS)"
@@ -24,7 +25,7 @@ perf-stream:
 	$(MAKE) -C "$(PROJECT_DIR)" bsim SIM_BACKEND=$(SIM_BACKEND) \
 		BSIM_TOP_SOURCE="$(PROJECT_DIR)/sim/TbSwayPerf.bsv" BSIM_TOP_MODULE=mkTbSwayPerf \
 		BSIM_DIR="$(PERF_ROOT)/stream"
-	cd "$(PROJECT_DIR)" && "$(PERF_ROOT)/stream/bsim" 2> "$(PERF_RESULTS)/stream.stderr.log" | tee "$(PERF_RESULTS)/stream.log"
+	cd "$(PROJECT_DIR)" && $(PERF_RUNNER) "$(PERF_ROOT)/stream/bsim" 2> "$(PERF_RESULTS)/stream.stderr.log" | tee "$(PERF_RESULTS)/stream.log"
 
 check-perf-parser:
 	cd "$(PROJECT_DIR)/reference" && $(PYTHON) -m unittest -v test_check_perf.py
