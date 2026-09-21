@@ -93,3 +93,17 @@ To regenerate checkpoint ROMs, test fixtures, and the numerical report using the
 ```sh
 python hw/reference/generate.py --data ../data/mars
 ```
+
+## Kernel performance test
+
+```sh
+make -C hw perf BLUEYOSYS=/absolute/path/to/blueyosys
+make -C hw perf SIM_BACKEND=iverilog BLUEYOSYS=/absolute/path/to/blueyosys
+make -C hw check-perf-parser BLUEYOSYS=/absolute/path/to/blueyosys
+```
+
+`TbSwayPerf.bsv` directly drives the unchanged `mkSwayBaseline`, not the UART wrapper. Separate simulations measure one isolated frame and a continuous 64-frame stream, cycling through the checked-in fixtures. The source attempts one input byte each cycle; the sink attempts one output each cycle. Only DUT readiness introduces stalls. Every output is checked against the integer reference; watchdog and trailing-output checks remain active. No training or dataset download is required.
+
+Logs and `summary.json` are generated in `hw/results/perf/<backend>/`; builds use `hw/perf/<backend>/`. Existing stress tests, logs, synthesis settings, and weights are unchanged. Single-frame latency is the last output cycle minus the first accepted input cycle. Throughput uses completion intervals between frames 8 and 55 (47 intervals), reports min/mean/max and variation, and does not assume those intervals have converged. Input acceptance, internal stalls, and 57-byte output serialization are included; reset, UART, host processing, and the final 2,048-cycle drain are excluded. Time and frames/s use the configured 100 MHz from `timing.json`, not its 101.49 MHz timing limit, and are derived from simulation rather than board measurements.
+
+The checker has synthetic-transcript unit tests. No performance measurements from this new testbench are claimed until its simulations have run successfully.

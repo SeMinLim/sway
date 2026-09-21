@@ -80,3 +80,5 @@ check-reset: check-bsc
 	$(BSC) -D BSIM -sim -e mkTbLocalReset -bdir "$(RESET_SIM_DIR)/bsim" -simdir "$(RESET_SIM_DIR)/bsim" -o "$(RESET_SIM_DIR)/bsim/check"
 	"$(RESET_SIM_DIR)/bsim/check" | tee "$(PROJECT_DIR)/results/reset_bluesim.log"
 	$(PYTHON) -c 'from pathlib import Path; import sys; s=Path(sys.argv[1]).read_text(); sys.exit(0 if "SWAY_RESET_BSIM_PASS" in s and "FAIL" not in s else 1)' "$(PROJECT_DIR)/results/reset_bluesim.log"
+
+include $(PROJECT_DIR)/perf.mk
