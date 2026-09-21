@@ -1,0 +1,1773 @@
+{
+  "variant": "B2",
+  "attempt": "physical",
+  "status": "timing_fail",
+  "routing_complete": true,
+  "route_exit_code": 2,
+  "core_fmax_mhz": 88.77841186523438,
+  "core_constraint_mhz": 100,
+  "timing_allow_fail": false,
+  "reported_critical_paths_containing_input_projection": 1,
+  "critical_paths_with_prepack_fanout": [
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "contains_input_projection": false,
+      "segments": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_11",
+            "loc": [
+              103,
+              88
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_11",
+            "loc": [
+              103,
+              88
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 1.1319999694824219,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_11",
+            "loc": [
+              103,
+              88
+            ],
+            "port": "Q"
+          },
+          "net": "uart_clkcnt[5]",
+          "sources": [
+            "mkTop.v:7147.16-7147.27"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN_CCU2C_COUT$CCU2_COMB1",
+            "loc": [
+              104,
+              89
+            ],
+            "port": "B"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95808
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_11",
+              "Q",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.44699999690055847,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN_CCU2C_COUT$CCU2_COMB1",
+            "loc": [
+              104,
+              89
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN_CCU2C_COUT$CCU2_COMB1",
+            "loc": [
+              104,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN_CCU2C_COUT$CCU2_COMB1",
+            "loc": [
+              104,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN",
+          "sources": [
+            "mkTop.v:45506.20-45506.39",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/arith_map_ccu2c.v:74.7-80.4",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/ccu2c_sim.vh:9.9-9.13"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95832
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_CIN_CCU2C_COUT",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT",
+          "sources": [
+            "mkTop.v:45506.20-45506.39",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/arith_map_ccu2c.v:74.7-80.4",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/ccu2c_sim.vh:9.9-9.13"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95833
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN$CCU2_COMB1",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT",
+          "sources": [
+            "mkTop.v:45506.20-45506.39",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/arith_map_ccu2c.v:74.7-80.4",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/ccu2c_sim.vh:9.9-9.13"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95837
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.4429999887943268,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 1.1139999628067017,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN$CCU2_COMB0",
+            "loc": [
+              105,
+              89
+            ],
+            "port": "F"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "A"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95841
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN",
+              "S0",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.44699999690055847,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "A"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1_COUT",
+          "sources": [
+            "mkTop.v:44953.44-44953.61",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/arith_map_ccu2c.v:74.7-80.4",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/ccu2c_sim.vh:9.9-9.13"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95853
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              105,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1_COUT",
+          "sources": [
+            "mkTop.v:44953.44-44953.61",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/arith_map_ccu2c.v:74.7-80.4",
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/ccu2c_sim.vh:9.9-9.13"
+          ],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95849
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1$CCU2_COMB1",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCO"
+          },
+          "net": "$nextpnr_CCU2C_43$CIN",
+          "sources": [],
+          "to": {
+            "cell": "$nextpnr_CCU2C_43$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0.4429999887943268,
+          "from": {
+            "cell": "$nextpnr_CCU2C_43$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "$nextpnr_CCU2C_43$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.42899999022483826,
+          "from": {
+            "cell": "$nextpnr_CCU2C_43$CCU2_COMB0",
+            "loc": [
+              106,
+              88
+            ],
+            "port": "F"
+          },
+          "net": "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C[1]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95806
+          ],
+          "prepack_fanout": 12,
+          "prepack_driver_endpoints": [
+            [
+              "uart_clkcnt_TRELLIS_FF_Q_9_DI_LUT4_Z_C_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_CCU2C_A1",
+              "COUT",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.6830000281333923,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "F"
+          },
+          "net": "uart_inQ.empty_reg_LUT4_B_2_Z[2]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_1_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95952
+          ],
+          "prepack_fanout": 6,
+          "prepack_driver_endpoints": [
+            [
+              "uart_inQ.empty_reg_LUT4_B_2",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_1_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_1_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.45500001311302185,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_1_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "F"
+          },
+          "net": "uart_inQ.empty_reg_LUT4_B_1_Z[3]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95927
+          ],
+          "prepack_fanout": 8,
+          "prepack_driver_endpoints": [
+            [
+              "uart_inQ.empty_reg_LUT4_B_1_Z_LUT4_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.746999979019165,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              107,
+              89
+            ],
+            "port": "F"
+          },
+          "net": "uart_inQ.empty_reg_LUT4_B_Z[2]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI_LUT4_Z",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95929
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_inQ.empty_reg_LUT4_B_Z_LUT4_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI_LUT4_Z",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI_LUT4_Z",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.12999999523162842,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI_LUT4_Z",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "F"
+          },
+          "net": "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI",
+          "sources": [],
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "DI"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95928
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "uart_inQ.data0_reg_TRELLIS_FF_Q_2_DI_LUT4_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "DI"
+          },
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_2",
+            "loc": [
+              107,
+              88
+            ],
+            "port": "DI"
+          },
+          "type": "setup"
+        }
+      ],
+      "delay_by_type_ns": {
+        "clk-to-q": 0.5249999761581421,
+        "routing": 4.689999938011169,
+        "logic": 3.007999986410141,
+        "setup": 0.0
+      },
+      "total_delay_ns": 8.222999900579453
+    },
+    {
+      "from": "posedge $glbnet$clocks_coreReset.CLK",
+      "to": "posedge $glbnet$clocks_coreReset.CLK",
+      "contains_input_projection": true,
+      "segments": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_groupStartQ.empty_reg_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              55
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_groupStartQ.empty_reg_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              55
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 3.2639999389648438,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_groupStartQ.empty_reg_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              55
+            ],
+            "port": "Q"
+          },
+          "net": "core_block1_inputProjection_engine_issueOn_LUT4_A_Z[0]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              85,
+              47
+            ],
+            "port": "C"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            57914
+          ],
+          "prepack_fanout": 25,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_groupStartQ.empty_reg_TRELLIS_FF_Q",
+              "Q",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              85,
+              47
+            ],
+            "port": "C"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              85,
+              47
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 3.3459999561309814,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+            "loc": [
+              85,
+              47
+            ],
+            "port": "F"
+          },
+          "net": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z[2]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_issueOn_LUT4_A",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "C"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            57564
+          ],
+          "prepack_fanout": 36,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_issueOn_LUT4_A",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "C"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_issueOn_LUT4_A",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.4309999942779541,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_issueOn_LUT4_A",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "F"
+          },
+          "net": "core_block1_inputProjection_engine_issueOn_LUT4_A_Z[3]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            58334
+          ],
+          "prepack_fanout": 2,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_issueOn_LUT4_A",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 1.0440000295639038,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B",
+            "loc": [
+              40,
+              55
+            ],
+            "port": "F"
+          },
+          "net": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B_Z[1]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_issueCommandQ.full_reg_LUT4_C_Z_LUT4_Z",
+            "loc": [
+              32,
+              53
+            ],
+            "port": "C"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            57928
+          ],
+          "prepack_fanout": 9,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_hasNextGroupR_LUT4_B",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_issueCommandQ.full_reg_LUT4_C_Z_LUT4_Z",
+            "loc": [
+              32,
+              53
+            ],
+            "port": "C"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_issueCommandQ.full_reg_LUT4_C_Z_LUT4_Z",
+            "loc": [
+              32,
+              53
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.7889999747276306,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_issueCommandQ.full_reg_LUT4_C_Z_LUT4_Z",
+            "loc": [
+              32,
+              53
+            ],
+            "port": "F"
+          },
+          "net": "core_block1_inputProjection_engine_hasNextGroupR_LUT4_A_C[4]",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI_PFUMX_Z_BLUT_LUT4_Z",
+            "loc": [
+              30,
+              52
+            ],
+            "port": "M"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            58488
+          ],
+          "prepack_fanout": 20,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_issueCommandQ.full_reg_LUT4_C_Z_LUT4_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.25600001215934753,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI_PFUMX_Z_BLUT_LUT4_Z",
+            "loc": [
+              30,
+              52
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI_PFUMX_Z_BLUT_LUT4_Z",
+            "loc": [
+              30,
+              52
+            ],
+            "port": "OFX"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.6650000214576721,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI_PFUMX_Z_BLUT_LUT4_Z",
+            "loc": [
+              30,
+              52
+            ],
+            "port": "OFX"
+          },
+          "net": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI",
+          "sources": [],
+          "to": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8",
+            "loc": [
+              30,
+              51
+            ],
+            "port": "M"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            61870
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8_DI_PFUMX_Z",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8",
+            "loc": [
+              30,
+              51
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "core_block1_inputProjection_engine_weightR_3_raw.ADDR_TRELLIS_FF_Q_8",
+            "loc": [
+              30,
+              51
+            ],
+            "port": "M"
+          },
+          "type": "setup"
+        }
+      ],
+      "delay_by_type_ns": {
+        "clk-to-q": 0.5249999761581421,
+        "routing": 9.538999915122986,
+        "logic": 1.2000000178813934,
+        "setup": 0.0
+      },
+      "total_delay_ns": 11.263999909162521
+    },
+    {
+      "from": "<async>",
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "contains_input_projection": false,
+      "segments": [
+        {
+          "delay": 0,
+          "from": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "to": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "type": "source"
+        },
+        {
+          "delay": 3.135999917984009,
+          "from": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "net": "ftdi_txd$TRELLIS_IO_IN",
+          "sources": [
+            "mkTop.v:7168.16-7168.30"
+          ],
+          "to": {
+            "cell": "uart_rxin_TRELLIS_FF_Q_1",
+            "loc": [
+              45,
+              90
+            ],
+            "port": "M"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_rxin_TRELLIS_FF_Q_1",
+            "loc": [
+              45,
+              90
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "uart_rxin_TRELLIS_FF_Q_1",
+            "loc": [
+              45,
+              90
+            ],
+            "port": "M"
+          },
+          "type": "setup"
+        }
+      ],
+      "delay_by_type_ns": {
+        "source": 0.0,
+        "routing": 3.135999917984009,
+        "setup": 0.0
+      },
+      "total_delay_ns": 3.135999917984009
+    },
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "to": "<async>",
+      "contains_input_projection": false,
+      "segments": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              103,
+              91
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              103,
+              91
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 7.611000061035156,
+          "from": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              103,
+              91
+            ],
+            "port": "Q"
+          },
+          "net": "ftdi_rxd$TRELLIS_IO_OUT",
+          "sources": [
+            "mkTop.v:7177.7-7177.16"
+          ],
+          "to": {
+            "cell": "ftdi_rxd$tr_io",
+            "loc": [
+              0,
+              56
+            ],
+            "port": "I"
+          },
+          "type": "routing",
+          "prepack_net_bits": [],
+          "prepack_fanout": 0,
+          "prepack_driver_endpoints": []
+        }
+      ],
+      "delay_by_type_ns": {
+        "clk-to-q": 0.5249999761581421,
+        "routing": 7.611000061035156
+      },
+      "total_delay_ns": 8.136000037193298
+    },
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "to": "posedge $glbnet$clocks_coreReset.CLK",
+      "contains_input_projection": false,
+      "segments": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 0.4350000023841858,
+          "from": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "net": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            2484
+          ],
+          "prepack_fanout": 1,
+          "prepack_driver_endpoints": [
+            [
+              "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR",
+              "Q",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 1.190000057220459,
+          "from": {
+            "cell": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "F"
+          },
+          "net": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D_Z",
+          "sources": [],
+          "to": {
+            "cell": "rxQ.fifoMem.0.0_WAD_1_LUT4_D_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q_1_DI_TRELLIS_FF_Q",
+            "loc": [
+              50,
+              90
+            ],
+            "port": "LSR"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            2487
+          ],
+          "prepack_fanout": 115,
+          "prepack_driver_endpoints": [
+            [
+              "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_Q_LUT4_D",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.42399999499320984,
+          "from": {
+            "cell": "rxQ.fifoMem.0.0_WAD_1_LUT4_D_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q_1_DI_TRELLIS_FF_Q",
+            "loc": [
+              50,
+              90
+            ],
+            "port": "LSR"
+          },
+          "to": {
+            "cell": "rxQ.fifoMem.0.0_WAD_1_LUT4_D_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q_1_DI_TRELLIS_FF_Q",
+            "loc": [
+              50,
+              90
+            ],
+            "port": "LSR"
+          },
+          "type": "setup"
+        }
+      ],
+      "delay_by_type_ns": {
+        "clk-to-q": 0.5249999761581421,
+        "routing": 1.6250000596046448,
+        "logic": 0.23600000143051147,
+        "setup": 0.42399999499320984
+      },
+      "total_delay_ns": 2.810000032186508
+    },
+    {
+      "from": "posedge $glbnet$clocks_coreReset.CLK",
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "contains_input_projection": false,
+      "segments": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "txReset_leaf.secondReset",
+            "loc": [
+              103,
+              84
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "txReset_leaf.secondReset",
+            "loc": [
+              103,
+              84
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 0.7369999885559082,
+          "from": {
+            "cell": "txReset_leaf.secondReset",
+            "loc": [
+              103,
+              84
+            ],
+            "port": "Q"
+          },
+          "net": "txReset_leaf.secondReset_Q",
+          "sources": [
+            "/workspace/scratch/2dc194a6b0cd/physical_toolchains/oss-cad-suite/lib/../share/yosys/lattice/cells_map_trellis.v:108.23-108.24"
+          ],
+          "to": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_D",
+            "loc": [
+              104,
+              85
+            ],
+            "port": "D"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95764
+          ],
+          "prepack_fanout": 2,
+          "prepack_driver_endpoints": [
+            [
+              "txReset_leaf.secondReset",
+              "Q",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_D",
+            "loc": [
+              104,
+              85
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_D",
+            "loc": [
+              104,
+              85
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.6439999938011169,
+          "from": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_D",
+            "loc": [
+              104,
+              85
+            ],
+            "port": "F"
+          },
+          "net": "txReset_leaf.secondReset_Q_LUT4_D_Z",
+          "sources": [],
+          "to": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_B_A_TRELLIS_FF_Q_DI_LUT4_Z_D_LUT4_Z_A_LUT4_C_Z_LUT4_D_Z_LUT4_Z_A_LUT4_B_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q",
+            "loc": [
+              104,
+              84
+            ],
+            "port": "LSR"
+          },
+          "type": "routing",
+          "prepack_net_bits": [
+            95720
+          ],
+          "prepack_fanout": 46,
+          "prepack_driver_endpoints": [
+            [
+              "txReset_leaf.secondReset_Q_LUT4_D",
+              "Z",
+              0
+            ]
+          ]
+        },
+        {
+          "delay": 0.42399999499320984,
+          "from": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_B_A_TRELLIS_FF_Q_DI_LUT4_Z_D_LUT4_Z_A_LUT4_C_Z_LUT4_D_Z_LUT4_Z_A_LUT4_B_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q",
+            "loc": [
+              104,
+              84
+            ],
+            "port": "LSR"
+          },
+          "to": {
+            "cell": "txReset_leaf.secondReset_Q_LUT4_B_A_TRELLIS_FF_Q_DI_LUT4_Z_D_LUT4_Z_A_LUT4_C_Z_LUT4_D_Z_LUT4_Z_A_LUT4_B_Z_TRELLIS_FF_DI_Q_TRELLIS_FF_DI_Q_TRELLIS_FF_Q",
+            "loc": [
+              104,
+              84
+            ],
+            "port": "LSR"
+          },
+          "type": "setup"
+        }
+      ],
+      "delay_by_type_ns": {
+        "clk-to-q": 0.5249999761581421,
+        "routing": 1.3809999823570251,
+        "logic": 0.23600000143051147,
+        "setup": 0.42399999499320984
+      },
+      "total_delay_ns": 2.5659999549388885
+    }
+  ],
+  "source_report_sha256": "7c60a2820efa8dab1b2b1bddb07704f500aa4c6939b315eeaa5888bba65ec6e7",
+  "physical_netlist_sha256": "96d39c64145fa911a5e035626e10347e082589840974ebc7613d81f2be9c26b3",
+  "notes": [
+    "Fanout is calculated on the exact audited prepack physical netlist; nextpnr packing may absorb or rename intermediate nodes."
+  ]
+}

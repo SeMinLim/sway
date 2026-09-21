@@ -80,5 +80,40 @@ class TestCriticalControls(unittest.TestCase):
         self.mutation_rejected(lambda cells: cells['reg2_23']['parameters'].update(REGSET='SET'))
 
 
+class TestB2CriticalControl(unittest.TestCase):
+    def test_only_reported_driver_is_split_and_state_is_preserved(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            args = SimpleNamespace(input=root/'old.json', output=root/'new.json',
+                                   manifest=root/'manifest.json', report=root/'audit.json',
+                                   top='mkTop', variant='B2')
+            name, = replicate_critical_controls.DRIVERS_BY_VARIANT['B2']
+            cells = {name: cell('LUT4', {'A': ['0'], 'B': ['0'], 'C': [1], 'D': [2]},
+                                {'Z': [10]}, {'INIT': '0000111100000000'}),
+                     'unselected': cell('LUT4', {'A': [1], 'B': [2], 'C': ['0'], 'D': ['0']},
+                                        {'Z': [11]}, {'INIT': '1000100010001000'})}
+            for index in range(36):
+                cells[f'selected_sink_{index}'] = cell(
+                    'TRELLIS_FF', {'CLK': [3], 'CE': [11], 'DI': [1], 'LSR': [10]},
+                    {'Q': [100 + index]}, {'REGSET': 'RESET'})
+            doc = {'modules': {'mkTop': {'attributes': {},
+                                        'ports': {'input': {'direction': 'input', 'bits': [1, 2, 3]}},
+                                        'cells': cells, 'netnames': {}}}}
+            args.input.write_text(json.dumps(doc))
+            with contextlib.redirect_stdout(io.StringIO()):
+                replicate_critical_controls.run(args)
+                check_control_replication.audit(args)
+            manifest = json.loads(args.manifest.read_text())
+            self.assertEqual(set(manifest['selected_drivers']), {name})
+            self.assertEqual(set(manifest['clone_origins'].values()), {name})
+            self.assertEqual(manifest['cloned_cell_types'], {'LUT4': 4})
+            self.assertEqual(sorted(manifest['selected_drivers'][name]['final_output_fanout'].values()),
+                             [4, 8, 8, 8, 8])
+            result = json.loads(args.output.read_text())['modules']['mkTop']['cells']
+            self.assertEqual(result['unselected'], cells['unselected'])
+            self.assertEqual(sum(c['type'] == 'TRELLIS_FF' for c in result.values()), 36)
+            self.assertEqual(json.loads(args.report.read_text())['status'], 'pass')
+
+
 if __name__ == '__main__':
     unittest.main()

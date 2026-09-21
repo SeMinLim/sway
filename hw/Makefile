@@ -8,6 +8,16 @@ INPUT_PROJECTION_VARIANT ?= B0
 ifneq ($(filter $(INPUT_PROJECTION_VARIANT),B0 B1 B2),$(INPUT_PROJECTION_VARIANT))
 $(error INPUT_PROJECTION_VARIANT must be B0, B1, or B2)
 endif
+# Replay only the measured, targeted post-synthesis control-buffer follow-up.
+CRITICAL_CONTROL_REPAIR ?= 0
+ifneq ($(CRITICAL_CONTROL_REPAIR),0)
+ifneq ($(CRITICAL_CONTROL_REPAIR),1)
+$(error CRITICAL_CONTROL_REPAIR must be 0 or 1)
+endif
+ifeq ($(INPUT_PROJECTION_VARIANT),B0)
+$(error CRITICAL_CONTROL_REPAIR=1 is supported only for B1 or B2)
+endif
+endif
 # Frozen B0/B1 packages preserve the RTL used by their measured builds. B2 uses
 # the current package; selecting only flags on that file changes generated RTL.
 VARIANT_SUFFIX := $(if $(filter B0,$(INPUT_PROJECTION_VARIANT)),,-$(INPUT_PROJECTION_VARIANT))
@@ -72,13 +82,21 @@ runtime-rtl: verilog
 netlist: runtime-rtl
 
 PHYSICAL_NETLIST := $(BUILD_DIR)/$(TOP_MODULE).physical.json
+PHYSICAL_BASE_NETLIST := $(if $(filter 1,$(CRITICAL_CONTROL_REPAIR)),$(BUILD_DIR)/$(TOP_MODULE).physical-base.json,$(PHYSICAL_NETLIST))
 .PHONY: physical-netlist
 physical-netlist: netlist
 	mkdir -p "$(RESULTS_DIR)"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_native_rom.py" --netlist "$(JSON_NETLIST)" --output "$(RESULTS_DIR)/native_rom.json" $(NATIVE_ROM_CHECK_FLAGS)
 	rm -f "$(PHYSICAL_NETLIST)" "$(RESULTS_DIR)/control_replication.json" "$(RESULTS_DIR)/control_replication_audit.json"
-	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_controls.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --top "$(TOP_MODULE)" --cap 64
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_control_replication.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --report "$(RESULTS_DIR)/control_replication_audit.json"
+ifeq ($(CRITICAL_CONTROL_REPAIR),1)
+	rm -f "$(PHYSICAL_BASE_NETLIST)" "$(RESULTS_DIR)/critical_control_replication.json" "$(RESULTS_DIR)/critical_control_replication_audit.json"
+endif
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_controls.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_BASE_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --top "$(TOP_MODULE)" --cap 64
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_control_replication.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_BASE_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --report "$(RESULTS_DIR)/control_replication_audit.json"
+ifeq ($(CRITICAL_CONTROL_REPAIR),1)
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_critical_controls.py" --variant "$(INPUT_PROJECTION_VARIANT)" --input "$(PHYSICAL_BASE_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/critical_control_replication.json" --top "$(TOP_MODULE)"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_control_replication.py" --input "$(PHYSICAL_BASE_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/critical_control_replication.json" --report "$(RESULTS_DIR)/critical_control_replication_audit.json"
+endif
 # The existing blueyosys pnr recipe consumes the audited physical netlist;
 # private prevents this override from changing its synthesis prerequisites.
 pnr: private JSON_NETLIST := $(PHYSICAL_NETLIST)

@@ -14,7 +14,7 @@
   ],
   "timing_constraint_mhz": 100,
   "nextpnr_seed": "default (no explicit seed)",
-  "phase": "strict_audits_pass_route_running",
+  "phase": "complete_timing_fail",
   "static_proof_files": {
     "hw/reference/replicate_controls.py": {
       "bytes": 11973,
@@ -83,5 +83,98 @@
   "simulation_repeated": false,
   "equivalence_basis": "Unchanged structural checker proves original cap64 netlist plus nine truth-table-identical combinational LUT4 clones, with all sequential cells, clocks, resets, I/O, and initialization unchanged.",
   "nextpnr_options": "--85k --package CABGA381 --router router1 --placer-heap-cell-placement-timeout 0 --tmg-ripup",
-  "route_attempt_count": 1
+  "route_attempt_count": 1,
+  "completed_utc": "2026-09-21T16:48:41.555469+00:00",
+  "result": "physical_result.json",
+  "completed_route_attempts": 1,
+  "environment_restarts": 1,
+  "interruption_record": "interruption.json",
+  "result_files": {
+    "critical_control_replication.json": {
+      "bytes": 3632,
+      "sha256": "bd0173acab0ad6355c9a265fec9b26dc2182109ebdd825020601f59517fbb976"
+    },
+    "critical_control_replication_audit.json": {
+      "bytes": 708,
+      "sha256": "7ff123b16f333d53126e7123bd31910b4a5e296d313bb1f914e7a3e8c450f8e8"
+    },
+    "interruption.json": {
+      "bytes": 1120,
+      "sha256": "b365b6914c84efe8f98a29ab5f721a7a7276f8c8f80763775c6579fa89787eb8"
+    },
+    "nextpnr.interrupted-20260921.log": {
+      "bytes": 5407,
+      "sha256": "b268dc2f6b3733a738d1466b7423775998b7811a963e29545056591c6ce2d42c"
+    },
+    "nextpnr.json": {
+      "bytes": 30747,
+      "sha256": "b3f4ee643007ac1a7286b6db754abb3b82587477ef8462db85b8f6215f1a23aa"
+    },
+    "nextpnr.log": {
+      "bytes": 81749,
+      "sha256": "2578ea6bbf561411b6969e3808cdef510c6682e47c47fffc7acf0e877f88cf6d"
+    },
+    "physical_result.json": {
+      "bytes": 1721,
+      "sha256": "5ef2131aa634d2e2b58d2923e009a0d82217369adf9b1f150f98b08e0df2dc89"
+    },
+    "route_build.interrupted-20260921.log": {
+      "bytes": 5487,
+      "sha256": "4b4c25073b68ac16337ae762f1e169fce9ac53633a4480963f37244b1b5d5813"
+    },
+    "route_build.log": {
+      "bytes": 82132,
+      "sha256": "474fd7aca7d5765a025ba4720cf204ddedcebaa2147d4b395b18e1885829793e"
+    },
+    "timing_failure.json": {
+      "bytes": 59400,
+      "sha256": "4a4c248e1f4af6483f4987b1d11786de17a0ad606227cece58cd7594a44c0ff6"
+    },
+    "utilization.rpt": {
+      "bytes": 2154,
+      "sha256": "0ce77e0b372e406a4d81cfa0c06448606494a81a94ef704163d6d6af82b3cc83"
+    },
+    "yosys.json": {
+      "bytes": 1541,
+      "sha256": "011b04e740191dfd32d178e78da5164ed5e6da2203eee6f43440cfc587819ff5"
+    },
+    "yosys.rpt": {
+      "bytes": 409,
+      "sha256": "7014f10f00420ae52edf902865304c258cb15bb90530b6aadf839382ebc74c11"
+    }
+  },
+  "final_build_files": {
+    "mkTop.config": {
+      "bytes": 31524446,
+      "sha256": "25c1c67c04c2b6bbf3191d7254abdfd1e1bc992fb9149e89d390e67f67119387"
+    },
+    "mkTop.json": {
+      "bytes": 101259332,
+      "sha256": "d24db55f078873afb88d8880c699e2116ed50f7d8e21f5ccd679487a8e8ec477"
+    },
+    "mkTop.nextpnr.json": {
+      "bytes": 30747,
+      "sha256": "b3f4ee643007ac1a7286b6db754abb3b82587477ef8462db85b8f6215f1a23aa"
+    },
+    "mkTop.physical.json": {
+      "bytes": 64035093,
+      "sha256": "b7a915f6d61d51019ff7b1bbaa86254bce67e80c6942dc98de374760e7964dce"
+    },
+    "mkTop.utilization.rpt": {
+      "bytes": 2154,
+      "sha256": "0ce77e0b372e406a4d81cfa0c06448606494a81a94ef704163d6d6af82b3cc83"
+    },
+    "mkTop.v": {
+      "bytes": 3124075,
+      "sha256": "a4d113afe950b6f3143e359795aac55bb53b5b36b898db2d2f2388b5d4452858"
+    },
+    "mkTop.yosys.json": {
+      "bytes": 1541,
+      "sha256": "011b04e740191dfd32d178e78da5164ed5e6da2203eee6f43440cfc587819ff5"
+    },
+    "mkTop.yosys.rpt": {
+      "bytes": 409,
+      "sha256": "7014f10f00420ae52edf902865304c258cb15bb90530b6aadf839382ebc74c11"
+    }
+  }
 }

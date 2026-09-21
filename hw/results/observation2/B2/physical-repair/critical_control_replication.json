@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "scope": "B2 one selected input-projection critical-path LUT4 control",
+  "input_sha256": "96d39c64145fa911a5e035626e10347e082589840974ebc7613d81f2be9c26b3",
+  "top": "mkTop",
+  "cap": 8,
+  "selected_drivers": {
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z": {
+      "net_bit": 57564,
+      "before_fanout": 36,
+      "final_output_fanout": {
+        "57564": 8,
+        "100491": 8,
+        "100492": 8,
+        "100493": 8,
+        "100494": 4
+      }
+    }
+  },
+  "processing_order": [
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z"
+  ],
+  "splits": [
+    {
+      "driver": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+      "before_partition_fanout": 36,
+      "copies": [
+        100491,
+        100492,
+        100493,
+        100494
+      ]
+    }
+  ],
+  "clone_origins": {
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z$critical_fanout$0": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z$critical_fanout$1": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z$critical_fanout$2": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z$critical_fanout$3": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z"
+  },
+  "net_aliases": {
+    "100491": 57564,
+    "100492": 57564,
+    "100493": 57564,
+    "100494": 57564
+  },
+  "cloned_cell_types": {
+    "LUT4": 4
+  },
+  "partition_heuristic": "logical destination FF Q net name and bit index, then cell name",
+  "no_recursive_cloning": true,
+  "no_sequential_cells_cloned": true,
+  "no_timing_constraints_changed": true,
+  "output_sha256": "bb53600e3dec4dc0d6b4d5f3db36aa99c2896464f86d0408b05622d100ec61d8"
+}

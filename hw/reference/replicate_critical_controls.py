@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Replicate only the three late LUT4 controls on B1's routed critical path."""
+"""Replicate only explicitly selected LUT4 controls on a routed critical path."""
 
 import argparse
 import collections
@@ -16,6 +16,10 @@ DRIVERS = (
     'core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_3_LSR_LUT4_Z_1',
     'core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_7_LSR_LUT4_Z',
 )
+DRIVERS_BY_VARIANT = {
+    'B1': DRIVERS,
+    'B2': ('core_block1_inputProjection_engine_chunkLoadOn_LUT4_B_Z_LUT4_Z',),
+}
 CAP = 8
 
 
@@ -29,6 +33,9 @@ def sha(path):
 
 
 def run(args):
+    variant = getattr(args, 'variant', 'B1')
+    require(variant in DRIVERS_BY_VARIANT, 'variant must be B1 or B2')
+    drivers = DRIVERS_BY_VARIANT[variant]
     paths = [args.input.resolve(), args.output.resolve(), args.manifest.resolve()]
     require(len(set(paths)) == len(paths), 'input/output/manifest must be distinct')
     args.output.unlink(missing_ok=True)
@@ -66,7 +73,7 @@ def run(args):
         return natural(endpoint)
 
     selected = {}
-    for name in DRIVERS:
+    for name in drivers:
         require(name in cells, f'missing selected driver: {name}')
         cell = cells[name]
         require(cell['type'] == 'LUT4', f'selected driver must be LUT4: {name}')
@@ -90,7 +97,7 @@ def run(args):
     splits = []
     # Clone downstream controls first. Their additional inputs are then included
     # when the selected upstream drivers are partitioned; no other cone is cloned.
-    for name in reversed(DRIVERS):
+    for name in reversed(drivers):
         bit = selected[name]['net_bit']
         endpoints = sorted(users(bit), key=destination_order)
         groups = [endpoints[start:start + CAP] for start in range(0, len(endpoints), CAP)]
@@ -123,9 +130,10 @@ def run(args):
                 f'selected control exceeded cap: {name}')
         selected[name]['final_output_fanout'] = final_fanout
 
-    result = {'schema': 1, 'scope': 'B1 three selected late critical-path LUT4 controls',
+    result = {'schema': 1, 'scope': ('B1 three selected late critical-path LUT4 controls' if variant == 'B1'
+                                      else 'B2 one selected input-projection critical-path LUT4 control'),
               'input_sha256': sha(args.input), 'top': args.top, 'cap': CAP,
-              'selected_drivers': selected, 'processing_order': list(reversed(DRIVERS)),
+              'selected_drivers': selected, 'processing_order': list(reversed(drivers)),
               'splits': splits, 'clone_origins': origins,
               'net_aliases': {str(bit): source for bit, source in aliases.items()},
               'cloned_cell_types': {'LUT4': len(origins)},
@@ -137,7 +145,7 @@ def run(args):
     result['output_sha256'] = sha(args.output)
     args.manifest.parent.mkdir(parents=True, exist_ok=True)
     args.manifest.write_text(json.dumps(result, indent=2) + '\n')
-    print(f'SWAY_CRITICAL_CONTROL_REPLICATION generated={len(origins)} cap={CAP} selected=3')
+    print(f'SWAY_CRITICAL_CONTROL_REPLICATION generated={len(origins)} cap={CAP} selected={len(drivers)}')
 
 
 if __name__ == '__main__':
@@ -146,4 +154,5 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--manifest', type=Path, required=True)
     parser.add_argument('--top', default='mkTop')
+    parser.add_argument('--variant', choices=tuple(DRIVERS_BY_VARIANT), default='B1')
     run(parser.parse_args())
