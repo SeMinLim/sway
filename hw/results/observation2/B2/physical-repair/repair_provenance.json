@@ -1,7 +1,7 @@
 {
   "variant": "B2",
   "attempt": "one_targeted_control_replication_repair",
-  "phase": "strict_audit_pass_pending_independent_review",
+  "phase": "complete_timing_fail",
   "original_result": "../physical/physical_result.json",
   "original_physical_netlist_sha256": "96d39c64145fa911a5e035626e10347e082589840974ebc7613d81f2be9c26b3",
   "raw_netlist_sha256": "2bbfd854825233d0815e12c34affbd7dc332de250fbede7d841055c648f84fcb",
@@ -83,5 +83,85 @@
     },
     "function": "Z = D & !C; A/B tied low; original C/D inputs and INIT preserved on every copy",
     "ordinary_adjustment": "Split only this distributed 36-load LUT output into five branches of at most eight loads; four identical LUT4 copies. Upstream FFs, logic function, cycle boundaries, original router settings and seed remain unchanged."
+  },
+  "completed_utc": "2026-09-21T17:17:53.982317+00:00",
+  "result": "physical_result.json",
+  "completed_route_attempts": 1,
+  "environment_restarts": 0,
+  "result_files": {
+    "critical_control_replication.json": {
+      "bytes": 1927,
+      "sha256": "0a14bf42be2d881cc9dddd5175051d6c8e5959d95ccd7fec48816d951c1d2300"
+    },
+    "critical_control_replication_audit.json": {
+      "bytes": 708,
+      "sha256": "0f22119c0a229786f9ab0f17adcf8b20a38f9a57d0e0d7c1007b7731f60bdf6d"
+    },
+    "nextpnr.json": {
+      "bytes": 26447,
+      "sha256": "4310e8ca10fa64a3a182cf127fb9d88edb01bfbd4e5fa614fda99e76843b2bb8"
+    },
+    "nextpnr.log": {
+      "bytes": 78541,
+      "sha256": "00e96f361962dc2bdd7d4e0ce45f3198fc50decfdcdcd9a07c7138039451c719"
+    },
+    "physical_result.json": {
+      "bytes": 1675,
+      "sha256": "0d56a01da4fea6b920b209e1f95b0b36730ce0d7458485d6a69403b82f670a05"
+    },
+    "route_build.log": {
+      "bytes": 78924,
+      "sha256": "4a08196bc9658ae7e5f6f816bd2eed847143dc1787c9bd361bf86b5f24ec46d3"
+    },
+    "timing_failure.json": {
+      "bytes": 50726,
+      "sha256": "ad80ed78d0e9be90e33bae170a8bd24d7e1bbde741f91b39f76b4047c5d4549d"
+    },
+    "utilization.rpt": {
+      "bytes": 2154,
+      "sha256": "7988f00ecabe47f1d137bb56f50cfa19c28478da355904dc01402f51ef2deb74"
+    },
+    "yosys.json": {
+      "bytes": 1541,
+      "sha256": "ea7695ec6fcc4b38c258ed0d61302c75668d48acfcb1edcd607dc47163982d0f"
+    },
+    "yosys.rpt": {
+      "bytes": 409,
+      "sha256": "3df8adbf3c914316aa449ca485654838f6b512c27d0343ce5c7a9c4287956c04"
+    }
+  },
+  "final_build_files": {
+    "mkTop.config": {
+      "bytes": 31452570,
+      "sha256": "0d03742db7500c26289452479174f464cbac7a7ef9fca2e2c00e71b0c8f053c2"
+    },
+    "mkTop.json": {
+      "bytes": 101148390,
+      "sha256": "2bbfd854825233d0815e12c34affbd7dc332de250fbede7d841055c648f84fcb"
+    },
+    "mkTop.nextpnr.json": {
+      "bytes": 26447,
+      "sha256": "4310e8ca10fa64a3a182cf127fb9d88edb01bfbd4e5fa614fda99e76843b2bb8"
+    },
+    "mkTop.physical.json": {
+      "bytes": 63942557,
+      "sha256": "bb53600e3dec4dc0d6b4d5f3db36aa99c2896464f86d0408b05622d100ec61d8"
+    },
+    "mkTop.utilization.rpt": {
+      "bytes": 2154,
+      "sha256": "7988f00ecabe47f1d137bb56f50cfa19c28478da355904dc01402f51ef2deb74"
+    },
+    "mkTop.v": {
+      "bytes": 3132568,
+      "sha256": "6b15f2f94dfd30c555fc44c29a9182a693f1635029c6ad5ec5d81479facbab5f"
+    },
+    "mkTop.yosys.json": {
+      "bytes": 1541,
+      "sha256": "ea7695ec6fcc4b38c258ed0d61302c75668d48acfcb1edcd607dc47163982d0f"
+    },
+    "mkTop.yosys.rpt": {
+      "bytes": 409,
+      "sha256": "3df8adbf3c914316aa449ca485654838f6b512c27d0343ce5c7a9c4287956c04"
+    }
   }
 }
