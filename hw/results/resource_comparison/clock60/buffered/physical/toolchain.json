@@ -1,0 +1,32 @@
+{
+  "bsc": {
+    "version": "2026.01",
+    "build": "9bd39e6f",
+    "archive_sha256": "6d13db288cf268dc1331f05b277c414b4ff1c1ab9618a6526ba16ad29e484e43"
+  },
+  "oss_cad_suite": {
+    "tag": "2026-09-20",
+    "archive_sha256": "ca71456ac66e2d346377c06575f5ee5cfb15d83ede70fe7c7fd9c365ff6d29d4"
+  },
+  "blueyosys_commit": "3ea0afea56c7c73b8ed59ec0edd256c409466788",
+  "executables": {
+    "yosys": {
+      "path": "/workspace/scratch/e6420b0fda2a/toolchains/oss-cad-suite/bin/yosys",
+      "sha256_libexec": "d498131a5d2b545b8cff9d9be6f111be921948d63ac87efbfc4acb9eab7539d5"
+    },
+    "nextpnr-ecp5": {
+      "path": "/workspace/scratch/e6420b0fda2a/toolchains/oss-cad-suite/bin/nextpnr-ecp5",
+      "sha256_libexec": "93e67ec0b041989f15268fa53f5236ab243dcc4eead1fe30f282724b9982d74e"
+    },
+    "ecppack": {
+      "path": "/workspace/scratch/e6420b0fda2a/toolchains/oss-cad-suite/bin/ecppack",
+      "sha256_libexec": "54fed9f142cddee295ae3a2921b9246765adcd0d7cc37cddc39e9a34772a9d9c"
+    }
+  },
+  "runtime_support": {
+    "tcl_package_url": "https://archive.ubuntu.com/ubuntu/pool/main/t/tcl8.6/libtcl8.6_8.6.14+dfsg-1build1_amd64.deb",
+    "tcl_package_sha256": "7534eb825f6317514d747ce53b4d6c23bf24df1dc1785f9599610ece5515e685",
+    "yosys_abc_wrapper_symlink": "oss-cad-suite/lib/yosys-abc -> ../bin/yosys-abc",
+    "reason": "Pinned Yosys launched via packaged ELF loader locates its ABC executable beside loader; wrapper symlink resolves the unchanged pinned ABC binary."
+  }
+}

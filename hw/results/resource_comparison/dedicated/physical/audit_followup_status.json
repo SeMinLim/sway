@@ -1,0 +1,17 @@
+{
+  "target": "native_rom_audit_followup",
+  "command": [
+    "python3",
+    "/workspace/scratch/e6420b0fda2a/dedicated-source/hw/reference/check_native_rom.py",
+    "--netlist",
+    "/workspace/scratch/e6420b0fda2a/sway/hw/resource-build/dedicated/physical/mkTop.json",
+    "--output",
+    "/workspace/scratch/e6420b0fda2a/sway/hw/results/resource_comparison/dedicated/physical/native_rom.json",
+    "--resource-comparison",
+    "--input-projection-fifo2"
+  ],
+  "start_unix": 1790040150.0210876,
+  "status": "pass",
+  "exit_code": 0,
+  "elapsed_seconds": 4.146533250808716
+}

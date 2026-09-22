@@ -1,0 +1,71 @@
+{
+  "variant": "buffered",
+  "status": "pass",
+  "flow_attempt": "resource_comparison_60mhz",
+  "synthesis_status": "pass",
+  "native_rom_audit": "pass",
+  "control_replication_audit": "pass",
+  "routing_status": "completed",
+  "route_build_exit_code": 0,
+  "timing_status": "pass",
+  "actual_core_constraint_mhz": 60.0,
+  "clocks": {
+    "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": {
+      "achieved": 118.25921630859375,
+      "constraint": 25
+    },
+    "$glbnet$clocks_coreReset.CLK": {
+      "achieved": 85.41898345947266,
+      "constraint": 60.00239944458008
+    }
+  },
+  "packed_resources": {
+    "TRELLIS_COMB": {
+      "available": 83640,
+      "used": 47287
+    },
+    "TRELLIS_FF": {
+      "available": 83640,
+      "used": 48199
+    },
+    "DP16KD": {
+      "available": 208,
+      "used": 49
+    },
+    "MULT18X18D": {
+      "available": 156,
+      "used": 0
+    },
+    "TRELLIS_RAMW": {
+      "available": 10455,
+      "used": 501
+    }
+  },
+  "raw_yosys_cells": {
+    "CCU2C": 4540,
+    "DP16KD": 49,
+    "EHXPLLL": 1,
+    "L6MUX21": 25,
+    "LUT4": 31742,
+    "PFUMX": 2693,
+    "TRELLIS_DPR16X4": 501,
+    "TRELLIS_FF": 48199
+  },
+  "bram_capacity_bits": 903168,
+  "distributed_ram_capacity_bits": 32064,
+  "clock_throughput_claim_valid": true,
+  "bitstream_created": true,
+  "routing_complete_marker_present": true,
+  "toolchain_record": "toolchain.json",
+  "source_snapshot_record": "source_hashes.json",
+  "build_hashes_record": "build_hashes.json",
+  "completed_utc": "2026-09-22T02:14:48.293312+00:00",
+  "netlist_sha256": "c0094bd2243ff1781d72fe204a7d0c93f1046a603b7f4321bda9c9418f10600b",
+  "physical_netlist_sha256": "5c75753208a25d5897faa8e123a12d4000dc48a7b13db8a3583d09f9d0b8bcfe",
+  "nextpnr_report_sha256": "8b3e82cef88e4c7a3d9dfc7e2d87941f452a262f370bcef2f6cf10a0a03eb835",
+  "nextpnr_log_sha256": "29c1938d96a655994b6b42fac9b11fc467521ac85e9a163c66e35f1a0ea60f31",
+  "bitstream_sha256": "6d9e8f7e33ec37cfda911603a13a82c7c1946b6f9c4e0de3087898c6eb1a8363",
+  "route_duration_seconds": 293.52,
+  "analytical_placement_seconds": 592.85,
+  "placement_refinement_seconds": 411.21
+}

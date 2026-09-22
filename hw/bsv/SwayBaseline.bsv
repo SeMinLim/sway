@@ -10,6 +10,10 @@ import SwayParameters::*;
 import SwayLinear::*;
 import SwayHeadLinear::*;
 import SwayBlock::*;
+`ifdef SWAY_REALLOCATE
+import SwayFoldedLinear::*;
+import SwayDelta::*;
+`endif
 
 // Fixed-weight MARS graph. Each affine/normalization/scan stage has its own
 // engine. FIFOs permit adjacent tokens and independent frames to overlap.
@@ -30,11 +34,26 @@ module mkSwayBaseline(SwayIfc);
 	Reg#(Bool) fillOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bit#(9)) inputCnt <- mkReg(0, reset_by localReset.rst);
 
+`ifdef SWAY_REALLOCATE
+	LinearIfc#(20, 20) embedding <- mkSwayFoldedLinear(0, 1);
+`ifdef SWAY_SHARED_DELTA
+	SwayDeltaIfc delta <- mkSwayDelta(2);
+	BlockIfc block0 <- mkSwayBlock(0, delta.block0);
+	BlockIfc block1 <- mkSwayBlock(1, delta.block1);
+`else
+	SwayDeltaIfc delta0 <- mkSwayDelta(0);
+	SwayDeltaIfc delta1 <- mkSwayDelta(1);
+	BlockIfc block0 <- mkSwayBlock(0, delta0.block0);
+	BlockIfc block1 <- mkSwayBlock(1, delta1.block1);
+`endif
+	LinearIfc#(20, 57) headOutput <- mkSwayFoldedLinear(10, 1);
+`else
 	LinearIfc#(20, 20) embedding <- mkSwayLinear(0);
 	BlockIfc block0 <- mkSwayBlock(0);
 	BlockIfc block1 <- mkSwayBlock(1);
-	LinearIfc#(20, 20) headHidden <- mkSwayHeadLinear;
 	LinearIfc#(20, 57) headOutput <- mkSwayLinear(10);
+`endif
+	LinearIfc#(20, 20) headHidden <- mkSwayHeadLinear;
 
 	Reg#(Bool) patchOn <- mkReg(False, reset_by localReset.rst);
 	Reg#(Bool) patchPrepareOn <- mkReg(False, reset_by localReset.rst);

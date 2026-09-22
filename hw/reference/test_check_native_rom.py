@@ -6,17 +6,22 @@ LUT4/TRELLIS_FF cells. Actual B1/B2 mapper compatibility needs a real netlist.
 """
 
 import copy
+import hashlib
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
-from check_native_rom import fifo2_address_path
+from check_native_rom import BooleanProof, ENGINES, check_native_rom, fifo2_address_path
 
 
-def fixture():
+def fixture(command_width=20):
+    address_offset = command_width - 11
     cells = {}
     command = "core_block0_inputProjection_engine_issueCommandQ"
     address = list(range(100, 111))
-    head = list(range(200, 220))
-    tail = list(range(300, 320))
+    head = list(range(200, 200 + command_width))
+    tail = list(range(300, 300 + command_width))
     enq, deq, full, empty, clock = 400, 401, 402, 403, 404
     next_bit = 500
 
@@ -47,15 +52,15 @@ def fixture():
     tail_enable = lut("d1di", [enq, empty], lambda e, n: e and n)
     for i in range(11):
         new_value = lut(f"input_term_{i}", [from_input, address[i]], lambda a, b: a and b)
-        tail_value = lut(f"tail_term_{i}", [from_tail, tail[i + 9]], lambda a, b: a and b)
-        hold_value = lut(f"hold_term_{i}", [hold, head[i + 9]], lambda a, b: a and b)
+        tail_value = lut(f"tail_term_{i}", [from_tail, tail[i + address_offset]], lambda a, b: a and b)
+        hold_value = lut(f"hold_term_{i}", [hold, head[i + address_offset]], lambda a, b: a and b)
         head_data = lut(f"head_data_{i}", [new_value, tail_value, hold_value], lambda a, b, c: a or b or c)
-        register(f"head_{i}", head_data, head[i + 9], "1", "1")
-        register(f"tail_{i}", address[i], tail[i + 9], tail_enable, "CE")
+        register(f"head_{i}", head_data, head[i + address_offset], "1", "1")
+        register(f"tail_{i}", address[i], tail[i + address_offset], tail_enable, "CE")
     nets = {command + suffix: {"bits": bits} for suffix, bits in {
         ".data0_reg": head, ".data1_reg": tail,
         ".ENQ": [enq], ".DEQ": [deq], ".FULL_N": [full], ".EMPTY_N": [empty]}.items()}
-    return cells, nets, command, address, head[9:20], clock
+    return cells, nets, command, address, head[address_offset:command_width], clock
 
 
 def check(data):
@@ -66,7 +71,26 @@ def check(data):
             if direction == "output":
                 for bit in cell["connections"][port]:
                     drivers.setdefault(bit, []).append((name, port))
-    return fifo2_address_path(cells, nets, drivers, command, address, actual, clock)
+    command_width = len(nets[command + ".data1_reg"]["bits"])
+    return fifo2_address_path(cells, nets, drivers, command, address, actual, clock,
+                              command_width, command_width - 11)
+
+
+class TestBooleanProof(unittest.TestCase):
+    def test_all_two_input_function_identities(self):
+        bdd = BooleanProof()
+        x, y = bdd.variable(10), bdd.variable(20)
+        nodes = [bdd.choose(y, bdd.choose(x, (table >> 3) & 1, (table >> 2) & 1),
+                           bdd.choose(x, (table >> 1) & 1, table & 1)) for table in range(16)]
+        for left in range(16):
+            self.assertEqual(bdd.negate(nodes[left]), nodes[left ^ 15])
+            for right in range(16):
+                self.assertEqual(bdd.apply("and", nodes[left], nodes[right]), nodes[left & right])
+                self.assertEqual(bdd.apply("or", nodes[left], nodes[right]), nodes[left | right])
+                self.assertEqual(bdd.apply("xor", nodes[left], nodes[right]), nodes[left ^ right])
+                for select in range(16):
+                    self.assertEqual(bdd.choose(nodes[select], nodes[left], nodes[right]),
+                                     nodes[(select & left) | ((select ^ 15) & right)])
 
 
 class TestFIFO2AddressProof(unittest.TestCase):
@@ -77,6 +101,18 @@ class TestFIFO2AddressProof(unittest.TestCase):
         result = check(self.data)
         self.assertEqual(result["truth_assignments_checked"], 1408)
         self.assertEqual(len(result["registers"]), 22)
+
+    def test_folded_command_address_equations_pass(self):
+        self.data = fixture(22)
+        result = check(self.data)
+        self.assertEqual(result["truth_assignments_checked"], 1408)
+        self.assertIn("D_IN21:11", result["mapping"])
+
+    def test_folded_wrong_counter_bit_rejected(self):
+        self.data = fixture(22)
+        self.data[0]["tail_0"]["connections"]["DI"] = [self.data[3][1]]
+        with self.assertRaisesRegex(ValueError, "does not match the address counter"):
+            check(self.data)
 
     def test_mapped_head_clock_enable_equivalent_to_hold_passes(self):
         cells = self.data[0]
@@ -169,6 +205,71 @@ class TestFIFO2AddressProof(unittest.TestCase):
         self.assertEqual(result["control_bits"]["ENQ"], 400)
         self.assertEqual(result["control_bits"]["DEQ"], 401)
         self.assertEqual(result["occupancy_identity_proof"]["transition_assignments_checked"], 9)
+
+    def test_folded_optimized_alias_recovery_with_proven_guards_passes(self):
+        self.data = fixture(22)
+        self.remove_aliases_with_guarded_controls()
+        result = check(self.data)
+        self.assertTrue(result["occupancy_guard_implications_proven"])
+        self.assertEqual(result["truth_assignments_checked"], 792)
+        self.assertIn("D_IN21:11", result["mapping"])
+
+    def factor_dequeue_control(self):
+        self.data = fixture(22)
+        self.remove_aliases_with_guarded_controls()
+        cells = self.data[0]
+        original = cells.pop("dequeue_guard")
+        replacements = []
+        for name, cell in cells.items():
+            for port, direction in cell["port_directions"].items():
+                if direction == "input" and cell["connections"][port] == [401]:
+                    replacements.append((name, port))
+        for index, (name, port) in enumerate(replacements):
+            control = copy.deepcopy(original)
+            control["connections"]["A"] = [3000 + index]
+            control["connections"]["Z"] = [2000 + index]
+            cells[f"duplicated_request_{index}"] = {
+                "type": "LUT4", "parameters": {"INIT": "1000100010001000"},
+                "connections": {"A": [451], "B": [456], "C": ["0"], "D": ["0"], "Z": [3000 + index]},
+                "port_directions": {"A": "input", "B": "input", "C": "input", "D": "input", "Z": "output"}}
+            cells[f"duplicated_dequeue_{index}"] = control
+            cells[name]["connections"][port] = [2000 + index]
+
+    def test_factored_dispatch_proves_complete_mapped_cones(self):
+        self.factor_dequeue_control()
+        result = check(self.data)
+        self.assertIsNone(result["control_bits"]["DEQ"])
+        self.assertEqual(result["occupancy_identity_proof"]["legal_occupancy_states_checked"], 3)
+        self.assertIn("ROBDD", result["occupancy_identity_proof"]["method"])
+        self.assertEqual(len(result["registers"]), 22)
+
+    def test_factored_dispatch_still_rejects_corrupted_data_or_occupancy(self):
+        for name, field, value in (("head_data_1", "INIT", "0" * 16),
+                                   ("full_state", "REGSET", "RESET"),
+                                   ("empty_state_next", "INIT", "0" * 16)):
+            with self.subTest(name=name):
+                self.factor_dequeue_control()
+                self.data[0][name]["parameters"][field] = value
+                with self.assertRaises(ValueError):
+                    check(self.data)
+
+    def test_factored_dispatch_rejects_tail_enable_corruption(self):
+        self.factor_dequeue_control()
+        self.data[0]["tail_1"]["connections"]["CE"] = ["1"]
+        with self.assertRaisesRegex(ValueError, "next-state mismatch"):
+            check(self.data)
+
+    def test_factored_dispatch_rejects_wrong_fifo_address_input(self):
+        self.factor_dequeue_control()
+        self.data[0]["tail_1"]["connections"]["DI"] = [self.data[3][0]]
+        with self.assertRaisesRegex(ValueError, "does not match the address counter"):
+            check(self.data)
+
+    def test_factored_dispatch_rejects_unknown_logic(self):
+        self.factor_dequeue_control()
+        self.data[0]["head_data_1"]["type"] = "UNPROVEN_PRIMITIVE"
+        with self.assertRaisesRegex(ValueError, "unsupported FIFO2 Boolean logic"):
+            check(self.data)
 
     def test_recovered_controls_without_guard_implications_rejected(self):
         for name in ("enqueue_guard", "dequeue_guard"):
@@ -272,6 +373,181 @@ class TestFIFO2AddressProof(unittest.TestCase):
         data[1][command + ".data1_reg"]["bits"][9] = data[4][0]
         with self.assertRaisesRegex(ValueError, "DI does not match|aliases unrelated"):
             check(data)
+
+
+def native_fixture(root, resource_comparison):
+    """Mapped coefficient fixtures exercise exact coverage/content, not P&R."""
+    generated = root / "generated"
+    generated.mkdir()
+    header = generated / "SwayCoeffRomInit.vh"
+    header.write_text("synthetic native coefficient initialization fixture\n")
+    hashes = {header.name: hashlib.sha256(header.read_bytes()).hexdigest()}
+    banks = []
+    for layer in range(11):
+        for lane in range(4):
+            source = generated / f"linear_l{layer}_lane{lane}.hex"
+            source.write_text(f"{layer * 4 + lane:02x}\n")
+            digest = hashlib.sha256(source.read_bytes()).hexdigest()
+            hashes[source.name] = digest
+            banks.append({"layer": layer, "lane": lane, "file": source.name, "depth": 1, "sha256": digest})
+    reference = root / "reference.json"
+    reference.write_text(json.dumps({"generatedSHA256": hashes, "linearROMBanks": {
+        "banks": banks, "nativeRegisteredROM": {"file": header.name}}}))
+    cells = {}
+    nets = {"clocks_coreReset.CLK": {"bits": [1]}}
+    layers = [layer for layer in range(11) if not resource_comparison or layer not in (3, 7)]
+    for layer in layers:
+        command = ENGINES[layer] + "_issueCommandQ"
+        width = 22 if resource_comparison and layer not in (1, 5) else 20
+        offset = width - 11
+        base = 10000 * (layer + 1)
+        address = [base + i for i in range(11)]
+        head = [base + 100 + i for i in range(width)]
+        if resource_comparison:
+            fcells, fnets, fname, faddress, factual, fclock = fixture(width)
+            def remap(bit):
+                return 1 if bit == fclock else base + bit if type(bit) is int else bit
+            for name, cell in fcells.items():
+                cell = copy.deepcopy(cell)
+                cell["connections"] = {port: [remap(bit) for bit in bits]
+                                       for port, bits in cell["connections"].items()}
+                cells[command + "." + name] = cell
+            for name, net in fnets.items():
+                nets[name.replace(fname, command)] = {"bits": [remap(bit) for bit in net["bits"]]}
+            address = [remap(bit) for bit in faddress]
+            head = nets[command + ".data0_reg"]["bits"]
+        else:
+            for index in range(11):
+                cells[command + f".address_ff{index}"] = {
+                    "type": "TRELLIS_FF", "parameters": {"CLKMUX": "CLK", "CEMUX": "CE",
+                        "LSRMUX": "LSR", "GSR": "DISABLED"},
+                    "attributes": {"src": "BSC-2026.01/lib/Verilog/FIFO1.v:1.1-2.1"},
+                    "connections": {"DI": [address[index]], "Q": [head[offset + index]], "CLK": [1],
+                                    "LSR": ["0"], "CE": [base + 500]},
+                    "port_directions": {"DI": "input", "Q": "output", "CLK": "input", "LSR": "input", "CE": "input"}}
+        nets[ENGINES[layer] + "_addressCnt"] = {"bits": address}
+        nets[command + ".D_IN"] = {"bits": [base + 1000 + i for i in range(offset)] + address}
+        nets[command + ".D_OUT"] = {"bits": head}
+        for lane in range(4):
+            prefix = f"{ENGINES[layer]}_weightR_{lane}_raw"
+            parameters = {"REGMODE_A": "OUTREG", "REGMODE_B": "OUTREG", "DATA_WIDTH_A": "1001",
+                          "DATA_WIDTH_B": "1001", "GSR": "DISABLED", "CSDECODE_A": "0b000", "CSDECODE_B": "0b000"}
+            for block in range(64):
+                parameters[f"INITVAL_{block:02X}"] = f"{layer * 4 + lane if block == 0 else 0:0320b}"
+            connections = {port: [bit] for port, bit in {"CEA": "1", "OCEA": "1", "WEA": "0", "RSTA": "0",
+                "CEB": "0", "OCEB": "0", "WEB": "0", "RSTB": "0", "CLKB": "0", "CLKA": 1}.items()}
+            for side in "AB":
+                for bit in range(3):
+                    connections[f"CS{side}{bit}"] = ["0"]
+                for bit in range(18):
+                    connections[f"DI{side}{bit}"] = ["0"]
+            for bit in range(14):
+                connections[f"ADB{bit}"] = ["0"]
+                connections[f"ADA{bit}"] = ["0" if bit < 3 else head[offset + bit - 3]]
+            cells[prefix] = {"type": "DP16KD", "parameters": parameters, "connections": connections,
+                             "port_directions": {port: "input" for port in connections}}
+            nets[prefix + ".ADDR"] = {"bits": head[offset:]}
+    netlist = root / "netlist.json"
+    netlist.write_text(json.dumps({"modules": {"mkTop": {"cells": cells, "netnames": nets}}}))
+    return netlist, reference, generated
+
+
+class TestNativeROMCoverage(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+
+    def test_default_still_requires_and_checks_all_44_banks(self):
+        paths = native_fixture(self.root, False)
+        result = check_native_rom(*paths)
+        self.assertEqual(result["coefficient_banks_checked"], 44)
+        self.assertEqual(result["command_address_registers_checked"], 121)
+        self.assertFalse(result["resource_comparison"])
+
+    def test_resource_mode_checks_exactly_36_banks_and_198_address_registers(self):
+        paths = native_fixture(self.root, True)
+        result = check_native_rom(*paths, resource_comparison=True)
+        self.assertEqual(result["coefficient_banks_checked"], 36)
+        self.assertEqual(result["command_address_registers_checked"], 198)
+        self.assertEqual(result["non_native_coefficient_layers"], [3, 7])
+        self.assertEqual(len(result["fifo2_address_proofs"]), 9)
+
+    def test_36_banks_are_rejected_without_explicit_resource_mode(self):
+        paths = native_fixture(self.root, True)
+        with self.assertRaisesRegex(ValueError, "Native coefficient memories missing"):
+            check_native_rom(*paths)
+
+    def test_resource_mode_rejects_unexpected_native_delta_bank(self):
+        paths = native_fixture(self.root, True)
+        data = json.loads(paths[0].read_text())
+        cells = data["modules"]["mkTop"]["cells"]
+        cells[ENGINES[3] + "_weightR_0_raw"] = copy.deepcopy(cells[ENGINES[0] + "_weightR_0_raw"])
+        paths[0].write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "Unrecognized coefficient hierarchy"):
+            check_native_rom(*paths, resource_comparison=True)
+
+    def test_resource_mode_rejects_missing_non_delta_bank(self):
+        paths = native_fixture(self.root, True)
+        data = json.loads(paths[0].read_text())
+        del data["modules"]["mkTop"]["cells"][ENGINES[10] + "_weightR_3_raw"]
+        paths[0].write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "Native coefficient memories missing"):
+            check_native_rom(*paths, resource_comparison=True)
+
+    def test_resource_mode_still_rejects_coefficient_corruption(self):
+        paths = native_fixture(self.root, True)
+        data = json.loads(paths[0].read_text())
+        data["modules"]["mkTop"]["cells"][ENGINES[0] + "_weightR_0_raw"]["parameters"]["INITVAL_00"] = f"{1:0320b}"
+        paths[0].write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "INIT mismatch"):
+            check_native_rom(*paths, resource_comparison=True)
+
+    def remove_folded_counter_alias(self, paths):
+        data = json.loads(paths[0].read_text())
+        module = data["modules"]["mkTop"]
+        address = module["netnames"].pop(ENGINES[0] + "_addressCnt")["bits"]
+        for index, bit in enumerate(address):
+            module["cells"][f"folded_counter_{index}"] = {
+                "type": "TRELLIS_FF", "parameters": {"CLKMUX": "CLK", "CEMUX": "CE", "LSRMUX": "LSR",
+                    "GSR": "DISABLED", "REGSET": "RESET", "SRMODE": "LSR_OVER_CE"},
+                "attributes": {"src": "mkTop.v:12.3-14.6|cells_map_trellis.v:83.1-83.4"},
+                "connections": {"CLK": [1], "CE": [200000], "LSR": [200001 if index < 2 else "0"],
+                                "DI": [200010 + index], "Q": [bit]},
+                "port_directions": {"CLK": "input", "CE": "input", "LSR": "input", "DI": "input", "Q": "output"}}
+        paths[0].write_text(json.dumps(data))
+        return data
+
+    def test_folded_counter_alias_removed_by_mapper_is_recovered(self):
+        paths = native_fixture(self.root, True)
+        self.remove_folded_counter_alias(paths)
+        result = check_native_rom(*paths, resource_comparison=True)
+        bank = result["banks"][0]
+        self.assertFalse(bank["address_counter_alias_preserved"])
+        self.assertEqual(len(bank["address_counter_alias_recovery"]["registers"]), 11)
+
+    def test_folded_counter_recovery_rejects_wrong_clock_or_provenance(self):
+        paths = native_fixture(self.root, True)
+        data = self.remove_folded_counter_alias(paths)
+        for field in ("clock", "source", "enable", "clear"):
+            with self.subTest(field=field):
+                mutated = copy.deepcopy(data)
+                cell = mutated["modules"]["mkTop"]["cells"]["folded_counter_1"]
+                if field == "source":
+                    cell["attributes"]["src"] = "FIFO2.v:1.1-2.1"
+                else:
+                    cell["connections"][{"clock": "CLK", "enable": "CE", "clear": "LSR"}[field]] = [299999]
+                paths[0].write_text(json.dumps(mutated))
+                with self.assertRaises(ValueError):
+                    check_native_rom(*paths, resource_comparison=True)
+
+    def test_resource_mode_still_requires_complete_source_manifest(self):
+        paths = native_fixture(self.root, True)
+        data = json.loads(paths[1].read_text())
+        data["linearROMBanks"]["banks"] = [bank for bank in data["linearROMBanks"]["banks"] if bank["layer"] not in (3, 7)]
+        paths[1].write_text(json.dumps(data))
+        with self.assertRaisesRegex(ValueError, "exactly 44 coefficient banks"):
+            check_native_rom(*paths, resource_comparison=True)
 
 
 if __name__ == "__main__":

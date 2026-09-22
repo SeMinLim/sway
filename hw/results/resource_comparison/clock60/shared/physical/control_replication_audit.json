@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "scope": "structural combinational-equivalence proof",
+  "input_sha256": "976813ad1937dd3b16051d2a06d3388f3fcfbf142bbcdfe9ebbd4d43e1ffd41c",
+  "output_sha256": "fd1b85c83c1cfd40e3d04afb1b89e19ecd5dd9e3fafe6192d666f78e924035ac",
+  "manifest_sha256": "8671e76dc0a767bc1f7260a2226aaa8ff30a9c2bce94aecc8417388cf6a8164c",
+  "original_cells_preserved": 83187,
+  "added_cells": 442,
+  "new_equivalent_nets": 442,
+  "all_original_cell_ports_canonicalize_identically": true,
+  "all_clone_parameters_and_inputs_match_originals": true,
+  "all_state_io_clocks_resets_and_initialization_unchanged": true,
+  "timing_constraints_unchanged": true,
+  "physical_timing_improvement_not_established": true
+}

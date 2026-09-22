@@ -1,0 +1,23 @@
+
+23. Printing statistics.
+
+=== mkTop ===
+
+        +----------Local Count, excluding submodules.
+        | 
+    45627 wires
+   135355 wire bits
+    45627 public wires
+   135355 public wire bits
+        4 ports
+       11 port bits
+    87750 cells
+     4540   CCU2C
+       49   DP16KD
+        1   EHXPLLL
+       25   L6MUX21
+    31742   LUT4
+     2693   PFUMX
+      501   TRELLIS_DPR16X4
+    48199   TRELLIS_FF
+

@@ -55,6 +55,22 @@ def positive(value: str) -> int:
     return number
 
 
+def check_native_rtl(rtl: str, resource_comparison: bool = False) -> list[int]:
+    if not re.search(r"\bmodule\s+mkTbSway\s*\(", rtl):
+        raise ValueError("Generated RTL does not declare mkTbSway")
+    native_banks = [int(bank) for bank in re.findall(
+        r"\bSwayCoeffRom\s*#\s*\(\s*\.BANK_ID\(32'd(\d+)\)", rtl
+    )]
+    expected = [bank for bank in range(44) if not resource_comparison or bank // 4 not in (3, 7)]
+    if sorted(native_banks) != expected:
+        raise ValueError(f"Expected native coefficient BVI bank IDs {expected}; regenerate with SWAY_ROM_NATIVE "
+                         "and the selected architecture")
+    fixture_names = re.findall(r'\.file\("([^"\n]+)"\)', rtl)
+    if sorted(fixture_names) != ["generated/test_expected.hex", "generated/test_input.hex"]:
+        raise ValueError("Unexpected generated-Verilog file dependencies")
+    return sorted(native_banks)
+
+
 def run(args: argparse.Namespace, report_path: Path) -> dict:
     hw = Path(__file__).resolve().parents[1]
     verilator = executable(args.verilator)
@@ -71,17 +87,7 @@ def run(args: argparse.Namespace, report_path: Path) -> dict:
         "generated/test_expected.hex": hw / "generated/test_expected.hex",
     }
     source_hashes = {name: digest(path) for name, path in sources.items()}
-    rtl = sources["mkTbSway.v"].read_text()
-    if not re.search(r"\bmodule\s+mkTbSway\s*\(", rtl):
-        raise ValueError("Generated RTL does not declare mkTbSway")
-    native_banks = [int(bank) for bank in re.findall(
-        r"\bSwayCoeffRom\s*#\s*\(\s*\.BANK_ID\(32'd(\d+)\)", rtl
-    )]
-    if sorted(native_banks) != list(range(44)):
-        raise ValueError("Expected all 44 native coefficient BVI banks; regenerate with SWAY_ROM_NATIVE")
-    fixture_names = re.findall(r'\.file\("([^"\n]+)"\)', rtl)
-    if sorted(fixture_names) != ["generated/test_expected.hex", "generated/test_input.hex"]:
-        raise ValueError("Unexpected generated-Verilog file dependencies")
+    native_banks = check_native_rtl(sources["mkTbSway.v"].read_text(), args.resource_comparison)
 
     # Capture original runtime before compiling; later retain the exact files that
     # Verilator reports it consumed. The entry point and clock/reset logic are unmodified.
@@ -161,6 +167,8 @@ def run(args: argparse.Namespace, report_path: Path) -> dict:
         "build_log_sha256": digest(build_log),
         "stderr_sha256": digest(stderr_log),
         "native_coefficient_banks": len(native_banks),
+        "native_coefficient_bank_ids": native_banks,
+        "resource_comparison": args.resource_comparison,
         "clock_reset_model": "Unmodified BSC Verilog/main.v and runtime with --timing",
         "model_scope": "Generated kernel Verilog with native coefficient BVI behavioral ROM; two-state simulation. "
                        "Icarus four-state verification, FPGA primitive reset tests and physical timing are distinct checks.",
@@ -176,6 +184,8 @@ def main() -> None:
     parser.add_argument("--build-dir", type=Path, default=hw / "verilator")
     parser.add_argument("--results-dir", type=Path, default=hw / "results")
     parser.add_argument("--bsc-runtime", type=Path)
+    parser.add_argument("--resource-comparison", action="store_true",
+                        help="Require the 36 native banks outside delta layers 3 and 7")
     parser.add_argument("--verilator", default="verilator")
     parser.add_argument("--jobs", type=positive, default=4)
     parser.add_argument("--build-timeout", type=positive, default=600)

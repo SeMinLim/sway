@@ -7,6 +7,9 @@ import Vector::*;
 import SwayTypes::*;
 import SwayReset::*;
 import SwayLinear::*;
+`ifdef SWAY_REALLOCATE
+import SwayFoldedLinear::*;
+`endif
 
 typedef struct {
 	Bit#(4) lane;
@@ -112,7 +115,11 @@ module mkSwayHeadLinear(LinearIfc#(20, 20));
 		endmethod
 	endinterface;
 
+`ifdef SWAY_REALLOCATE
+	LinearEngineIfc#(20) engine <- mkSwayFoldedLinearEngine(9, 320, 1, source);
+`else
 	LinearEngineIfc#(20) engine <- mkSwayLinearEngine(9, 320, source);
+`endif
 
 	method Action put(Token#(20) value) if ( localReset.ready );
 		inputQ.enq(value);

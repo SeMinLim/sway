@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "change": "Recognize exact nextpnr integer-picosecond/float32 frequency representation while retaining PLL-derived nominal-clock and achieved-versus-reported-constraint gates.",
+  "hardware_changed": false,
+  "rerouted": false,
+  "frozen_source_manifest_changed": false,
+  "checker_path": "hw/reference/check_timing.py",
+  "initial_checker_sha256": "a22752eb3df8afa5ffe8a1b916f8104d0a31bc7597c4cd82103b5dcb7b6078f0",
+  "verified_checker_sha256": "98713aec329569a974389e43450afeb35137c9e0894da318500fe67ff8e0306e",
+  "initial_make_exit_code": 2,
+  "routing_exit_code": 0,
+  "timing_followup_exit_code": 0,
+  "timing_followup_core_mhz": 60,
+  "failure_record": "checker_initial_failure.json",
+  "followup_log": "timing_followup.log"
+}

@@ -1,0 +1,28 @@
+make: Entering directory '/workspace/scratch/e6420b0fda2a/shared-source/hw'
+rm -rf /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim
+mkdir -p /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim
+bsc -show-schedule -show-range-conflict -aggressive-conditions -D SWAY_BUFFERED -D SWAY_REALLOCATE -D SWAY_SHARED_DELTA -D SWAY_CORE_80MHZ -D SWAY_INPUT_FIFO2 -D SWAY_INPUT_OVERLAP -bdir /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim -vdir /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim -simdir /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim -info-dir /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim -fdir /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/shared/stress/bluesim -D BSIM -l pthread  \
+	-p +:/workspace/scratch/e6420b0fda2a/blueyosys/lib/bsv:/workspace/scratch/e6420b0fda2a/blueyosys/fpga/ecp5/bsv:/workspace/scratch/e6420b0fda2a/blueyosys/boards/ulx3s/bsv:/workspace/scratch/e6420b0fda2a/shared-source/hw/bsv:/workspace/scratch/e6420b0fda2a/shared-source/hw/generated:/workspace/scratch/e6420b0fda2a/shared-source/hw/sim -sim -u -g mkTbSway /workspace/scratch/e6420b0fda2a/shared-source/hw/sim/TbSway.bsv
+checking package dependencies
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayTypes.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/generated/GeneratedTestConfig.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/generated/SwayParameters.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayReset.bsv
+Warning: "/workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayReset.bsv", line 15, column 16: (P0216)
+  import BVI module declares `ready' as a method name, which is maybe not what
+  you intended.
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayLookup.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayNorm.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayScan.bsv
+Warning: "/workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayScan.bsv", line 514, column 41: (P0102)
+  Declaration of `high' shadows previous declaration at
+  "/workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayScan.bsv", line
+  505, column 33
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayCoeffRom.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayLinear.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayFoldedLinear.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayHeadLinear.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayBlock.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayDelta.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/bsv/SwayBaseline.bsv
+compiling /workspace/scratch/e6420b0fda2a/shared-source/hw/sim/TbSway.bsv

@@ -1,0 +1,6 @@
+{
+  "status": "fail",
+  "error": "Missing address counter net core_embedding_engine_addressCnt",
+  "netlist": "/workspace/scratch/e6420b0fda2a/sway/hw/resource-build/dedicated/physical/mkTop.json",
+  "checker_sha256": "17af2511b5f05c75f5b795313e1e0f020d31158b79be4134fe6b12f7d3f092d9"
+}

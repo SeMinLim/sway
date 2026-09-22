@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gate the completed ECP5 route against the actual 100 MHz and 25 MHz clocks.
+"""Gate the completed ECP5 route against the selected core and 25 MHz clocks.
 
 The report schema and completion markers follow nextpnr 3e53a0bf:
 common/kernel/report.cc, common/kernel/command.cc, and common/route/router{1,2}.cc.
@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import re
+import struct
 from pathlib import Path
 
 
@@ -58,7 +59,32 @@ def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def check_timing(report_path: Path, log_path: Path, bitstream_path: Path) -> dict:
+def ecp5_reported_constraint(required_mhz: float) -> float:
+    """Reproduce the pinned tool's integer-ps period and float32 MHz report.
+
+    nextpnr 3e53a0bf truncates the PLL period to delay_t in
+    ecp5/pack.cc:generate_constraints/simple_clk_contraint. Its
+    ecp5/arch.h:getDelayNS returns float(period_ps * 0.001), and
+    common/kernel/timing.cc:build_crit_path_reports assigns
+    float target = 1000 / getDelayNS(period). See the pinned primary source:
+    https://github.com/YosysHQ/nextpnr/tree/3e53a0bf
+
+    At 60 MHz the period is 16666 ps and the reported constraint is exactly
+    60.00239944458008 MHz. This is a stricter constraint, not a tolerance.
+    The supported 25, 80 and 100 MHz periods are already integer picoseconds.
+    """
+    def float32(value: float) -> float:
+        return struct.unpack("=f", struct.pack("=f", value))[0]
+
+    period_ps = math.floor(1e6 / required_mhz)
+    return float32(1000 / float32(period_ps * 0.001))
+
+
+def check_timing(report_path: Path, log_path: Path, bitstream_path: Path,
+                 core_mhz: float = 100.0) -> dict:
+    core_mhz = positive_number(core_mhz, "core_mhz")
+    if core_mhz not in (60.0, 80.0, 100.0):
+        raise ValueError("core_mhz must select the physical 60, 80, or 100 MHz PLL configuration")
     report = json.loads(report_path.read_text(), object_pairs_hook=unique_object)
     log = log_path.read_text(errors="replace")
     if not isinstance(report, dict):
@@ -85,8 +111,8 @@ def check_timing(report_path: Path, log_path: Path, bitstream_path: Path) -> dic
         rf"Derived frequency constraint of ({NUMBER}) MHz for net (\S+)", log)
     core_derived = [float(frequency) for frequency, name in derived_clocks
                     if clock_name(name) == CORE_CLOCK]
-    if not core_derived or any(abs(frequency - 100.0) > 1e-6 for frequency in core_derived):
-        raise AssertionError("Actual core clock lacks a PLL-derived 100 MHz constraint")
+    if not core_derived or any(abs(frequency - core_mhz) > 1e-6 for frequency in core_derived):
+        raise AssertionError(f"Actual core clock lacks a PLL-derived {core_mhz:g} MHz constraint")
 
     fmax = report.get("fmax")
     if not isinstance(fmax, dict) or not fmax:
@@ -103,11 +129,15 @@ def check_timing(report_path: Path, log_path: Path, bitstream_path: Path) -> dic
         if achieved < constraint:
             raise AssertionError(f"Clock {raw_name} failed timing: {achieved} < {constraint} MHz")
         clocks[name] = {"net": raw_name, "achieved_mhz": achieved, "constraint_mhz": constraint}
-    for name, required in ((CORE_CLOCK, 100.0), (UART_CLOCK, 25.0)):
+    for name, required in ((CORE_CLOCK, core_mhz), (UART_CLOCK, 25.0)):
         if name not in clocks:
             raise AssertionError(f"Missing actual clock in report: {name}")
-        if abs(clocks[name]["constraint_mhz"] - required) > 1e-6:
-            raise AssertionError(f"Clock {name} must be constrained to exactly {required} MHz")
+        constraint = clocks[name]["constraint_mhz"]
+        # Permit only the nominal value or the pinned ECP5 representation;
+        # never permit a weaker clock constraint, including sub-ppm drift.
+        if constraint < required or constraint not in (required, ecp5_reported_constraint(required)):
+            raise AssertionError(f"Clock {name} must be constrained to exactly {required} MHz "
+                                 "or its exact conservative ECP5 period representation")
 
     # Cross-check JSON values with final log records, allowing only %.02f rounding.
     log_clocks = {}
@@ -166,13 +196,14 @@ def main() -> None:
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--log", type=Path, required=True)
     parser.add_argument("--bitstream", type=Path, required=True)
+    parser.add_argument("--core-mhz", type=float, choices=(60.0, 80.0, 100.0), default=100.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.output.resolve() in {args.report.resolve(), args.log.resolve(), args.bitstream.resolve()}:
         parser.error("--output must not replace an input artifact")
     args.output.unlink(missing_ok=True)
     try:
-        result = check_timing(args.report, args.log, args.bitstream)
+        result = check_timing(args.report, args.log, args.bitstream, args.core_mhz)
     except (OSError, ValueError, AssertionError) as error:
         print(f"SWAY_TIMING_FAIL {error}")
         raise SystemExit(1) from error

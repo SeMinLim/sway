@@ -1,0 +1,62 @@
+{
+  "variant": "shared",
+  "status": "fail",
+  "flow_attempt": "resource_comparison_80mhz",
+  "synthesis_status": "pass",
+  "native_rom_audit": "pass",
+  "control_replication_audit": "pass",
+  "routing_status": "completed",
+  "timing_status": "fail",
+  "actual_core_constraint_mhz": 80,
+  "clocks": {
+    "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": {
+      "achieved": 109.92634582519531,
+      "constraint": 25
+    },
+    "$glbnet$clocks_coreReset.CLK": {
+      "achieved": 77.2081527709961,
+      "constraint": 80
+    }
+  },
+  "packed_resources": {
+    "TRELLIS_COMB": {
+      "available": 83640,
+      "used": 43538
+    },
+    "TRELLIS_FF": {
+      "available": 83640,
+      "used": 44555
+    },
+    "DP16KD": {
+      "available": 208,
+      "used": 41
+    },
+    "MULT18X18D": {
+      "available": 156,
+      "used": 0
+    },
+    "TRELLIS_RAMW": {
+      "available": 10455,
+      "used": 479
+    }
+  },
+  "raw_yosys_cells": {
+    "CCU2C": 3576,
+    "DP16KD": 41,
+    "EHXPLLL": 1,
+    "L6MUX21": 112,
+    "LUT4": 30667,
+    "PFUMX": 3756,
+    "TRELLIS_DPR16X4": 479,
+    "TRELLIS_FF": 44555
+  },
+  "bitstream_created": false,
+  "clock_throughput_claim_valid": false,
+  "routing_complete_marker_present": true,
+  "netlist_sha256": "9178bbce788186257a2efb4147163733bc5cdeafa6ee9c4fe6c4345a0004f243",
+  "physical_netlist_sha256": "6d9cdc003ba09ff5b338d7d7025dd47d63a14a65991eb239e237d15b9443b27a",
+  "nextpnr_report_sha256": "93afb4d8e470a96501bf1b600faefefe1667df7caa7f1c200667125acb977665",
+  "nextpnr_log_sha256": "dc93bb7a10150d25d6f6a62ae3a1bb9964ceffeaf86156b2affa93d51539c08a",
+  "interpretation": "Retained failed 80 MHz operating-point trial; not an architectural infeasibility claim. A separately compiled actual 60 MHz PLL is being validated for equal-throughput comparison.",
+  "route_process_note": "The original asynchronous exit-code handle was unavailable after interruption; failure is established by the completed route report and final nextpnr ERROR timing diagnostic."
+}

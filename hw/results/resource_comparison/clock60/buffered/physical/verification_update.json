@@ -1,0 +1,13 @@
+{
+  "kind": "timing_checker_update",
+  "initial_checker_sha256": "a22752eb3df8afa5ffe8a1b916f8104d0a31bc7597c4cd82103b5dcb7b6078f0",
+  "final_checker_sha256": "98713aec329569a974389e43450afeb35137c9e0894da318500fe67ff8e0306e",
+  "original_make_exit_code": 2,
+  "initial_timing_checker_exit_code": 1,
+  "followup_timing_checker_exit_code": 0,
+  "reason": "The frozen checker required an exact 60 MHz JSON constraint. nextpnr uses integer-picosecond timing periods: the 16666 ps period is conservatively stronger than the requested 60 MHz, and its JSON frequency is 60.00239944458008 MHz. The revised checker accepts the precise quantized constraint and still rejects weaker constraints; physical routing, bitstream and frozen DUT sources are unchanged.",
+  "hardware_or_routing_changed": false,
+  "initial_failure_record": "timing.initial.log",
+  "followup_record": "timing.followup.log",
+  "tests_passed": 29
+}

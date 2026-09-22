@@ -1,0 +1,4337 @@
+{
+  "schema": 1,
+  "scope": "mapped combinational duplication, before nextpnr packing",
+  "input_sha256": "976813ad1937dd3b16051d2a06d3388f3fcfbf142bbcdfe9ebbd4d43e1ffd41c",
+  "top": "mkTop",
+  "cap": 64,
+  "initial_ce_nets": 141,
+  "splits": [
+    {
+      "net_bit": 630,
+      "driver": "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z",
+      "before_fanout": 137,
+      "copies": [
+        95621,
+        95622
+      ]
+    },
+    {
+      "net_bit": 643,
+      "driver": "core_block0_normalization_divideOn_LUT4_C",
+      "before_fanout": 84,
+      "copies": [
+        95623
+      ]
+    },
+    {
+      "net_bit": 970,
+      "driver": "core_block1_normalization_divideOn_LUT4_C",
+      "before_fanout": 85,
+      "copies": [
+        95624
+      ]
+    },
+    {
+      "net_bit": 983,
+      "driver": "MUX_core_block1_normalization_quotientR_write_1__VAL_2_TRELLIS_FF_Q_DI_PFUMX_Z_C0_CCU2C_S1_S0_LUT4_Z",
+      "before_fanout": 142,
+      "copies": [
+        95625,
+        95626
+      ]
+    },
+    {
+      "net_bit": 1303,
+      "driver": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+      "before_fanout": 456,
+      "copies": [
+        95627,
+        95628,
+        95629,
+        95630,
+        95631,
+        95632,
+        95633
+      ]
+    },
+    {
+      "net_bit": 3096,
+      "driver": "core_block0_expandedQ.empty_reg_LUT4_D",
+      "before_fanout": 652,
+      "copies": [
+        95634,
+        95635,
+        95636,
+        95637,
+        95638,
+        95639,
+        95640,
+        95641,
+        95642,
+        95643
+      ]
+    },
+    {
+      "net_bit": 3177,
+      "driver": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+      "before_fanout": 325,
+      "copies": [
+        95644,
+        95645,
+        95646,
+        95647,
+        95648
+      ]
+    },
+    {
+      "net_bit": 3505,
+      "driver": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+      "before_fanout": 327,
+      "copies": [
+        95649,
+        95650,
+        95651,
+        95652,
+        95653
+      ]
+    },
+    {
+      "net_bit": 3691,
+      "driver": "core_block0_convQuantizedQ.empty_reg_LUT4_C_1",
+      "before_fanout": 212,
+      "copies": [
+        95654,
+        95655,
+        95656
+      ]
+    },
+    {
+      "net_bit": 4206,
+      "driver": "core_block0_convAddressQ.empty_reg_LUT4_B",
+      "before_fanout": 166,
+      "copies": [
+        95657,
+        95658
+      ]
+    },
+    {
+      "net_bit": 7493,
+      "driver": "core_block0_convOperandQ.empty_reg_LUT4_B",
+      "before_fanout": 170,
+      "copies": [
+        95659,
+        95660
+      ]
+    },
+    {
+      "net_bit": 7655,
+      "driver": "core_block0_convOperandQ.empty_reg_LUT4_C",
+      "before_fanout": 240,
+      "copies": [
+        95661,
+        95662,
+        95663
+      ]
+    },
+    {
+      "net_bit": 7657,
+      "driver": "core_block0_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 168,
+      "copies": [
+        95664,
+        95665
+      ]
+    },
+    {
+      "net_bit": 7732,
+      "driver": "core_block0_convPairQ.empty_reg_LUT4_C",
+      "before_fanout": 108,
+      "copies": [
+        95666
+      ]
+    },
+    {
+      "net_bit": 8077,
+      "driver": "core_block0_convPairQ.empty_reg_LUT4_C_1",
+      "before_fanout": 76,
+      "copies": [
+        95667
+      ]
+    },
+    {
+      "net_bit": 9727,
+      "driver": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+      "before_fanout": 656,
+      "copies": [
+        95668,
+        95669,
+        95670,
+        95671,
+        95672,
+        95673,
+        95674,
+        95675,
+        95676,
+        95677
+      ]
+    },
+    {
+      "net_bit": 10368,
+      "driver": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+      "before_fanout": 649,
+      "copies": [
+        95678,
+        95679,
+        95680,
+        95681,
+        95682,
+        95683,
+        95684,
+        95685,
+        95686,
+        95687
+      ]
+    },
+    {
+      "net_bit": 11657,
+      "driver": "core_block0_expandedQ.empty_reg_LUT4_C",
+      "before_fanout": 647,
+      "copies": [
+        95688,
+        95689,
+        95690,
+        95691,
+        95692,
+        95693,
+        95694,
+        95695,
+        95696,
+        95697
+      ]
+    },
+    {
+      "net_bit": 12625,
+      "driver": "core_block0_gateDelayQ.ring_empty_LUT4_A",
+      "before_fanout": 320,
+      "copies": [
+        95698,
+        95699,
+        95700,
+        95701
+      ]
+    },
+    {
+      "net_bit": 12954,
+      "driver": "core_block0_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D",
+      "before_fanout": 82,
+      "copies": [
+        95702
+      ]
+    },
+    {
+      "net_bit": 12955,
+      "driver": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+      "before_fanout": 327,
+      "copies": [
+        95703,
+        95704,
+        95705,
+        95706,
+        95707
+      ]
+    },
+    {
+      "net_bit": 14771,
+      "driver": "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D",
+      "before_fanout": 104,
+      "copies": [
+        95708
+      ]
+    },
+    {
+      "net_bit": 14974,
+      "driver": "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 104,
+      "copies": [
+        95709
+      ]
+    },
+    {
+      "net_bit": 15080,
+      "driver": "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_C",
+      "before_fanout": 104,
+      "copies": [
+        95710
+      ]
+    },
+    {
+      "net_bit": 15209,
+      "driver": "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+      "before_fanout": 132,
+      "copies": [
+        95711,
+        95712
+      ]
+    },
+    {
+      "net_bit": 16870,
+      "driver": "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_1",
+      "before_fanout": 102,
+      "copies": [
+        95713
+      ]
+    },
+    {
+      "net_bit": 17542,
+      "driver": "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D",
+      "before_fanout": 66,
+      "copies": [
+        95714
+      ]
+    },
+    {
+      "net_bit": 16265,
+      "driver": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 167,
+      "copies": [
+        95715,
+        95716
+      ]
+    },
+    {
+      "net_bit": 18171,
+      "driver": "core_block0_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z",
+      "before_fanout": 101,
+      "copies": [
+        95717
+      ]
+    },
+    {
+      "net_bit": 17945,
+      "driver": "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_B",
+      "before_fanout": 96,
+      "copies": [
+        95718
+      ]
+    },
+    {
+      "net_bit": 18496,
+      "driver": "core_block0_residualQ.not_ring_full_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 166,
+      "copies": [
+        95719,
+        95720
+      ]
+    },
+    {
+      "net_bit": 18828,
+      "driver": "core_block0_inputQ.empty_reg_LUT4_C",
+      "before_fanout": 167,
+      "copies": [
+        95721,
+        95722
+      ]
+    },
+    {
+      "net_bit": 18830,
+      "driver": "core_block0_residualQ.not_ring_full_LUT4_D",
+      "before_fanout": 173,
+      "copies": [
+        95723,
+        95724
+      ]
+    },
+    {
+      "net_bit": 18982,
+      "driver": "core_block0_normalization_centeredQ.empty_reg_LUT4_C",
+      "before_fanout": 195,
+      "copies": [
+        95725,
+        95726,
+        95727
+      ]
+    },
+    {
+      "net_bit": 18984,
+      "driver": "core_block0_normalization_centeredQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 123,
+      "copies": [
+        95728
+      ]
+    },
+    {
+      "net_bit": 20872,
+      "driver": "core_block0_normalization_productQ.empty_reg_LUT4_C",
+      "before_fanout": 91,
+      "copies": [
+        95729
+      ]
+    },
+    {
+      "net_bit": 21910,
+      "driver": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT",
+      "before_fanout": 129,
+      "copies": [
+        95732,
+        95735
+      ]
+    },
+    {
+      "net_bit": 22559,
+      "driver": "core_block0_outputProjection_engine_emitOn_LUT4_C",
+      "before_fanout": 167,
+      "copies": [
+        95736,
+        95737
+      ]
+    },
+    {
+      "net_bit": 23431,
+      "driver": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 211,
+      "copies": [
+        95738,
+        95739,
+        95740
+      ]
+    },
+    {
+      "net_bit": 22561,
+      "driver": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 326,
+      "copies": [
+        95741,
+        95742,
+        95743,
+        95744,
+        95745
+      ]
+    },
+    {
+      "net_bit": 25295,
+      "driver": "core_block0_outputQ.empty_reg_LUT4_C",
+      "before_fanout": 167,
+      "copies": [
+        95746,
+        95747
+      ]
+    },
+    {
+      "net_bit": 25298,
+      "driver": "core_block1_residualQ.not_ring_full_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 167,
+      "copies": [
+        95748,
+        95749
+      ]
+    },
+    {
+      "net_bit": 25463,
+      "driver": "core_block0_residualQ.ring_empty_LUT4_B",
+      "before_fanout": 160,
+      "copies": [
+        95750,
+        95751
+      ]
+    },
+    {
+      "net_bit": 25793,
+      "driver": "core_block0_residualQ.ring_empty_LUT4_C",
+      "before_fanout": 166,
+      "copies": [
+        95752,
+        95753
+      ]
+    },
+    {
+      "net_bit": 26476,
+      "driver": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+      "before_fanout": 743,
+      "copies": [
+        95754,
+        95755,
+        95756,
+        95757,
+        95758,
+        95759,
+        95760,
+        95761,
+        95762,
+        95763,
+        95764
+      ]
+    },
+    {
+      "net_bit": 26515,
+      "driver": "core_block0_scan_addressQ.empty_reg_LUT4_D",
+      "before_fanout": 179,
+      "copies": [
+        95765,
+        95766
+      ]
+    },
+    {
+      "net_bit": 26654,
+      "driver": "core_block0_scan_argumentQ.empty_reg_LUT4_D",
+      "before_fanout": 108,
+      "copies": [
+        95767
+      ]
+    },
+    {
+      "net_bit": 27010,
+      "driver": "core_block0_scan_lookupQ.empty_reg_LUT4_D",
+      "before_fanout": 118,
+      "copies": [
+        95768
+      ]
+    },
+    {
+      "net_bit": 27011,
+      "driver": "core_block0_scan_combinedQ.empty_reg_LUT4_D",
+      "before_fanout": 91,
+      "copies": [
+        95769
+      ]
+    },
+    {
+      "net_bit": 27258,
+      "driver": "core_block0_scan_currentQ.empty_reg_LUT4_D",
+      "before_fanout": 91,
+      "copies": [
+        95770
+      ]
+    },
+    {
+      "net_bit": 27495,
+      "driver": "core_block0_scan_currentQ.empty_reg_LUT4_C",
+      "before_fanout": 296,
+      "copies": [
+        95771,
+        95772,
+        95773,
+        95774
+      ]
+    },
+    {
+      "net_bit": 27500,
+      "driver": "core_block0_scan_operandQ.empty_reg_LUT4_D",
+      "before_fanout": 176,
+      "copies": [
+        95775,
+        95776
+      ]
+    },
+    {
+      "net_bit": 27008,
+      "driver": "core_block0_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 140,
+      "copies": [
+        95777,
+        95778
+      ]
+    },
+    {
+      "net_bit": 28503,
+      "driver": "core_block0_stateParameterQ.empty_reg_LUT4_C",
+      "before_fanout": 157,
+      "copies": [
+        95779,
+        95780
+      ]
+    },
+    {
+      "net_bit": 30442,
+      "driver": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+      "before_fanout": 781,
+      "copies": [
+        95781,
+        95782,
+        95783,
+        95784,
+        95785,
+        95786,
+        95787,
+        95788,
+        95789,
+        95790,
+        95791,
+        95792
+      ]
+    },
+    {
+      "net_bit": 32402,
+      "driver": "core_block0_scan_lookupQ.empty_reg_LUT4_C",
+      "before_fanout": 106,
+      "copies": [
+        95793
+      ]
+    },
+    {
+      "net_bit": 33391,
+      "driver": "core_block0_scan_operandQ.empty_reg_LUT4_C",
+      "before_fanout": 116,
+      "copies": [
+        95794
+      ]
+    },
+    {
+      "net_bit": 33578,
+      "driver": "core_block0_scan_outputLowerQ.empty_reg_LUT4_C",
+      "before_fanout": 109,
+      "copies": [
+        95795
+      ]
+    },
+    {
+      "net_bit": 27497,
+      "driver": "core_block0_scan_currentQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 192,
+      "copies": [
+        95796,
+        95797
+      ]
+    },
+    {
+      "net_bit": 33758,
+      "driver": "core_block0_scan_outputLowerQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 127,
+      "copies": [
+        95798
+      ]
+    },
+    {
+      "net_bit": 34999,
+      "driver": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+      "before_fanout": 327,
+      "copies": [
+        95799,
+        95800,
+        95801,
+        95802,
+        95803
+      ]
+    },
+    {
+      "net_bit": 32404,
+      "driver": "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 196,
+      "copies": [
+        95804,
+        95805,
+        95806
+      ]
+    },
+    {
+      "net_bit": 36833,
+      "driver": "core_block0_scan_unclippedQ.empty_reg_LUT4_C",
+      "before_fanout": 98,
+      "copies": [
+        95807
+      ]
+    },
+    {
+      "net_bit": 38083,
+      "driver": "core_block0_scan_updateNibbleQ.empty_reg_LUT4_D",
+      "before_fanout": 142,
+      "copies": [
+        95808,
+        95809
+      ]
+    },
+    {
+      "net_bit": 37011,
+      "driver": "core_block0_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 124,
+      "copies": [
+        95810
+      ]
+    },
+    {
+      "net_bit": 38669,
+      "driver": "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT",
+      "before_fanout": 128,
+      "copies": [
+        95813
+      ]
+    },
+    {
+      "net_bit": 40000,
+      "driver": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A_Z_LUT4_Z",
+      "before_fanout": 147,
+      "copies": [
+        95814,
+        95815
+      ]
+    },
+    {
+      "net_bit": 41482,
+      "driver": "core_block0_xDelayQ.empty_reg_LUT4_C",
+      "before_fanout": 325,
+      "copies": [
+        95816,
+        95817,
+        95818,
+        95819,
+        95820
+      ]
+    },
+    {
+      "net_bit": 41486,
+      "driver": "core_block1_expandedQ.empty_reg_LUT4_D",
+      "before_fanout": 652,
+      "copies": [
+        95821,
+        95822,
+        95823,
+        95824,
+        95825,
+        95826,
+        95827,
+        95828,
+        95829,
+        95830
+      ]
+    },
+    {
+      "net_bit": 41852,
+      "driver": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+      "before_fanout": 325,
+      "copies": [
+        95831,
+        95832,
+        95833,
+        95834,
+        95835
+      ]
+    },
+    {
+      "net_bit": 41855,
+      "driver": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 327,
+      "copies": [
+        95836,
+        95837,
+        95838,
+        95839,
+        95840
+      ]
+    },
+    {
+      "net_bit": 42041,
+      "driver": "core_block1_convQuantizedQ.empty_reg_LUT4_C",
+      "before_fanout": 240,
+      "copies": [
+        95841,
+        95842,
+        95843
+      ]
+    },
+    {
+      "net_bit": 42592,
+      "driver": "core_block1_convAddressQ.empty_reg_LUT4_B",
+      "before_fanout": 166,
+      "copies": [
+        95844,
+        95845
+      ]
+    },
+    {
+      "net_bit": 42821,
+      "driver": "core_block1_convOperandQ.empty_reg_LUT4_B",
+      "before_fanout": 166,
+      "copies": [
+        95846,
+        95847
+      ]
+    },
+    {
+      "net_bit": 43140,
+      "driver": "core_block1_convOperandQ.empty_reg_LUT4_C",
+      "before_fanout": 240,
+      "copies": [
+        95848,
+        95849,
+        95850
+      ]
+    },
+    {
+      "net_bit": 43142,
+      "driver": "core_block1_convPairQ.empty_reg_LUT4_C",
+      "before_fanout": 108,
+      "copies": [
+        95851
+      ]
+    },
+    {
+      "net_bit": 43524,
+      "driver": "core_block1_convPairQ.empty_reg_LUT4_C_1",
+      "before_fanout": 76,
+      "copies": [
+        95852
+      ]
+    },
+    {
+      "net_bit": 43525,
+      "driver": "core_block1_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 168,
+      "copies": [
+        95853,
+        95854
+      ]
+    },
+    {
+      "net_bit": 48086,
+      "driver": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+      "before_fanout": 652,
+      "copies": [
+        95855,
+        95856,
+        95857,
+        95858,
+        95859,
+        95860,
+        95861,
+        95862,
+        95863,
+        95864
+      ]
+    },
+    {
+      "net_bit": 48727,
+      "driver": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+      "before_fanout": 647,
+      "copies": [
+        95865,
+        95866,
+        95867,
+        95868,
+        95869,
+        95870,
+        95871,
+        95872,
+        95873,
+        95874
+      ]
+    },
+    {
+      "net_bit": 50335,
+      "driver": "core_block1_gateDelayQ.ring_empty_LUT4_B",
+      "before_fanout": 320,
+      "copies": [
+        95875,
+        95876,
+        95877,
+        95878
+      ]
+    },
+    {
+      "net_bit": 50664,
+      "driver": "core_block1_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D",
+      "before_fanout": 82,
+      "copies": [
+        95879
+      ]
+    },
+    {
+      "net_bit": 50665,
+      "driver": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+      "before_fanout": 327,
+      "copies": [
+        95880,
+        95881,
+        95882,
+        95883,
+        95884
+      ]
+    },
+    {
+      "net_bit": 52423,
+      "driver": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+      "before_fanout": 323,
+      "copies": [
+        95885,
+        95886,
+        95887,
+        95888,
+        95889
+      ]
+    },
+    {
+      "net_bit": 52485,
+      "driver": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 649,
+      "copies": [
+        95890,
+        95891,
+        95892,
+        95893,
+        95894,
+        95895,
+        95896,
+        95897,
+        95898,
+        95899
+      ]
+    },
+    {
+      "net_bit": 52518,
+      "driver": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D",
+      "before_fanout": 104,
+      "copies": [
+        95900
+      ]
+    },
+    {
+      "net_bit": 52721,
+      "driver": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_C",
+      "before_fanout": 104,
+      "copies": [
+        95901
+      ]
+    },
+    {
+      "net_bit": 52826,
+      "driver": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 104,
+      "copies": [
+        95902
+      ]
+    },
+    {
+      "net_bit": 52958,
+      "driver": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+      "before_fanout": 132,
+      "copies": [
+        95903,
+        95904
+      ]
+    },
+    {
+      "net_bit": 55195,
+      "driver": "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_C",
+      "before_fanout": 102,
+      "copies": [
+        95905
+      ]
+    },
+    {
+      "net_bit": 55865,
+      "driver": "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D",
+      "before_fanout": 66,
+      "copies": [
+        95906
+      ]
+    },
+    {
+      "net_bit": 56496,
+      "driver": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B",
+      "before_fanout": 167,
+      "copies": [
+        95907,
+        95908
+      ]
+    },
+    {
+      "net_bit": 56508,
+      "driver": "core_block1_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z",
+      "before_fanout": 101,
+      "copies": [
+        95909
+      ]
+    },
+    {
+      "net_bit": 56519,
+      "driver": "core_block1_inputProjection_engine_sumQ.empty_reg_LUT4_A",
+      "before_fanout": 96,
+      "copies": [
+        95910
+      ]
+    },
+    {
+      "net_bit": 56867,
+      "driver": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B_Z_LUT4_Z",
+      "before_fanout": 167,
+      "copies": [
+        95911,
+        95912
+      ]
+    },
+    {
+      "net_bit": 57846,
+      "driver": "core_block1_residualQ.not_ring_full_LUT4_C",
+      "before_fanout": 174,
+      "copies": [
+        95913,
+        95914
+      ]
+    },
+    {
+      "net_bit": 58030,
+      "driver": "core_block1_normalization_centeredQ.empty_reg_LUT4_D",
+      "before_fanout": 195,
+      "copies": [
+        95915,
+        95916,
+        95917
+      ]
+    },
+    {
+      "net_bit": 59500,
+      "driver": "core_block1_normalization_productQ.empty_reg_LUT4_D_1_Z_LUT4_Z",
+      "before_fanout": 123,
+      "copies": [
+        95918
+      ]
+    },
+    {
+      "net_bit": 59501,
+      "driver": "core_block1_normalization_productQ.empty_reg_LUT4_D_1",
+      "before_fanout": 91,
+      "copies": [
+        95919
+      ]
+    },
+    {
+      "net_bit": 60743,
+      "driver": "core_block1_outputProjection_engine_emitOn_LUT4_B",
+      "before_fanout": 164,
+      "copies": [
+        95920,
+        95921
+      ]
+    },
+    {
+      "net_bit": 60948,
+      "driver": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+      "before_fanout": 129,
+      "copies": [
+        95924,
+        95927
+      ]
+    },
+    {
+      "net_bit": 62479,
+      "driver": "core_block1_residualSumQ.empty_reg_LUT4_B",
+      "before_fanout": 185,
+      "copies": [
+        95928,
+        95929
+      ]
+    },
+    {
+      "net_bit": 64309,
+      "driver": "core_block1_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 163,
+      "copies": [
+        95930,
+        95931
+      ]
+    },
+    {
+      "net_bit": 64793,
+      "driver": "core_block1_outputQ.empty_reg_LUT4_C",
+      "before_fanout": 163,
+      "copies": [
+        95932,
+        95933
+      ]
+    },
+    {
+      "net_bit": 64796,
+      "driver": "core_block1_residualSumQ.empty_reg_LUT4_B_1_Z_LUT4_B_1",
+      "before_fanout": 160,
+      "copies": [
+        95934,
+        95935
+      ]
+    },
+    {
+      "net_bit": 65126,
+      "driver": "core_block1_residualQ.ring_empty_LUT4_C",
+      "before_fanout": 169,
+      "copies": [
+        95936,
+        95937
+      ]
+    },
+    {
+      "net_bit": 65605,
+      "driver": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+      "before_fanout": 743,
+      "copies": [
+        95938,
+        95939,
+        95940,
+        95941,
+        95942,
+        95943,
+        95944,
+        95945,
+        95946,
+        95947,
+        95948
+      ]
+    },
+    {
+      "net_bit": 65644,
+      "driver": "core_block1_scan_addressQ.empty_reg_LUT4_B",
+      "before_fanout": 179,
+      "copies": [
+        95949,
+        95950
+      ]
+    },
+    {
+      "net_bit": 65807,
+      "driver": "core_block1_scan_argumentQ.empty_reg_LUT4_D",
+      "before_fanout": 108,
+      "copies": [
+        95951
+      ]
+    },
+    {
+      "net_bit": 66163,
+      "driver": "core_block1_scan_lookupQ.empty_reg_LUT4_D_1",
+      "before_fanout": 118,
+      "copies": [
+        95952
+      ]
+    },
+    {
+      "net_bit": 66164,
+      "driver": "core_block1_scan_outputLowerQ.empty_reg_LUT4_C",
+      "before_fanout": 109,
+      "copies": [
+        95953
+      ]
+    },
+    {
+      "net_bit": 66317,
+      "driver": "core_block1_scan_partialQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 91,
+      "copies": [
+        95954
+      ]
+    },
+    {
+      "net_bit": 66507,
+      "driver": "core_block1_scan_unclippedQ.empty_reg_LUT4_C",
+      "before_fanout": 96,
+      "copies": [
+        95955
+      ]
+    },
+    {
+      "net_bit": 66586,
+      "driver": "core_block1_scan_currentQ.empty_reg_LUT4_D",
+      "before_fanout": 91,
+      "copies": [
+        95956
+      ]
+    },
+    {
+      "net_bit": 66779,
+      "driver": "core_block1_scan_currentQ.empty_reg_LUT4_D_1",
+      "before_fanout": 296,
+      "copies": [
+        95957,
+        95958,
+        95959,
+        95960
+      ]
+    },
+    {
+      "net_bit": 66783,
+      "driver": "core_block1_scan_operandQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 116,
+      "copies": [
+        95961
+      ]
+    },
+    {
+      "net_bit": 67076,
+      "driver": "core_block1_scan_operandQ.empty_reg_LUT4_D",
+      "before_fanout": 176,
+      "copies": [
+        95962,
+        95963
+      ]
+    },
+    {
+      "net_bit": 66161,
+      "driver": "core_block1_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 140,
+      "copies": [
+        95964,
+        95965
+      ]
+    },
+    {
+      "net_bit": 68002,
+      "driver": "core_delta_input1Q.empty_reg_LUT4_D",
+      "before_fanout": 151,
+      "copies": [
+        95966,
+        95967
+      ]
+    },
+    {
+      "net_bit": 70205,
+      "driver": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+      "before_fanout": 781,
+      "copies": [
+        95968,
+        95969,
+        95970,
+        95971,
+        95972,
+        95973,
+        95974,
+        95975,
+        95976,
+        95977,
+        95978,
+        95979
+      ]
+    },
+    {
+      "net_bit": 72180,
+      "driver": "core_block1_scan_lookupQ.empty_reg_LUT4_D",
+      "before_fanout": 106,
+      "copies": [
+        95980
+      ]
+    },
+    {
+      "net_bit": 66781,
+      "driver": "core_block1_scan_currentQ.empty_reg_LUT4_D_1_Z_LUT4_Z",
+      "before_fanout": 192,
+      "copies": [
+        95981,
+        95982
+      ]
+    },
+    {
+      "net_bit": 73909,
+      "driver": "core_block1_scan_outputNibbleQ.empty_reg_LUT4_D",
+      "before_fanout": 127,
+      "copies": [
+        95983
+      ]
+    },
+    {
+      "net_bit": 71309,
+      "driver": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 323,
+      "copies": [
+        95984,
+        95985,
+        95986,
+        95987,
+        95988
+      ]
+    },
+    {
+      "net_bit": 76160,
+      "driver": "core_block1_scan_preparedQ.empty_reg_LUT4_C",
+      "before_fanout": 196,
+      "copies": [
+        95989,
+        95990,
+        95991
+      ]
+    },
+    {
+      "net_bit": 76162,
+      "driver": "core_block1_scan_preparedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 142,
+      "copies": [
+        95992,
+        95993
+      ]
+    },
+    {
+      "net_bit": 76399,
+      "driver": "core_block1_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 124,
+      "copies": [
+        95994
+      ]
+    },
+    {
+      "net_bit": 77792,
+      "driver": "core_block1_stateProjection_engine_emitOn_LUT4_B",
+      "before_fanout": 147,
+      "copies": [
+        95995,
+        95996
+      ]
+    },
+    {
+      "net_bit": 77998,
+      "driver": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+      "before_fanout": 129,
+      "copies": [
+        95999,
+        96002
+      ]
+    },
+    {
+      "net_bit": 80870,
+      "driver": "core_block1_xDelayQ.empty_reg_LUT4_C",
+      "before_fanout": 325,
+      "copies": [
+        96003,
+        96004,
+        96005,
+        96006,
+        96007
+      ]
+    },
+    {
+      "net_bit": 81309,
+      "driver": "core_delta_emitOn_LUT4_B",
+      "before_fanout": 323,
+      "copies": [
+        96008,
+        96009,
+        96010,
+        96011,
+        96012
+      ]
+    },
+    {
+      "net_bit": 81310,
+      "driver": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+      "before_fanout": 323,
+      "copies": [
+        96013,
+        96014,
+        96015,
+        96016,
+        96017
+      ]
+    },
+    {
+      "net_bit": 82532,
+      "driver": "core_embedding_engine_emitOn_LUT4_C",
+      "before_fanout": 168,
+      "copies": [
+        96018,
+        96019
+      ]
+    },
+    {
+      "net_bit": 82781,
+      "driver": "core_embedding_engine_chunkLoadOn_LUT4_C",
+      "before_fanout": 129,
+      "copies": [
+        96020,
+        96021
+      ]
+    },
+    {
+      "net_bit": 83513,
+      "driver": "core_embedding_engine_requestMetadataQ.hasodata_LUT4_B_Z_LUT4_D",
+      "before_fanout": 68,
+      "copies": [
+        96022
+      ]
+    },
+    {
+      "net_bit": 84414,
+      "driver": "core_patchTokenQ.empty_reg_LUT4_D",
+      "before_fanout": 167,
+      "copies": [
+        96023,
+        96024
+      ]
+    },
+    {
+      "net_bit": 84740,
+      "driver": "core_patchIssueOn_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z_C_LUT4_C",
+      "before_fanout": 167,
+      "copies": [
+        96025,
+        96026
+      ]
+    },
+    {
+      "net_bit": 85378,
+      "driver": "core_headHidden_engine_emitOn_LUT4_B_Z_LUT4_D",
+      "before_fanout": 162,
+      "copies": [
+        96027,
+        96028
+      ]
+    },
+    {
+      "net_bit": 87424,
+      "driver": "core_headHidden_engine_outputQ.empty_reg_LUT4_D",
+      "before_fanout": 163,
+      "copies": [
+        96029,
+        96030
+      ]
+    },
+    {
+      "net_bit": 89345,
+      "driver": "core_headOutput_engine_chunkLoadOn_LUT4_B",
+      "before_fanout": 114,
+      "copies": [
+        96031
+      ]
+    },
+    {
+      "net_bit": 87428,
+      "driver": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+      "before_fanout": 458,
+      "copies": [
+        96032,
+        96033,
+        96034,
+        96035,
+        96036,
+        96037,
+        96038
+      ]
+    },
+    {
+      "net_bit": 95621,
+      "driver": "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z$fanout$0",
+      "before_fanout": 65,
+      "copies": [
+        96039
+      ]
+    },
+    {
+      "net_bit": 1315,
+      "driver": "core_outputOn_LUT4_C",
+      "before_fanout": 459,
+      "copies": [
+        96040,
+        96041,
+        96042,
+        96043,
+        96044,
+        96045,
+        96046
+      ]
+    },
+    {
+      "net_bit": 95672,
+      "driver": "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$51",
+      "before_fanout": 73,
+      "copies": [
+        96047
+      ]
+    },
+    {
+      "net_bit": 21909,
+      "driver": "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+      "before_fanout": 69,
+      "copies": [
+        96050
+      ]
+    },
+    {
+      "net_bit": 23431,
+      "driver": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+      "before_fanout": 68,
+      "copies": [
+        96051
+      ]
+    },
+    {
+      "net_bit": 38668,
+      "driver": "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+      "before_fanout": 68,
+      "copies": [
+        96054
+      ]
+    },
+    {
+      "net_bit": 95859,
+      "driver": "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$238",
+      "before_fanout": 73,
+      "copies": [
+        96055
+      ]
+    },
+    {
+      "net_bit": 60947,
+      "driver": "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+      "before_fanout": 69,
+      "copies": [
+        96058
+      ]
+    },
+    {
+      "net_bit": 62479,
+      "driver": "core_block1_residualSumQ.empty_reg_LUT4_B",
+      "before_fanout": 66,
+      "copies": [
+        96059
+      ]
+    },
+    {
+      "net_bit": 77997,
+      "driver": "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+      "before_fanout": 69,
+      "copies": [
+        96062
+      ]
+    }
+  ],
+  "unmodified_sequential_ce_boundaries": [
+    {
+      "bit": 85596,
+      "driver": [
+        "core_headHidden_engine_chunkLoadOn_TRELLIS_FF_Q",
+        "Q",
+        0
+      ],
+      "type": "TRELLIS_FF",
+      "before_fanout": 133,
+      "fanout": 133,
+      "sink_ports": {
+        "CE": 128,
+        "D": 2,
+        "C": 2,
+        "B": 1
+      }
+    }
+  ],
+  "clone_origins": {
+    "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z$fanout$0": "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z",
+    "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z$fanout$1": "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z",
+    "core_block0_normalization_divideOn_LUT4_C$fanout$2": "core_block0_normalization_divideOn_LUT4_C",
+    "core_block1_normalization_divideOn_LUT4_C$fanout$3": "core_block1_normalization_divideOn_LUT4_C",
+    "MUX_core_block1_normalization_quotientR_write_1__VAL_2_TRELLIS_FF_Q_DI_PFUMX_Z_C0_CCU2C_S1_S0_LUT4_Z$fanout$4": "MUX_core_block1_normalization_quotientR_write_1__VAL_2_TRELLIS_FF_Q_DI_PFUMX_Z_C0_CCU2C_S1_S0_LUT4_Z",
+    "MUX_core_block1_normalization_quotientR_write_1__VAL_2_TRELLIS_FF_Q_DI_PFUMX_Z_C0_CCU2C_S1_S0_LUT4_Z$fanout$5": "MUX_core_block1_normalization_quotientR_write_1__VAL_2_TRELLIS_FF_Q_DI_PFUMX_Z_C0_CCU2C_S1_S0_LUT4_Z",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$6": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$7": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$8": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$9": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$10": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$11": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D$fanout$12": "core_outputQ.not_ring_full_LUT4_D_Z_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$13": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$14": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$15": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$16": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$17": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$18": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$19": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$20": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$21": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_D$fanout$22": "core_block0_expandedQ.empty_reg_LUT4_D",
+    "core_block0_gateDelayQ.not_ring_full_LUT4_A_1$fanout$23": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block0_gateDelayQ.not_ring_full_LUT4_A_1$fanout$24": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block0_gateDelayQ.not_ring_full_LUT4_A_1$fanout$25": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block0_gateDelayQ.not_ring_full_LUT4_A_1$fanout$26": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block0_gateDelayQ.not_ring_full_LUT4_A_1$fanout$27": "core_block0_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A$fanout$28": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A$fanout$29": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A$fanout$30": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A$fanout$31": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A$fanout$32": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A",
+    "core_block0_convQuantizedQ.empty_reg_LUT4_C_1$fanout$33": "core_block0_convQuantizedQ.empty_reg_LUT4_C_1",
+    "core_block0_convQuantizedQ.empty_reg_LUT4_C_1$fanout$34": "core_block0_convQuantizedQ.empty_reg_LUT4_C_1",
+    "core_block0_convQuantizedQ.empty_reg_LUT4_C_1$fanout$35": "core_block0_convQuantizedQ.empty_reg_LUT4_C_1",
+    "core_block0_convAddressQ.empty_reg_LUT4_B$fanout$36": "core_block0_convAddressQ.empty_reg_LUT4_B",
+    "core_block0_convAddressQ.empty_reg_LUT4_B$fanout$37": "core_block0_convAddressQ.empty_reg_LUT4_B",
+    "core_block0_convOperandQ.empty_reg_LUT4_B$fanout$38": "core_block0_convOperandQ.empty_reg_LUT4_B",
+    "core_block0_convOperandQ.empty_reg_LUT4_B$fanout$39": "core_block0_convOperandQ.empty_reg_LUT4_B",
+    "core_block0_convOperandQ.empty_reg_LUT4_C$fanout$40": "core_block0_convOperandQ.empty_reg_LUT4_C",
+    "core_block0_convOperandQ.empty_reg_LUT4_C$fanout$41": "core_block0_convOperandQ.empty_reg_LUT4_C",
+    "core_block0_convOperandQ.empty_reg_LUT4_C$fanout$42": "core_block0_convOperandQ.empty_reg_LUT4_C",
+    "core_block0_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$43": "core_block0_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$44": "core_block0_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_convPairQ.empty_reg_LUT4_C$fanout$45": "core_block0_convPairQ.empty_reg_LUT4_C",
+    "core_block0_convPairQ.empty_reg_LUT4_C_1$fanout$46": "core_block0_convPairQ.empty_reg_LUT4_C_1",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$47": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$48": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$49": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$50": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$51": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$52": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$53": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$54": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$55": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$56": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$57": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$58": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$59": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$60": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$61": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$62": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$63": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$64": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$65": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D$fanout$66": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$67": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$68": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$69": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$70": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$71": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$72": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$73": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$74": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$75": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_expandedQ.empty_reg_LUT4_C$fanout$76": "core_block0_expandedQ.empty_reg_LUT4_C",
+    "core_block0_gateDelayQ.ring_empty_LUT4_A$fanout$77": "core_block0_gateDelayQ.ring_empty_LUT4_A",
+    "core_block0_gateDelayQ.ring_empty_LUT4_A$fanout$78": "core_block0_gateDelayQ.ring_empty_LUT4_A",
+    "core_block0_gateDelayQ.ring_empty_LUT4_A$fanout$79": "core_block0_gateDelayQ.ring_empty_LUT4_A",
+    "core_block0_gateDelayQ.ring_empty_LUT4_A$fanout$80": "core_block0_gateDelayQ.ring_empty_LUT4_A",
+    "core_block0_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D$fanout$81": "core_block0_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D",
+    "core_block0_gateDelayQ.ring_empty_LUT4_C$fanout$82": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+    "core_block0_gateDelayQ.ring_empty_LUT4_C$fanout$83": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+    "core_block0_gateDelayQ.ring_empty_LUT4_C$fanout$84": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+    "core_block0_gateDelayQ.ring_empty_LUT4_C$fanout$85": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+    "core_block0_gateDelayQ.ring_empty_LUT4_C$fanout$86": "core_block0_gateDelayQ.ring_empty_LUT4_C",
+    "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D$fanout$87": "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D",
+    "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$88": "core_block0_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_C$fanout$89": "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_C",
+    "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C_1$fanout$90": "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+    "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C_1$fanout$91": "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+    "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_1$fanout$92": "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_1",
+    "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D$fanout$93": "core_block0_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$94": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$95": "core_block0_inputProjection_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z$fanout$96": "core_block0_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z",
+    "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_B$fanout$97": "core_block0_inputProjection_engine_productQ.empty_reg_LUT4_B",
+    "core_block0_residualQ.not_ring_full_LUT4_D_Z_LUT4_Z$fanout$98": "core_block0_residualQ.not_ring_full_LUT4_D_Z_LUT4_Z",
+    "core_block0_residualQ.not_ring_full_LUT4_D_Z_LUT4_Z$fanout$99": "core_block0_residualQ.not_ring_full_LUT4_D_Z_LUT4_Z",
+    "core_block0_inputQ.empty_reg_LUT4_C$fanout$100": "core_block0_inputQ.empty_reg_LUT4_C",
+    "core_block0_inputQ.empty_reg_LUT4_C$fanout$101": "core_block0_inputQ.empty_reg_LUT4_C",
+    "core_block0_residualQ.not_ring_full_LUT4_D$fanout$102": "core_block0_residualQ.not_ring_full_LUT4_D",
+    "core_block0_residualQ.not_ring_full_LUT4_D$fanout$103": "core_block0_residualQ.not_ring_full_LUT4_D",
+    "core_block0_normalization_centeredQ.empty_reg_LUT4_C$fanout$104": "core_block0_normalization_centeredQ.empty_reg_LUT4_C",
+    "core_block0_normalization_centeredQ.empty_reg_LUT4_C$fanout$105": "core_block0_normalization_centeredQ.empty_reg_LUT4_C",
+    "core_block0_normalization_centeredQ.empty_reg_LUT4_C$fanout$106": "core_block0_normalization_centeredQ.empty_reg_LUT4_C",
+    "core_block0_normalization_centeredQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$107": "core_block0_normalization_centeredQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_normalization_productQ.empty_reg_LUT4_C$fanout$108": "core_block0_normalization_productQ.empty_reg_LUT4_C",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D$fanout$109": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$110": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT$fanout$111": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D$fanout$112": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$113": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT$fanout$114": "core_block0_outputProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C$fanout$115": "core_block0_outputProjection_engine_emitOn_LUT4_C",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C$fanout$116": "core_block0_outputProjection_engine_emitOn_LUT4_C",
+    "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$117": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$118": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$119": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z$fanout$120": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z$fanout$121": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z$fanout$122": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z$fanout$123": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z$fanout$124": "core_block0_outputProjection_engine_emitOn_LUT4_C_Z_LUT4_Z",
+    "core_block0_outputQ.empty_reg_LUT4_C$fanout$125": "core_block0_outputQ.empty_reg_LUT4_C",
+    "core_block0_outputQ.empty_reg_LUT4_C$fanout$126": "core_block0_outputQ.empty_reg_LUT4_C",
+    "core_block1_residualQ.not_ring_full_LUT4_C_Z_LUT4_Z$fanout$127": "core_block1_residualQ.not_ring_full_LUT4_C_Z_LUT4_Z",
+    "core_block1_residualQ.not_ring_full_LUT4_C_Z_LUT4_Z$fanout$128": "core_block1_residualQ.not_ring_full_LUT4_C_Z_LUT4_Z",
+    "core_block0_residualQ.ring_empty_LUT4_B$fanout$129": "core_block0_residualQ.ring_empty_LUT4_B",
+    "core_block0_residualQ.ring_empty_LUT4_B$fanout$130": "core_block0_residualQ.ring_empty_LUT4_B",
+    "core_block0_residualQ.ring_empty_LUT4_C$fanout$131": "core_block0_residualQ.ring_empty_LUT4_C",
+    "core_block0_residualQ.ring_empty_LUT4_C$fanout$132": "core_block0_residualQ.ring_empty_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$133": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$134": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$135": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$136": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$137": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$138": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$139": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$140": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$141": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$142": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_inputQ.empty_reg_LUT4_D$fanout$143": "core_block0_scan_inputQ.empty_reg_LUT4_D",
+    "core_block0_scan_addressQ.empty_reg_LUT4_D$fanout$144": "core_block0_scan_addressQ.empty_reg_LUT4_D",
+    "core_block0_scan_addressQ.empty_reg_LUT4_D$fanout$145": "core_block0_scan_addressQ.empty_reg_LUT4_D",
+    "core_block0_scan_argumentQ.empty_reg_LUT4_D$fanout$146": "core_block0_scan_argumentQ.empty_reg_LUT4_D",
+    "core_block0_scan_lookupQ.empty_reg_LUT4_D$fanout$147": "core_block0_scan_lookupQ.empty_reg_LUT4_D",
+    "core_block0_scan_combinedQ.empty_reg_LUT4_D$fanout$148": "core_block0_scan_combinedQ.empty_reg_LUT4_D",
+    "core_block0_scan_currentQ.empty_reg_LUT4_D$fanout$149": "core_block0_scan_currentQ.empty_reg_LUT4_D",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C$fanout$150": "core_block0_scan_currentQ.empty_reg_LUT4_C",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C$fanout$151": "core_block0_scan_currentQ.empty_reg_LUT4_C",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C$fanout$152": "core_block0_scan_currentQ.empty_reg_LUT4_C",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C$fanout$153": "core_block0_scan_currentQ.empty_reg_LUT4_C",
+    "core_block0_scan_operandQ.empty_reg_LUT4_D$fanout$154": "core_block0_scan_operandQ.empty_reg_LUT4_D",
+    "core_block0_scan_operandQ.empty_reg_LUT4_D$fanout$155": "core_block0_scan_operandQ.empty_reg_LUT4_D",
+    "core_block0_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$156": "core_block0_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$157": "core_block0_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_stateParameterQ.empty_reg_LUT4_C$fanout$158": "core_block0_stateParameterQ.empty_reg_LUT4_C",
+    "core_block0_stateParameterQ.empty_reg_LUT4_C$fanout$159": "core_block0_stateParameterQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$160": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$161": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$162": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$163": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$164": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$165": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$166": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$167": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$168": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$169": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$170": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_inputQ.empty_reg_LUT4_C$fanout$171": "core_block0_scan_inputQ.empty_reg_LUT4_C",
+    "core_block0_scan_lookupQ.empty_reg_LUT4_C$fanout$172": "core_block0_scan_lookupQ.empty_reg_LUT4_C",
+    "core_block0_scan_operandQ.empty_reg_LUT4_C$fanout$173": "core_block0_scan_operandQ.empty_reg_LUT4_C",
+    "core_block0_scan_outputLowerQ.empty_reg_LUT4_C$fanout$174": "core_block0_scan_outputLowerQ.empty_reg_LUT4_C",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$175": "core_block0_scan_currentQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_currentQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$176": "core_block0_scan_currentQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_outputLowerQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$177": "core_block0_scan_outputLowerQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C$fanout$178": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+    "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C$fanout$179": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+    "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C$fanout$180": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+    "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C$fanout$181": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+    "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C$fanout$182": "core_block0_scan_outputQ.empty_reg_LUT4_A_D_LUT4_C",
+    "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$183": "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$184": "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$185": "core_block0_scan_lookupQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_scan_unclippedQ.empty_reg_LUT4_C$fanout$186": "core_block0_scan_unclippedQ.empty_reg_LUT4_C",
+    "core_block0_scan_updateNibbleQ.empty_reg_LUT4_D$fanout$187": "core_block0_scan_updateNibbleQ.empty_reg_LUT4_D",
+    "core_block0_scan_updateNibbleQ.empty_reg_LUT4_D$fanout$188": "core_block0_scan_updateNibbleQ.empty_reg_LUT4_D",
+    "core_block0_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$189": "core_block0_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D$fanout$190": "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D",
+    "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$191": "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT$fanout$192": "core_block0_stateProjection_engine_chunkLoadOn_LUT4_D_Z_PFUMX_ALUT",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A_Z_LUT4_Z$fanout$193": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A_Z_LUT4_Z",
+    "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A_Z_LUT4_Z$fanout$194": "core_block0_stateProjection_localReset_leaf.secondReset_Q_LUT4_A_Z_LUT4_Z",
+    "core_block0_xDelayQ.empty_reg_LUT4_C$fanout$195": "core_block0_xDelayQ.empty_reg_LUT4_C",
+    "core_block0_xDelayQ.empty_reg_LUT4_C$fanout$196": "core_block0_xDelayQ.empty_reg_LUT4_C",
+    "core_block0_xDelayQ.empty_reg_LUT4_C$fanout$197": "core_block0_xDelayQ.empty_reg_LUT4_C",
+    "core_block0_xDelayQ.empty_reg_LUT4_C$fanout$198": "core_block0_xDelayQ.empty_reg_LUT4_C",
+    "core_block0_xDelayQ.empty_reg_LUT4_C$fanout$199": "core_block0_xDelayQ.empty_reg_LUT4_C",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$200": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$201": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$202": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$203": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$204": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$205": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$206": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$207": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$208": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_expandedQ.empty_reg_LUT4_D$fanout$209": "core_block1_expandedQ.empty_reg_LUT4_D",
+    "core_block1_gateDelayQ.not_ring_full_LUT4_A_1$fanout$210": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block1_gateDelayQ.not_ring_full_LUT4_A_1$fanout$211": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block1_gateDelayQ.not_ring_full_LUT4_A_1$fanout$212": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block1_gateDelayQ.not_ring_full_LUT4_A_1$fanout$213": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block1_gateDelayQ.not_ring_full_LUT4_A_1$fanout$214": "core_block1_gateDelayQ.not_ring_full_LUT4_A_1",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$215": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$216": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$217": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$218": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$219": "core_block1_scan_inputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_convQuantizedQ.empty_reg_LUT4_C$fanout$220": "core_block1_convQuantizedQ.empty_reg_LUT4_C",
+    "core_block1_convQuantizedQ.empty_reg_LUT4_C$fanout$221": "core_block1_convQuantizedQ.empty_reg_LUT4_C",
+    "core_block1_convQuantizedQ.empty_reg_LUT4_C$fanout$222": "core_block1_convQuantizedQ.empty_reg_LUT4_C",
+    "core_block1_convAddressQ.empty_reg_LUT4_B$fanout$223": "core_block1_convAddressQ.empty_reg_LUT4_B",
+    "core_block1_convAddressQ.empty_reg_LUT4_B$fanout$224": "core_block1_convAddressQ.empty_reg_LUT4_B",
+    "core_block1_convOperandQ.empty_reg_LUT4_B$fanout$225": "core_block1_convOperandQ.empty_reg_LUT4_B",
+    "core_block1_convOperandQ.empty_reg_LUT4_B$fanout$226": "core_block1_convOperandQ.empty_reg_LUT4_B",
+    "core_block1_convOperandQ.empty_reg_LUT4_C$fanout$227": "core_block1_convOperandQ.empty_reg_LUT4_C",
+    "core_block1_convOperandQ.empty_reg_LUT4_C$fanout$228": "core_block1_convOperandQ.empty_reg_LUT4_C",
+    "core_block1_convOperandQ.empty_reg_LUT4_C$fanout$229": "core_block1_convOperandQ.empty_reg_LUT4_C",
+    "core_block1_convPairQ.empty_reg_LUT4_C$fanout$230": "core_block1_convPairQ.empty_reg_LUT4_C",
+    "core_block1_convPairQ.empty_reg_LUT4_C_1$fanout$231": "core_block1_convPairQ.empty_reg_LUT4_C_1",
+    "core_block1_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$232": "core_block1_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$233": "core_block1_convPairQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$234": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$235": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$236": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$237": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$238": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$239": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$240": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$241": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$242": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$243": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$244": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$245": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$246": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$247": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$248": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$249": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$250": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$251": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$252": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_expandedQ.empty_reg_LUT4_D_1$fanout$253": "core_block1_expandedQ.empty_reg_LUT4_D_1",
+    "core_block1_gateDelayQ.ring_empty_LUT4_B$fanout$254": "core_block1_gateDelayQ.ring_empty_LUT4_B",
+    "core_block1_gateDelayQ.ring_empty_LUT4_B$fanout$255": "core_block1_gateDelayQ.ring_empty_LUT4_B",
+    "core_block1_gateDelayQ.ring_empty_LUT4_B$fanout$256": "core_block1_gateDelayQ.ring_empty_LUT4_B",
+    "core_block1_gateDelayQ.ring_empty_LUT4_B$fanout$257": "core_block1_gateDelayQ.ring_empty_LUT4_B",
+    "core_block1_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D$fanout$258": "core_block1_gateDelayQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z_D_LUT4_D",
+    "core_block1_gateDelayQ.ring_empty_LUT4_C$fanout$259": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+    "core_block1_gateDelayQ.ring_empty_LUT4_C$fanout$260": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+    "core_block1_gateDelayQ.ring_empty_LUT4_C$fanout$261": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+    "core_block1_gateDelayQ.ring_empty_LUT4_C$fanout$262": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+    "core_block1_gateDelayQ.ring_empty_LUT4_C$fanout$263": "core_block1_gateDelayQ.ring_empty_LUT4_C",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z$fanout$264": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z$fanout$265": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z$fanout$266": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z$fanout$267": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z$fanout$268": "core_block1_outputProjection_engine_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$269": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$270": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$271": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$272": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$273": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$274": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$275": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$276": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$277": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$278": "core_block1_inputProjection_engine_startQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D$fanout$279": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D",
+    "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_C$fanout$280": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_C",
+    "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$281": "core_block1_inputProjection_engine_biasQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C_1$fanout$282": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+    "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C_1$fanout$283": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C_1",
+    "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_C$fanout$284": "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_C",
+    "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D$fanout$285": "core_block1_inputProjection_engine_partialQ.empty_reg_LUT4_D_Z_LUT4_D",
+    "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B$fanout$286": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B",
+    "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B$fanout$287": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B",
+    "core_block1_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z$fanout$288": "core_block1_inputProjection_engine_sumR_TRELLIS_FF_Q_LSR_LUT4_Z",
+    "core_block1_inputProjection_engine_sumQ.empty_reg_LUT4_A$fanout$289": "core_block1_inputProjection_engine_sumQ.empty_reg_LUT4_A",
+    "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B_Z_LUT4_Z$fanout$290": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B_Z_LUT4_Z",
+    "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B_Z_LUT4_Z$fanout$291": "core_block1_inputProjection_localReset_leaf.secondReset_Q_LUT4_B_Z_LUT4_Z",
+    "core_block1_residualQ.not_ring_full_LUT4_C$fanout$292": "core_block1_residualQ.not_ring_full_LUT4_C",
+    "core_block1_residualQ.not_ring_full_LUT4_C$fanout$293": "core_block1_residualQ.not_ring_full_LUT4_C",
+    "core_block1_normalization_centeredQ.empty_reg_LUT4_D$fanout$294": "core_block1_normalization_centeredQ.empty_reg_LUT4_D",
+    "core_block1_normalization_centeredQ.empty_reg_LUT4_D$fanout$295": "core_block1_normalization_centeredQ.empty_reg_LUT4_D",
+    "core_block1_normalization_centeredQ.empty_reg_LUT4_D$fanout$296": "core_block1_normalization_centeredQ.empty_reg_LUT4_D",
+    "core_block1_normalization_productQ.empty_reg_LUT4_D_1_Z_LUT4_Z$fanout$297": "core_block1_normalization_productQ.empty_reg_LUT4_D_1_Z_LUT4_Z",
+    "core_block1_normalization_productQ.empty_reg_LUT4_D_1$fanout$298": "core_block1_normalization_productQ.empty_reg_LUT4_D_1",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B$fanout$299": "core_block1_outputProjection_engine_emitOn_LUT4_B",
+    "core_block1_outputProjection_engine_emitOn_LUT4_B$fanout$300": "core_block1_outputProjection_engine_emitOn_LUT4_B",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C$fanout$301": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$302": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT$fanout$303": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C$fanout$304": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$305": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT$fanout$306": "core_block1_outputProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+    "core_block1_residualSumQ.empty_reg_LUT4_B$fanout$307": "core_block1_residualSumQ.empty_reg_LUT4_B",
+    "core_block1_residualSumQ.empty_reg_LUT4_B$fanout$308": "core_block1_residualSumQ.empty_reg_LUT4_B",
+    "core_block1_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$309": "core_block1_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$310": "core_block1_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_outputQ.empty_reg_LUT4_C$fanout$311": "core_block1_outputQ.empty_reg_LUT4_C",
+    "core_block1_outputQ.empty_reg_LUT4_C$fanout$312": "core_block1_outputQ.empty_reg_LUT4_C",
+    "core_block1_residualSumQ.empty_reg_LUT4_B_1_Z_LUT4_B_1$fanout$313": "core_block1_residualSumQ.empty_reg_LUT4_B_1_Z_LUT4_B_1",
+    "core_block1_residualSumQ.empty_reg_LUT4_B_1_Z_LUT4_B_1$fanout$314": "core_block1_residualSumQ.empty_reg_LUT4_B_1_Z_LUT4_B_1",
+    "core_block1_residualQ.ring_empty_LUT4_C$fanout$315": "core_block1_residualQ.ring_empty_LUT4_C",
+    "core_block1_residualQ.ring_empty_LUT4_C$fanout$316": "core_block1_residualQ.ring_empty_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$317": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$318": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$319": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$320": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$321": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$322": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$323": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$324": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$325": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$326": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D$fanout$327": "core_block1_scan_inputQ.empty_reg_LUT4_D",
+    "core_block1_scan_addressQ.empty_reg_LUT4_B$fanout$328": "core_block1_scan_addressQ.empty_reg_LUT4_B",
+    "core_block1_scan_addressQ.empty_reg_LUT4_B$fanout$329": "core_block1_scan_addressQ.empty_reg_LUT4_B",
+    "core_block1_scan_argumentQ.empty_reg_LUT4_D$fanout$330": "core_block1_scan_argumentQ.empty_reg_LUT4_D",
+    "core_block1_scan_lookupQ.empty_reg_LUT4_D_1$fanout$331": "core_block1_scan_lookupQ.empty_reg_LUT4_D_1",
+    "core_block1_scan_outputLowerQ.empty_reg_LUT4_C$fanout$332": "core_block1_scan_outputLowerQ.empty_reg_LUT4_C",
+    "core_block1_scan_partialQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$333": "core_block1_scan_partialQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_unclippedQ.empty_reg_LUT4_C$fanout$334": "core_block1_scan_unclippedQ.empty_reg_LUT4_C",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D$fanout$335": "core_block1_scan_currentQ.empty_reg_LUT4_D",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1$fanout$336": "core_block1_scan_currentQ.empty_reg_LUT4_D_1",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1$fanout$337": "core_block1_scan_currentQ.empty_reg_LUT4_D_1",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1$fanout$338": "core_block1_scan_currentQ.empty_reg_LUT4_D_1",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1$fanout$339": "core_block1_scan_currentQ.empty_reg_LUT4_D_1",
+    "core_block1_scan_operandQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$340": "core_block1_scan_operandQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_operandQ.empty_reg_LUT4_D$fanout$341": "core_block1_scan_operandQ.empty_reg_LUT4_D",
+    "core_block1_scan_operandQ.empty_reg_LUT4_D$fanout$342": "core_block1_scan_operandQ.empty_reg_LUT4_D",
+    "core_block1_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$343": "core_block1_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$344": "core_block1_scan_argumentQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_delta_input1Q.empty_reg_LUT4_D$fanout$345": "core_delta_input1Q.empty_reg_LUT4_D",
+    "core_delta_input1Q.empty_reg_LUT4_D$fanout$346": "core_delta_input1Q.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$347": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$348": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$349": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$350": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$351": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$352": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$353": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$354": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$355": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$356": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$357": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_inputQ.empty_reg_LUT4_C$fanout$358": "core_block1_scan_inputQ.empty_reg_LUT4_C",
+    "core_block1_scan_lookupQ.empty_reg_LUT4_D$fanout$359": "core_block1_scan_lookupQ.empty_reg_LUT4_D",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1_Z_LUT4_Z$fanout$360": "core_block1_scan_currentQ.empty_reg_LUT4_D_1_Z_LUT4_Z",
+    "core_block1_scan_currentQ.empty_reg_LUT4_D_1_Z_LUT4_Z$fanout$361": "core_block1_scan_currentQ.empty_reg_LUT4_D_1_Z_LUT4_Z",
+    "core_block1_scan_outputNibbleQ.empty_reg_LUT4_D$fanout$362": "core_block1_scan_outputNibbleQ.empty_reg_LUT4_D",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$363": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$364": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$365": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$366": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$367": "core_block1_scan_inputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block1_scan_preparedQ.empty_reg_LUT4_C$fanout$368": "core_block1_scan_preparedQ.empty_reg_LUT4_C",
+    "core_block1_scan_preparedQ.empty_reg_LUT4_C$fanout$369": "core_block1_scan_preparedQ.empty_reg_LUT4_C",
+    "core_block1_scan_preparedQ.empty_reg_LUT4_C$fanout$370": "core_block1_scan_preparedQ.empty_reg_LUT4_C",
+    "core_block1_scan_preparedQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$371": "core_block1_scan_preparedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_preparedQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$372": "core_block1_scan_preparedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$373": "core_block1_scan_unclippedQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block1_stateProjection_engine_emitOn_LUT4_B$fanout$374": "core_block1_stateProjection_engine_emitOn_LUT4_B",
+    "core_block1_stateProjection_engine_emitOn_LUT4_B$fanout$375": "core_block1_stateProjection_engine_emitOn_LUT4_B",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C$fanout$376": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$377": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT$fanout$378": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C$fanout$379": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z$fanout$380": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT_BLUT_LUT4_Z",
+    "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT$fanout$381": "core_block1_stateProjection_engine_chunkLoadOn_LUT4_C_Z_PFUMX_ALUT",
+    "core_block1_xDelayQ.empty_reg_LUT4_C$fanout$382": "core_block1_xDelayQ.empty_reg_LUT4_C",
+    "core_block1_xDelayQ.empty_reg_LUT4_C$fanout$383": "core_block1_xDelayQ.empty_reg_LUT4_C",
+    "core_block1_xDelayQ.empty_reg_LUT4_C$fanout$384": "core_block1_xDelayQ.empty_reg_LUT4_C",
+    "core_block1_xDelayQ.empty_reg_LUT4_C$fanout$385": "core_block1_xDelayQ.empty_reg_LUT4_C",
+    "core_block1_xDelayQ.empty_reg_LUT4_C$fanout$386": "core_block1_xDelayQ.empty_reg_LUT4_C",
+    "core_delta_emitOn_LUT4_B$fanout$387": "core_delta_emitOn_LUT4_B",
+    "core_delta_emitOn_LUT4_B$fanout$388": "core_delta_emitOn_LUT4_B",
+    "core_delta_emitOn_LUT4_B$fanout$389": "core_delta_emitOn_LUT4_B",
+    "core_delta_emitOn_LUT4_B$fanout$390": "core_delta_emitOn_LUT4_B",
+    "core_delta_emitOn_LUT4_B$fanout$391": "core_delta_emitOn_LUT4_B",
+    "core_delta_emitOn_LUT4_B_Z_LUT4_Z$fanout$392": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_delta_emitOn_LUT4_B_Z_LUT4_Z$fanout$393": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_delta_emitOn_LUT4_B_Z_LUT4_Z$fanout$394": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_delta_emitOn_LUT4_B_Z_LUT4_Z$fanout$395": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_delta_emitOn_LUT4_B_Z_LUT4_Z$fanout$396": "core_delta_emitOn_LUT4_B_Z_LUT4_Z",
+    "core_embedding_engine_emitOn_LUT4_C$fanout$397": "core_embedding_engine_emitOn_LUT4_C",
+    "core_embedding_engine_emitOn_LUT4_C$fanout$398": "core_embedding_engine_emitOn_LUT4_C",
+    "core_embedding_engine_chunkLoadOn_LUT4_C$fanout$399": "core_embedding_engine_chunkLoadOn_LUT4_C",
+    "core_embedding_engine_chunkLoadOn_LUT4_C$fanout$400": "core_embedding_engine_chunkLoadOn_LUT4_C",
+    "core_embedding_engine_requestMetadataQ.hasodata_LUT4_B_Z_LUT4_D$fanout$401": "core_embedding_engine_requestMetadataQ.hasodata_LUT4_B_Z_LUT4_D",
+    "core_patchTokenQ.empty_reg_LUT4_D$fanout$402": "core_patchTokenQ.empty_reg_LUT4_D",
+    "core_patchTokenQ.empty_reg_LUT4_D$fanout$403": "core_patchTokenQ.empty_reg_LUT4_D",
+    "core_patchIssueOn_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z_C_LUT4_C$fanout$404": "core_patchIssueOn_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z_C_LUT4_C",
+    "core_patchIssueOn_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z_C_LUT4_C$fanout$405": "core_patchIssueOn_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z_C_LUT4_C",
+    "core_headHidden_engine_emitOn_LUT4_B_Z_LUT4_D$fanout$406": "core_headHidden_engine_emitOn_LUT4_B_Z_LUT4_D",
+    "core_headHidden_engine_emitOn_LUT4_B_Z_LUT4_D$fanout$407": "core_headHidden_engine_emitOn_LUT4_B_Z_LUT4_D",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D$fanout$408": "core_headHidden_engine_outputQ.empty_reg_LUT4_D",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D$fanout$409": "core_headHidden_engine_outputQ.empty_reg_LUT4_D",
+    "core_headOutput_engine_chunkLoadOn_LUT4_B$fanout$410": "core_headOutput_engine_chunkLoadOn_LUT4_B",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$411": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$412": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$413": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$414": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$415": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$416": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z$fanout$417": "core_headHidden_engine_outputQ.empty_reg_LUT4_D_Z_LUT4_Z",
+    "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z$fanout$0$fanout$418": "core_block0_normalization_remainderR_221_BITS__ETC___d1227_TRELLIS_FF_Q_DI_LUT4_Z_D_CCU2C_S1_S0_LUT4_Z",
+    "core_outputOn_LUT4_C$fanout$419": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$420": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$421": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$422": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$423": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$424": "core_outputOn_LUT4_C",
+    "core_outputOn_LUT4_C$fanout$425": "core_outputOn_LUT4_C",
+    "core_block0_scan_outputQ.empty_reg_LUT4_B$fanout$51$fanout$426": "core_block0_scan_outputQ.empty_reg_LUT4_B",
+    "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z$fanout$427": "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z",
+    "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z$fanout$428": "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z",
+    "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z$fanout$429": "core_block0_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+    "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z$fanout$430": "core_block0_outputQ.empty_reg_LUT4_C_Z_LUT4_Z",
+    "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z$fanout$431": "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z",
+    "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z$fanout$432": "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z",
+    "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z$fanout$433": "core_block0_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+    "core_block1_scan_outputQ.empty_reg_LUT4_B$fanout$238$fanout$434": "core_block1_scan_outputQ.empty_reg_LUT4_B",
+    "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z$fanout$435": "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z",
+    "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z$fanout$436": "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z",
+    "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z$fanout$437": "core_block1_outputProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z",
+    "core_block1_residualSumQ.empty_reg_LUT4_B$fanout$438": "core_block1_residualSumQ.empty_reg_LUT4_B",
+    "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z$fanout$439": "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_ALUT_LUT4_Z",
+    "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z$fanout$440": "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z_BLUT_LUT4_Z",
+    "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z$fanout$441": "core_block1_stateProjection_inputQ.empty_reg_LUT4_C_Z_PFUMX_Z"
+  },
+  "net_aliases": {
+    "95621": 630,
+    "95622": 630,
+    "95623": 643,
+    "95624": 970,
+    "95625": 983,
+    "95626": 983,
+    "95627": 1303,
+    "95628": 1303,
+    "95629": 1303,
+    "95630": 1303,
+    "95631": 1303,
+    "95632": 1303,
+    "95633": 1303,
+    "95634": 3096,
+    "95635": 3096,
+    "95636": 3096,
+    "95637": 3096,
+    "95638": 3096,
+    "95639": 3096,
+    "95640": 3096,
+    "95641": 3096,
+    "95642": 3096,
+    "95643": 3096,
+    "95644": 3177,
+    "95645": 3177,
+    "95646": 3177,
+    "95647": 3177,
+    "95648": 3177,
+    "95649": 3505,
+    "95650": 3505,
+    "95651": 3505,
+    "95652": 3505,
+    "95653": 3505,
+    "95654": 3691,
+    "95655": 3691,
+    "95656": 3691,
+    "95657": 4206,
+    "95658": 4206,
+    "95659": 7493,
+    "95660": 7493,
+    "95661": 7655,
+    "95662": 7655,
+    "95663": 7655,
+    "95664": 7657,
+    "95665": 7657,
+    "95666": 7732,
+    "95667": 8077,
+    "95668": 9727,
+    "95669": 9727,
+    "95670": 9727,
+    "95671": 9727,
+    "95672": 9727,
+    "95673": 9727,
+    "95674": 9727,
+    "95675": 9727,
+    "95676": 9727,
+    "95677": 9727,
+    "95678": 10368,
+    "95679": 10368,
+    "95680": 10368,
+    "95681": 10368,
+    "95682": 10368,
+    "95683": 10368,
+    "95684": 10368,
+    "95685": 10368,
+    "95686": 10368,
+    "95687": 10368,
+    "95688": 11657,
+    "95689": 11657,
+    "95690": 11657,
+    "95691": 11657,
+    "95692": 11657,
+    "95693": 11657,
+    "95694": 11657,
+    "95695": 11657,
+    "95696": 11657,
+    "95697": 11657,
+    "95698": 12625,
+    "95699": 12625,
+    "95700": 12625,
+    "95701": 12625,
+    "95702": 12954,
+    "95703": 12955,
+    "95704": 12955,
+    "95705": 12955,
+    "95706": 12955,
+    "95707": 12955,
+    "95708": 14771,
+    "95709": 14974,
+    "95710": 15080,
+    "95711": 15209,
+    "95712": 15209,
+    "95713": 16870,
+    "95714": 17542,
+    "95715": 16265,
+    "95716": 16265,
+    "95717": 18171,
+    "95718": 17945,
+    "95719": 18496,
+    "95720": 18496,
+    "95721": 18828,
+    "95722": 18828,
+    "95723": 18830,
+    "95724": 18830,
+    "95725": 18982,
+    "95726": 18982,
+    "95727": 18982,
+    "95728": 18984,
+    "95729": 20872,
+    "95730": 21907,
+    "95731": 21908,
+    "95732": 21910,
+    "95733": 21907,
+    "95734": 21908,
+    "95735": 21910,
+    "95736": 22559,
+    "95737": 22559,
+    "95738": 23431,
+    "95739": 23431,
+    "95740": 23431,
+    "95741": 22561,
+    "95742": 22561,
+    "95743": 22561,
+    "95744": 22561,
+    "95745": 22561,
+    "95746": 25295,
+    "95747": 25295,
+    "95748": 25298,
+    "95749": 25298,
+    "95750": 25463,
+    "95751": 25463,
+    "95752": 25793,
+    "95753": 25793,
+    "95754": 26476,
+    "95755": 26476,
+    "95756": 26476,
+    "95757": 26476,
+    "95758": 26476,
+    "95759": 26476,
+    "95760": 26476,
+    "95761": 26476,
+    "95762": 26476,
+    "95763": 26476,
+    "95764": 26476,
+    "95765": 26515,
+    "95766": 26515,
+    "95767": 26654,
+    "95768": 27010,
+    "95769": 27011,
+    "95770": 27258,
+    "95771": 27495,
+    "95772": 27495,
+    "95773": 27495,
+    "95774": 27495,
+    "95775": 27500,
+    "95776": 27500,
+    "95777": 27008,
+    "95778": 27008,
+    "95779": 28503,
+    "95780": 28503,
+    "95781": 30442,
+    "95782": 30442,
+    "95783": 30442,
+    "95784": 30442,
+    "95785": 30442,
+    "95786": 30442,
+    "95787": 30442,
+    "95788": 30442,
+    "95789": 30442,
+    "95790": 30442,
+    "95791": 30442,
+    "95792": 30442,
+    "95793": 32402,
+    "95794": 33391,
+    "95795": 33578,
+    "95796": 27497,
+    "95797": 27497,
+    "95798": 33758,
+    "95799": 34999,
+    "95800": 34999,
+    "95801": 34999,
+    "95802": 34999,
+    "95803": 34999,
+    "95804": 32404,
+    "95805": 32404,
+    "95806": 32404,
+    "95807": 36833,
+    "95808": 38083,
+    "95809": 38083,
+    "95810": 37011,
+    "95811": 38666,
+    "95812": 38667,
+    "95813": 38669,
+    "95814": 40000,
+    "95815": 40000,
+    "95816": 41482,
+    "95817": 41482,
+    "95818": 41482,
+    "95819": 41482,
+    "95820": 41482,
+    "95821": 41486,
+    "95822": 41486,
+    "95823": 41486,
+    "95824": 41486,
+    "95825": 41486,
+    "95826": 41486,
+    "95827": 41486,
+    "95828": 41486,
+    "95829": 41486,
+    "95830": 41486,
+    "95831": 41852,
+    "95832": 41852,
+    "95833": 41852,
+    "95834": 41852,
+    "95835": 41852,
+    "95836": 41855,
+    "95837": 41855,
+    "95838": 41855,
+    "95839": 41855,
+    "95840": 41855,
+    "95841": 42041,
+    "95842": 42041,
+    "95843": 42041,
+    "95844": 42592,
+    "95845": 42592,
+    "95846": 42821,
+    "95847": 42821,
+    "95848": 43140,
+    "95849": 43140,
+    "95850": 43140,
+    "95851": 43142,
+    "95852": 43524,
+    "95853": 43525,
+    "95854": 43525,
+    "95855": 48086,
+    "95856": 48086,
+    "95857": 48086,
+    "95858": 48086,
+    "95859": 48086,
+    "95860": 48086,
+    "95861": 48086,
+    "95862": 48086,
+    "95863": 48086,
+    "95864": 48086,
+    "95865": 48727,
+    "95866": 48727,
+    "95867": 48727,
+    "95868": 48727,
+    "95869": 48727,
+    "95870": 48727,
+    "95871": 48727,
+    "95872": 48727,
+    "95873": 48727,
+    "95874": 48727,
+    "95875": 50335,
+    "95876": 50335,
+    "95877": 50335,
+    "95878": 50335,
+    "95879": 50664,
+    "95880": 50665,
+    "95881": 50665,
+    "95882": 50665,
+    "95883": 50665,
+    "95884": 50665,
+    "95885": 52423,
+    "95886": 52423,
+    "95887": 52423,
+    "95888": 52423,
+    "95889": 52423,
+    "95890": 52485,
+    "95891": 52485,
+    "95892": 52485,
+    "95893": 52485,
+    "95894": 52485,
+    "95895": 52485,
+    "95896": 52485,
+    "95897": 52485,
+    "95898": 52485,
+    "95899": 52485,
+    "95900": 52518,
+    "95901": 52721,
+    "95902": 52826,
+    "95903": 52958,
+    "95904": 52958,
+    "95905": 55195,
+    "95906": 55865,
+    "95907": 56496,
+    "95908": 56496,
+    "95909": 56508,
+    "95910": 56519,
+    "95911": 56867,
+    "95912": 56867,
+    "95913": 57846,
+    "95914": 57846,
+    "95915": 58030,
+    "95916": 58030,
+    "95917": 58030,
+    "95918": 59500,
+    "95919": 59501,
+    "95920": 60743,
+    "95921": 60743,
+    "95922": 60945,
+    "95923": 60946,
+    "95924": 60948,
+    "95925": 60945,
+    "95926": 60946,
+    "95927": 60948,
+    "95928": 62479,
+    "95929": 62479,
+    "95930": 64309,
+    "95931": 64309,
+    "95932": 64793,
+    "95933": 64793,
+    "95934": 64796,
+    "95935": 64796,
+    "95936": 65126,
+    "95937": 65126,
+    "95938": 65605,
+    "95939": 65605,
+    "95940": 65605,
+    "95941": 65605,
+    "95942": 65605,
+    "95943": 65605,
+    "95944": 65605,
+    "95945": 65605,
+    "95946": 65605,
+    "95947": 65605,
+    "95948": 65605,
+    "95949": 65644,
+    "95950": 65644,
+    "95951": 65807,
+    "95952": 66163,
+    "95953": 66164,
+    "95954": 66317,
+    "95955": 66507,
+    "95956": 66586,
+    "95957": 66779,
+    "95958": 66779,
+    "95959": 66779,
+    "95960": 66779,
+    "95961": 66783,
+    "95962": 67076,
+    "95963": 67076,
+    "95964": 66161,
+    "95965": 66161,
+    "95966": 68002,
+    "95967": 68002,
+    "95968": 70205,
+    "95969": 70205,
+    "95970": 70205,
+    "95971": 70205,
+    "95972": 70205,
+    "95973": 70205,
+    "95974": 70205,
+    "95975": 70205,
+    "95976": 70205,
+    "95977": 70205,
+    "95978": 70205,
+    "95979": 70205,
+    "95980": 72180,
+    "95981": 66781,
+    "95982": 66781,
+    "95983": 73909,
+    "95984": 71309,
+    "95985": 71309,
+    "95986": 71309,
+    "95987": 71309,
+    "95988": 71309,
+    "95989": 76160,
+    "95990": 76160,
+    "95991": 76160,
+    "95992": 76162,
+    "95993": 76162,
+    "95994": 76399,
+    "95995": 77792,
+    "95996": 77792,
+    "95997": 77995,
+    "95998": 77996,
+    "95999": 77998,
+    "96000": 77995,
+    "96001": 77996,
+    "96002": 77998,
+    "96003": 80870,
+    "96004": 80870,
+    "96005": 80870,
+    "96006": 80870,
+    "96007": 80870,
+    "96008": 81309,
+    "96009": 81309,
+    "96010": 81309,
+    "96011": 81309,
+    "96012": 81309,
+    "96013": 81310,
+    "96014": 81310,
+    "96015": 81310,
+    "96016": 81310,
+    "96017": 81310,
+    "96018": 82532,
+    "96019": 82532,
+    "96020": 82781,
+    "96021": 82781,
+    "96022": 83513,
+    "96023": 84414,
+    "96024": 84414,
+    "96025": 84740,
+    "96026": 84740,
+    "96027": 85378,
+    "96028": 85378,
+    "96029": 87424,
+    "96030": 87424,
+    "96031": 89345,
+    "96032": 87428,
+    "96033": 87428,
+    "96034": 87428,
+    "96035": 87428,
+    "96036": 87428,
+    "96037": 87428,
+    "96038": 87428,
+    "96039": 630,
+    "96040": 1315,
+    "96041": 1315,
+    "96042": 1315,
+    "96043": 1315,
+    "96044": 1315,
+    "96045": 1315,
+    "96046": 1315,
+    "96047": 9727,
+    "96048": 25288,
+    "96049": 25289,
+    "96050": 21909,
+    "96051": 23431,
+    "96052": 41475,
+    "96053": 41476,
+    "96054": 38668,
+    "96055": 48086,
+    "96056": 64304,
+    "96057": 64305,
+    "96058": 60947,
+    "96059": 62479,
+    "96060": 80865,
+    "96061": 80866,
+    "96062": 77997
+  },
+  "cloned_cell_types": {
+    "LUT4": 431,
+    "PFUMX": 11
+  },
+  "cells_before": 83187,
+  "cells_after": 83629,
+  "unsupported_recursive_boundaries": [],
+  "all_remaining_nonclock_high_fanout_nets": [
+    {
+      "bit": 28513,
+      "driver": "core_block0_xDelayQ.full_reg_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 648,
+      "sink_ports": {
+        "D": 648
+      }
+    },
+    {
+      "bit": 68044,
+      "driver": "core_block1_xDelayQ.full_reg_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 648,
+      "sink_ports": {
+        "D": 648
+      }
+    },
+    {
+      "bit": 85611,
+      "driver": "core_headHidden_memoryR_0.ADDR_1_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 385,
+      "sink_ports": {
+        "D": 128,
+        "C": 256,
+        "B0": 1
+      }
+    },
+    {
+      "bit": 28511,
+      "driver": "core_block0_xDelayQ.full_reg_LUT4_C",
+      "type": "LUT4",
+      "fanout": 324,
+      "sink_ports": {
+        "C0": 324
+      }
+    },
+    {
+      "bit": 68041,
+      "driver": "core_block1_xDelayQ.full_reg_LUT4_C",
+      "type": "LUT4",
+      "fanout": 324,
+      "sink_ports": {
+        "C0": 324
+      }
+    },
+    {
+      "bit": 85612,
+      "driver": "core_headHidden_readBankR_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 258,
+      "sink_ports": {
+        "D": 256,
+        "C": 2
+      }
+    },
+    {
+      "bit": 16279,
+      "driver": "core_block0_inputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_42_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 202,
+      "sink_ports": {
+        "C": 184,
+        "D": 18
+      }
+    },
+    {
+      "bit": 54604,
+      "driver": "core_block1_inputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_84_DI_CCU2C_S1_COUT_CCU2C_CIN_S1_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 202,
+      "sink_ports": {
+        "C": 184,
+        "D": 18
+      }
+    },
+    {
+      "bit": 16280,
+      "driver": "core_block0_inputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_42_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 185,
+      "sink_ports": {
+        "D": 168,
+        "C0": 17
+      }
+    },
+    {
+      "bit": 54605,
+      "driver": "core_block1_inputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_84_DI_CCU2C_S1_COUT_CCU2C_CIN_S1_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 185,
+      "sink_ports": {
+        "D": 168,
+        "C0": 17
+      }
+    },
+    {
+      "bit": 85596,
+      "driver": "core_headHidden_engine_chunkLoadOn_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 133,
+      "sink_ports": {
+        "CE": 128,
+        "D": 2,
+        "C": 2,
+        "B": 1
+      }
+    },
+    {
+      "bit": 17556,
+      "driver": "core_block0_inputProjection_engine_productQ.full_reg_LUT4_A",
+      "type": "LUT4",
+      "fanout": 130,
+      "sink_ports": {
+        "D": 90,
+        "C": 40
+      }
+    },
+    {
+      "bit": 55880,
+      "driver": "core_block1_inputProjection_engine_productQ.data1_reg_TRELLIS_FF_Q_52_DI_CCU2C_S0_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 130,
+      "sink_ports": {
+        "D": 90,
+        "C": 40
+      }
+    },
+    {
+      "bit": 88494,
+      "driver": "core_headHidden_memoryR_0.ADDR_1_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 130,
+      "sink_ports": {
+        "RAD": 128,
+        "B0": 1,
+        "D": 1
+      }
+    },
+    {
+      "bit": 88501,
+      "driver": "core_headHidden_memoryR_0.ADDR_1_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 129,
+      "sink_ports": {
+        "RAD": 128,
+        "B0": 1
+      }
+    },
+    {
+      "bit": 88500,
+      "driver": "core_headHidden_memoryR_0.ADDR_1_TRELLIS_FF_Q_2",
+      "type": "TRELLIS_FF",
+      "fanout": 129,
+      "sink_ports": {
+        "RAD": 128,
+        "B1": 1
+      }
+    },
+    {
+      "bit": 88505,
+      "driver": "core_headHidden_memoryR_0.ADDR_1_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 129,
+      "sink_ports": {
+        "RAD": 128,
+        "B1": 1
+      }
+    },
+    {
+      "bit": 21885,
+      "driver": "core_block0_outputProjection_engine_chunkCnt_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "C": 108,
+        "D": 20
+      }
+    },
+    {
+      "bit": 21884,
+      "driver": "core_block0_outputProjection_engine_chunkCnt_LUT4_C",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "D": 108,
+        "C": 20
+      }
+    },
+    {
+      "bit": 38644,
+      "driver": "core_block0_stateProjection_engine_chunkCnt_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "C": 128
+      }
+    },
+    {
+      "bit": 38643,
+      "driver": "core_block0_stateProjection_engine_chunkCnt_LUT4_C",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "D": 128
+      }
+    },
+    {
+      "bit": 60925,
+      "driver": "core_block1_outputProjection_engine_chunkCnt_LUT4_C",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "C": 99,
+        "D": 29
+      }
+    },
+    {
+      "bit": 60926,
+      "driver": "core_block1_outputProjection_engine_chunkCnt_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "D": 99,
+        "C": 29
+      }
+    },
+    {
+      "bit": 77973,
+      "driver": "core_block1_stateProjection_engine_chunkCnt_LUT4_C",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "C": 64,
+        "D": 64
+      }
+    },
+    {
+      "bit": 77974,
+      "driver": "core_block1_stateProjection_engine_chunkCnt_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 128,
+      "sink_ports": {
+        "D": 64,
+        "C": 64
+      }
+    },
+    {
+      "bit": 88510,
+      "driver": "core_headHidden_memoryR_0.ADDR_IN_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 128,
+      "sink_ports": {
+        "WAD": 128
+      }
+    },
+    {
+      "bit": 88508,
+      "driver": "core_headHidden_memoryR_0.ADDR_IN_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 128,
+      "sink_ports": {
+        "WAD": 128
+      }
+    },
+    {
+      "bit": 88511,
+      "driver": "core_headHidden_memoryR_0.ADDR_IN_TRELLIS_FF_Q_2",
+      "type": "TRELLIS_FF",
+      "fanout": 128,
+      "sink_ports": {
+        "WAD": 128
+      }
+    },
+    {
+      "bit": 88512,
+      "driver": "core_headHidden_memoryR_0.ADDR_IN_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 128,
+      "sink_ports": {
+        "WAD": 128
+      }
+    },
+    {
+      "bit": 65633,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 126,
+      "sink_ports": {
+        "C": 107,
+        "A": 7,
+        "ADB8": 2,
+        "D": 7,
+        "B": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 26503,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 123,
+      "sink_ports": {
+        "B": 12,
+        "D": 46,
+        "C": 51,
+        "C0": 8,
+        "A": 3,
+        "ADB7": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 26505,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_6",
+      "type": "TRELLIS_FF",
+      "fanout": 122,
+      "sink_ports": {
+        "D": 3,
+        "C": 16,
+        "A": 46,
+        "B": 54,
+        "ADB9": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 26504,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 122,
+      "sink_ports": {
+        "B": 45,
+        "C": 52,
+        "D": 15,
+        "A": 7,
+        "DI": 1,
+        "ADB8": 2
+      }
+    },
+    {
+      "bit": 65634,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_6",
+      "type": "TRELLIS_FF",
+      "fanout": 122,
+      "sink_ports": {
+        "B": 102,
+        "C": 9,
+        "ADB7": 2,
+        "DI": 1,
+        "D": 3,
+        "A": 4,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 65635,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_7",
+      "type": "TRELLIS_FF",
+      "fanout": 122,
+      "sink_ports": {
+        "A": 101,
+        "B": 7,
+        "ADB6": 2,
+        "C": 9,
+        "D": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 16174,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_39",
+      "type": "TRELLIS_FF",
+      "fanout": 121,
+      "sink_ports": {
+        "A": 63,
+        "B": 38,
+        "C": 16,
+        "D": 4
+      }
+    },
+    {
+      "bit": 53860,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 121,
+      "sink_ports": {
+        "C": 47,
+        "B": 58,
+        "A": 4,
+        "D": 12
+      }
+    },
+    {
+      "bit": 65632,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 116,
+      "sink_ports": {
+        "A": 5,
+        "D": 98,
+        "DI": 1,
+        "B": 8,
+        "ADB9": 2,
+        "C": 2
+      }
+    },
+    {
+      "bit": 2805,
+      "driver": "clocks_pll.locked_LUT4_D_Z_TRELLIS_FF_LSR_1_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 115,
+      "sink_ports": {
+        "LSR": 115
+      }
+    },
+    {
+      "bit": 4202,
+      "driver": "core_block0_convAddressQ.D_OUT_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 106,
+      "sink_ports": {
+        "D": 8,
+        "B": 20,
+        "C": 77,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 53880,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_7",
+      "type": "TRELLIS_FF",
+      "fanout": 106,
+      "sink_ports": {
+        "B": 24,
+        "C": 55,
+        "C0": 8,
+        "D": 15,
+        "A": 4
+      }
+    },
+    {
+      "bit": 23443,
+      "driver": "core_block0_outputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_48_DI_CCU2C_S0_S1_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 102,
+      "sink_ports": {
+        "C": 92,
+        "D": 10
+      }
+    },
+    {
+      "bit": 40028,
+      "driver": "core_block0_stateProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_45_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 102,
+      "sink_ports": {
+        "D": 10,
+        "C": 92
+      }
+    },
+    {
+      "bit": 62490,
+      "driver": "core_block1_outputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_10_DI_CCU2C_S1_CIN_CCU2C_COUT_CIN_CCU2C_COUT_S1_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 102,
+      "sink_ports": {
+        "C": 92,
+        "D": 10
+      }
+    },
+    {
+      "bit": 79391,
+      "driver": "core_block1_stateProjection_engine_partialQ.empty_reg_LUT4_B",
+      "type": "LUT4",
+      "fanout": 102,
+      "sink_ports": {
+        "D": 10,
+        "C": 92
+      }
+    },
+    {
+      "bit": 16079,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_21",
+      "type": "TRELLIS_FF",
+      "fanout": 101,
+      "sink_ports": {
+        "B": 46,
+        "C": 20,
+        "D": 31,
+        "SD": 4
+      }
+    },
+    {
+      "bit": 53870,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 100,
+      "sink_ports": {
+        "D": 13,
+        "B": 54,
+        "C": 21,
+        "C0": 3,
+        "SD": 6,
+        "A": 3
+      }
+    },
+    {
+      "bit": 4495,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C",
+      "type": "LUT4",
+      "fanout": 99,
+      "sink_ports": {
+        "D": 89,
+        "C": 10
+      }
+    },
+    {
+      "bit": 16192,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 98,
+      "sink_ports": {
+        "C": 29,
+        "D": 16,
+        "B": 42,
+        "A": 4,
+        "SD": 4,
+        "C0": 3
+      }
+    },
+    {
+      "bit": 16197,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_6",
+      "type": "TRELLIS_FF",
+      "fanout": 97,
+      "sink_ports": {
+        "A": 47,
+        "C0": 8,
+        "C": 32,
+        "B": 10
+      }
+    },
+    {
+      "bit": 23440,
+      "driver": "core_block0_outputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_48_DI_CCU2C_S0_S1_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 97,
+      "sink_ports": {
+        "D": 92,
+        "C0": 5
+      }
+    },
+    {
+      "bit": 40029,
+      "driver": "core_block0_stateProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_45_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 97,
+      "sink_ports": {
+        "D": 92,
+        "C0": 5
+      }
+    },
+    {
+      "bit": 45182,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 97,
+      "sink_ports": {
+        "C": 75,
+        "D": 15,
+        "A": 1,
+        "B": 6
+      }
+    },
+    {
+      "bit": 62491,
+      "driver": "core_block1_outputProjection_engine_partialQ.data1_reg_TRELLIS_FF_Q_10_DI_CCU2C_S1_CIN_CCU2C_COUT_CIN_CCU2C_COUT_S1_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 97,
+      "sink_ports": {
+        "D": 92,
+        "C0": 5
+      }
+    },
+    {
+      "bit": 79392,
+      "driver": "core_block1_stateProjection_engine_partialQ.empty_reg_LUT4_B_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 97,
+      "sink_ports": {
+        "D": 92,
+        "C0": 5
+      }
+    },
+    {
+      "bit": 4203,
+      "driver": "core_block0_convAddressQ.D_OUT_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 96,
+      "sink_ports": {
+        "B": 75,
+        "A": 10,
+        "C": 10,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 15207,
+      "driver": "core_block0_inputProjection_engine_chunkLoadOn_LUT4_C",
+      "type": "LUT4",
+      "fanout": 96,
+      "sink_ports": {
+        "LSR": 96
+      }
+    },
+    {
+      "bit": 52956,
+      "driver": "core_block1_inputProjection_engine_chunkLoadOn_LUT4_C",
+      "type": "LUT4",
+      "fanout": 96,
+      "sink_ports": {
+        "LSR": 96
+      }
+    },
+    {
+      "bit": 82782,
+      "driver": "core_embedding_engine_chunkLoadOn_LUT4_C_1",
+      "type": "LUT4",
+      "fanout": 96,
+      "sink_ports": {
+        "LSR": 96
+      }
+    },
+    {
+      "bit": 45183,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 95,
+      "sink_ports": {
+        "D": 34,
+        "C": 56,
+        "B": 5
+      }
+    },
+    {
+      "bit": 4483,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_40_DI_LUT4_Z_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 93,
+      "sink_ports": {
+        "D": 84,
+        "B": 9
+      }
+    },
+    {
+      "bit": 42589,
+      "driver": "core_block1_convAddressQ.D_OUT_TRELLIS_FF_Q_5",
+      "type": "TRELLIS_FF",
+      "fanout": 92,
+      "sink_ports": {
+        "A": 76,
+        "B": 10,
+        "C": 5,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 26502,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 91,
+      "sink_ports": {
+        "C": 10,
+        "C0": 22,
+        "D": 48,
+        "SD": 4,
+        "A": 1,
+        "ADB6": 2,
+        "DI": 1,
+        "B": 3
+      }
+    },
+    {
+      "bit": 14737,
+      "driver": "core_block0_inputProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 21707,
+      "driver": "core_block0_outputProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 38409,
+      "driver": "core_block0_stateProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 52483,
+      "driver": "core_block1_inputProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 60741,
+      "driver": "core_block1_outputProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 77790,
+      "driver": "core_block1_stateProjection_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 82530,
+      "driver": "core_embedding_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 85375,
+      "driver": "core_headHidden_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 89042,
+      "driver": "core_headOutput_engine_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 90,
+      "sink_ports": {
+        "LSR": 90
+      }
+    },
+    {
+      "bit": 4197,
+      "driver": "core_block0_convAddressQ.D_OUT_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 89,
+      "sink_ports": {
+        "C": 4,
+        "A": 76,
+        "B": 8,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 4498,
+      "driver": "core_block0_historyR_2_0_3_LUT4_B_Z_LUT4_Z_D_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 87,
+      "sink_ports": {
+        "D": 51,
+        "C": 29,
+        "B": 7
+      }
+    },
+    {
+      "bit": 53875,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_6",
+      "type": "TRELLIS_FF",
+      "fanout": 87,
+      "sink_ports": {
+        "D": 54,
+        "C": 21,
+        "C0": 8,
+        "SD": 4
+      }
+    },
+    {
+      "bit": 4201,
+      "driver": "core_block0_convAddressQ.D_OUT_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 85,
+      "sink_ports": {
+        "D": 78,
+        "DI": 1,
+        "C": 6
+      }
+    },
+    {
+      "bit": 12952,
+      "driver": "core_block0_gateDelayQ.tail_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 84,
+      "sink_ports": {
+        "WAD": 80,
+        "D": 4
+      }
+    },
+    {
+      "bit": 12953,
+      "driver": "core_block0_gateDelayQ.tail_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 84,
+      "sink_ports": {
+        "B": 2,
+        "WAD": 80,
+        "C": 2
+      }
+    },
+    {
+      "bit": 42588,
+      "driver": "core_block1_convAddressQ.D_OUT_TRELLIS_FF_Q_4",
+      "type": "TRELLIS_FF",
+      "fanout": 84,
+      "sink_ports": {
+        "B": 78,
+        "DI": 1,
+        "A": 2,
+        "C": 3
+      }
+    },
+    {
+      "bit": 50662,
+      "driver": "core_block1_gateDelayQ.tail_TRELLIS_FF_Q",
+      "type": "TRELLIS_FF",
+      "fanout": 84,
+      "sink_ports": {
+        "WAD": 80,
+        "D": 4
+      }
+    },
+    {
+      "bit": 50663,
+      "driver": "core_block1_gateDelayQ.tail_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 84,
+      "sink_ports": {
+        "WAD": 80,
+        "A": 2,
+        "C": 2
+      }
+    },
+    {
+      "bit": 89555,
+      "driver": "core_headOutput_engine_chunkLoadOn_LUT4_C",
+      "type": "LUT4",
+      "fanout": 84,
+      "sink_ports": {
+        "LSR": 84
+      }
+    },
+    {
+      "bit": 45218,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 83,
+      "sink_ports": {
+        "C": 67,
+        "A": 2,
+        "D": 12,
+        "B": 2
+      }
+    },
+    {
+      "bit": 45222,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1_C_LUT4_C",
+      "type": "LUT4",
+      "fanout": 83,
+      "sink_ports": {
+        "D": 67,
+        "C": 8,
+        "A": 1,
+        "B": 7
+      }
+    },
+    {
+      "bit": 45233,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 83,
+      "sink_ports": {
+        "D": 35,
+        "C": 45,
+        "B": 3
+      }
+    },
+    {
+      "bit": 45237,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 83,
+      "sink_ports": {
+        "D": 45,
+        "C": 37,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 45241,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 83,
+      "sink_ports": {
+        "C": 73,
+        "D": 4,
+        "B": 5,
+        "A": 1
+      }
+    },
+    {
+      "bit": 16022,
+      "driver": "core_block0_inputProjection_engine_operandQ.full_reg_LUT4_D",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 82
+      }
+    },
+    {
+      "bit": 32490,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_98_DI_LUT4_Z_D_LUT4_Z_B_LUT4_C_Z_LUT4_D_Z_LUT4_Z_1_B_LUT4_Z_D_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 63,
+        "B": 10,
+        "C": 9
+      }
+    },
+    {
+      "bit": 42587,
+      "driver": "core_block1_convAddressQ.D_OUT_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 82,
+      "sink_ports": {
+        "C": 76,
+        "B": 4,
+        "DI": 1,
+        "D": 1
+      }
+    },
+    {
+      "bit": 45203,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1_C_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 32,
+        "C": 48,
+        "B": 1,
+        "A": 1
+      }
+    },
+    {
+      "bit": 45210,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "C": 38,
+        "D": 41,
+        "B": 2,
+        "A": 1
+      }
+    },
+    {
+      "bit": 45229,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 44,
+        "C": 35,
+        "B": 3
+      }
+    },
+    {
+      "bit": 45242,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_Z_LUT4_Z_D_LUT4_C",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 45,
+        "C": 31,
+        "B": 5,
+        "A": 1
+      }
+    },
+    {
+      "bit": 53700,
+      "driver": "core_block1_inputProjection_engine_operandQ.full_reg_LUT4_C_1",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 82
+      }
+    },
+    {
+      "bit": 72232,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_104_DI_LUT4_Z_D_LUT4_Z_D_LUT4_Z_1_D_LUT4_Z_1_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 82,
+      "sink_ports": {
+        "D": 60,
+        "C": 18,
+        "B": 2,
+        "C0": 1,
+        "A": 1
+      }
+    },
+    {
+      "bit": 4458,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_B_LUT4_D",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 74,
+        "B": 4,
+        "C": 3
+      }
+    },
+    {
+      "bit": 4475,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 27,
+        "C": 46,
+        "B": 8
+      }
+    },
+    {
+      "bit": 4490,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_1_Z_LUT4_Z_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 31,
+        "C": 48,
+        "B": 2
+      }
+    },
+    {
+      "bit": 4491,
+      "driver": "core_block0_historyR_2_0_3_LUT4_B_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 66,
+        "B": 2,
+        "C": 12,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 32423,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_100_DI_LUT4_Z_C_LUT4_Z_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 58,
+        "B": 20,
+        "C": 2,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 42586,
+      "driver": "core_block1_convAddressQ.D_OUT_TRELLIS_FF_Q_2",
+      "type": "TRELLIS_FF",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 74,
+        "C": 6,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 45211,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_48_DI_LUT4_Z_C_LUT4_Z_B_LUT4_C",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "B": 5,
+        "D": 69,
+        "C": 7
+      }
+    },
+    {
+      "bit": 45214,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "C": 75,
+        "D": 2,
+        "B": 4
+      }
+    },
+    {
+      "bit": 45230,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 71,
+        "C": 9,
+        "B": 1
+      }
+    },
+    {
+      "bit": 45238,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_Z_LUT4_Z_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 65,
+        "B": 3,
+        "C": 13
+      }
+    },
+    {
+      "bit": 45245,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_C",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "C": 12,
+        "D": 65,
+        "B": 4
+      }
+    },
+    {
+      "bit": 65631,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_3",
+      "type": "TRELLIS_FF",
+      "fanout": 81,
+      "sink_ports": {
+        "C0": 55,
+        "ADB10": 2,
+        "B": 8,
+        "A": 8,
+        "C": 7,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 72392,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_99_DI_LUT4_Z_C_LUT4_Z_D_LUT4_Z_D_LUT4_Z_D_LUT4_C_Z_LUT4_Z_D_PFUMX_Z_C0_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 81,
+      "sink_ports": {
+        "D": 34,
+        "C": 42,
+        "B": 4,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 4455,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_88_LSR_LUT4_D_C_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 47,
+        "D": 28,
+        "B": 5
+      }
+    },
+    {
+      "bit": 4456,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_2",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 39,
+        "C": 31,
+        "B": 10
+      }
+    },
+    {
+      "bit": 4463,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_88_LSR_LUT4_D_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 53,
+        "B": 8,
+        "D": 19
+      }
+    },
+    {
+      "bit": 4464,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 28,
+        "D": 50,
+        "B": 2
+      }
+    },
+    {
+      "bit": 4470,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_1_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 74,
+        "B": 6
+      }
+    },
+    {
+      "bit": 4471,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_1_Z_LUT4_Z_D_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 16,
+        "C": 60,
+        "B": 4
+      }
+    },
+    {
+      "bit": 4474,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_88_LSR_LUT4_D_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 61,
+        "D": 11,
+        "B": 8
+      }
+    },
+    {
+      "bit": 4482,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_1_Z_LUT4_Z_D_LUT4_C",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 64,
+        "C": 9,
+        "B": 7
+      }
+    },
+    {
+      "bit": 4486,
+      "driver": "core_block0_historyR_2_0_3_LUT4_B_Z_LUT4_Z_D_LUT4_D",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 73,
+        "B": 5,
+        "D": 2
+      }
+    },
+    {
+      "bit": 4487,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_6_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_C_1",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 51,
+        "D": 29
+      }
+    },
+    {
+      "bit": 4494,
+      "driver": "core_block0_historyR_2_0_3_LUT4_B_Z_LUT4_Z_D_LUT4_D_2",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 43,
+        "B": 12,
+        "D": 25
+      }
+    },
+    {
+      "bit": 4502,
+      "driver": "core_block0_historyR_1_0_9_LUT4_B_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 60,
+        "D": 15,
+        "B": 5
+      }
+    },
+    {
+      "bit": 4503,
+      "driver": "core_block0_convOperandQ.D_IN_TRELLIS_FF_Q_88_LSR_LUT4_D_C_LUT4_C",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 52,
+        "C": 23,
+        "B": 5
+      }
+    },
+    {
+      "bit": 12950,
+      "driver": "core_block0_gateDelayQ.head_LUT4_C_1_Z_TRELLIS_FF_DI",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "RAD": 80
+      }
+    },
+    {
+      "bit": 12951,
+      "driver": "core_block0_gateDelayQ.head_LUT4_C_Z_TRELLIS_FF_DI",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "RAD": 80
+      }
+    },
+    {
+      "bit": 26506,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_7",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "A": 53,
+        "B": 18,
+        "ADB10": 2,
+        "D": 3,
+        "C": 3,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 26501,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_2",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "A": 70,
+        "B": 3,
+        "C": 4,
+        "ADB5": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 45202,
+      "driver": "core_block1_historyR_0_0_8_LUT4_B_Z_PFUMX_Z",
+      "type": "PFUMX",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 77,
+        "B": 3
+      }
+    },
+    {
+      "bit": 45215,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 74,
+        "B": 6
+      }
+    },
+    {
+      "bit": 45221,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_D_LUT4_D_1_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "C": 61,
+        "D": 16,
+        "B": 3
+      }
+    },
+    {
+      "bit": 45234,
+      "driver": "core_block1_convSelectedQ.D_OUT_TRELLIS_FF_Q_57_DI_LUT4_Z_C_LUT4_D_1_Z_LUT4_Z_C_LUT4_D_2_Z_LUT4_D",
+      "type": "LUT4",
+      "fanout": 80,
+      "sink_ports": {
+        "D": 46,
+        "C": 21,
+        "B": 13
+      }
+    },
+    {
+      "bit": 50660,
+      "driver": "core_block1_gateDelayQ.head_LUT4_C_Z_TRELLIS_FF_DI",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "RAD": 80
+      }
+    },
+    {
+      "bit": 50661,
+      "driver": "core_block1_gateDelayQ.head_LUT4_C_1_Z_TRELLIS_FF_DI",
+      "type": "TRELLIS_FF",
+      "fanout": 80,
+      "sink_ports": {
+        "RAD": 80
+      }
+    },
+    {
+      "bit": 26500,
+      "driver": "core_block0_scan_addressQ.D_OUT_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 79,
+      "sink_ports": {
+        "B": 72,
+        "D": 4,
+        "ADB4": 2,
+        "DI": 1
+      }
+    },
+    {
+      "bit": 72234,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_104_DI_LUT4_Z_D_LUT4_Z_D_LUT4_Z_1_D_LUT4_Z_1_C_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 79,
+      "sink_ports": {
+        "C": 72,
+        "D": 3,
+        "B": 4
+      }
+    },
+    {
+      "bit": 2808,
+      "driver": "core_localReset_leaf.secondReset_Q_LUT4_D",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "LSR": 78
+      }
+    },
+    {
+      "bit": 32452,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_125_DI_PFUMX_Z_BLUT_LUT4_Z_A_LUT4_D",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 69,
+        "D": 6,
+        "B": 3
+      }
+    },
+    {
+      "bit": 32460,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_76_DI_LUT4_Z_D_LUT4_Z_C_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 75,
+        "D": 2,
+        "B": 1
+      }
+    },
+    {
+      "bit": 32509,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_96_DI_LUT4_Z_D_LUT4_Z_1_D_LUT4_Z_1_A_LUT4_D",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 40,
+        "D": 36,
+        "B": 2
+      }
+    },
+    {
+      "bit": 32518,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_104_DI_LUT4_Z_D_LUT4_Z_B_PFUMX_C0_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 46,
+        "B": 22,
+        "D": 9,
+        "A": 1
+      }
+    },
+    {
+      "bit": 32594,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_125_DI_PFUMX_Z_BLUT_LUT4_Z_A_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 21,
+        "D": 53,
+        "B": 4
+      }
+    },
+    {
+      "bit": 72290,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_9_DI_LUT4_Z_B_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 75,
+        "B": 3
+      }
+    },
+    {
+      "bit": 72217,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_100_DI_LUT4_Z_B_LUT4_Z_C_LUT4_D",
+      "type": "LUT4",
+      "fanout": 78,
+      "sink_ports": {
+        "C": 45,
+        "D": 22,
+        "B": 11
+      }
+    },
+    {
+      "bit": 16084,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_22",
+      "type": "TRELLIS_FF",
+      "fanout": 77,
+      "sink_ports": {
+        "A": 74,
+        "B": 3
+      }
+    },
+    {
+      "bit": 32453,
+      "driver": "core_block0_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_125_DI_PFUMX_Z_BLUT_LUT4_Z_A_LUT4_D_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 77,
+      "sink_ports": {
+        "D": 59,
+        "C": 13,
+        "B": 5
+      }
+    },
+    {
+      "bit": 53827,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_34",
+      "type": "TRELLIS_FF",
+      "fanout": 77,
+      "sink_ports": {
+        "B": 56,
+        "D": 5,
+        "C": 16
+      }
+    },
+    {
+      "bit": 53842,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_37",
+      "type": "TRELLIS_FF",
+      "fanout": 77,
+      "sink_ports": {
+        "B": 33,
+        "A": 38,
+        "C": 6
+      }
+    },
+    {
+      "bit": 72218,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_100_DI_LUT4_Z_B_LUT4_Z_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 77,
+      "sink_ports": {
+        "D": 74,
+        "B": 3
+      }
+    },
+    {
+      "bit": 311,
+      "driver": "core_delta_operandQ.D_IN_TRELLIS_FF_Q_DI_CCU2C_S0_CIN_CCU2C_COUT_S0_LUT4_C_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 76,
+      "sink_ports": {
+        "A": 76
+      }
+    },
+    {
+      "bit": 72350,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_104_DI_LUT4_Z_D_LUT4_Z_D_LUT4_Z_1_D_LUT4_Z_1_C_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 76,
+      "sink_ports": {
+        "B": 10,
+        "C": 21,
+        "D": 44,
+        "C0": 1
+      }
+    },
+    {
+      "bit": 16089,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_23",
+      "type": "TRELLIS_FF",
+      "fanout": 75,
+      "sink_ports": {
+        "C": 23,
+        "A": 12,
+        "D": 7,
+        "B": 33
+      }
+    },
+    {
+      "bit": 65629,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_1",
+      "type": "TRELLIS_FF",
+      "fanout": 75,
+      "sink_ports": {
+        "B": 65,
+        "D": 4,
+        "ADB5": 2,
+        "DI": 1,
+        "C": 1,
+        "A": 2
+      }
+    },
+    {
+      "bit": 72391,
+      "driver": "core_block1_scan_operandCandidateQ.D_OUT_TRELLIS_FF_Q_99_DI_LUT4_Z_C_LUT4_Z_D_LUT4_Z_D_LUT4_D_Z_LUT4_D_Z_LUT4_C_Z_LUT4_D",
+      "type": "LUT4",
+      "fanout": 75,
+      "sink_ports": {
+        "D": 55,
+        "C": 17,
+        "B": 3
+      }
+    },
+    {
+      "bit": 312,
+      "driver": "core_delta_operandQ.D_IN_TRELLIS_FF_Q_DI_CCU2C_S0_CIN_CCU2C_COUT_S0_LUT4_C_Z_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 74,
+      "sink_ports": {
+        "B": 74
+      }
+    },
+    {
+      "bit": 313,
+      "driver": "core_delta_operandQ.D_IN_TRELLIS_FF_Q_DI_CCU2C_S0_CIN_CCU2C_COUT_S0_LUT4_C_Z_LUT4_Z_2",
+      "type": "LUT4",
+      "fanout": 74,
+      "sink_ports": {
+        "C": 74
+      }
+    },
+    {
+      "bit": 65636,
+      "driver": "core_block1_scan_addressQ.D_OUT_TRELLIS_FF_Q_8",
+      "type": "TRELLIS_FF",
+      "fanout": 74,
+      "sink_ports": {
+        "A": 66,
+        "C": 4,
+        "ADB4": 2,
+        "DI": 1,
+        "B": 1
+      }
+    },
+    {
+      "bit": 27607,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_41",
+      "type": "TRELLIS_FF",
+      "fanout": 73,
+      "sink_ports": {
+        "B": 33,
+        "A": 38,
+        "C": 2
+      }
+    },
+    {
+      "bit": 67168,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_35",
+      "type": "TRELLIS_FF",
+      "fanout": 73,
+      "sink_ports": {
+        "A": 40,
+        "B": 32,
+        "C": 1
+      }
+    },
+    {
+      "bit": 27521,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_44",
+      "type": "TRELLIS_FF",
+      "fanout": 71,
+      "sink_ports": {
+        "B": 18,
+        "A": 50,
+        "C": 3
+      }
+    },
+    {
+      "bit": 27609,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_40",
+      "type": "TRELLIS_FF",
+      "fanout": 71,
+      "sink_ports": {
+        "A": 48,
+        "B": 18,
+        "C": 5
+      }
+    },
+    {
+      "bit": 67124,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_38",
+      "type": "TRELLIS_FF",
+      "fanout": 71,
+      "sink_ports": {
+        "A": 68,
+        "B": 2,
+        "C": 1
+      }
+    },
+    {
+      "bit": 67170,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_34",
+      "type": "TRELLIS_FF",
+      "fanout": 71,
+      "sink_ports": {
+        "B": 18,
+        "A": 50,
+        "C": 3
+      }
+    },
+    {
+      "bit": 27623,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_31",
+      "type": "TRELLIS_FF",
+      "fanout": 70,
+      "sink_ports": {
+        "C": 12,
+        "B": 56,
+        "A": 2
+      }
+    },
+    {
+      "bit": 67184,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_31",
+      "type": "TRELLIS_FF",
+      "fanout": 70,
+      "sink_ports": {
+        "B": 56,
+        "C": 12,
+        "A": 2
+      }
+    },
+    {
+      "bit": 27520,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_46",
+      "type": "TRELLIS_FF",
+      "fanout": 67,
+      "sink_ports": {
+        "B": 27,
+        "A": 37,
+        "C": 3
+      }
+    },
+    {
+      "bit": 67115,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_33",
+      "type": "TRELLIS_FF",
+      "fanout": 67,
+      "sink_ports": {
+        "C": 7,
+        "B": 36,
+        "A": 24
+      }
+    },
+    {
+      "bit": 24082,
+      "driver": "core_block0_outputProjection_engine_productQ.empty_reg_LUT4_B_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 66,
+      "sink_ports": {
+        "D": 66
+      }
+    },
+    {
+      "bit": 40670,
+      "driver": "core_block0_stateProjection_engine_productQ.data1_reg_TRELLIS_FF_Q_26_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 66,
+      "sink_ports": {
+        "D": 66
+      }
+    },
+    {
+      "bit": 63133,
+      "driver": "core_block1_outputProjection_engine_productQ.data1_reg_TRELLIS_FF_Q_24_DI_CCU2C_S1_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S1_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 66,
+      "sink_ports": {
+        "D": 66
+      }
+    },
+    {
+      "bit": 80034,
+      "driver": "core_block1_stateProjection_engine_productQ.empty_reg_LUT4_B_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 66,
+      "sink_ports": {
+        "D": 66
+      }
+    },
+    {
+      "bit": 16159,
+      "driver": "core_block0_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_36",
+      "type": "TRELLIS_FF",
+      "fanout": 65,
+      "sink_ports": {
+        "B": 26,
+        "D": 24,
+        "C": 15
+      }
+    },
+    {
+      "bit": 17554,
+      "driver": "core_block0_inputProjection_engine_productQ.full_reg_LUT4_A_Z_LUT4_Z",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "C0": 65
+      }
+    },
+    {
+      "bit": 21916,
+      "driver": "core_block0_outputProjection_engine_startQ.empty_reg_LUT4_C_1_Z_LUT4_D",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "LSR": 64,
+        "D": 1
+      }
+    },
+    {
+      "bit": 27611,
+      "driver": "core_block0_scan_operandQ.D_OUT_TRELLIS_FF_Q_42",
+      "type": "TRELLIS_FF",
+      "fanout": 65,
+      "sink_ports": {
+        "A": 51,
+        "B": 9,
+        "C": 4,
+        "D": 1
+      }
+    },
+    {
+      "bit": 38673,
+      "driver": "core_block0_stateProjection_engine_startQ.empty_reg_LUT4_C_1_Z_LUT4_D",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "LSR": 64,
+        "D": 1
+      }
+    },
+    {
+      "bit": 53852,
+      "driver": "core_block1_inputProjection_engine_operandQ.data0_reg_TRELLIS_FF_Q_39",
+      "type": "TRELLIS_FF",
+      "fanout": 65,
+      "sink_ports": {
+        "A": 56,
+        "B": 5,
+        "C": 4
+      }
+    },
+    {
+      "bit": 55877,
+      "driver": "core_block1_inputProjection_engine_productQ.data1_reg_TRELLIS_FF_Q_52_DI_CCU2C_S0_COUT_CCU2C_CIN_COUT_CCU2C_CIN_COUT_CCU2C_CIN_S0_LUT4_Z_1",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "C0": 65
+      }
+    },
+    {
+      "bit": 60954,
+      "driver": "core_block1_outputProjection_engine_startQ.empty_reg_LUT4_D_1_Z_LUT4_D_1",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "LSR": 64,
+        "D": 1
+      }
+    },
+    {
+      "bit": 67172,
+      "driver": "core_block1_scan_operandQ.D_OUT_TRELLIS_FF_Q_36",
+      "type": "TRELLIS_FF",
+      "fanout": 65,
+      "sink_ports": {
+        "A": 52,
+        "B": 8,
+        "C": 5
+      }
+    },
+    {
+      "bit": 78003,
+      "driver": "core_block1_stateProjection_engine_startQ.empty_reg_LUT4_D_1_Z_LUT4_D",
+      "type": "LUT4",
+      "fanout": 65,
+      "sink_ports": {
+        "LSR": 64,
+        "D": 1
+      }
+    }
+  ],
+  "partition_heuristic": "logical destination FF Q net name and bit index, then cell name; no placement coordinates",
+  "max_transformed_output_fanout": 64,
+  "max_final_seed_fanout": 64,
+  "no_sequential_cells_cloned": true,
+  "no_timing_constraints_changed": true,
+  "output_sha256": "fd1b85c83c1cfd40e3d04afb1b89e19ecd5dd9e3fafe6192d666f78e924035ac"
+}

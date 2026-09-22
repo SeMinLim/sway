@@ -1,0 +1,8 @@
+SWAY_FOLDED_LAYER_PASS layer=2 lanes=2 tokens=12 outputs=216 cycles=5430
+SWAY_FOLDED_LAYER_PASS layer=6 lanes=2 tokens=12 outputs=216 cycles=5430
+SWAY_FOLDED_LAYER_PASS layer=4 lanes=2 tokens=12 outputs=240 cycles=5521
+SWAY_FOLDED_LAYER_PASS layer=8 lanes=2 tokens=12 outputs=240 cycles=5521
+SWAY_FOLDED_LAYER_PASS layer=0 lanes=1 tokens=12 outputs=240 cycles=5715
+SWAY_FOLDED_LAYER_PASS layer=10 lanes=1 tokens=12 outputs=684 cycles=15921
+SWAY_FOLDED_LAYER_PASS layer=9 lanes=1 tokens=12 outputs=240 cycles=82433
+SWAY_FOLDED_PASS layers=7 tokens=84 scalar_outputs=2076 cycles=82434

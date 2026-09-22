@@ -1,0 +1,7 @@
+{
+  "reason": "Support exact synthesized folded-engine address aliases; DUT/netlist unchanged",
+  "checker": "hw/reference/check_native_rom.py",
+  "previous_sha256": "17af2511b5f05c75f5b795313e1e0f020d31158b79be4134fe6b12f7d3f092d9",
+  "current_sha256": "0d57025ebf7aa491e94e232d6a64edac2cdeba63e98dfa26ba0040da96776270",
+  "raw_netlist_sha256": "cc0b74c8f7f468250ebd3186d9a11a4a424b363d4c0abf20a13e618a3ad8acd9"
+}

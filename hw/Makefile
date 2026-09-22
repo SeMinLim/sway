@@ -5,6 +5,19 @@ SHELL := /bin/bash
 PROJECT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 PROJECT_NAME := sway_mars
 INPUT_PROJECTION_VARIANT ?= B0
+RESOURCE_VARIANT ?= legacy
+ifneq ($(filter $(RESOURCE_VARIANT),legacy buffered dedicated shared),$(RESOURCE_VARIANT))
+$(error RESOURCE_VARIANT must be legacy, buffered, dedicated, or shared)
+endif
+ifneq ($(RESOURCE_VARIANT),legacy)
+ifneq ($(INPUT_PROJECTION_VARIANT),B2)
+$(error Resource comparisons require INPUT_PROJECTION_VARIANT=B2)
+endif
+endif
+CORE_MHZ ?= 100
+ifneq ($(filter $(CORE_MHZ),60 80 100),$(CORE_MHZ))
+$(error CORE_MHZ must be 60, 80, or 100)
+endif
 ifneq ($(filter $(INPUT_PROJECTION_VARIANT),B0 B1 B2),$(INPUT_PROJECTION_VARIANT))
 $(error INPUT_PROJECTION_VARIANT must be B0, B1, or B2)
 endif
@@ -20,7 +33,7 @@ endif
 endif
 # Frozen B0/B1 packages preserve the RTL used by their measured builds. B2 uses
 # the current package; selecting only flags on that file changes generated RTL.
-VARIANT_SUFFIX := $(if $(filter B0,$(INPUT_PROJECTION_VARIANT)),,-$(INPUT_PROJECTION_VARIANT))
+VARIANT_SUFFIX := $(if $(filter B0,$(INPUT_PROJECTION_VARIANT)),,-$(INPUT_PROJECTION_VARIANT))$(if $(filter legacy,$(RESOURCE_VARIANT)),,-$(RESOURCE_VARIANT))$(if $(filter 100,$(CORE_MHZ)),,-$(CORE_MHZ)mhz)
 LINEAR_VARIANT_PATH := $(if $(filter B0 B1,$(INPUT_PROJECTION_VARIANT)),$(PROJECT_DIR)/variants/$(INPUT_PROJECTION_VARIANT),)
 LINEAR_SOURCE := $(if $(LINEAR_VARIANT_PATH),$(LINEAR_VARIANT_PATH),$(PROJECT_DIR)/bsv)/SwayLinear.bsv
 RESULTS_DIR ?= $(PROJECT_DIR)/results$(VARIANT_SUFFIX)
@@ -49,6 +62,23 @@ ifeq ($(wildcard $(ROOTDIR)/build.mk),)
 $(error blueYosys not found at $(ROOTDIR). Set BLUEYOSYS=/absolute/path/to/blueyosys)
 endif
 include $(ROOTDIR)/build.mk
+ifneq ($(RESOURCE_VARIANT),legacy)
+override BSCFLAGS_COMMON += -D SWAY_BUFFERED
+endif
+ifneq ($(filter dedicated shared,$(RESOURCE_VARIANT)),)
+override BSCFLAGS_COMMON += -D SWAY_REALLOCATE
+NATIVE_ROM_CHECK_FLAGS += --resource-comparison
+VERILATOR_CHECK_FLAGS += --resource-comparison
+endif
+ifeq ($(RESOURCE_VARIANT),shared)
+override BSCFLAGS_COMMON += -D SWAY_SHARED_DELTA
+endif
+ifeq ($(CORE_MHZ),80)
+override BSCFLAGS_COMMON += -D SWAY_CORE_80MHZ
+endif
+ifeq ($(CORE_MHZ),60)
+override BSCFLAGS_COMMON += -D SWAY_CORE_60MHZ
+endif
 ifneq ($(filter B1 B2,$(INPUT_PROJECTION_VARIANT)),)
 NATIVE_ROM_CHECK_FLAGS += --input-projection-fifo2
 ifeq ($(findstring SWAY_INPUT_FIFO2,$(BSCFLAGS_COMMON)),)
@@ -104,13 +134,13 @@ pnr: physical-netlist
 
 .PHONY: check-timing
 check-timing: bitstream
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_timing.py" --report "$(PNR_REPORT_JSON)" --log "$(PNR_LOG)" --bitstream "$(BITSTREAM)" --output "$(RESULTS_DIR)/timing.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_timing.py" --report "$(PNR_REPORT_JSON)" --log "$(PNR_LOG)" --bitstream "$(BITSTREAM)" --output "$(RESULTS_DIR)/timing.json" --core-mhz $(CORE_MHZ)
 synth: check-timing
 
 .PHONY: check-verilator
 check-verilator:
 	$(MAKE) -C "$(PROJECT_DIR)" bsim SIM_BACKEND=iverilog BSIM_DIR="$(VERILATOR_RTL_DIR)"
-	$(PYTHON) "$(PROJECT_DIR)/reference/run_verilator.py" --rtl "$(VERILATOR_RTL_DIR)/mkTbSway.v" --build-dir "$(VERILATOR_SIM_DIR)" --results-dir "$(RESULTS_DIR)" --bsc-runtime "$(BSC_RUNTIME_DIR)" --jobs "$(VERILATOR_JOBS)"
+	$(PYTHON) "$(PROJECT_DIR)/reference/run_verilator.py" --rtl "$(VERILATOR_RTL_DIR)/mkTbSway.v" --build-dir "$(VERILATOR_SIM_DIR)" --results-dir "$(RESULTS_DIR)" --bsc-runtime "$(BSC_RUNTIME_DIR)" --jobs "$(VERILATOR_JOBS)" $(VERILATOR_CHECK_FLAGS)
 
 .PHONY: check-reset
 check-reset: check-bsc

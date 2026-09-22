@@ -1,0 +1,63 @@
+{
+  "status": "pass",
+  "scope": "Historical 80 MHz reproduction check, performed after the folded/delta changes and before adding CORE_MHZ=60; no synthesis or place-and-route rerun.",
+  "configuration": {
+    "INPUT_PROJECTION_VARIANT": "B2",
+    "RESOURCE_VARIANT": "buffered",
+    "CORE_MHZ": 80,
+    "SWAY_REALLOCATE": false
+  },
+  "compiler": "Bluespec 2026.01 build9bd39e6f",
+  "command": "source /workspace/scratch/e6420b0fda2a/toolchains/sway_env.sh; make -C hw verilog INPUT_PROJECTION_VARIANT=B2 RESOURCE_VARIANT=buffered CORE_MHZ=80 BUILD_DIR=/workspace/scratch/e6420b0fda2a/buffered_repro/build RESULTS_DIR=/workspace/scratch/e6420b0fda2a/buffered_repro/results",
+  "measured_rtl": "hw/resource-build/buffered/physical/mkTop.v",
+  "fresh_rtl": "/workspace/scratch/e6420b0fda2a/buffered_repro/build/mkTop.v",
+  "measured_rtl_sha256": "6ecd9bda53d98531a076c6fea2de9a4f312b52ab0d0c4d743fef2c4b45d2591b",
+  "fresh_rtl_sha256": "ae6d21f9eaceb463532ec8655550900a8a16782430443c589a078dd4c23e202c",
+  "normalization": "Remove exactly one generated // On timestamp comment; preserve every other byte.",
+  "normalized_rtl_sha256": "eae46fd51ea8978155639e9219b6dc93720f89ba978442760393afa61aca1bec",
+  "exact_difference": {
+    "line": 4,
+    "measured_comment": "// On Mon Sep 21 18:08:42 PDT 2026",
+    "fresh_comment": "// On Mon Sep 21 18:33:46 PDT 2026",
+    "all_other_bytes_identical": true
+  },
+  "copied_support_rtl_byte_identical": true,
+  "copied_support_rtl_count": 17,
+  "copied_support_rtl_sha256": {
+    "BRAM2.v": "1644a962bd70d8155b50274a4f99ae73bd6e10cc366d9a4c50d1a548ad4bddda",
+    "ClockDiv.v": "36966d220e82453e5ebb0c7ae68fc9888dc7aab59d8c77aaf06e22ea518dfd4e",
+    "FIFO1.v": "2d51b68e9a7f6a7f4dc3a47cdd383d85a8519ca6a34ec93f2cf5ccc8b4418955",
+    "FIFO2.v": "1f9fd7c208e38252743ca3db7139e9aad7c92be3ac27782015d1d6f5be6b5afd",
+    "MakeResetA.v": "ed45d83a2aa5d1988e237a499928a1103ac15e4437e96729467ca5ec0c4f69fa",
+    "RevertReg.v": "a919dec21d4d6f1a0eac547e4f536dc3757abc8f9b71e843c40fba90b764c6dc",
+    "SizedFIFO.v": "01c029aa4ca78625e316de58781489d1d85122861e405f15a8a6bf51023f18fb",
+    "SwayCoeffRom.v": "dd8de8834ed3b4a619f61ffe6a93792006a28629a9b7ce5b45c5cf3dff7ac4ae",
+    "SwayPll.v": "1e82d1480d7a7702b2f4de135b1c79a3c068d5817ee6d445192241ba3df0b46b",
+    "SwayReset.v": "6850c175449b41206167176b506562b6ca6e2bad51a5a5d333860f02e5ebd60d",
+    "SyncFIFO.v": "4cf24a17d12abe55b99e2b024565e02fa35179c40dad9f46b44f0f0454c4d460",
+    "SyncResetA.v": "ca89307c89636d0339d1b4d9fc51fe30087ead8d56381acc1c5219dded07150f",
+    "inout16.v": "5c49a121a64f3bde851e1c41185a68221a54e0e573e3617b38d10e04ddf9dda9",
+    "mult18x18d.v": "1da78440b318046d064e57012b94d3b7e532f12e90e3cfea9ad9daa1ed4f83bc",
+    "pll_fastclk.v": "70e772c23e0ad4148e3de60893862ca5b882441e0153a0651e3e05df5e75e10f",
+    "quantized_mult18x18d.v": "f2012dd89083be4eb0df86a6aae339d62c4604f55826683bd133f89cf6cae325",
+    "sdram.v": "180595941b3569f4ad42417c0063b7be2a7422703069a1528d222e18128867f6"
+  },
+  "runtime_support_rtl_note": "The physical runtime-rtl target additionally copied these three files; make verilog does not copy them. All three measured files equal the currently selected BSC runtime files byte for byte.",
+  "runtime_support_rtl_sha256": {
+    "RegFile.v": "7de616d2aff8b2411994abadf3876aba8bd64e753741c73d2c0ea19fff0a7db8",
+    "RegFileLoad.v": "71555757cdf742b318e363d9c7cc68f9d35b51db7a7b02c88a39e9d238a6fe9e",
+    "ResetInverter.v": "34d4347e3c72294ec1bfd1e63f2faf6511c97750d4f4e3621bf2c39347647383"
+  },
+  "changed_hardware_sources_since_measured_snapshot": {
+    "bsv/SwayFoldedLinear.bsv": {
+      "measured_source_sha256": "78c68a615fdfacd210d6ca4fbe4745db8d241057a9d099682972c64fb91429a5",
+      "current_source_sha256": "858cae3c693fccd733e6d0347103d30242451b1f86435e70a966fed870e894f9"
+    }
+  },
+  "added_hardware_sources_since_measured_snapshot": {
+    "bsv/SwayDelta.bsv": "c5a67106771471056e29c197d60951324b302d69b2b0f3a1ea782d3a495ea3b5"
+  },
+  "unused_source_exclusion": "SWAY_REALLOCATE is undefined for buffered; neither SwayFoldedLinear.bo nor SwayDelta.bo is emitted in the fresh build.",
+  "build_log_sha256": "ee5c76962c7fde537a3e8c2b79c15114f3b31a8516817e0a74b57b95215e6bbb",
+  "conclusion": "At this check, buffered80 reproduced the measured RTL exactly except its generated timestamp comment. The folded/delta source changes did not affect that configuration. The later clock60 builds have separate frozen manifests and validation evidence."
+}

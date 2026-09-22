@@ -39,16 +39,119 @@ class TimingGateTests(unittest.TestCase):
         )
         self.bitstream_path.write_bytes(b"SYNTHETIC CHECKER TEST, NOT AN FPGA BITSTREAM")
 
-    def check(self):
+    def check(self, core_mhz=100.0):
         self.report_path.write_text(json.dumps(self.report))
         self.log_path.write_text(self.log)
-        return check_timing(self.report_path, self.log_path, self.bitstream_path)
+        return check_timing(self.report_path, self.log_path, self.bitstream_path, core_mhz)
 
     def test_complete_pass(self):
         result = self.check()
         self.assertEqual(result["status"], "pass")
         self.assertEqual(result["core_pll_derived_mhz"], 100.0)
         self.assertEqual(len(result["bitstream_sha256"]), 64)
+
+    def select_80mhz(self):
+        self.report["fmax"][self.core]["constraint"] = 80.0
+        self.report["fmax"][self.core]["achieved"] = 92.125
+        self.log = self.log.replace("100.0 MHz for net", "80.0 MHz for net")
+        self.log = self.log.replace("105.13 MHz (PASS at 100.00 MHz)",
+                                    "92.13 MHz (PASS at 80.00 MHz)")
+
+    def test_selected_80mhz_pass(self):
+        self.select_80mhz()
+        result = self.check(80.0)
+        self.assertEqual(result["core_pll_derived_mhz"], 80.0)
+        self.assertEqual(result["clocks"]["clocks_coreReset.CLK"]["constraint_mhz"], 80.0)
+
+    def test_80mhz_requires_explicit_selection(self):
+        self.select_80mhz()
+        with self.assertRaisesRegex(AssertionError, "PLL-derived 100 MHz"):
+            self.check()
+
+    def test_80mhz_target_rejects_100mhz_pll(self):
+        self.report["fmax"][self.core]["constraint"] = 80.0
+        with self.assertRaisesRegex(AssertionError, "PLL-derived 80 MHz"):
+            self.check(80.0)
+
+    def test_80mhz_target_rejects_wrong_report_constraint(self):
+        self.select_80mhz()
+        self.report["fmax"][self.core]["constraint"] = 75.0
+        with self.assertRaisesRegex(AssertionError, "exactly 80.0 MHz"):
+            self.check(80.0)
+
+    def test_80mhz_target_still_rejects_timing_failure(self):
+        self.select_80mhz()
+        self.report["fmax"][self.core]["achieved"] = 79.99
+        with self.assertRaisesRegex(AssertionError, "failed timing"):
+            self.check(80.0)
+
+    def test_unsupported_pll_frequency_rejected(self):
+        with self.assertRaisesRegex(ValueError, "physical 60, 80, or 100 MHz"):
+            self.check(70.0)
+
+    def select_60mhz(self):
+        self.report["fmax"][self.core]["constraint"] = 60.0
+        self.report["fmax"][self.core]["achieved"] = 72.125
+        self.log = self.log.replace("100.0 MHz for net", "60.0 MHz for net")
+        self.log = self.log.replace("105.13 MHz (PASS at 100.00 MHz)",
+                                    "72.13 MHz (PASS at 60.00 MHz)")
+
+    def test_selected_60mhz_pass(self):
+        self.select_60mhz()
+        self.assertEqual(self.check(60.0)["core_pll_derived_mhz"], 60.0)
+
+    def test_actual_60mhz_integer_ps_constraint_pass(self):
+        self.select_60mhz()
+        self.report["fmax"][self.core]["constraint"] = 60.00239944458008
+        result = self.check(60.0)
+        self.assertEqual(result["core_pll_derived_mhz"], 60.0)
+        self.assertEqual(result["clocks"]["clocks_coreReset.CLK"]["constraint_mhz"],
+                         60.00239944458008)
+
+    def test_60mhz_weaker_constraint_never_accepted(self):
+        self.select_60mhz()
+        for frequency in (59.9988, 59.9999999):
+            with self.subTest(frequency=frequency):
+                self.report["fmax"][self.core]["constraint"] = frequency
+                with self.assertRaisesRegex(AssertionError, "exactly 60.0 MHz"):
+                    self.check(60.0)
+
+    def test_60mhz_arbitrary_nearby_constraint_rejected(self):
+        self.select_60mhz()
+        for frequency in (60.0000001, 60.001, 60.0024, 60.00239944458009):
+            with self.subTest(frequency=frequency):
+                self.report["fmax"][self.core]["constraint"] = frequency
+                with self.assertRaisesRegex(AssertionError, "exactly 60.0 MHz"):
+                    self.check(60.0)
+
+    def test_60mhz_must_pass_stricter_integer_ps_constraint(self):
+        self.select_60mhz()
+        self.report["fmax"][self.core]["constraint"] = 60.00239944458008
+        self.report["fmax"][self.core]["achieved"] = 60.001
+        with self.assertRaisesRegex(AssertionError, "failed timing"):
+            self.check(60.0)
+
+    def test_60mhz_requires_explicit_selection(self):
+        self.select_60mhz()
+        with self.assertRaisesRegex(AssertionError, "PLL-derived 100 MHz"):
+            self.check()
+
+    def test_60mhz_target_rejects_80mhz_pll(self):
+        self.select_80mhz()
+        with self.assertRaisesRegex(AssertionError, "PLL-derived 60 MHz"):
+            self.check(60.0)
+
+    def test_60mhz_target_rejects_wrong_report_constraint(self):
+        self.select_60mhz()
+        self.report["fmax"][self.core]["constraint"] = 59.0
+        with self.assertRaisesRegex(AssertionError, "exactly 60.0 MHz"):
+            self.check(60.0)
+
+    def test_60mhz_target_still_rejects_timing_failure(self):
+        self.select_60mhz()
+        self.report["fmax"][self.core]["achieved"] = 59.99
+        with self.assertRaisesRegex(AssertionError, "failed timing"):
+            self.check(60.0)
 
     def test_router2_completion(self):
         self.log = self.log.replace("Routing complete.", "Router2 time 12.34s")

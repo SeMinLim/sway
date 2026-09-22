@@ -8,6 +8,9 @@ import SwayParameters::*;
 import SwayReset::*;
 import SwayLookup::*;
 import SwayLinear::*;
+`ifdef SWAY_REALLOCATE
+import SwayFoldedLinear::*;
+`endif
 import SwayNorm::*;
 import SwayScan::*;
 
@@ -109,7 +112,11 @@ typedef struct {
 	Vector#(8, Int#(8)) c;
 } StateParameters deriving (Bits, Eq, FShow);
 
+`ifdef SWAY_REALLOCATE
+module mkSwayBlock#(Integer blockId, LinearIfc#(2, 40) deltaProjection)(BlockIfc);
+`else
 module mkSwayBlock#(Integer blockId)(BlockIfc);
+`endif
 	LocalResetIfc localReset <- mkSwayLocalReset;
 	Integer firstLinear = 1 + blockId * 4;
 	Integer inExp = blockScale(blockId, "in");
@@ -130,14 +137,23 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	// Child engines derive sibling reset leaves from the unchanged root reset.
 	NormIfc normalization <- mkSwayNorm(blockId);
 	LinearIfc#(20, 80) inputProjection <- mkSwayLinear(firstLinear);
+`ifdef SWAY_REALLOCATE
+	LinearIfc#(40, 18) stateProjection <- mkSwayFoldedLinear(firstLinear + 1, 2);
+	LinearIfc#(40, 20) outputProjection <- mkSwayFoldedLinear(firstLinear + 3, 2);
+`else
 	LinearIfc#(40, 18) stateProjection <- mkSwayLinear(firstLinear + 1);
 	LinearIfc#(2, 40) deltaProjection <- mkSwayLinear(firstLinear + 2);
 	LinearIfc#(40, 20) outputProjection <- mkSwayLinear(firstLinear + 3);
+`endif
 	ScanIfc scan <- mkSwayScan(blockId);
 
 	FIFO#(Token#(20)) inputQ <- mkFIFO1(reset_by localReset.rst);
-	// Four residual slots allow tokens to occupy independent downstream engines.
+	// Buffer sizing is a conventional baseline correction, applied to both blocks.
+`ifdef SWAY_BUFFERED
+	FIFO#(Token#(20)) residualQ <- mkSizedFIFO(5, reset_by localReset.rst);
+`else
 	FIFO#(Token#(20)) residualQ <- mkSizedFIFO(4, reset_by localReset.rst);
+`endif
 	FIFO#(Token#(20)) outputQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Token#(80)) expandedQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(ConvAddress) convAddressQ <- mkFIFO1(reset_by localReset.rst);
@@ -157,7 +173,11 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	FIFO#(GateResults) gateResultQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(ResidualSums) residualSumQ <- mkFIFO1(reset_by localReset.rst);
 	FIFO#(Token#(40)) activatedQ <- mkFIFO1(reset_by localReset.rst);
+`ifdef SWAY_BUFFERED
+	FIFO#(Token#(40)) xDelayQ <- mkSizedFIFO(2, reset_by localReset.rst);
+`else
 	FIFO#(Token#(40)) xDelayQ <- mkFIFO1(reset_by localReset.rst);
+`endif
 	FIFO#(Token#(40)) gateDelayQ <- mkSizedFIFO(4, reset_by localReset.rst);
 	FIFO#(StateParameters) stateParameterQ <- mkFIFO1(reset_by localReset.rst);
 

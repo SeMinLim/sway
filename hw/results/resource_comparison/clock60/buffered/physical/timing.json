@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "evidence": "completed nextpnr ECP5 routing and static timing analysis",
+  "scope": "Post-route tool timing, not measured board performance",
+  "routing_completion_marker": "Info: Routing complete.",
+  "core_pll_derived_mhz": 60.0,
+  "clocks": {
+    "CLK_clk_25mhz": {
+      "net": "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "achieved_mhz": 118.25921630859375,
+      "constraint_mhz": 25.0
+    },
+    "clocks_coreReset.CLK": {
+      "net": "$glbnet$clocks_coreReset.CLK",
+      "achieved_mhz": 85.41898345947266,
+      "constraint_mhz": 60.00239944458008
+    }
+  },
+  "all_reported_clocks_pass": true,
+  "bitstream_bytes": 2041307,
+  "report_sha256": "8b3e82cef88e4c7a3d9dfc7e2d87941f452a262f370bcef2f6cf10a0a03eb835",
+  "log_sha256": "29c1938d96a655994b6b42fac9b11fc467521ac85e9a163c66e35f1a0ea60f31",
+  "bitstream_sha256": "6d9e8f7e33ec37cfda911603a13a82c7c1946b6f9c4e0de3087898c6eb1a8363"
+}

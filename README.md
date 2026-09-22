@@ -2,6 +2,8 @@
 
 Compact selective state-space model accelerator research for ECP5-class FPGAs.
 
+Latest hardware evaluation: [resource comparison at equal kernel throughput](#resource-comparison-at-equal-kernel-throughput).
+
 ## MARS software
 
 `sw/` implements, trains, evaluates, quantizes, and exports a MARS human-pose regression model reconstructed from the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). It uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, and ReLU for the selective step size. Exact SiLU and exponential functions are used in training; piecewise approximations are evaluated separately.
@@ -55,7 +57,7 @@ The eMamba paper reports FP32/INT8 RMSE of 7.85/8.83 cm. Those are published ref
 
 ## MARS hardware baseline
 
-The default build remains B0 because it passes the existing 100 MHz constraint. The baseline measurements below describe B0; the completed [Observation 2 comparison](#observation-2-fifo-and-group-scheduling) records B1/B2 cycle improvements and their timing failures, including one limited buffer follow-up per configuration.
+Legacy build defaults and the measurements in this section reproduce B0. The [resource comparison](#resource-comparison-at-equal-kernel-throughput) uses buffered B2 and a dedicated baseline with per-engine lane allocation. Historical 100 MHz failures below are not evidence that the existing architecture is infeasible.
 
 `hw/` implements the complete fixed-weight MARS inference graph in Bluespec: patch embedding, two selective-SSM blocks, and the regression head. It retains separate layer engines and token pipelining through FIFOs. Affine engines have four output lanes; normalization, depthwise convolution, and gating use two lanes; the scan processes two states of one channel per issue. Affine weights use four initialized ROM banks per layer. Two frame RAM banks feed the patch serializer; each block's recurrent state uses two 160×17 RAM banks. This is our ECP5-folded baseline, not the eMamba authors' RTL.
 
@@ -226,7 +228,7 @@ This identifies the observed Block0 input-projection constraint in the current E
 
 ## Observation 2: FIFO and group scheduling
 
-**Ordinary FIFO and scheduling changes reduce the two identified costs, but neither changed configuration meets 100 MHz under the tested ECP5 conditions, including one targeted physical buffer follow-up per configuration. Validation is complete; B0 remains the default.** Only three configurations are compared, in order: B0 unchanged; B1 with two-entry `issueCommandQ`, `operandQ`, `partialQ`, and `productQ`; B2 with those FIFOs plus issue-driven preparation of the next output group. The changes apply to both Block0 and Block1 input projections, layer IDs 1 and 5. The model, weights, precision, four arithmetic lanes, ROM banks and four reserved response slots, other projections, scan, and synthesis conditions are unchanged.
+**Historical comparison at a fixed 100 MHz constraint. Ordinary FIFO and scheduling changes reduce the two identified costs, while those particular physical builds miss that constraint. This does not establish a throughput failure or architectural necessity. The subsequent resource comparison uses each implementation’s actual validated operating clock.** Only three configurations are compared, in order: B0 unchanged; B1 with two-entry `issueCommandQ`, `operandQ`, `partialQ`, and `productQ`; B2 with those FIFOs plus issue-driven preparation of the next output group. The changes apply to both Block0 and Block1 input projections, layer IDs 1 and 5. The model, weights, precision, four arithmetic lanes, ROM banks and four reserved response slots, other projections, scan, and synthesis conditions are unchanged.
 
 B2 separates `groupCnt` on the issue side from `completionGroupCnt` on the accumulation side. The final operand issue queues the next group start. FIFO ordering and the existing last-operand flag preserve completion order; only consumption of the final product clears the accumulator and advances its destination group. Starting another group cannot overwrite the outstanding group's sum or destination. No additional arithmetic lane or accumulator is introduced.
 
@@ -264,7 +266,7 @@ B1 completed its original route, including all 50 bounded timing-reroute checks,
 
 B2 completed its original route at 88.78 MHz and failed the 100 MHz core constraint; UART passed. Its critical path runs directly through Block1 input projection, from the group-start FIFO empty flag to a weight-ROM address register. Routing contributes 9.539 ns of the 11.264 ns total. A single shared LUT has 36 loads and lies on two consecutive routed segments of 3.264 and 3.346 ns, making a long outward-and-return trip. The limited B2 follow-up replicates only that LUT at cap eight, adding four equivalent LUT4s without changing any state or cycle. The unchanged structural checker preserves all 85,102 original cells, five focused tests pass, and independent review confirms the exact one-LUT scope. Its single follow-up completed all 50 automatic timing-reroute checks at 97.25 MHz, still below 100 MHz; UART passed. The worst path moved to the existing core-reset distribution, from the PLL-lock-derived reset FF to `txReset_leaf.secondReset` LSR. Routing contributes 9.334 ns of its 10.283 ns total (0.525 ns clock-to-Q and 0.424 ns setup). This path is outside input projection; the movement of the worst path does not prove that every input-projection path meets 100 MHz. No further B2 trial or seed/parameter search was performed.
 
-**Conclusion:** ordinary FIFO and scheduling improvements substantially reduce alternate-cycle issue and repeated group drain within the existing four-lane engine. Continuous kernel cycles/frame decrease by 36.3% in B1 and 40.2% in B2, while unchanged downstream control and buffering become the simulation throughput limit. Resource capacity is sufficient, but the tested implementations and one limited buffer follow-up each do not jointly achieve these cycle improvements and 100 MHz timing. Routing delay on control paths is the remaining physical limitation in these runs. B2's final worst path is outside the changed projection, so these results do not establish an unavoidable cost of continuous issue, physical infeasibility of the existing architecture, or a requirement for a new Sway architecture. B0 remains the validated default; B1/B2 remain reproducible experimental configurations without 100 MHz throughput claims.
+**Conclusion:** ordinary FIFO and scheduling improvements substantially reduce alternate-cycle issue and repeated group drain within the existing four-lane engine. Continuous kernel cycles/frame decrease by 36.3% in B1 and 40.2% in B2, while unchanged downstream control and buffering become the simulation throughput limit. Resource capacity is sufficient, but the tested implementations and one limited buffer follow-up each do not jointly achieve these cycle improvements and 100 MHz timing. Routing delay on control paths is the remaining physical limitation in these runs. B2's final worst path is outside the changed projection, so these results do not establish an unavoidable cost of continuous issue, physical infeasibility of the existing architecture, or a requirement for a new Sway architecture. These historical B1/B2 builds have no 100 MHz throughput claims. The resource study below absorbs the remaining buffer limits into its baseline and measures hardware cost at equal kernel throughput.
 
 Evidence: [B1 performance](hw/results/observation2/B1/perf/summary.json), [B1 internal profile](hw/results/observation2/B1/block-profile/summary.json), [B2 performance](hw/results/observation2/B2/perf/summary.json), and [B2 internal profile](hw/results/observation2/B2/block-profile/summary.json). Their directories include raw logs, schedules and CSVs; adjacent `profile/` and `stress/` directories contain noninterference and backpressure reports. [B1 original route](hw/results/observation2/B1/physical/physical_result.json), [B2 original route](hw/results/observation2/B2/physical/physical_result.json), [B1 buffer follow-up](hw/results/observation2/B1/physical-repair/physical_result.json), and [B2 buffer follow-up](hw/results/observation2/B2/physical-repair/physical_result.json) record completed outcomes. The B2 [final timing-path analysis](hw/results/observation2/B2/physical-repair/timing_failure.json) and [repair provenance](hw/results/observation2/B2/physical-repair/repair_provenance.json) retain the measured limitation and strict equivalence proof. The exact measured B1 hardware source is retained as a [patch](hw/results/observation2/B1/source.patch) against `8c143e560e4753d17429be0af4f0a8eca8ed2223`; B2 uses the current `bsv/SwayLinear.bsv`. The build selects exact frozen B0/B1 packages from `hw/variants/B0` and `hw/variants/B1`. [Reproduction evidence](hw/results/observation2/B1/physical/source_reproducibility.json) confirms that rebuilding the frozen B1 package reproduces its measured RTL byte-for-byte except for one generated timestamp comment; the other 16 common RTL files are identical. Applying B1 flags to the current B2 package alone does not reproduce that RTL, so it is not used for B1. Build-time source hashes identify the selected package in each report.
 
@@ -303,3 +305,77 @@ fi
 ```
 
 Both original and follow-up B1/B2 physical commands return nonzero on their measured 100 MHz timing failures; run the follow-up separately after recording the original outcome. The buffer option preserves the original cap-64 netlist as `mkTop.physical-base.json`, applies only the measured variant's selected cap-eight LUT copies, and proves equivalence before routing. It adds no new logical configuration. For a clock conversion after successful routing, rerun `check_perf.py` with the selected `--linear-source` package and `--timing` pointing to that same variant's passing `physical/timing.json` or `physical-repair/timing.json`, and omit `--cycles-only`. B0's timing report cannot establish B1/B2 timing.
+
+
+## Resource comparison at equal kernel throughput
+
+This experiment compares hardware resources at the same kernel throughput, using the unchanged model, weights, INT8 outputs, ULX3S-85F, and toolchain. The three configurations are `RESOURCE_VARIANT=buffered`, `dedicated`, and `shared`, all with `INPUT_PROJECTION_VARIANT=B2`. Historical 100 MHz timing failures are not used as architectural evidence.
+
+The comparison uses **validated operating frequency / measured cycles per frame**. Old B2 would equal B0's 100 MHz throughput at `100 × 9,448 / 15,792 = 59.83 MHz`; this is a break-even calculation, not a validated B2 operating point. The new experiment selects a common 60 MHz operating point and checks each implementation's own complete route.
+
+Section 4.4 of the [eMamba paper](https://arxiv.org/html/2508.10370v1) describes separate layer pipeline stages, token handoff, and waiting caused by unequal stage execution times. This motivates testing the cost of fixed engine placement. Idle cycles alone establish no resource saving: the experiment must remove hardware while preserving complete-kernel throughput. The hardware compared here remains our ECP5 implementation, not the authors' RTL.
+
+`buffered` changes both blocks to `xDelayQ=2` and `residualQ=5`. These starting capacities follow from the old measured 589-cycle delay-token residence and 2,362-cycle residual-slot reuse period: `ceil(589 / 475) = 2` and `ceil(2,362 / 475) = 5`. The added payload capacity is `40 + 20 = 60` bytes per block, excluding token indices and control. These estimates alone do not guarantee throughput; after the change, all 63 observed frame intervals decrease from the old B2's 9,448 cycles to **7,600 cycles**, or 475 cycles/token. These are ordinary baseline corrections.
+
+`dedicated` additionally permits continuous issue and engine-specific lane allocation. Its delta engines use the same specialized two-input scalar execution and coefficient lookup as the sharing candidate. Their shorter arithmetic widths preserve exact results. No part of this conventional optimization is attributed to sharing.
+
+| Affine engine | Instances | Products per invocation | Period budget (cycles) | Dedicated lanes per instance |
+|---|---:|---:|---:|---:|
+| Embedding, 20→20 | 1 | 400 | 475 | 1 |
+| Input projection, 20→80 | 2 | 1,600 | 475 | 4 |
+| State projection, 40→18 | 2 | 720 | 475 | 2 |
+| Delta projection, 2→40 | 2 | 80 | 475 | 1 |
+| Output projection, 40→20 | 2 | 800 | 475 | 2 |
+| Hidden head, 320→20 | 1 | 6,400 | 7,600 | 1 |
+| Output head, 20→57 | 1 | 1,140 | 7,600 | 1 |
+
+Each allocation reaches `ceil(products / period)` for the existing dense execution with at most one scalar product/lane/cycle. This is a lane-count bound under these conditions, not a LUT/FF optimum. The total decreases from 44 to 21 affine lanes through conventional optimization.
+
+`shared` replaces only the two dedicated scalar delta engines with **one shared scalar engine**, giving 20 total affine lanes. Each block retains independent request/result queues. Round-robin arbitration starts a job only when its destination result slot is free; the selected block and token remain fixed until all 40 outputs finish. A blocked consumer cannot reserve the other block's output slot. The same module implements dedicated modes 0/1 and shared mode 2, making `dedicated` the sharing-disabled ablation. Both configurations retain identical FIFO capacities, folded engines, coefficient representation, arithmetic and weights.
+
+The delta trace measures 87 cycles from job selection to result enqueue and 88 cycles between consecutive selections. Two jobs require 176 service cycles within the 475-cycle token budget. This capacity calculation motivates the candidate; the complete-kernel comparison below tests whether dependencies and backpressure permit it in practice.
+
+| Measurement | Buffered B2 | Dedicated, lane-allocated baseline | Shared delta candidate |
+|---|---:|---:|---:|
+| Validated operating clock (MHz) | 60 (PASS) | 60 (PASS) | 60 (PASS) |
+| Continuous completion interval (cycles/frame) | 7,600 | 7,600 | 7,600 |
+| Derived kernel throughput (frames/s) | 7,894.74 | 7,894.74 | 7,894.74 |
+| Isolated-frame latency (cycles) | 16,545 | 20,763 | 20,763 |
+| Packed logic, `TRELLIS_COMB` | 47,287 | 44,126 | 43,538 |
+| Flip-flops, `TRELLIS_FF` | 48,199 | 45,233 | 44,555 |
+| Block RAMs, `DP16KD` | 49 | 41 | 41 |
+| `TRELLIS_RAMW` cells | 501 | 479 | 479 |
+| DSPs, `MULT18X18D` | 0 | 0 | 0 |
+| Raw synthesis `LUT4` | 31,742 | 31,150 | 30,667 |
+
+At the same **60 MHz / 7,600 cycles = 7,894.74 frames/s**, delta sharing saves **588 packed COMB cells (1.33%) and 678 FFs (1.50%)** relative to the dedicated baseline. BRAM, distributed RAM and DSP counts are unchanged. These counts include the entire kernel and board wrapper. The 44→21 lane reduction and 49→41 BRAM reduction (small delta tables mapped to LUT logic in both configurations) belong to conventional baseline optimization; only the dedicated→shared difference is attributed to Sway's resource organization.
+
+Disabling sharing restores the two dedicated delta engines and all 588 COMB/678 FF of additional cost, with the same observed kernel throughput and isolated-frame latency. This is the sharing ablation. Conventional lane allocation increases isolated latency from 16,545 to 20,763 cycles (+25.5%) relative to buffered B2; sharing adds no further observed latency.
+
+This establishes a modest, measured resource benefit for this delta-sharing organization at one common validated operating point. It is not a per-variant maximum-throughput or complete resource/clock Pareto comparison, a novelty result, or proof of fitting a cheaper FPGA part. Throughput is derived from functional simulation cycles and completed post-route static timing; it is not a board or UART-transfer measurement.
+
+The [combined comparison](hw/results/resource_comparison/clock60/summary.json) requires passing performance, stress, native-ROM, control-equivalence and timing reports, matching simulation/physical sources, and linked netlist/report/log/bitstream hashes. Physical results: [buffered](hw/results/resource_comparison/clock60/buffered/physical/physical_result.json), [dedicated](hw/results/resource_comparison/clock60/dedicated/physical/physical_result.json), [shared](hw/results/resource_comparison/clock60/shared/physical/physical_result.json).
+
+The initial 80 MHz route passed for buffered B2 (85.419 MHz reported timing limit), but failed for dedicated (65.998 MHz) and shared (77.208 MHz). Those [dedicated](hw/results/resource_comparison/dedicated/physical/physical_result.json) and [shared](hw/results/resource_comparison/shared/physical/physical_result.json) trials remain validation history; no throughput is derived from their failed operating point. All three implementations were then rebuilt with a real 60 MHz PLL. The timing checker recognizes the pinned tool's exact conservative 60.00239944458008 MHz representation of a 16,666 ps constraint, and rejects weaker or arbitrary nearby constraints. The [checker update record](hw/results/resource_comparison/clock60/shared/physical/verification_update.json) retains the original rejection and corrected verification without any RTL, netlist or routing change.
+
+Every configuration checks 57 isolated-frame and 3,648 continuous-run outputs against the existing integer reference; the 64-frame run cycles through the same 14 fixtures. Bluesim and native-ROM Verilator stress tests each check 798 outputs with input bubbles and 8,192-cycle output stalls. Dedicated and shared stress traces are bit/cycle identical, finishing at cycle 138,362. The standalone folded-engine test checks seven layers and 2,076 scalar outputs against the old affine engine. The delta equivalence test exhausts all 65,536 INT8 input pairs on both layers: 5,242,880 scalar outputs per implementation match the original four-lane engines, including a stalled client and independent progress by the other client.
+
+Evidence: [buffered kernel](hw/results/resource_comparison/clock60/buffered/perf/summary.json), [dedicated kernel](hw/results/resource_comparison/clock60/dedicated/perf/summary.json), [shared kernel](hw/results/resource_comparison/clock60/shared/perf/summary.json), [folded equivalence](hw/results/resource_comparison/folded/bluesim.log), and [exhaustive delta equivalence](hw/results/resource_comparison/delta-equivalence/summary.json). Adjacent directories retain raw logs, schedules, source hashes and physical checks. All three 60 MHz builds use identical frozen hardware sources and fixtures, with separate configuration manifests and build directories.
+
+To reproduce one configuration with the pinned blueyosys/toolchain, select `buffered`, `dedicated`, or `shared`:
+
+```sh
+make -C hw perf runsim check-verilator synth \
+  BLUEYOSYS=/absolute/path/to/blueyosys \
+  INPUT_PROJECTION_VARIANT=B2 RESOURCE_VARIANT=shared CORE_MHZ=60
+```
+
+Each configuration has separate default build/results directories. Performance first records cycles only; after the same configuration's `synth` passes, its `timing.json` supplies the validated clock conversion. The physical PLL really produces 60 MHz (25 MHz input; divisors 5/12/10; 600 MHz VCO), and the timing checker verifies that derived clock rather than substituting a requested frequency for the hardware clock. The unchanged UART constraint is 25 MHz. Synthesis uses `-nodsp`, ordinary cap-64 control replication with structural equivalence checks, and the same nextpnr router/seed settings. No selected critical-control repair or seed search is used.
+
+To recheck the archived comparison and its evidence links:
+
+```sh
+python3 hw/reference/summarize_resource_comparison.py \
+  --results hw/results/resource_comparison/clock60 --core-mhz 60 \
+  --output hw/results/resource_comparison/clock60/summary.json
+```

@@ -1,0 +1,47 @@
+blueYosys Resource Utilization Report
+======================================
+Project:    sway_mars
+Board:      ulx3s-85f
+Top module: mkTop
+
+Yosys post-synthesis cell statistics
+------------------------------------
+Total cells: 83187
+
+Cell type                               Count
+---------------------------------- ----------
+TRELLIS_FF                              44555
+LUT4                                    30667
+PFUMX                                    3756
+CCU2C                                    3576
+TRELLIS_DPR16X4                           479
+L6MUX21                                   112
+DP16KD                                     41
+EHXPLLL                                     1
+
+nextpnr post-pack device utilization
+------------------------------------
+Only resources with non-zero use are listed.
+
+Resource                           Used    Available      Usage
+---------------------------- ---------- ------------ ----------
+DCCA                                  2           56      3.57%
+DP16KD                               41          208     19.71%
+EHXPLLL                               1            4     25.00%
+TRELLIS_COMB                      43538        83640     52.05%
+TRELLIS_FF                        44555        83640     53.27%
+TRELLIS_IO                           11          365      3.01%
+TRELLIS_RAMW                        479        10455      4.58%
+
+Clock timing
+------------
+
+Clock                                                          Achieved       Target       Margin   Status
+---------------------------------------------------------- ------------ ------------ ------------ --------
+$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN                           109.93 MHz     25.00 MHz    +84.93 MHz     PASS
+$glbnet$clocks_coreReset.CLK                                   75.88 MHz     60.00 MHz    +15.88 MHz     PASS
+
+Machine-readable source reports
+-------------------------------
+Yosys:   /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/clock60/shared/physical/mkTop.yosys.json
+nextpnr: /workspace/scratch/e6420b0fda2a/sway/hw/resource-build/clock60/shared/physical/mkTop.nextpnr.json

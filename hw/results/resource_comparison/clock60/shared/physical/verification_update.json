@@ -1,0 +1,18 @@
+{
+  "change": "Timing checker only; frozen hardware source, synthesized netlists, routed design, and bitstream unchanged",
+  "reason": "Pinned ECP5 nextpnr truncates a 60 MHz period to 16666 ps and reports its float32 reciprocal as exactly 60.00239944458008 MHz. The updated checker accepts only that exact conservative representation or 60.0 MHz, and still rejects every weaker constraint.",
+  "original_checker_sha256": "a22752eb3df8afa5ffe8a1b916f8104d0a31bc7597c4cd82103b5dcb7b6078f0",
+  "checker_sha256": "98713aec329569a974389e43450afeb35137c9e0894da318500fe67ff8e0306e",
+  "original_make_exit_code": 2,
+  "original_checker_replay_exit_code": 1,
+  "original_checker_replay_log": "timing-original-checker.log",
+  "original_checker_replay_log_sha256": "e242cb0d325f13acaf3c869675afb02fd2c9968d5841960f7e8835a22e562329",
+  "followup_checker_exit_code": 0,
+  "followup_checker_log": "timing-followup.log",
+  "followup_checker_log_sha256": "e8de942dd2717817cbf23945f1f485c961e1955cf73ee0bb745a8c82caac6817",
+  "focused_timing_checker_tests_passed": 29,
+  "actual_core_pll_mhz": 60.0,
+  "nextpnr_reported_core_constraint_mhz": 60.00239944458008,
+  "final_timing_report": "timing.json",
+  "final_timing_report_sha256": "c70f6964894b390fd40974821c25af71cfc17e20af8cd6a57a62a846807dcf60"
+}
