@@ -12,9 +12,9 @@ The reported metric is the mean of 57 coordinatewise RMSE values over all 7,984 
 
 ## Training and PTQ protocol
 
-Weights are trained only in ordinary FP32 with exact SiLU and exponential functions. Coordinate-RMSE refinement continues the prior validation-selected FP32 model. The focused restart runs for 160 epochs and selects epoch 157 at validation RMSE 7.9731855171 cm. The final linear-head refit selects ridge 0.001 at validation RMSE 7.9596001163 cm: [restart_head_refit/best.pt](restart_head_refit/best.pt). These are validation measurements, not test results.
+Weights are trained only in ordinary FP32 with exact SiLU and exponential functions. Coordinate-RMSE refinement starts from the included frozen FP32 source checkpoint. The focused restart runs for 160 epochs and selects epoch 157 at validation RMSE 7.9731855171 cm. The final linear-head refit selects ridge 0.001 at validation RMSE 7.9596001163 cm: [restart_head_refit/best.pt](restart_head_refit/best.pt). These are validation measurements, not test results.
 
-Head refitting solves a training-only least-squares/ridge problem with penalties 0, 0.0001, and 0.001, retaining the untouched source as a fallback. It does not use quantized predictions. The selected lineage uses neither QAT nor PWL weight training. Files in `diagnostics/` include exploratory comparisons against historical PWL-trained checkpoints; those checkpoints are not used in this final lineage. Training histories and run metadata record selected epochs and source checkpoint hashes.
+Head refitting solves a training-only least-squares/ridge problem with penalties 0, 0.0001, and 0.001, retaining the untouched source as a fallback. It does not use quantized predictions. All weight optimization uses exact FP32 nonlinearities. Training histories and run metadata record selected epochs and source checkpoint hashes.
 
 After FP32 training, `ptq_pwl.py` observes 2,048 training frames to fit SiLU and exponential knot locations, retaining 17 and 11 segments. Validation compares the original knots, fitted exponential knots only, and both fitted functions. PWL calibration changes inference coefficients, not learned parameter tensors or exact FP32 outputs.
 
@@ -132,10 +132,10 @@ subprocess.run([
 PY_SELECT
 ```
 
-`evaluate_ptq.py` creates the self-contained bundle before opening test arrays. Each calibration profile records the command arguments and source hashes. The [focused software tests](focused_tests.log) recorded 37 passes and one skipped legacy-checkpoint case.
+`evaluate_ptq.py` creates the self-contained bundle before opening test arrays. Each calibration profile records the command arguments and source hashes. The [focused software tests](focused_tests.log) recorded 37 passes and one skipped optional-fixture case.
 
-## Relation to eMamba and historical results
+## Relation to eMamba
 
-[eMamba, Table 4](https://arxiv.org/html/2508.10370v1) reports FP32 RMSE 7.85 cm and INT8 PTQ RMSE 8.83 cm. This run uses PTQ. The earlier [2026-09-22 result](../mars_accuracy_20260922/README.md) of 8.8135 cm used a separate QAT branch and is not the PTQ checkpoint provided here.
+[eMamba, Table 4](https://arxiv.org/html/2508.10370v1) reports FP32 RMSE 7.85 cm and INT8 PTQ RMSE 8.83 cm. This checkpoint uses PTQ with frozen weights after exact FP32 training.
 
-Our official MARS split is approximately 60/20/20, while eMamba states 64/16/20. Author split indices, checkpoint, regression-head details, and PWL coefficients were not supplied. These differences prevent an exact reproduction claim. The hardware ROMs and historical RTL/resource/timing results are unchanged; this run does not establish new FPGA measurements.
+Our official MARS split is approximately 60/20/20, while eMamba states 64/16/20. Author split indices, checkpoint, regression-head details, and PWL coefficients were not supplied. These differences prevent an exact reproduction claim. This checkpoint has software validation; it has not been installed or validated in the RTL build.
