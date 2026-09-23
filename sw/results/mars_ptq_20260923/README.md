@@ -138,4 +138,4 @@ PY_SELECT
 
 [eMamba, Table 4](https://arxiv.org/html/2508.10370v1) reports FP32 RMSE 7.85 cm and INT8 PTQ RMSE 8.83 cm. This checkpoint uses PTQ with frozen weights after exact FP32 training.
 
-Our official MARS split is approximately 60/20/20, while eMamba states 64/16/20. Author split indices, checkpoint, regression-head details, and PWL coefficients were not supplied. These differences prevent an exact reproduction claim. This checkpoint has software validation; it has not been installed or validated in the RTL build.
+Our official MARS split is approximately 60/20/20, while eMamba states 64/16/20. Author split indices, checkpoint, regression-head details, and PWL coefficients were not supplied. These differences prevent an exact reproduction claim. The baseline hardware uses this checkpoint's INT8 export and fitted PWL tables. See the [hardware project](../../../hw/README.md) for separate baseline validation and its integer-normalization metric.

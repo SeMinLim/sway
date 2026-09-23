@@ -26,7 +26,7 @@ def check_log(log_path: Path, input_path: Path, expected_path: Path,
     evidence = {
         "bluesim": "BSV Bluesim simulation",
         "iverilog": "generated-Verilog simulation",
-        "verilator": "generated-Verilog simulation (Verilator, native coefficient BVI behavioral model)",
+        "verilator": "generated-Verilog simulation (Verilator)",
     }
     if backend not in evidence:
         raise ValueError(f"Unsupported simulation backend: {backend}")

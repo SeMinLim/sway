@@ -1,6 +1,0 @@
-{
-  "change": "Verification checker only; RTL and synthesized netlist unchanged",
-  "checker_sha256": "0d57025ebf7aa491e94e232d6a64edac2cdeba63e98dfa26ba0040da96776270",
-  "native_audit": "native_rom.json",
-  "independent_routing_computation": "Routing computation was launched while the native-ROM Boolean proof was pending. Final validation requires every audit and timing gate to pass."
-}

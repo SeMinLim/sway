@@ -1,14 +1,52 @@
 {
-  "schemaVersion": 1,
-  "exportManifestSHA256": "78d02a435c00201d79492053494712d41c435406eb46dbe43087ac7faf63dec2",
-  "quantizationSHA256": "b7986b2ad2e4bc8f528f36dab12d27453d1eafdb97344758101c4313e130f160",
-  "checkpointSHA256": "a127288682e3002ab0682f8be6df57baf905989af7ad508d6907c4f5d939731b",
+  "schemaVersion": 2,
+  "architecture": "first baseline, combinational coefficient lookup",
+  "exportManifestSHA256": "1f3164c10d34ba1cbc5064d8e0cdbdde8a6accef23eb5107d417d8c739c70f86",
+  "quantizationSHA256": "c1f937d22a8aab0afb89c21b4a06550021663916a09836d9ca53959e8b23ad6c",
+  "checkpointSHA256": "866604ec36154035d4f23f9c9ff246657772af06bad2a626cf43bd6420fb22e7",
+  "modelProvenanceSHA256": "6255c23d096fe347abe9813f2e1ae1c71338afd18f339cbba10adeb33e5e1852",
   "parameterCount": 15717,
-  "parameterVerification": "All binary SHA256, size, shape, and hex values matched SW manifest",
+  "parameterVerification": "Every binary SHA256, size, shape, hex value and INT8 checkpoint tensor matched",
   "nonlinearROM": {
-    "backend": "torch 2.14.0+cpu",
+    "backend": "torch 2.8.0+cpu",
     "dtype": "float32",
-    "definition": "sw/model.py:piecewise",
+    "definition": "reference/generate.py:piecewise (frozen checkpoint operation order)",
+    "pwlKnots": {
+      "silu_knots": [
+        -7.0,
+        -5.05,
+        -3.55,
+        -1.65,
+        -1.25,
+        -0.95,
+        -0.7,
+        -0.5,
+        -0.3,
+        -0.15,
+        0.0,
+        0.15,
+        0.3,
+        0.5,
+        0.7,
+        0.95,
+        1.3,
+        7.0
+      ],
+      "exp_knots": [
+        -4.0,
+        -2.9,
+        -2.22,
+        -1.72,
+        -1.34,
+        -1.02,
+        -0.76,
+        -0.54,
+        -0.34,
+        -0.16,
+        0.0,
+        1.0
+      ]
+    },
     "addressOrder": "signed inputs -128 through 127",
     "tables": [
       {
@@ -32,7 +70,7 @@
         "input": "blocks.0.expInput",
         "output": "blocks.0.Abar",
         "operation": "exp",
-        "inputExponent": -2,
+        "inputExponent": -4,
         "outputExponent": -7
       },
       {
@@ -40,7 +78,7 @@
         "input": "blocks.1.conv",
         "output": "blocks.1.x",
         "operation": "silu",
-        "inputExponent": -5,
+        "inputExponent": -6,
         "outputExponent": -6
       },
       {
@@ -48,19 +86,477 @@
         "input": "blocks.1.gateInput",
         "output": "blocks.1.gate",
         "operation": "silu",
-        "inputExponent": -6,
-        "outputExponent": -6
+        "inputExponent": -5,
+        "outputExponent": -7
       },
       {
         "block": 1,
         "input": "blocks.1.expInput",
         "output": "blocks.1.Abar",
         "operation": "exp",
-        "inputExponent": -2,
+        "inputExponent": -5,
         "outputExponent": -7
       }
     ]
   },
+  "hardwareWidthChecks": [
+    {
+      "operation": "linear0 accumulation",
+      "maximumAbsoluteValue": 44032,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear0 aligned bias",
+      "maximumAbsoluteValue": 47808,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear0 output rescale",
+      "maximumAbsoluteValue": 374,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear1 accumulation",
+      "maximumAbsoluteValue": 43264,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear1 aligned bias",
+      "maximumAbsoluteValue": 43264,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear1 output rescale",
+      "maximumAbsoluteValue": 169,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear2 accumulation",
+      "maximumAbsoluteValue": 140928,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear2 aligned bias",
+      "maximumAbsoluteValue": 140928,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear2 output rescale",
+      "maximumAbsoluteValue": 1101,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear3 accumulation",
+      "maximumAbsoluteValue": 26880,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear3 aligned bias",
+      "maximumAbsoluteValue": 28912,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear3 output rescale",
+      "maximumAbsoluteValue": 226,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear4 accumulation",
+      "maximumAbsoluteValue": 241920,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear4 aligned bias",
+      "maximumAbsoluteValue": 241920,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear4 output rescale",
+      "maximumAbsoluteValue": 1890,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear5 accumulation",
+      "maximumAbsoluteValue": 97408,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear5 aligned bias",
+      "maximumAbsoluteValue": 97408,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear5 output rescale",
+      "maximumAbsoluteValue": 191,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear6 accumulation",
+      "maximumAbsoluteValue": 124416,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear6 aligned bias",
+      "maximumAbsoluteValue": 124416,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear6 output rescale",
+      "maximumAbsoluteValue": 972,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear7 accumulation",
+      "maximumAbsoluteValue": 18688,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear7 aligned bias",
+      "maximumAbsoluteValue": 22464,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear7 output rescale",
+      "maximumAbsoluteValue": 176,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear8 accumulation",
+      "maximumAbsoluteValue": 125184,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear8 aligned bias",
+      "maximumAbsoluteValue": 125184,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear8 output rescale",
+      "maximumAbsoluteValue": 1956,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear9 accumulation",
+      "maximumAbsoluteValue": 695808,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear9 aligned bias",
+      "maximumAbsoluteValue": 698752,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear9 output rescale",
+      "maximumAbsoluteValue": 683,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear10 accumulation",
+      "maximumAbsoluteValue": 76672,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "linear10 aligned bias",
+      "maximumAbsoluteValue": 80512,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "linear10 output rescale",
+      "maximumAbsoluteValue": 1258,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.norm numerator",
+      "maximumAbsoluteValue": 5614080,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.norm denominator",
+      "maximumAbsoluteValue": 20400,
+      "bits": 32,
+      "signed": false
+    },
+    {
+      "operation": "blocks.0.convolution sum",
+      "maximumAbsoluteValue": 21760,
+      "bits": 18,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.convolution aligned bias",
+      "maximumAbsoluteValue": 22784,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.convolution output rescale",
+      "maximumAbsoluteValue": 89,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.recurrent and drive",
+      "maximumAbsoluteValue": 10485760,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.state reduction",
+      "maximumAbsoluteValue": 8589934592,
+      "bits": 35,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.SSM aligned output",
+      "maximumAbsoluteValue": 8623489024,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.SSM output rescale",
+      "maximumAbsoluteValue": 32896,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.in to convInput",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.in to gateInput",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.xProjection to deltaInput",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.xProjection to B",
+      "maximumAbsoluteValue": 64,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.xProjection to C",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.deltaProjection to delta",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.expInput product rescale",
+      "maximumAbsoluteValue": 2048,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.Bbar product rescale",
+      "maximumAbsoluteValue": 512,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.gated product rescale",
+      "maximumAbsoluteValue": 1024,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.residual aligned sum",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.0.residual output rescale",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.norm numerator",
+      "maximumAbsoluteValue": 10575360,
+      "bits": 32,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.norm denominator",
+      "maximumAbsoluteValue": 40800,
+      "bits": 32,
+      "signed": false
+    },
+    {
+      "operation": "blocks.1.convolution sum",
+      "maximumAbsoluteValue": 24320,
+      "bits": 18,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.convolution aligned bias",
+      "maximumAbsoluteValue": 25120,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.convolution output rescale",
+      "maximumAbsoluteValue": 393,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.recurrent and drive",
+      "maximumAbsoluteValue": 16777216,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.state reduction",
+      "maximumAbsoluteValue": 8589934592,
+      "bits": 35,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.SSM aligned output",
+      "maximumAbsoluteValue": 8858370048,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.SSM output rescale",
+      "maximumAbsoluteValue": 2112,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.in to convInput",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.in to gateInput",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.xProjection to deltaInput",
+      "maximumAbsoluteValue": 512,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.xProjection to B",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.xProjection to C",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.deltaProjection to delta",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.expInput product rescale",
+      "maximumAbsoluteValue": 512,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.Bbar product rescale",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.gated product rescale",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.residual aligned sum",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.residual output rescale",
+      "maximumAbsoluteValue": 256,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "input to patches",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "blocks.1.residual to headInput",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    },
+    {
+      "operation": "headHidden to headActivation",
+      "maximumAbsoluteValue": 128,
+      "bits": 64,
+      "signed": true
+    }
+  ],
   "arithmeticChecks": {
     "signedDivision": "1179657 numerator/divisor cases passed",
     "signedRescale": "4325409 value/shift cases passed",
@@ -90,760 +586,68 @@
       "repeat real index 0",
       "repeat real index 0"
     ],
-    "inputOrder": "320 signed INT8 HWC bytes/frame",
+    "inputOrder": "320 signed INT8 HWC bytes/frame after model input preprocessing",
     "outputOrder": "57 signed INT8 x19,y19,z19 coordinates/frame",
-    "inputExponent": -2,
-    "outputExponent": -5
+    "inputExponent": -5,
+    "outputExponent": -6
   },
   "fullTest": {
     "integerReference": {
       "frames": 7984,
-      "mae_cm": 7.980579706206032,
-      "rmse_coordinate_mean_cm": 10.458866000251746,
-      "rmse_global_cm": 10.92013387590205,
+      "mae_cm": 6.107159731651063,
+      "rmse_coordinate_mean_cm": 8.35790827423903,
+      "rmse_global_cm": 9.000469094355385,
       "axis_mae_cm": {
-        "x": 8.558970886016692,
-        "y": 6.971871244317683,
-        "z": 8.410896988283723
+        "x": 7.218718046498034,
+        "y": 3.95868399650308,
+        "z": 7.144077151952074
       },
       "axis_rmse_cm": {
-        "x": 11.632942175193604,
-        "y": 8.915595759184187,
-        "z": 10.828060066377445
+        "x": 10.02416216453648,
+        "y": 5.542677641417025,
+        "z": 9.506885016763585
       }
     },
     "existingSwQDQ": {
       "frames": 7984,
-      "mae_cm": 7.979911854925035,
-      "rmse_coordinate_mean_cm": 10.459829861960658,
-      "rmse_global_cm": 10.920819318597486,
+      "mae_cm": 6.10705499712151,
+      "rmse_coordinate_mean_cm": 8.356373500431944,
+      "rmse_global_cm": 8.998808838575384,
       "axis_mae_cm": {
-        "x": 8.557906061123404,
-        "y": 6.971177456091255,
-        "z": 8.410652047560449
+        "x": 7.219886161696558,
+        "y": 3.9595027907137856,
+        "z": 7.141776038954185
       },
       "axis_rmse_cm": {
-        "x": 11.63390188984767,
-        "y": 8.917556313757032,
-        "z": 10.828031382277274
+        "x": 10.022033774356297,
+        "y": 5.541711310039382,
+        "z": 9.505375416900158
       }
     },
-    "evaluationSeconds": 5.509288354000091,
-    "matchedOutputElements": 448645,
+    "evaluationSeconds": 4.890044668001792,
+    "matchedOutputElements": 440000,
     "totalOutputElements": 455088,
-    "matchedFrames": 7540,
-    "maxOutputDifferenceLSB": 3,
-    "meanAbsoluteOutputDifferenceLSB": 0.014364254825440355,
-    "differenceRMSE_cm": 0.38005121473708975,
+    "matchedFrames": 7313,
+    "maxOutputDifferenceLSB": 6,
+    "meanAbsoluteOutputDifferenceLSB": 0.03638417185247688,
+    "differenceRMSE_cm": 0.3262280326024427,
     "comparison": "Integer rational normalization replaces float32 QDQ normalization; no blanket bit-exact SW claim"
   },
   "datasetSHA256": {
     "featuremap_test.npy": "331551d42039e97a0afc260029d605dec29f4a0d11ede65e4c1328c49cb5c145",
     "labels_test.npy": "a1f29ebee5d5b4a63810997e9eda811af97bd222dcf4d4766777ccaea1b256e8"
   },
-  "fixtureQDQComparison": {
-    "matchedElements": 745,
-    "totalElements": 798,
-    "maxDifferenceLSB": 3
-  },
-  "normalizationIsolation": {
-    "frames": 7984,
-    "totalOutputElements": 455088,
-    "integerVersusSwWithOnlyNormalizationReplacedMatches": 455088,
-    "currentSwVersusSavedQDQMatches": 455088,
-    "result": "All integer outputs match the existing SW graph when only its float32 range normalization is replaced by the specified exact rational normalization"
-  },
   "generatedSHA256": {
-    "SwayParameters.bsv": "7ed824b6d8ad86e50a0d7c217bcf17d51b92dbeac3152a4ed3da3be1ba292689",
-    "nonlinear_tables.npy": "c83fb951ba276ee1f18ea18220aaad9a73ebe1c5c70962befd6899e63fb0b1a9",
+    "SwayParameters.bsv": "d3e8d3ae436529cbe7e7c43635dc33607814d5deb6c7db344ba2584ee810531a",
+    "nonlinear_tables.npy": "2bad6648b11e4ff7fa793ee867c81f122df802a6214e9c7b4d304572b97f2a48",
     "GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
-    "test_input.hex": "dbec9ee71b42612d386fddb18dede2b267fa6495524d0ed867699f5fdd8817f2",
-    "test_expected.hex": "c5c4d7ef886dfaa9640c15a498da3704dfaa6f5b2d8a39bac3b542d700f12192",
-    "test_trace.npz": "6a231e8348073a2d5702de2687b7ae91aa2df72fa54fd729dfa4b5777927eaf1",
-    "predictions_integer.npy": "68a79f613b03e14986484c6ae0eee8b1f7b8f16d1b3478765119a81d1b26d9f3",
-    "linear_l0_lane0.hex": "4daeba329aada85b91a65b22e300cdfd03d4c8c1a415a1dc33530a72110494e3",
-    "linear_l0_lane1.hex": "9d98a00ae8a05f02e90c7af9bf45f01ad150c9503f1af42c07d5e90bc73f4558",
-    "linear_l0_lane2.hex": "8e332292097bfc30d7230026974c54e7d67ec4201b77ddcf067c00363233e2ea",
-    "linear_l0_lane3.hex": "ac0c6f0d5cb67a30a3ed6891fdce329c47ed7f009c4126b00d1aabd125b68a1d",
-    "linear_l1_lane0.hex": "dbadce3dff8aefd0aba9b12a7f95bf2a9a506334a9ee68abd1fd468be522ca98",
-    "linear_l1_lane1.hex": "270658e151c028b9172c0eb3f04f5e1bfdd1f5565b13b2ef07014cfcbd89b953",
-    "linear_l1_lane2.hex": "3b494ef6224cdfb1dc3fcc1dc260790565b5285c2cc351ad0435d9dd4d1a62c2",
-    "linear_l1_lane3.hex": "2bf67c479e04299c5905c8c464c091a0c6b8692c3aabd6de3f04b565de6a3c8d",
-    "linear_l2_lane0.hex": "639ed91f79bdd25da91e7b98b92ff6d4c0e012635d46dbebfe393cd51764ed05",
-    "linear_l2_lane1.hex": "c1364512a478755b29eb7ce816acc13a4b13ea318318ebe649053b916088764e",
-    "linear_l2_lane2.hex": "0a08afd265d94e7ed84cce01a8363eadc947297997f4e5d22f4d2044e210bbd4",
-    "linear_l2_lane3.hex": "888e7d57b022f003c9b5c5bf14f0554bde352a042ad733920a3b3267636e727b",
-    "linear_l3_lane0.hex": "66c3ecd1ca899c551453fc0550bbf92d602baa75e8caa87c0629ea784c932560",
-    "linear_l3_lane1.hex": "6a835e2b5ddc085390a9b66ad079e0902dc2f3e6bdd12ceec5714762181ca241",
-    "linear_l3_lane2.hex": "3036e907c7ff770d2cfc00da00322a8cdfe0815ea66b91a9e5c7e3180a36bcb1",
-    "linear_l3_lane3.hex": "446eaba09a0125149564499af846a92782d631f28fa46ce95c987f85f9a0f686",
-    "linear_l4_lane0.hex": "987468e1de90b1b9b5a745da33af9fc4ad4f19226080065559d490df432c87eb",
-    "linear_l4_lane1.hex": "4f0557969ddcc39db97d065d810209376458ce0e39aba976c7e03af628cd9705",
-    "linear_l4_lane2.hex": "8c70d07c2057480321a9d459528b17790c747a40aa23333932f6a9b4a6e01235",
-    "linear_l4_lane3.hex": "5ca2c7fbcd30db25a549239fd4c9bb6840e58ac7e862af34ccdf7f656b94a5d0",
-    "linear_l5_lane0.hex": "a20208325df63146ddefd44fdbf6e153edf535daa965aebcfff906bdf359bfc4",
-    "linear_l5_lane1.hex": "4cd4087aaea01f52dd574e85b864636b665fb770e8542a91c3c737feed2732fd",
-    "linear_l5_lane2.hex": "4e1f2779685f941324662ac098bc75a184056452806e4d73410e1a5309043f25",
-    "linear_l5_lane3.hex": "6d642b4141c88ecc0cf3585b465523535dca323650ce4667b7e881e5c2b5d698",
-    "linear_l6_lane0.hex": "8c963e2576423c8d4e68e8ca46c0c1f214d2b89bc76d6579108a6b24c8530c0f",
-    "linear_l6_lane1.hex": "d4773022284a57ff13e019a7dd50b8e362cd42b366952f6636d474609e7f0b7f",
-    "linear_l6_lane2.hex": "d2f7251f24d9147812d78f70786dc7176a3d53cc883fa60587d7ddfe31db8d77",
-    "linear_l6_lane3.hex": "02b10eec1007e8a603cb7ddcf857379905517abb51c4eb14c8334d2ae60b353d",
-    "linear_l7_lane0.hex": "b4a4c99032f3049ac9aa83ff251fa0ad72057d0cf007d1ac77e50cded3103ef0",
-    "linear_l7_lane1.hex": "903449e7b929f44e4fa74704cb28b868b222da84aad993b75c40260b11bc49b8",
-    "linear_l7_lane2.hex": "52465946a519723dadde2b24aec338c01b457d7be17220f92657904d6ce3bf2b",
-    "linear_l7_lane3.hex": "3c7442e3cabaf27e53be4e3873939585cee41f339bae1ac59be3435198804c78",
-    "linear_l8_lane0.hex": "173c8026661bfa9c59bdca78f15dad09620be7c6f350ab7ca760464351334d45",
-    "linear_l8_lane1.hex": "edf8fb66d014699742e924bd075f9720540ff2c2a574b55383d214ff2099c6a5",
-    "linear_l8_lane2.hex": "d1afcbe194791801b7cb3345c599643c1572732a5d2fc8c0228b09ba534ea09f",
-    "linear_l8_lane3.hex": "572ad9007360170b5be94822b629f569b2b5afc546bc767895f1bbe83908f6c5",
-    "linear_l9_lane0.hex": "ad8a08873627da8b6622e9d1865d1638f5152c5662a68c1b974e5fde1c57ce29",
-    "linear_l9_lane1.hex": "0a067d7dfa37255ece16aea4c15873ce39451b7f599b2449af245ea6f138c3be",
-    "linear_l9_lane2.hex": "2dc14699020797ce99d9524d397da18740566a3f2619d76adce0803a764465e6",
-    "linear_l9_lane3.hex": "cd1df13d901493213d9106bd25af81d8300294a4e59d28cb7cb738624e9310f5",
-    "linear_l10_lane0.hex": "72158b488f58298f4c25d58694df237c2dbad13667aaa1f927b2eb7a14c2269d",
-    "linear_l10_lane1.hex": "94a1655251c80163a56997711afc75282e484591d75a93dc8ccb0ff9a8311752",
-    "linear_l10_lane2.hex": "7c43fcdb186387c1caf7be15a142d8fd09e3e2317db7cad844c322cf3bc4be82",
-    "linear_l10_lane3.hex": "f66741138e8bd42b0056ffd1c3620ad2042ee0aa451d04f24f141b384d6b3423",
-    "SwayCoeffRomInit.vh": "8f944b4e1863801b69f90cc4df9139fb1b107020e7b8af727001ec2610a3bc4f"
+    "test_input.hex": "bff0e0a7e6eb3044228153400ada59360959abb4a4779df584efe15343ed54eb",
+    "test_expected.hex": "ee895d85ae7b2eb20b7c17718438623c04252725bd679a093d3c56aa7bdf0214",
+    "test_trace.npz": "616588ef76e7eade26ec1b0a1021687622ee4333a02b8a0598cff382c5734751",
+    "predictions_integer.npy": "334bf6e6f9d8e5df599d61c64bbd19b8c6562672a1cdb2e1f6bb64a4237f1e75"
   },
   "referenceSHA256": {
-    "integer_model.py": "4eca544d80f1e5d625782575915bf0a474340c4d37fb19eb36752aab85df30e0",
-    "generate.py": "a3f606b5bc3754654fb757b6997cf714fd0272f97af1fdf79fdc684760438d4b",
-    "generate_native_rom.py": "1082949014887c69ae4fb02042b7c60b4246fdba3046bcae783d4287acd96567"
-  },
-  "linearROMBanks": {
-    "layout": "row=group*4+lane; address=group*inputDim+inputIdx; absent rows and power-of-two tail are zero",
-    "encoding": "one signed INT8 two's-complement byte per line",
-    "banks": [
-      {
-        "layer": 0,
-        "lane": 0,
-        "file": "linear_l0_lane0.hex",
-        "depth": 128,
-        "validWords": 100,
-        "sourceParameter": "embedding.weight",
-        "sha256": "4daeba329aada85b91a65b22e300cdfd03d4c8c1a415a1dc33530a72110494e3"
-      },
-      {
-        "layer": 0,
-        "lane": 1,
-        "file": "linear_l0_lane1.hex",
-        "depth": 128,
-        "validWords": 100,
-        "sourceParameter": "embedding.weight",
-        "sha256": "9d98a00ae8a05f02e90c7af9bf45f01ad150c9503f1af42c07d5e90bc73f4558"
-      },
-      {
-        "layer": 0,
-        "lane": 2,
-        "file": "linear_l0_lane2.hex",
-        "depth": 128,
-        "validWords": 100,
-        "sourceParameter": "embedding.weight",
-        "sha256": "8e332292097bfc30d7230026974c54e7d67ec4201b77ddcf067c00363233e2ea"
-      },
-      {
-        "layer": 0,
-        "lane": 3,
-        "file": "linear_l0_lane3.hex",
-        "depth": 128,
-        "validWords": 100,
-        "sourceParameter": "embedding.weight",
-        "sha256": "ac0c6f0d5cb67a30a3ed6891fdce329c47ed7f009c4126b00d1aabd125b68a1d"
-      },
-      {
-        "layer": 1,
-        "lane": 0,
-        "file": "linear_l1_lane0.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.0.inWeight",
-        "sha256": "dbadce3dff8aefd0aba9b12a7f95bf2a9a506334a9ee68abd1fd468be522ca98"
-      },
-      {
-        "layer": 1,
-        "lane": 1,
-        "file": "linear_l1_lane1.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.0.inWeight",
-        "sha256": "270658e151c028b9172c0eb3f04f5e1bfdd1f5565b13b2ef07014cfcbd89b953"
-      },
-      {
-        "layer": 1,
-        "lane": 2,
-        "file": "linear_l1_lane2.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.0.inWeight",
-        "sha256": "3b494ef6224cdfb1dc3fcc1dc260790565b5285c2cc351ad0435d9dd4d1a62c2"
-      },
-      {
-        "layer": 1,
-        "lane": 3,
-        "file": "linear_l1_lane3.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.0.inWeight",
-        "sha256": "2bf67c479e04299c5905c8c464c091a0c6b8692c3aabd6de3f04b565de6a3c8d"
-      },
-      {
-        "layer": 2,
-        "lane": 0,
-        "file": "linear_l2_lane0.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.xWeight",
-        "sha256": "639ed91f79bdd25da91e7b98b92ff6d4c0e012635d46dbebfe393cd51764ed05"
-      },
-      {
-        "layer": 2,
-        "lane": 1,
-        "file": "linear_l2_lane1.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.xWeight",
-        "sha256": "c1364512a478755b29eb7ce816acc13a4b13ea318318ebe649053b916088764e"
-      },
-      {
-        "layer": 2,
-        "lane": 2,
-        "file": "linear_l2_lane2.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.xWeight",
-        "sha256": "0a08afd265d94e7ed84cce01a8363eadc947297997f4e5d22f4d2044e210bbd4"
-      },
-      {
-        "layer": 2,
-        "lane": 3,
-        "file": "linear_l2_lane3.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.xWeight",
-        "sha256": "888e7d57b022f003c9b5c5bf14f0554bde352a042ad733920a3b3267636e727b"
-      },
-      {
-        "layer": 3,
-        "lane": 0,
-        "file": "linear_l3_lane0.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.0.dtWeight",
-        "sha256": "66c3ecd1ca899c551453fc0550bbf92d602baa75e8caa87c0629ea784c932560"
-      },
-      {
-        "layer": 3,
-        "lane": 1,
-        "file": "linear_l3_lane1.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.0.dtWeight",
-        "sha256": "6a835e2b5ddc085390a9b66ad079e0902dc2f3e6bdd12ceec5714762181ca241"
-      },
-      {
-        "layer": 3,
-        "lane": 2,
-        "file": "linear_l3_lane2.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.0.dtWeight",
-        "sha256": "3036e907c7ff770d2cfc00da00322a8cdfe0815ea66b91a9e5c7e3180a36bcb1"
-      },
-      {
-        "layer": 3,
-        "lane": 3,
-        "file": "linear_l3_lane3.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.0.dtWeight",
-        "sha256": "446eaba09a0125149564499af846a92782d631f28fa46ce95c987f85f9a0f686"
-      },
-      {
-        "layer": 4,
-        "lane": 0,
-        "file": "linear_l4_lane0.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.outWeight",
-        "sha256": "987468e1de90b1b9b5a745da33af9fc4ad4f19226080065559d490df432c87eb"
-      },
-      {
-        "layer": 4,
-        "lane": 1,
-        "file": "linear_l4_lane1.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.outWeight",
-        "sha256": "4f0557969ddcc39db97d065d810209376458ce0e39aba976c7e03af628cd9705"
-      },
-      {
-        "layer": 4,
-        "lane": 2,
-        "file": "linear_l4_lane2.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.outWeight",
-        "sha256": "8c70d07c2057480321a9d459528b17790c747a40aa23333932f6a9b4a6e01235"
-      },
-      {
-        "layer": 4,
-        "lane": 3,
-        "file": "linear_l4_lane3.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.0.outWeight",
-        "sha256": "5ca2c7fbcd30db25a549239fd4c9bb6840e58ac7e862af34ccdf7f656b94a5d0"
-      },
-      {
-        "layer": 5,
-        "lane": 0,
-        "file": "linear_l5_lane0.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.1.inWeight",
-        "sha256": "a20208325df63146ddefd44fdbf6e153edf535daa965aebcfff906bdf359bfc4"
-      },
-      {
-        "layer": 5,
-        "lane": 1,
-        "file": "linear_l5_lane1.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.1.inWeight",
-        "sha256": "4cd4087aaea01f52dd574e85b864636b665fb770e8542a91c3c737feed2732fd"
-      },
-      {
-        "layer": 5,
-        "lane": 2,
-        "file": "linear_l5_lane2.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.1.inWeight",
-        "sha256": "4e1f2779685f941324662ac098bc75a184056452806e4d73410e1a5309043f25"
-      },
-      {
-        "layer": 5,
-        "lane": 3,
-        "file": "linear_l5_lane3.hex",
-        "depth": 512,
-        "validWords": 400,
-        "sourceParameter": "blocks.1.inWeight",
-        "sha256": "6d642b4141c88ecc0cf3585b465523535dca323650ce4667b7e881e5c2b5d698"
-      },
-      {
-        "layer": 6,
-        "lane": 0,
-        "file": "linear_l6_lane0.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.xWeight",
-        "sha256": "8c963e2576423c8d4e68e8ca46c0c1f214d2b89bc76d6579108a6b24c8530c0f"
-      },
-      {
-        "layer": 6,
-        "lane": 1,
-        "file": "linear_l6_lane1.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.xWeight",
-        "sha256": "d4773022284a57ff13e019a7dd50b8e362cd42b366952f6636d474609e7f0b7f"
-      },
-      {
-        "layer": 6,
-        "lane": 2,
-        "file": "linear_l6_lane2.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.xWeight",
-        "sha256": "d2f7251f24d9147812d78f70786dc7176a3d53cc883fa60587d7ddfe31db8d77"
-      },
-      {
-        "layer": 6,
-        "lane": 3,
-        "file": "linear_l6_lane3.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.xWeight",
-        "sha256": "02b10eec1007e8a603cb7ddcf857379905517abb51c4eb14c8334d2ae60b353d"
-      },
-      {
-        "layer": 7,
-        "lane": 0,
-        "file": "linear_l7_lane0.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.1.dtWeight",
-        "sha256": "b4a4c99032f3049ac9aa83ff251fa0ad72057d0cf007d1ac77e50cded3103ef0"
-      },
-      {
-        "layer": 7,
-        "lane": 1,
-        "file": "linear_l7_lane1.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.1.dtWeight",
-        "sha256": "903449e7b929f44e4fa74704cb28b868b222da84aad993b75c40260b11bc49b8"
-      },
-      {
-        "layer": 7,
-        "lane": 2,
-        "file": "linear_l7_lane2.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.1.dtWeight",
-        "sha256": "52465946a519723dadde2b24aec338c01b457d7be17220f92657904d6ce3bf2b"
-      },
-      {
-        "layer": 7,
-        "lane": 3,
-        "file": "linear_l7_lane3.hex",
-        "depth": 32,
-        "validWords": 20,
-        "sourceParameter": "blocks.1.dtWeight",
-        "sha256": "3c7442e3cabaf27e53be4e3873939585cee41f339bae1ac59be3435198804c78"
-      },
-      {
-        "layer": 8,
-        "lane": 0,
-        "file": "linear_l8_lane0.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.outWeight",
-        "sha256": "173c8026661bfa9c59bdca78f15dad09620be7c6f350ab7ca760464351334d45"
-      },
-      {
-        "layer": 8,
-        "lane": 1,
-        "file": "linear_l8_lane1.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.outWeight",
-        "sha256": "edf8fb66d014699742e924bd075f9720540ff2c2a574b55383d214ff2099c6a5"
-      },
-      {
-        "layer": 8,
-        "lane": 2,
-        "file": "linear_l8_lane2.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.outWeight",
-        "sha256": "d1afcbe194791801b7cb3345c599643c1572732a5d2fc8c0228b09ba534ea09f"
-      },
-      {
-        "layer": 8,
-        "lane": 3,
-        "file": "linear_l8_lane3.hex",
-        "depth": 256,
-        "validWords": 200,
-        "sourceParameter": "blocks.1.outWeight",
-        "sha256": "572ad9007360170b5be94822b629f569b2b5afc546bc767895f1bbe83908f6c5"
-      },
-      {
-        "layer": 9,
-        "lane": 0,
-        "file": "linear_l9_lane0.hex",
-        "depth": 2048,
-        "validWords": 1600,
-        "sourceParameter": "headHidden.weight",
-        "sha256": "ad8a08873627da8b6622e9d1865d1638f5152c5662a68c1b974e5fde1c57ce29"
-      },
-      {
-        "layer": 9,
-        "lane": 1,
-        "file": "linear_l9_lane1.hex",
-        "depth": 2048,
-        "validWords": 1600,
-        "sourceParameter": "headHidden.weight",
-        "sha256": "0a067d7dfa37255ece16aea4c15873ce39451b7f599b2449af245ea6f138c3be"
-      },
-      {
-        "layer": 9,
-        "lane": 2,
-        "file": "linear_l9_lane2.hex",
-        "depth": 2048,
-        "validWords": 1600,
-        "sourceParameter": "headHidden.weight",
-        "sha256": "2dc14699020797ce99d9524d397da18740566a3f2619d76adce0803a764465e6"
-      },
-      {
-        "layer": 9,
-        "lane": 3,
-        "file": "linear_l9_lane3.hex",
-        "depth": 2048,
-        "validWords": 1600,
-        "sourceParameter": "headHidden.weight",
-        "sha256": "cd1df13d901493213d9106bd25af81d8300294a4e59d28cb7cb738624e9310f5"
-      },
-      {
-        "layer": 10,
-        "lane": 0,
-        "file": "linear_l10_lane0.hex",
-        "depth": 512,
-        "validWords": 300,
-        "sourceParameter": "headOutput.weight",
-        "sha256": "72158b488f58298f4c25d58694df237c2dbad13667aaa1f927b2eb7a14c2269d"
-      },
-      {
-        "layer": 10,
-        "lane": 1,
-        "file": "linear_l10_lane1.hex",
-        "depth": 512,
-        "validWords": 300,
-        "sourceParameter": "headOutput.weight",
-        "sha256": "94a1655251c80163a56997711afc75282e484591d75a93dc8ccb0ff9a8311752"
-      },
-      {
-        "layer": 10,
-        "lane": 2,
-        "file": "linear_l10_lane2.hex",
-        "depth": 512,
-        "validWords": 300,
-        "sourceParameter": "headOutput.weight",
-        "sha256": "7c43fcdb186387c1caf7be15a142d8fd09e3e2317db7cad844c322cf3bc4be82"
-      },
-      {
-        "layer": 10,
-        "lane": 3,
-        "file": "linear_l10_lane3.hex",
-        "depth": 512,
-        "validWords": 300,
-        "sourceParameter": "headOutput.weight",
-        "sha256": "f66741138e8bd42b0056ffd1c3620ad2042ee0aa451d04f24f141b384d6b3423"
-      }
-    ],
-    "nativeRegisteredROM": {
-      "file": "SwayCoeffRomInit.vh",
-      "primitive": "DP16KD",
-      "dataWidth": 9,
-      "depth": 2048,
-      "outputMode": "OUTREG",
-      "bankId": "layer*4+lane",
-      "banksChecked": [
-        {
-          "layer": 0,
-          "lane": 0,
-          "sourceSHA256": "4daeba329aada85b91a65b22e300cdfd03d4c8c1a415a1dc33530a72110494e3"
-        },
-        {
-          "layer": 0,
-          "lane": 1,
-          "sourceSHA256": "9d98a00ae8a05f02e90c7af9bf45f01ad150c9503f1af42c07d5e90bc73f4558"
-        },
-        {
-          "layer": 0,
-          "lane": 2,
-          "sourceSHA256": "8e332292097bfc30d7230026974c54e7d67ec4201b77ddcf067c00363233e2ea"
-        },
-        {
-          "layer": 0,
-          "lane": 3,
-          "sourceSHA256": "ac0c6f0d5cb67a30a3ed6891fdce329c47ed7f009c4126b00d1aabd125b68a1d"
-        },
-        {
-          "layer": 1,
-          "lane": 0,
-          "sourceSHA256": "dbadce3dff8aefd0aba9b12a7f95bf2a9a506334a9ee68abd1fd468be522ca98"
-        },
-        {
-          "layer": 1,
-          "lane": 1,
-          "sourceSHA256": "270658e151c028b9172c0eb3f04f5e1bfdd1f5565b13b2ef07014cfcbd89b953"
-        },
-        {
-          "layer": 1,
-          "lane": 2,
-          "sourceSHA256": "3b494ef6224cdfb1dc3fcc1dc260790565b5285c2cc351ad0435d9dd4d1a62c2"
-        },
-        {
-          "layer": 1,
-          "lane": 3,
-          "sourceSHA256": "2bf67c479e04299c5905c8c464c091a0c6b8692c3aabd6de3f04b565de6a3c8d"
-        },
-        {
-          "layer": 2,
-          "lane": 0,
-          "sourceSHA256": "639ed91f79bdd25da91e7b98b92ff6d4c0e012635d46dbebfe393cd51764ed05"
-        },
-        {
-          "layer": 2,
-          "lane": 1,
-          "sourceSHA256": "c1364512a478755b29eb7ce816acc13a4b13ea318318ebe649053b916088764e"
-        },
-        {
-          "layer": 2,
-          "lane": 2,
-          "sourceSHA256": "0a08afd265d94e7ed84cce01a8363eadc947297997f4e5d22f4d2044e210bbd4"
-        },
-        {
-          "layer": 2,
-          "lane": 3,
-          "sourceSHA256": "888e7d57b022f003c9b5c5bf14f0554bde352a042ad733920a3b3267636e727b"
-        },
-        {
-          "layer": 3,
-          "lane": 0,
-          "sourceSHA256": "66c3ecd1ca899c551453fc0550bbf92d602baa75e8caa87c0629ea784c932560"
-        },
-        {
-          "layer": 3,
-          "lane": 1,
-          "sourceSHA256": "6a835e2b5ddc085390a9b66ad079e0902dc2f3e6bdd12ceec5714762181ca241"
-        },
-        {
-          "layer": 3,
-          "lane": 2,
-          "sourceSHA256": "3036e907c7ff770d2cfc00da00322a8cdfe0815ea66b91a9e5c7e3180a36bcb1"
-        },
-        {
-          "layer": 3,
-          "lane": 3,
-          "sourceSHA256": "446eaba09a0125149564499af846a92782d631f28fa46ce95c987f85f9a0f686"
-        },
-        {
-          "layer": 4,
-          "lane": 0,
-          "sourceSHA256": "987468e1de90b1b9b5a745da33af9fc4ad4f19226080065559d490df432c87eb"
-        },
-        {
-          "layer": 4,
-          "lane": 1,
-          "sourceSHA256": "4f0557969ddcc39db97d065d810209376458ce0e39aba976c7e03af628cd9705"
-        },
-        {
-          "layer": 4,
-          "lane": 2,
-          "sourceSHA256": "8c70d07c2057480321a9d459528b17790c747a40aa23333932f6a9b4a6e01235"
-        },
-        {
-          "layer": 4,
-          "lane": 3,
-          "sourceSHA256": "5ca2c7fbcd30db25a549239fd4c9bb6840e58ac7e862af34ccdf7f656b94a5d0"
-        },
-        {
-          "layer": 5,
-          "lane": 0,
-          "sourceSHA256": "a20208325df63146ddefd44fdbf6e153edf535daa965aebcfff906bdf359bfc4"
-        },
-        {
-          "layer": 5,
-          "lane": 1,
-          "sourceSHA256": "4cd4087aaea01f52dd574e85b864636b665fb770e8542a91c3c737feed2732fd"
-        },
-        {
-          "layer": 5,
-          "lane": 2,
-          "sourceSHA256": "4e1f2779685f941324662ac098bc75a184056452806e4d73410e1a5309043f25"
-        },
-        {
-          "layer": 5,
-          "lane": 3,
-          "sourceSHA256": "6d642b4141c88ecc0cf3585b465523535dca323650ce4667b7e881e5c2b5d698"
-        },
-        {
-          "layer": 6,
-          "lane": 0,
-          "sourceSHA256": "8c963e2576423c8d4e68e8ca46c0c1f214d2b89bc76d6579108a6b24c8530c0f"
-        },
-        {
-          "layer": 6,
-          "lane": 1,
-          "sourceSHA256": "d4773022284a57ff13e019a7dd50b8e362cd42b366952f6636d474609e7f0b7f"
-        },
-        {
-          "layer": 6,
-          "lane": 2,
-          "sourceSHA256": "d2f7251f24d9147812d78f70786dc7176a3d53cc883fa60587d7ddfe31db8d77"
-        },
-        {
-          "layer": 6,
-          "lane": 3,
-          "sourceSHA256": "02b10eec1007e8a603cb7ddcf857379905517abb51c4eb14c8334d2ae60b353d"
-        },
-        {
-          "layer": 7,
-          "lane": 0,
-          "sourceSHA256": "b4a4c99032f3049ac9aa83ff251fa0ad72057d0cf007d1ac77e50cded3103ef0"
-        },
-        {
-          "layer": 7,
-          "lane": 1,
-          "sourceSHA256": "903449e7b929f44e4fa74704cb28b868b222da84aad993b75c40260b11bc49b8"
-        },
-        {
-          "layer": 7,
-          "lane": 2,
-          "sourceSHA256": "52465946a519723dadde2b24aec338c01b457d7be17220f92657904d6ce3bf2b"
-        },
-        {
-          "layer": 7,
-          "lane": 3,
-          "sourceSHA256": "3c7442e3cabaf27e53be4e3873939585cee41f339bae1ac59be3435198804c78"
-        },
-        {
-          "layer": 8,
-          "lane": 0,
-          "sourceSHA256": "173c8026661bfa9c59bdca78f15dad09620be7c6f350ab7ca760464351334d45"
-        },
-        {
-          "layer": 8,
-          "lane": 1,
-          "sourceSHA256": "edf8fb66d014699742e924bd075f9720540ff2c2a574b55383d214ff2099c6a5"
-        },
-        {
-          "layer": 8,
-          "lane": 2,
-          "sourceSHA256": "d1afcbe194791801b7cb3345c599643c1572732a5d2fc8c0228b09ba534ea09f"
-        },
-        {
-          "layer": 8,
-          "lane": 3,
-          "sourceSHA256": "572ad9007360170b5be94822b629f569b2b5afc546bc767895f1bbe83908f6c5"
-        },
-        {
-          "layer": 9,
-          "lane": 0,
-          "sourceSHA256": "ad8a08873627da8b6622e9d1865d1638f5152c5662a68c1b974e5fde1c57ce29"
-        },
-        {
-          "layer": 9,
-          "lane": 1,
-          "sourceSHA256": "0a067d7dfa37255ece16aea4c15873ce39451b7f599b2449af245ea6f138c3be"
-        },
-        {
-          "layer": 9,
-          "lane": 2,
-          "sourceSHA256": "2dc14699020797ce99d9524d397da18740566a3f2619d76adce0803a764465e6"
-        },
-        {
-          "layer": 9,
-          "lane": 3,
-          "sourceSHA256": "cd1df13d901493213d9106bd25af81d8300294a4e59d28cb7cb738624e9310f5"
-        },
-        {
-          "layer": 10,
-          "lane": 0,
-          "sourceSHA256": "72158b488f58298f4c25d58694df237c2dbad13667aaa1f927b2eb7a14c2269d"
-        },
-        {
-          "layer": 10,
-          "lane": 1,
-          "sourceSHA256": "94a1655251c80163a56997711afc75282e484591d75a93dc8ccb0ff9a8311752"
-        },
-        {
-          "layer": 10,
-          "lane": 2,
-          "sourceSHA256": "7c43fcdb186387c1caf7be15a142d8fd09e3e2317db7cad844c322cf3bc4be82"
-        },
-        {
-          "layer": 10,
-          "lane": 3,
-          "sourceSHA256": "f66741138e8bd42b0056ffd1c3620ad2042ee0aa451d04f24f141b384d6b3423"
-        }
-      ],
-      "mapping": "INITVAL has sixteen 18-bit payloads in 20-bit slots; each payload holds two 9-bit words",
-      "paddedBytesChecked": 90112
-    }
+    "integer_model.py": "62d8f5f99e9a95e1f784662f98a283db0b7660297be3b1a0182cb08ae3236ee9",
+    "generate.py": "ec1241c1790ec0ab52a7f6ec828728fd96a165d2ea22962865a72d9ab5938f78"
   }
 }

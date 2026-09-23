@@ -2,155 +2,48 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -e -o pipefail -c
 .NOTPARALLEL:
+
 PROJECT_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
-PROJECT_NAME := sway_mars
-INPUT_PROJECTION_VARIANT ?= B0
-RESOURCE_VARIANT ?= legacy
-ifneq ($(filter $(RESOURCE_VARIANT),legacy buffered dedicated shared),$(RESOURCE_VARIANT))
-$(error RESOURCE_VARIANT must be legacy, buffered, dedicated, or shared)
-endif
-ifneq ($(RESOURCE_VARIANT),legacy)
-ifneq ($(INPUT_PROJECTION_VARIANT),B2)
-$(error Resource comparisons require INPUT_PROJECTION_VARIANT=B2)
-endif
-endif
-CORE_MHZ ?= 100
-ifneq ($(filter $(CORE_MHZ),60 80 100),$(CORE_MHZ))
-$(error CORE_MHZ must be 60, 80, or 100)
-endif
-ifneq ($(filter $(INPUT_PROJECTION_VARIANT),B0 B1 B2),$(INPUT_PROJECTION_VARIANT))
-$(error INPUT_PROJECTION_VARIANT must be B0, B1, or B2)
-endif
-# Replay only the measured, targeted post-synthesis control-buffer follow-up.
-CRITICAL_CONTROL_REPAIR ?= 0
-ifneq ($(CRITICAL_CONTROL_REPAIR),0)
-ifneq ($(CRITICAL_CONTROL_REPAIR),1)
-$(error CRITICAL_CONTROL_REPAIR must be 0 or 1)
-endif
-ifeq ($(INPUT_PROJECTION_VARIANT),B0)
-$(error CRITICAL_CONTROL_REPAIR=1 is supported only for B1 or B2)
-endif
-endif
-# Frozen B0/B1 packages preserve the RTL used by their measured builds. B2 uses
-# the current package; selecting only flags on that file changes generated RTL.
-VARIANT_SUFFIX := $(if $(filter B0,$(INPUT_PROJECTION_VARIANT)),,-$(INPUT_PROJECTION_VARIANT))$(if $(filter legacy,$(RESOURCE_VARIANT)),,-$(RESOURCE_VARIANT))$(if $(filter 100,$(CORE_MHZ)),,-$(CORE_MHZ)mhz)
-LINEAR_VARIANT_PATH := $(if $(filter B0 B1,$(INPUT_PROJECTION_VARIANT)),$(PROJECT_DIR)/variants/$(INPUT_PROJECTION_VARIANT),)
-LINEAR_SOURCE := $(if $(LINEAR_VARIANT_PATH),$(LINEAR_VARIANT_PATH),$(PROJECT_DIR)/bsv)/SwayLinear.bsv
-RESULTS_DIR ?= $(PROJECT_DIR)/results$(VARIANT_SUFFIX)
-BUILD_DIR ?= $(PROJECT_DIR)/build$(VARIANT_SUFFIX)
-BSIM_DIR ?= $(PROJECT_DIR)/bsim$(VARIANT_SUFFIX)
-BLUEYOSYS ?= $(abspath $(PROJECT_DIR)/../../blueyosys)
-ROOTDIR := $(BLUEYOSYS)
+PROJECT_NAME := sway_observation
+# Resolve unchanged in blueyosys/projects/sway_observation or a sibling Sway checkout.
+ROOTDIR ?= $(if $(wildcard $(PROJECT_DIR)/../../build.mk),$(abspath $(PROJECT_DIR)/../..),$(abspath $(PROJECT_DIR)/../../blueyosys))
 BOARD ?= ulx3s-85f
-TOP_SOURCE := $(PROJECT_DIR)/bsv/Top.bsv
+RESULTS_DIR ?= $(PROJECT_DIR)/results
+
+# Project Top preserves the baseline's PLL reset polarity and release sequence.
+# Simulation drives the same baseline core directly with local golden fixtures.
+TOP_SOURCE := $(PROJECT_DIR)/Top.bsv
 TOP_MODULE := mkTop
+NEEDS_INOUT_FIX := 0
 BSIM_TOP_SOURCE := $(PROJECT_DIR)/sim/TbSway.bsv
 BSIM_TOP_MODULE := mkTbSway
-EXTRA_BSV_PATHS := $(LINEAR_VARIANT_PATH) $(PROJECT_DIR)/bsv $(PROJECT_DIR)/generated $(PROJECT_DIR)/sim
-NEEDS_INOUT_FIX := 0
+EXTRA_BSV_PATHS := $(PROJECT_DIR) $(PROJECT_DIR)/bsv $(PROJECT_DIR)/generated $(PROJECT_DIR)/sim
 BSIM_CPPFILES :=
 BSIM_CXXFLAGS := -Xc++ -O1
-POST_RUN = $(PYTHON) reference/check_sim.py system.log --output $(RESULTS_DIR)/$(SIM_BACKEND).json --backend $(SIM_BACKEND) --stderr output.log && cp system.log $(RESULTS_DIR)/$(SIM_BACKEND).log
+POST_RUN = $(PYTHON) "$(PROJECT_DIR)/reference/check_sim.py" system.log --output "$(RESULTS_DIR)/$(SIM_BACKEND).json" --backend "$(SIM_BACKEND)" --stderr output.log && cp system.log "$(RESULTS_DIR)/$(SIM_BACKEND).log"
 BSC_RUNTIME_DIR ?= $(shell $(BSC) -help 2>/dev/null | sed -n 's/^Bluespec directory: //p')/Verilog
-YOSYS_DATA_DIR ?= $(shell yosys-config --datdir 2>/dev/null)
-RESET_SIM_DIR ?= $(PROJECT_DIR)/reset-sim$(VARIANT_SUFFIX)
-VERILATOR_RTL_DIR ?= $(PROJECT_DIR)/verilator-rtl$(VARIANT_SUFFIX)
-VERILATOR_SIM_DIR ?= $(PROJECT_DIR)/verilator$(VARIANT_SUFFIX)
-VERILATOR_JOBS ?= 4
 
 ifeq ($(wildcard $(ROOTDIR)/build.mk),)
-$(error blueYosys not found at $(ROOTDIR). Set BLUEYOSYS=/absolute/path/to/blueyosys)
+$(error blueYosys not found at $(ROOTDIR). Set ROOTDIR=/absolute/path/to/blueyosys)
 endif
 include $(ROOTDIR)/build.mk
-ifneq ($(RESOURCE_VARIANT),legacy)
-override BSCFLAGS_COMMON += -D SWAY_BUFFERED
-endif
-ifneq ($(filter dedicated shared,$(RESOURCE_VARIANT)),)
-override BSCFLAGS_COMMON += -D SWAY_REALLOCATE
-NATIVE_ROM_CHECK_FLAGS += --resource-comparison
-VERILATOR_CHECK_FLAGS += --resource-comparison
-endif
-ifeq ($(RESOURCE_VARIANT),shared)
-override BSCFLAGS_COMMON += -D SWAY_SHARED_DELTA
-endif
-ifeq ($(CORE_MHZ),80)
-override BSCFLAGS_COMMON += -D SWAY_CORE_80MHZ
-endif
-ifeq ($(CORE_MHZ),60)
-override BSCFLAGS_COMMON += -D SWAY_CORE_60MHZ
-endif
-ifneq ($(filter B1 B2,$(INPUT_PROJECTION_VARIANT)),)
-NATIVE_ROM_CHECK_FLAGS += --input-projection-fifo2
-ifeq ($(findstring SWAY_INPUT_FIFO2,$(BSCFLAGS_COMMON)),)
-override BSCFLAGS_COMMON += -D SWAY_INPUT_FIFO2
-endif
-endif
-ifeq ($(INPUT_PROJECTION_VARIANT),B2)
-ifeq ($(findstring SWAY_INPUT_OVERLAP,$(BSCFLAGS_COMMON)),)
-override BSCFLAGS_COMMON += -D SWAY_INPUT_OVERLAP
-endif
-BLOCK_PROFILE_CHECK_FLAGS += --group-overlap
-endif
-RTL_DIRS += $(PROJECT_DIR)/rtl
-BOARD_YOSYS_FLAGS += -nodsp
-BOARD_PNR_FLAGS += --router router1 --placer-heap-cell-placement-timeout 0 --tmg-ripup
 
+# Icarus executables embed their installation-time vvp path. Invoke the runtime
+# from PATH so copied projects also work with user-local tool installations.
 ifeq ($(SIM_BACKEND),iverilog)
-override BSCFLAGS_COMMON += -D SWAY_ROM_NATIVE
-BSC := $(BSC) -vsearch +:$(PROJECT_DIR)/rtl -Xv -DSWAY_ROM_BEHAVIORAL -Xv -I$(PROJECT_DIR)/generated
+.PHONY: sim-runner
+sim-runner: bsim
+	mv "$(BSIM_DIR)/bsim" "$(BSIM_DIR)/bsim.vvp"
+	printf '%s\n' '#!/bin/sh' 'exec vvp "$$(dirname "$$0")/bsim.vvp" "$$@"' > "$(BSIM_DIR)/bsim"
+	chmod +x "$(BSIM_DIR)/bsim"
+runsim: sim-runner
 endif
 
+# Baseline scan state and PLL reset conversion use these compiler primitives.
+# blueYosys copies its common runtime RTL; add the two missing files for Yosys.
 .PHONY: runtime-rtl
 runtime-rtl: verilog
-	test -f "$(BSC_RUNTIME_DIR)/ResetInverter.v"
 	test -f "$(BSC_RUNTIME_DIR)/RegFile.v"
-	test -f "$(BSC_RUNTIME_DIR)/RegFileLoad.v"
-	cp "$(BSC_RUNTIME_DIR)/ResetInverter.v" "$(BSC_RUNTIME_DIR)/RegFile.v" "$(BSC_RUNTIME_DIR)/RegFileLoad.v" "$(BUILD_DIR)/"
-	cp "$(PROJECT_DIR)/generated/SwayCoeffRomInit.vh" "$(BUILD_DIR)/"
-	mkdir -p "$(BUILD_DIR)/generated"
-	cp "$(PROJECT_DIR)"/generated/linear_l*_lane*.hex "$(BUILD_DIR)/generated/"
+	test -f "$(BSC_RUNTIME_DIR)/ResetInverter.v"
+	cp "$(BSC_RUNTIME_DIR)/RegFile.v" "$(BSC_RUNTIME_DIR)/ResetInverter.v" "$(BUILD_DIR)/"
 netlist: runtime-rtl
-
-PHYSICAL_NETLIST := $(BUILD_DIR)/$(TOP_MODULE).physical.json
-PHYSICAL_BASE_NETLIST := $(if $(filter 1,$(CRITICAL_CONTROL_REPAIR)),$(BUILD_DIR)/$(TOP_MODULE).physical-base.json,$(PHYSICAL_NETLIST))
-.PHONY: physical-netlist
-physical-netlist: netlist
-	mkdir -p "$(RESULTS_DIR)"
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_native_rom.py" --netlist "$(JSON_NETLIST)" --output "$(RESULTS_DIR)/native_rom.json" $(NATIVE_ROM_CHECK_FLAGS)
-	rm -f "$(PHYSICAL_NETLIST)" "$(RESULTS_DIR)/control_replication.json" "$(RESULTS_DIR)/control_replication_audit.json"
-ifeq ($(CRITICAL_CONTROL_REPAIR),1)
-	rm -f "$(PHYSICAL_BASE_NETLIST)" "$(RESULTS_DIR)/critical_control_replication.json" "$(RESULTS_DIR)/critical_control_replication_audit.json"
-endif
-	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_controls.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_BASE_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --top "$(TOP_MODULE)" --cap 64
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_control_replication.py" --input "$(JSON_NETLIST)" --output "$(PHYSICAL_BASE_NETLIST)" --manifest "$(RESULTS_DIR)/control_replication.json" --report "$(RESULTS_DIR)/control_replication_audit.json"
-ifeq ($(CRITICAL_CONTROL_REPAIR),1)
-	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_critical_controls.py" --variant "$(INPUT_PROJECTION_VARIANT)" --input "$(PHYSICAL_BASE_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/critical_control_replication.json" --top "$(TOP_MODULE)"
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_control_replication.py" --input "$(PHYSICAL_BASE_NETLIST)" --output "$(PHYSICAL_NETLIST)" --manifest "$(RESULTS_DIR)/critical_control_replication.json" --report "$(RESULTS_DIR)/critical_control_replication_audit.json"
-endif
-# The existing blueyosys pnr recipe consumes the audited physical netlist;
-# private prevents this override from changing its synthesis prerequisites.
-pnr: private JSON_NETLIST := $(PHYSICAL_NETLIST)
-pnr: physical-netlist
-
-.PHONY: check-timing
-check-timing: bitstream
-	$(PYTHON) "$(PROJECT_DIR)/reference/check_timing.py" --report "$(PNR_REPORT_JSON)" --log "$(PNR_LOG)" --bitstream "$(BITSTREAM)" --output "$(RESULTS_DIR)/timing.json" --core-mhz $(CORE_MHZ)
-synth: check-timing
-
-.PHONY: check-verilator
-check-verilator:
-	$(MAKE) -C "$(PROJECT_DIR)" bsim SIM_BACKEND=iverilog BSIM_DIR="$(VERILATOR_RTL_DIR)"
-	$(PYTHON) "$(PROJECT_DIR)/reference/run_verilator.py" --rtl "$(VERILATOR_RTL_DIR)/mkTbSway.v" --build-dir "$(VERILATOR_SIM_DIR)" --results-dir "$(RESULTS_DIR)" --bsc-runtime "$(BSC_RUNTIME_DIR)" --jobs "$(VERILATOR_JOBS)" $(VERILATOR_CHECK_FLAGS)
-
-.PHONY: check-reset
-check-reset: check-bsc
-	mkdir -p "$(RESET_SIM_DIR)/bsim" "$(RESULTS_DIR)"
-	iverilog -g2012 -I "$(YOSYS_DATA_DIR)/lattice" -s TestLocalReset -o "$(RESET_SIM_DIR)/reset.vvp" "$(PROJECT_DIR)/sim/TestLocalReset.v" "$(PROJECT_DIR)/rtl/SwayReset.v" "$(BSC_RUNTIME_DIR)/SyncResetA.v" "$(YOSYS_DATA_DIR)/lattice/common_sim.vh"
-	vvp "$(RESET_SIM_DIR)/reset.vvp" | tee "$(RESULTS_DIR)/reset.log"
-	$(PYTHON) -c 'from pathlib import Path; import sys; s=Path(sys.argv[1]).read_text(); sys.exit(0 if "SWAY_RESET_PASS" in s and "FAIL" not in s else 1)' "$(RESULTS_DIR)/reset.log"
-	$(BSC) -D BSIM -sim -u -bdir "$(RESET_SIM_DIR)/bsim" -simdir "$(RESET_SIM_DIR)/bsim" -p +:$(BSV_PATH) -g mkTbLocalReset "$(PROJECT_DIR)/sim/TbLocalReset.bsv"
-	$(BSC) -D BSIM -sim -e mkTbLocalReset -bdir "$(RESET_SIM_DIR)/bsim" -simdir "$(RESET_SIM_DIR)/bsim" -o "$(RESET_SIM_DIR)/bsim/check"
-	"$(RESET_SIM_DIR)/bsim/check" | tee "$(RESULTS_DIR)/reset_bluesim.log"
-	$(PYTHON) -c 'from pathlib import Path; import sys; s=Path(sys.argv[1]).read_text(); sys.exit(0 if "SWAY_RESET_BSIM_PASS" in s and "FAIL" not in s else 1)' "$(RESULTS_DIR)/reset_bluesim.log"
-
-include $(PROJECT_DIR)/perf.mk

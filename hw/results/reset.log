@@ -1,1 +1,0 @@
-SWAY_RESET_PASS assertion=async root_edges=2 leaf_edges=2 total_edges=4 domains_mhz=100,25 repetitions=2

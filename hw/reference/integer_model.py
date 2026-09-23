@@ -15,9 +15,10 @@ from pathlib import Path
 import numpy as np
 
 
-ROOT = Path(__file__).resolve().parents[2]
-EXPORT = ROOT / "sw/results/mars_seed20260917/evaluation/export"
-GENERATED = ROOT / "hw/generated"
+ROOT = Path(__file__).resolve().parents[1]
+MODEL = ROOT / "model"
+EXPORT = MODEL / "export"
+GENERATED = ROOT / "generated"
 LAYERS = [
     ("embedding", "patches", "embedding.weight", "embedding.bias"),
     ("blocks.0.in", "blocks.0.norm", "blocks.0.inWeight", None),
@@ -83,6 +84,22 @@ class IntegerModel:
         self.export = Path(export)
         self.manifest = json.loads((self.export / "manifest.json").read_text())
         self.profile = json.loads((self.export / "quantization.json").read_text())
+        self.config = self.manifest["modelConfig"]
+        expected = {"D": 20, "E": 2, "P": 2, "M": 2, "N": 8, "L": 16,
+                    "input_height": 8, "input_width": 8, "input_channels": 5,
+                    "outputs": 57, "dt_rank": 2, "conv_kernel": 4, "head_hidden": 20}
+        if any(self.config.get(key) != value for key, value in expected.items()):
+            raise ValueError("Export does not match the fixed baseline workload")
+        if self.profile.get("modelConfig") != self.config or not self.profile.get("usePWL"):
+            raise ValueError("Model and frozen PWL profile disagree")
+        for name, node in self.profile["nodes"].items():
+            bits = 24 if name.endswith(".currentState") else 17 if name.endswith(".state") else 8
+            if node["bits"] != bits or node["scale"] != 2.0 ** node["exponent"] or node.get("zeroPoint", 0) != 0:
+                raise ValueError("Expected symmetric power-of-two quantization: " + name)
+        for block in range(2):
+            prefix = "blocks.%d." % block
+            if self.exponent(prefix + "Abar") != -7 or self.exponent(prefix + "state") != self.exponent(prefix + "currentState") + 7:
+                raise ValueError("SSM state exponent relationship is incompatible with the baseline")
         self.parameters = {}
         for entry in self.manifest["tensors"]:
             binary = self.export / entry["binary"]
@@ -207,8 +224,15 @@ class IntegerModel:
             trace.update(headInput=head_input.copy(), headHidden=head.copy(), headActivation=activated.copy(), output=output.copy())
         return output
 
+    def quantize_inputs(self, inputs):
+        inputs = np.asarray(inputs, dtype=np.float32)
+        divisors = np.asarray(self.config.get("input_channel_divisors", [1.0] * 5), dtype=np.float32)
+        if divisors.shape != (5,) or not np.all(np.isfinite(divisors)) or np.any(divisors <= 0):
+            raise ValueError("Invalid fixed input-channel divisors")
+        return quantize_input(inputs / divisors, self.exponent("input"))
+
     def forward(self, inputs, trace=None):
-        return self.forward_integer(quantize_input(inputs, self.exponent("input")), trace)
+        return self.forward_integer(self.quantize_inputs(inputs), trace)
 
 
 def metrics(prediction, labels):

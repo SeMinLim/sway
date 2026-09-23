@@ -1,6 +1,6 @@
 # Sway
 
-Compact selective state-space model accelerator research for ECP5-class FPGAs. The repository contains a MARS pose-regression model with FP32 training and INT8 post-training quantization, plus a Bluespec implementation with a shared delta-projection engine.
+Compact selective state-space model accelerator research for ECP5-class FPGAs. The repository contains a MARS pose-regression model with FP32 training and INT8 post-training quantization, plus a Bluespec implementation of the dedicated-engine baseline.
 
 ## FP32 and INT8 PTQ checkpoint
 
@@ -59,37 +59,28 @@ Artifacts are under [`sw/results/mars_ptq_20260923/`](sw/results/mars_ptq_202609
 | [selection.json](sw/results/mars_ptq_20260923/selection.json) | Frozen validation-based checkpoint/profile selection |
 | [verification.json](sw/results/mars_ptq_20260923/verification.json) | Metric recomputation, checkpoint checks, and software-test results |
 
-## Hardware
+## Baseline hardware
 
-The shared-delta configuration targets ULX3S-85F and implements patch embedding, two selective-SSM blocks, and the regression head. FIFO token handoff connects the layer engines. Engine-specific affine lane allocation uses 20 lanes in total, with per-block `xDelayQ=2` and `residualQ=5`.
+`hw/` is a self-contained blueYosys project implementing the dedicated-engine MARS baseline. Patch embedding feeds two Mamba blocks and the regression head through explicit FIFOs. All 11 affine layers retain separate four-lane engines; each block has its own normalization, convolution, delta projection, scan, and output projection. Input frames and flattened head inputs use the baseline register/FIFO organization.
 
-Both blocks use one scalar delta-projection engine. Each block has independent request/result queues. Round-robin arbitration starts a job only when its destination result slot is free; the block and token remain fixed until all 40 outputs finish. A blocked consumer cannot reserve the other block's output slot. Recurrent state uses INT24 current values and INT17 retained values.
+The hardware uses the current PTQ checkpoint's INT8 parameters, scales, and fitted PWL functions. Its exact rational range normalization gives integer-reference test RMSE **8.3579082742 cm**, compared with **8.3563735004 cm** for the software QDQ path. [Numerical verification](hw/generated/software_contract_verification.json) checks the checkpoint/export, all PWL table entries, and normalization correspondence.
 
-The hardware results use the checked-in `hw/generated/` ROMs and fixtures. The PTQ checkpoint above has software validation and has not been installed or validated in this RTL build.
+The source follows the supplied BSV style: explicit FIFO boundaries, numbered stage rules, visible control/counter updates, named static dimensions, and thin input/output methods. [Project README](hw/README.md) documents the architecture, files, and validation.
 
-| Shared-delta hardware metric | Result |
-|---|---:|
-| Validated operating clock | 60 MHz |
-| Continuous completion interval | 7,600 cycles/frame |
-| Derived kernel throughput | 7,894.74 frames/s |
-| Isolated-frame latency | 20,763 cycles |
-| Packed logic, `TRELLIS_COMB` | 43,538 |
-| Flip-flops, `TRELLIS_FF` | 44,555 |
-| Block RAMs, `DP16KD` | 41 |
-| DSPs, `MULT18X18D` | 0 |
+## Run the baseline in blueYosys
 
-Throughput is derived from functional-simulation cycles and passing post-route timing at 60 MHz. Resource counts include the kernel and board wrapper. These are not physical-board or UART-transfer measurements. Evidence: [kernel performance](hw/results/resource_comparison/clock60/shared/perf/summary.json), [physical result](hw/results/resource_comparison/clock60/shared/physical/physical_result.json).
-
-Validation checks 57 isolated-frame outputs and 3,648 continuous-run outputs against the integer reference. Bluesim and native-ROM Verilator stress tests each check 798 outputs with input bubbles and output stalls. The [delta-equivalence check](hw/results/resource_comparison/delta-equivalence/summary.json) exhausts all 65,536 INT8 input pairs for both layers.
-
-## Build the hardware
-
-Use [blueyosys](https://github.com/SeMinLim/blueyosys/tree/3ea0afea56c7c73b8ed59ec0edd256c409466788), BSC/Bluesim, Verilator, and the ECP5 OSS CAD tools on `PATH`. The Makefile includes blueyosys `build.mk`. Select the shared 60 MHz configuration explicitly:
+The matching project is [`blueyosys/projects/sway_observation`](https://github.com/SeMinLim/blueyosys/tree/main/projects/sway_observation). From the blueYosys repository root:
 
 ```sh
-make -C hw perf runsim check-verilator synth \
-  BLUEYOSYS=/absolute/path/to/blueyosys \
-  INPUT_PROJECTION_VARIANT=B2 RESOURCE_VARIANT=shared CORE_MHZ=60
+make runsim PROJECT=sway_observation BOARD=ulx3s-85f
+make runsim PROJECT=sway_observation BOARD=ulx3s-85f SIM_BACKEND=iverilog
+make netlist PROJECT=sway_observation BOARD=ulx3s-85f
 ```
 
-This configuration writes to `hw/results-B2-shared-60mhz/` with separate build directories. `perf` records simulation cycles; `synth` requires completed routing, bitstream packing, and passing core/UART timing checks. The core PLL produces 60 MHz and the UART constraint is 25 MHz. Synthesis uses `-nodsp` and control replication with structural-equivalence checks.
+Or run the same hardware directory from Sway:
+
+```sh
+make -C hw runsim ROOTDIR=/absolute/path/to/blueyosys
+```
+
+Bluesim and Icarus pass the fixed 14-frame, 798-output test, including input bubbles, output backpressure, and per-frame state reset. The restored core matches the first baseline’s outputs, event cycles, and 115-rule compiler schedule. Project-top Verilog generation and ECP5 netlist synthesis also pass: [validation](hw/results/validation.json). The configured core clock is 100 MHz; timing closure and physical-board operation require separate FPGA validation.

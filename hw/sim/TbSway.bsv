@@ -7,8 +7,8 @@ import SwayBaseline::*;
 import GeneratedTestConfig::*;
 
 module mkTbSway(Empty);
-	Integer inputWords = valueOf(TestFrameCount) * 320;
-	Integer outputWords = valueOf(TestFrameCount) * 57;
+	Integer inputWords = valueOf(TestFrameCount) * valueOf(FrameElements);
+	Integer outputWords = valueOf(TestFrameCount) * valueOf(OutputDim);
 	Integer stallCycles = 8192;
 	Integer drainCycles = 2048;
 	Integer watchdogCycles = valueOf(TestFrameCount) * 1000000;
@@ -41,9 +41,11 @@ module mkTbSway(Empty);
 	rule process1 ( sentCnt < fromInteger(inputWords) && cycleCnt % 17 > 1 );
 		dut.put(inputR.sub(pack(sentCnt)));
 		sentCnt <= sentCnt + 1;
-		if ( sentCnt % 320 == 0 ) inputStartR <= cycleCnt;
-		if ( sentCnt % 320 == 319 ) begin
-			$display("SWAY_INPUT_FRAME,%0d,%0d,%0d", sentCnt / 320, inputStartR, cycleCnt);
+		if ( sentCnt % fromInteger(valueOf(FrameElements)) == 0 ) begin
+			inputStartR <= cycleCnt;
+		end
+		if ( sentCnt % fromInteger(valueOf(FrameElements)) == fromInteger(valueOf(FrameElements) - 1) ) begin
+			$display("SWAY_INPUT_FRAME,%0d,%0d,%0d", sentCnt / fromInteger(valueOf(FrameElements)), inputStartR, cycleCnt);
 		end
 	endrule
 
@@ -56,21 +58,23 @@ module mkTbSway(Empty);
 		let expected = expectedR.sub(pack(receivedCnt));
 		if ( value != expected ) begin
 			$display("SWAY_FAIL mismatch frame=%0d coordinate=%0d expected=%0d actual=%0d cycles=%0d",
-				receivedCnt / 57, receivedCnt % 57, expected, value, cycleCnt);
+				receivedCnt / fromInteger(valueOf(OutputDim)), receivedCnt % fromInteger(valueOf(OutputDim)), expected, value, cycleCnt);
 			$finish(1);
 		end
 		$display("SWAY_OUTPUT,%0d,%0d,%0d", receivedCnt, value, cycleCnt);
 		receivedCnt <= receivedCnt + 1;
-		if ( receivedCnt % 57 == 0 ) begin
+		if ( receivedCnt % fromInteger(valueOf(OutputDim)) == 0 ) begin
 			outputStartR <= cycleCnt;
 			pauseUntilR <= cycleCnt + fromInteger(stallCycles + 1);
-			$display("SWAY_STALL,%0d,%0d,%0d", receivedCnt / 57,
+			$display("SWAY_STALL,%0d,%0d,%0d", receivedCnt / fromInteger(valueOf(OutputDim)),
 				cycleCnt + 1, cycleCnt + fromInteger(stallCycles + 1));
 		end
-		if ( receivedCnt % 57 == 56 ) begin
-			$display("SWAY_FRAME,%0d,%0d,%0d", receivedCnt / 57, outputStartR, cycleCnt);
+		if ( receivedCnt % fromInteger(valueOf(OutputDim)) == fromInteger(valueOf(OutputDim) - 1) ) begin
+			$display("SWAY_FRAME,%0d,%0d,%0d", receivedCnt / fromInteger(valueOf(OutputDim)), outputStartR, cycleCnt);
 		end
-		if ( receivedCnt + 1 == fromInteger(outputWords) ) finishOn <= True;
+		if ( receivedCnt + 1 == fromInteger(outputWords) ) begin
+			finishOn <= True;
+		end
 	endrule
 
 	//------------------------------------------------------------------------------------
