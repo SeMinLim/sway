@@ -1,0 +1,231 @@
+{
+  "checkpoint_sha256": "e5c06bba8da13acdcc2341dc244d778e2d16f4bc99762173e59be24e51a8d2aa",
+  "checkpoint_epoch": 35,
+  "evaluation_source_sha256": {
+    "evaluate.py": "eb43e742bc49511d5c7c4095e43cc7dceb56685ccfc6328fb93ad14cf134e904",
+    "train.py": "0a6a43a14a7ce426387f5bc7215bd867aa3b331fbc27cddb1a885703e839a009",
+    "model.py": "f3d3c4eb9d2a067008bfc0fc4d6ada7461d5ac45ef068170269786afb4488a11",
+    "quantize.py": "74d0c4592139caaefa95610c516278b78e0d46292a65de70671c6f10cca3e016",
+    "finetune.py": "36f12de56866a7cd769858272959bdbe26af005e173ee5b811d5e2f3cc475bca"
+  },
+  "selection": "best validation mean coordinatewise RMSE; no test tuning",
+  "config": {
+    "D": 20,
+    "E": 2,
+    "P": 2,
+    "M": 2,
+    "N": 8,
+    "L": 16,
+    "input_height": 8,
+    "input_width": 8,
+    "input_channels": 5,
+    "outputs": 57,
+    "dt_rank": 2,
+    "conv_kernel": 4,
+    "head_hidden": 20,
+    "norm_epsilon": 1e-05,
+    "source": "https://arxiv.org/html/2508.10370v1",
+    "reconstruction_assumptions": {
+      "convolution": "Causal depthwise width 4 with bias, followed by SiLU, as in standard Mamba; eMamba does not specify the kernel or grouping and its figure omits conv SiLU.",
+      "delta": "Rank ceil(D/16)=2; ReLU after both projections to keep delta nonnegative. Figure 3 places Softplus between projections; exact ordering is unresolved.",
+      "head": "Flatten the 16 tokens, linear 320->20, ReLU, linear 20->57. The regression head is not published; this explicit assumption preserves patch positions.",
+      "biases": "No in/out/x projection biases; convolution and delta projection biases enabled, as in standard Mamba; embedding and regression biases enabled.",
+      "initialization": "Kaiming-uniform linear/conv; A=-exp(A_log), A initialized to -1..-8; D=1; positive log-uniform delta biases 0.01..0.1 for ReLU.",
+      "normalization": "Per-token range across D channels, learnable per-channel gamma and beta; denominator clamped to epsilon for constant inputs.",
+      "state_reset": "Zero convolution history and zero selective state independently for each 8x8x5 radar frame.",
+      "pwl": "Own secant coefficients at 18 SiLU knots and 12 exponential knots; 17 and 11 segments match the stated counts, but author coefficients and their error definition are unpublished.",
+      "parameter_count": "Head and other omitted details prevent exact recovery of the reported 16.8 KB INT8 parameter footprint. The actual count is measured and reported separately."
+    }
+  },
+  "metrics": {
+    "fp32": {
+      "frames": 7984,
+      "mae_cm": 6.572255317826371,
+      "rmse_coordinate_mean_cm": 8.864404109284878,
+      "rmse_global_cm": 9.547165768677505,
+      "axis_mae_cm": {
+        "x": 7.866971881593775,
+        "y": 4.213687553868215,
+        "z": 7.6361065180171215
+      },
+      "axis_rmse_cm": {
+        "x": 10.623444208588465,
+        "y": 5.894177683449597,
+        "z": 10.075590435816572
+      },
+      "evaluation_seconds": 0.7029208250023657
+    },
+    "fp32_pwl": {
+      "frames": 7984,
+      "mae_cm": 6.666674378161961,
+      "rmse_coordinate_mean_cm": 8.911782756831002,
+      "rmse_global_cm": 9.507655431186022,
+      "axis_mae_cm": {
+        "x": 7.720885446162353,
+        "y": 4.695631350778525,
+        "z": 7.583506337545004
+      },
+      "axis_rmse_cm": {
+        "x": 10.533141067966577,
+        "y": 6.2743144961014465,
+        "z": 9.927892706424986
+      },
+      "evaluation_seconds": 3.319199331999698
+    },
+    "int8_qat": {
+      "frames": 7984,
+      "mae_cm": 6.526647025784754,
+      "rmse_coordinate_mean_cm": 8.813494417645073,
+      "rmse_global_cm": 9.457976645935627,
+      "axis_mae_cm": {
+        "x": 7.794310048129521,
+        "y": 4.293160717323377,
+        "z": 7.492470311901366
+      },
+      "axis_rmse_cm": {
+        "x": 10.59104548857261,
+        "y": 5.917968681502507,
+        "z": 9.931469082860099
+      },
+      "evaluation_seconds": 5.012889336001535
+    },
+    "fp32_source": {
+      "frames": 7984,
+      "mae_cm": 6.374591970190825,
+      "rmse_coordinate_mean_cm": 8.668375809853055,
+      "rmse_global_cm": 9.351194370416401,
+      "axis_mae_cm": {
+        "x": 7.70145670194828,
+        "y": 4.010704549043418,
+        "z": 7.411614659580779
+      },
+      "axis_rmse_cm": {
+        "x": 10.518491348349478,
+        "y": 5.651344532569441,
+        "z": 9.835291548640248
+      },
+      "evaluation_seconds": 0.5739116490003653
+    },
+    "int8_before_qat": {
+      "frames": 7984,
+      "mae_cm": 7.976752997877463,
+      "rmse_coordinate_mean_cm": 10.43866406370214,
+      "rmse_global_cm": 10.955794945454258,
+      "axis_mae_cm": {
+        "x": 8.30140205979775,
+        "y": 6.85575418178196,
+        "z": 8.77310275205268
+      },
+      "axis_rmse_cm": {
+        "x": 11.11703744273438,
+        "y": 8.685925992377717,
+        "z": 11.513028755994323
+      },
+      "evaluation_seconds": 5.295067166000081
+    }
+  },
+  "source_checkpoint_sha256": "ead1fce057b460f9fe527505ea740a7aadd8344f34797b5a1541594e5f8530a1",
+  "source_checkpoint_epoch": 241,
+  "training_mode": "qat",
+  "quantization_selection": {
+    "source": "frozen profile stored in the validation-selected QAT checkpoint",
+    "selected_percentile": 100.0,
+    "selected_policy": "input_99.9_other_nodes_100",
+    "training_selection": {
+      "source": "training_calibration",
+      "calibration_file_sha256": null,
+      "candidates": [
+        {
+          "percentile": 99.9,
+          "calibration_policy": "uniform_percentile_99.9",
+          "profile_sha256": "e275f0c20766505f83ea9b377f37e7775519d133853d3287b4794462f0d30830",
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.196884524030482,
+            "rmse_coordinate_mean_cm": 10.727113540476507,
+            "rmse_global_cm": 11.243266577804505,
+            "axis_mae_cm": {
+              "x": 8.642372743342177,
+              "y": 7.596077915538486,
+              "z": 8.352202913210782
+            },
+            "axis_rmse_cm": {
+              "x": 11.662041347460686,
+              "y": 9.559228523064323,
+              "z": 10.960070750904508
+            }
+          }
+        },
+        {
+          "percentile": 100.0,
+          "calibration_policy": "uniform_percentile_100",
+          "profile_sha256": "0175fe6de280184d44b8b21064b415ef617eb91bf7da33f54eadf24ee65a7b06",
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.166539454389975,
+            "rmse_coordinate_mean_cm": 10.655526621963938,
+            "rmse_global_cm": 11.162449634604547,
+            "axis_mae_cm": {
+              "x": 8.439271522908054,
+              "y": 7.118083655002771,
+              "z": 8.942263185259101
+            },
+            "axis_rmse_cm": {
+              "x": 11.37279973360486,
+              "y": 8.900515907948595,
+              "z": 11.693264224338366
+            }
+          }
+        },
+        {
+          "percentile": 100.0,
+          "calibration_policy": "input_99.9_other_nodes_100",
+          "profile_sha256": "0a5f4a59a3abdbb86256819a72bbfa1961c6f11afe325e82a9826512d40b47ac",
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 7.952317825962755,
+            "rmse_coordinate_mean_cm": 10.421101567345817,
+            "rmse_global_cm": 10.936133857338136,
+            "axis_mae_cm": {
+              "x": 8.262996137970237,
+              "y": 6.8103553400167955,
+              "z": 8.783601999901233
+            },
+            "axis_rmse_cm": {
+              "x": 11.15844484408749,
+              "y": 8.586497454784018,
+              "z": 11.518362403165945
+            }
+          }
+        }
+      ],
+      "selected_percentile": 100.0,
+      "selected_policy": "input_99.9_other_nodes_100",
+      "criterion": "validation mean coordinatewise RMSE from quantizedForward",
+      "frozen_during_training": true,
+      "test_used": false
+    },
+    "test_used": false
+  },
+  "quantization_scope": "INT8 affine and convolution operands with INT64 reference MACs; integer SSM recurrence; normalization/nonlinearities/remaining elementwise graph use quantize-dequantize simulation; no RTL validation",
+  "quantization_statistics": {
+    "blocks.0": {
+      "currentStateClipped": 1,
+      "outputClipped": 19,
+      "stateElements": 40878080,
+      "outputElements": 5109760,
+      "maxAbsCurrentState": 8388607
+    },
+    "blocks.1": {
+      "currentStateClipped": 0,
+      "outputClipped": 0,
+      "stateElements": 40878080,
+      "outputElements": 5109760,
+      "maxAbsCurrentState": 7485440
+    }
+  },
+  "dataset_test_sha256": {
+    "featuremap_test.npy": "331551d42039e97a0afc260029d605dec29f4a0d11ede65e4c1328c49cb5c145",
+    "labels_test.npy": "a1f29ebee5d5b4a63810997e9eda811af97bd222dcf4d4766777ccaea1b256e8"
+  }
+}

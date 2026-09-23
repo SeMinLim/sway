@@ -1,0 +1,805 @@
+{
+  "schemaVersion": 1,
+  "source": "https://arxiv.org/html/2508.10370v1#S4.SS6",
+  "calibrationSplit": "train",
+  "calibrationSamples": 2048,
+  "calibrationSeed": 0,
+  "percentile": 99.9,
+  "calibrationIndexSHA256": "d70dbf179f2a907bcbe90f4f420d0f4a2530ccfebdee4b928e943e66829d0169",
+  "usePWL": true,
+  "nodes": {
+    "input": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 16.66047477722168,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "patches": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 16.66047477722168,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "embedding.weight": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.3709316551685333,
+      "observedElements": 3200,
+      "sampledElements": 3200,
+      "percentile": 100.0
+    },
+    "embedding.bias": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.4345354735851288,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "embedding": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.3519692420959473,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.normWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.4893466234207153,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "blocks.0.normBias": {
+      "exponent": -9,
+      "scale": 0.001953125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.19369475543498993,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "blocks.0.norm": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.1014550924301147,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.inWeight": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.7749114036560059,
+      "observedElements": 12800,
+      "sampledElements": 12800,
+      "percentile": 100.0
+    },
+    "blocks.0.in": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.981239914894104,
+      "observedElements": 2621440,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.convInput": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.981239914894104,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.gateInput": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.8832179307937622,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.convWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.1622904539108276,
+      "observedElements": 1280,
+      "sampledElements": 1280,
+      "percentile": 100.0
+    },
+    "blocks.0.convBias": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.25765424966812134,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.0.conv": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 5.245383262634277,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.x": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.9609458446502686,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.gate": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.2542983293533325,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.xWeight": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.6973773241043091,
+      "observedElements": 5760,
+      "sampledElements": 5760,
+      "percentile": 100.0
+    },
+    "blocks.0.xProjection": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.1575772762298584,
+      "observedElements": 589824,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.deltaInput": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.37841534614563,
+      "observedElements": 65536,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.B": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.1575772762298584,
+      "observedElements": 262144,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.C": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.006849765777588,
+      "observedElements": 262144,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.dtWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.3179759979248047,
+      "observedElements": 640,
+      "sampledElements": 640,
+      "percentile": 100.0
+    },
+    "blocks.0.dtBias": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.5645768642425537,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.0.deltaProjection": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.4434866905212402,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.delta": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.8382740020751953,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.A": {
+      "exponent": -2,
+      "scale": 0.25,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 19.659046173095703,
+      "observedElements": 2560,
+      "sampledElements": 2560,
+      "percentile": 100.0
+    },
+    "blocks.0.D": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.5937539339065552,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.0.expInput": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 38.88197708129883,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.Abar": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.0,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.Bbar": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 8.467982292175293,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.currentState": {
+      "exponent": -19,
+      "scale": 1.9073486328125e-06,
+      "bits": 24,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 8.252287864685059,
+      "observedElements": 10485760,
+      "sampledElements": 65536,
+      "percentile": 100.0
+    },
+    "blocks.0.state": {
+      "exponent": -12,
+      "scale": 0.000244140625,
+      "bits": 17,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 8.252287864685059,
+      "observedElements": 10485760,
+      "sampledElements": 65536,
+      "percentile": 100.0
+    },
+    "blocks.0.ssmY": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 18.801301956176758,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.gated": {
+      "exponent": -9,
+      "scale": 0.001953125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.488509178161621,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.outWeight": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.6010572910308838,
+      "observedElements": 6400,
+      "sampledElements": 6400,
+      "percentile": 100.0
+    },
+    "blocks.0.out": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.4890191555023193,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.0.residual": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.7573330402374268,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.normWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.2954167127609253,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "blocks.1.normBias": {
+      "exponent": -9,
+      "scale": 0.001953125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.12467759847640991,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "blocks.1.norm": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.9056857824325562,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.inWeight": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.7919485569000244,
+      "observedElements": 12800,
+      "sampledElements": 12800,
+      "percentile": 100.0
+    },
+    "blocks.1.in": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.9988490343093872,
+      "observedElements": 2621440,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.convInput": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.5377382040023804,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.gateInput": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.9988490343093872,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.convWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.0633084774017334,
+      "observedElements": 1280,
+      "sampledElements": 1280,
+      "percentile": 100.0
+    },
+    "blocks.1.convBias": {
+      "exponent": -9,
+      "scale": 0.001953125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.1794433444738388,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.1.conv": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.1323912143707275,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.x": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.1870992183685303,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.gate": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.5070784091949463,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.xWeight": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.6360887289047241,
+      "observedElements": 5760,
+      "sampledElements": 5760,
+      "percentile": 100.0
+    },
+    "blocks.1.xProjection": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.1108880043029785,
+      "observedElements": 589824,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.deltaInput": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.2546231746673584,
+      "observedElements": 65536,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.B": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 3.373659372329712,
+      "observedElements": 262144,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.C": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.1108880043029785,
+      "observedElements": 262144,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.dtWeight": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.0442492961883545,
+      "observedElements": 640,
+      "sampledElements": 640,
+      "percentile": 100.0
+    },
+    "blocks.1.dtBias": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.441241979598999,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.1.deltaProjection": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.9162808656692505,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.delta": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.6900670528411865,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.A": {
+      "exponent": -3,
+      "scale": 0.125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 15.011048316955566,
+      "observedElements": 2560,
+      "sampledElements": 2560,
+      "percentile": 100.0
+    },
+    "blocks.1.D": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.5594760179519653,
+      "observedElements": 320,
+      "sampledElements": 320,
+      "percentile": 100.0
+    },
+    "blocks.1.expInput": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 21.59020233154297,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.Abar": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 1.0,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.Bbar": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 5.455237865447998,
+      "observedElements": 10485760,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.currentState": {
+      "exponent": -20,
+      "scale": 9.5367431640625e-07,
+      "bits": 24,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 6.298222064971924,
+      "observedElements": 10485760,
+      "sampledElements": 65536,
+      "percentile": 100.0
+    },
+    "blocks.1.state": {
+      "exponent": -13,
+      "scale": 0.0001220703125,
+      "bits": 17,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 6.298222064971924,
+      "observedElements": 10485760,
+      "sampledElements": 65536,
+      "percentile": 100.0
+    },
+    "blocks.1.ssmY": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 20.33540153503418,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.gated": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.803311824798584,
+      "observedElements": 1310720,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.outWeight": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.9468382000923157,
+      "observedElements": 6400,
+      "sampledElements": 6400,
+      "percentile": 100.0
+    },
+    "blocks.1.out": {
+      "exponent": -7,
+      "scale": 0.0078125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.1837716102600098,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "blocks.1.residual": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.7407302856445312,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "headInput": {
+      "exponent": -6,
+      "scale": 0.015625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.7407302856445312,
+      "observedElements": 655360,
+      "sampledElements": 32768,
+      "percentile": 99.9
+    },
+    "headHidden.weight": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.33345282077789307,
+      "observedElements": 51200,
+      "sampledElements": 25600,
+      "percentile": 100.0
+    },
+    "headHidden.bias": {
+      "exponent": -9,
+      "scale": 0.001953125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.15426495671272278,
+      "observedElements": 160,
+      "sampledElements": 160,
+      "percentile": 100.0
+    },
+    "headHidden": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.4761271476745605,
+      "observedElements": 40960,
+      "sampledElements": 20480,
+      "percentile": 99.9
+    },
+    "headActivation": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 4.4761271476745605,
+      "observedElements": 40960,
+      "sampledElements": 20480,
+      "percentile": 99.9
+    },
+    "headOutput.weight": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.37720197439193726,
+      "observedElements": 9120,
+      "sampledElements": 9120,
+      "percentile": 100.0
+    },
+    "headOutput.bias": {
+      "exponent": -8,
+      "scale": 0.00390625,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 0.4305136501789093,
+      "observedElements": 456,
+      "sampledElements": 456,
+      "percentile": 100.0
+    },
+    "output": {
+      "exponent": -5,
+      "scale": 0.03125,
+      "bits": 8,
+      "zeroPoint": 0,
+      "calibrationAbsMax": 2.116389751434326,
+      "observedElements": 116736,
+      "sampledElements": 29184,
+      "percentile": 99.9
+    }
+  },
+  "rounding": "nearest_ties_to_even; recurrent_state_store=arithmetic_right_shift_7",
+  "overflow": "saturate signed INT8, current state INT24, retained state INT17",
+  "simulationScope": "INT8 affine and convolution operands with INT64 reference MACs; integer SSM recurrence; normalization/nonlinearities/remaining elementwise graph use quantize-dequantize simulation; no RTL validation"
+}

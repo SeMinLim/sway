@@ -1,0 +1,115 @@
+{
+  "status": "completed",
+  "source_commit": "cab09d42e539bbcb48d17daafe113f872070ee6c",
+  "original_checkpoint": "sw/results/mars_seed20260917/last.pt",
+  "model_changes": false,
+  "parameter_count": 15717,
+  "dataset_protocol": "unchanged official MARS train/validate/test arrays; 24066/8033/7984",
+  "metric": "mean of 57 coordinatewise RMSE values over frames, in cm",
+  "fp32": {
+    "resume_epoch": 150,
+    "maximum_total_epochs": 400,
+    "validation_patience": 25,
+    "batch_size": 256,
+    "threads": 2,
+    "optimizer_scheduler_rng_restored": true
+  },
+  "qat": {
+    "maximum_epochs": 40,
+    "validation_patience": 15,
+    "batch_size": 64,
+    "threads": 2,
+    "learning_rate": 0.0001,
+    "calibration_frames": 2048,
+    "calibration_candidates": [
+      "uniform_percentile_99.9",
+      "uniform_percentile_100",
+      "input_99.9_other_nodes_100"
+    ],
+    "frozen_scales": true,
+    "validation_uses": "quantizedForward integer numerical reference",
+    "source_checkpoint": "sw/results/mars_accuracy_20260922/fp32_at_qat_start.pt",
+    "source_epoch": 241,
+    "source_validation_rmse_cm": 8.626534004575868,
+    "source_checkpoint_sha256": "ead1fce057b460f9fe527505ea740a7aadd8344f34797b5a1541594e5f8530a1",
+    "execution": "parallel branch from frozen validation-selected intermediate FP32 checkpoint; FP32 continuation proceeds independently"
+  },
+  "test_policy": "Evaluate only after validation-selected FP32 and QAT checkpoints are frozen; no test-driven tuning",
+  "published_reference": {
+    "source": "https://arxiv.org/html/2508.10370v1",
+    "table": 4,
+    "fp32_rmse_cm": 7.85,
+    "int8_rmse_cm": 8.83,
+    "matching_split_or_author_checkpoint": false,
+    "fp32_pwl_scope": "Paper says PWL is applied at inference but Table4 does not explicitly bind the FP32 7.85cm number to specific nonlinearities; report both local FP32 paths.",
+    "quantization_method": "PTQ",
+    "local_selected_int8_method": "QAT",
+    "quantization_method_comparison": "Local 8.8135 cm uses QAT with weight updates; eMamba 8.83 cm uses PTQ. Numerical proximity is not a reproduction or an equivalent-method comparison."
+  },
+  "hardware_scope": "New weights/scales are software exports; existing RTL ROMs and physical results retain their original weights.",
+  "source_remote_main": "d6b0a414e50a0b20a755b915ba7fb1ef36c49549",
+  "recovery": {
+    "source_workspace": "/workspace/scratch/db6780febd21/sway",
+    "fp32_completed_epochs": 318,
+    "qat_completed_epochs": 14,
+    "validation": "Dataset, checkpoint pairing and QAT code hashes checked before resume; no source or profile change."
+  },
+  "fp32_refinement": {
+    "objective": "mean(sqrt(mean((prediction-label)**2, dim=0)+1e-8)) per training minibatch; full validation uses unsmoothed established metric",
+    "maximum_epochs": 60,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "threads": 2,
+    "validation_patience": 15,
+    "selection": "Compare MSE continuation and one RMSE refinement candidate on validation only, before final test evaluation.",
+    "source_checkpoint": "sw/results/mars_accuracy_20260922/rmse_source.pt",
+    "source_epoch": 344,
+    "source_checkpoint_sha256": "4db520f4b9cacd122a5669946dd55ef352ed562cee91f3b3fc5825889bb6d7eb",
+    "source_validation_rmse_cm": 8.54694788975057
+  },
+  "fp32_pwl_refinement": {
+    "maximum_epochs": 40,
+    "batch_size": 256,
+    "threads": 2,
+    "learning_rate": 0.0001,
+    "validation_patience": 15,
+    "selection": "PWL forward validation RMSE, including epoch0 fallback; no test tuning",
+    "source_checkpoint": "sw/results/mars_accuracy_20260922/pwl_source.pt",
+    "purpose": "Reduce approximation error with same PWL functions and model architecture; report PWL FP32 separately from exact-function FP32.",
+    "source_checkpoint_sha256": "a945cce99e9f0dd133d4dbe06c83ef2ba4946525c3278dc309f354a3a09674dd",
+    "source_epoch": 12,
+    "initial_pwl_validation_rmse_cm": 9.720959400601757
+  },
+  "selection": {
+    "criterion": "Minimum full-validation mean coordinatewise RMSE within the intended forward mode",
+    "frozen_before_test_evaluation": true,
+    "test_used_for_selection": false,
+    "candidates": {
+      "fp32": {
+        "best_epoch": 378,
+        "validation_rmse_cm": 8.536445038160705,
+        "checkpoint_sha256": "5193bf44fc5d7d7205e53a4ed47002c4868ba1f0a8394fbd4e2b8b54bd3f2612"
+      },
+      "fp32_rmse": {
+        "best_epoch": 57,
+        "validation_rmse_cm": 8.421804571178727,
+        "checkpoint_sha256": "ce4c956baae665033a3d99d2496dd79b1631b2f03375b74ab5b73bbc85e88c33"
+      },
+      "fp32_pwl": {
+        "best_epoch": 32,
+        "validation_rmse_cm": 8.4913754124116,
+        "checkpoint_sha256": "c43da583f81ac3b611f354f5c03fd171a6aeba2181a13a4b1f3b1e7a961cfd2c"
+      },
+      "qat": {
+        "best_epoch": 35,
+        "validation_rmse_cm": 8.763667536568986,
+        "checkpoint_sha256": "e5c06bba8da13acdcc2341dc244d778e2d16f4bc99762173e59be24e51a8d2aa"
+      }
+    },
+    "selected_fp32_exact": "fp32_rmse",
+    "selected_fp32_pwl": "fp32_pwl",
+    "selected_int8": "qat"
+  },
+  "final_summary": "summary.json"
+}

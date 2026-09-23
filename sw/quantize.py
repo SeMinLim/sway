@@ -315,6 +315,103 @@ def quantizedForward(model, x, profile, returnStatistics=False):
     return output
 
 
+def _qatCorrection(exact, surrogate, exponent, bits=8):
+    """Use exact integer forward values and clipped straight-through gradients.
+
+    Subtracting identical surrogate tensors before adding the exact result
+    avoids cancellation that could otherwise change a forward value by an ULP.
+    The backward pass is an estimator, not the derivative of integer rounding.
+    """
+    lower, upper = signedLimits(bits)
+    scale = 2.0 ** exponent
+    surrogate = surrogate.clamp(lower * scale, upper * scale)
+    return exact.detach() + (surrogate - surrogate.detach())
+
+
+class QATObserver(QuantizationObserver):
+    """Frozen-scale QAT with the same forward arithmetic as the PTQ reference.
+
+    Integer affine operations and recurrence remain authoritative in the
+    forward pass. Their float surrogates supply gradients through rounding;
+    saturation clips those gradients. No scales or bit widths are learned.
+    """
+
+    def __call__(self, name, value):
+        exact = super().__call__(name, value)
+        entry = self.profile["nodes"][name]
+        return _qatCorrection(exact, value, entry["exponent"], entry["bits"])
+
+    def linear(self, name, x, weight, bias):
+        exact = super().linear(name, x, weight, bias)
+        surrogate = torch.nn.functional.linear(x, weight, bias)
+        return _qatCorrection(exact, surrogate, self.exponent(name))
+
+    def conv1d(self, name, x, weight, bias):
+        exact = super().conv1d(name, x, weight, bias)
+        padded = torch.nn.functional.pad(x.transpose(1, 2), (weight.shape[-1] - 1, 0))
+        surrogate = torch.nn.functional.conv1d(
+            padded, weight, bias, groups=x.shape[-1]).transpose(1, 2)
+        return _qatCorrection(exact, surrogate, self.exponent(name))
+
+    def ssm(self, prefix, x, delta, A, B, C, D):
+        try:
+            from .model import piecewise, EXP_KNOTS
+        except ImportError:
+            from model import piecewise, EXP_KNOTS
+        exponentInput = self(prefix + ".expInput", delta[:, :, :, None] * A)
+        if self.profile["usePWL"]:
+            aBar = piecewise(exponentInput, EXP_KNOTS, "exp")
+        else:
+            aBar = torch.exp(exponentInput)
+        aBar = self(prefix + ".Abar", aBar)
+        bBar = self(prefix + ".Bbar", delta[:, :, :, None] * B[:, :, None, :])
+        xExponent = self.exponent(prefix + ".x")
+        bExponent = self.exponent(prefix + ".Bbar")
+        cExponent = self.exponent(prefix + ".C")
+        dExponent = self.exponent(prefix + ".D")
+        stateExponent = self.exponent(prefix + ".state")
+        outputExponent = self.exponent(prefix + ".ssmY")
+        exact, statistics = integerSSM(
+            quantizeTensor(x, xExponent), quantizeTensor(aBar, -7),
+            quantizeTensor(bBar, bExponent), quantizeTensor(C, cExponent),
+            quantizeTensor(D, dExponent), xExponent, bExponent, cExponent,
+            dExponent, stateExponent, outputExponent, trace=True)
+        currentTrace = statistics.pop("currentState")
+        storedTrace = statistics.pop("storedState")
+        self.statistics[prefix] = statistics
+        currentExponent = stateExponent - 7
+        currentScale = 2.0 ** currentExponent
+        stateScale = 2.0 ** stateExponent
+        state = x.new_zeros(x.shape[0], x.shape[2], A.shape[-1])
+        outputs = []
+        for tokenIdx in range(x.shape[1]):
+            inputTerm = bBar[:, tokenIdx] * x[:, tokenIdx, :, None]
+            # Input alignment rounds before addition, with no independent
+            # saturation. Only the resulting current state is INT24-clipped.
+            aligned = torch.round(inputTerm.detach() / currentScale) * currentScale
+            inputTerm = aligned + (inputTerm - inputTerm.detach())
+            current = aBar[:, tokenIdx] * state + inputTerm
+            exactCurrent = currentTrace[:, tokenIdx].to(x.dtype) * currentScale
+            current = _qatCorrection(exactCurrent, current, currentExponent, 24)
+            outputs.append((current * C[:, tokenIdx, None, :]).sum(dim=-1) + D * x[:, tokenIdx])
+            # The exact trace applies arithmetic >>7, including negative floor
+            # truncation. Its STE retains the current-state derivative.
+            exactStored = storedTrace[:, tokenIdx].to(x.dtype) * stateScale
+            state = _qatCorrection(exactStored, current, stateExponent, 17)
+        surrogate = torch.stack(outputs, dim=1)
+        exact = exact.to(x.dtype) * (2.0 ** outputExponent)
+        return _qatCorrection(exact, surrogate, outputExponent)
+
+
+def qatForward(model, x, profile, returnStatistics=False):
+    """Train with frozen INT8/state formats and exact reference forward values."""
+    observer = QATObserver(profile)
+    output = forwardModel(model, x, observer=observer, usePWL=profile["usePWL"])
+    if returnStatistics:
+        return output, observer.statistics
+    return output
+
+
 def tensorName(name):
     return re.sub(r"[^A-Za-z0-9_]", "_", name)
 

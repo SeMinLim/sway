@@ -1,0 +1,189 @@
+{
+  "status": "completed",
+  "mode": "qat",
+  "model_identity": "our_reimplementation_not_author_checkpoint",
+  "config": {
+    "D": 20,
+    "E": 2,
+    "P": 2,
+    "M": 2,
+    "N": 8,
+    "L": 16,
+    "input_height": 8,
+    "input_width": 8,
+    "input_channels": 5,
+    "outputs": 57,
+    "dt_rank": 2,
+    "conv_kernel": 4,
+    "head_hidden": 20,
+    "norm_epsilon": 1e-05,
+    "source": "https://arxiv.org/html/2508.10370v1",
+    "reconstruction_assumptions": {
+      "convolution": "Causal depthwise width 4 with bias, followed by SiLU, as in standard Mamba; eMamba does not specify the kernel or grouping and its figure omits conv SiLU.",
+      "delta": "Rank ceil(D/16)=2; ReLU after both projections to keep delta nonnegative. Figure 3 places Softplus between projections; exact ordering is unresolved.",
+      "head": "Flatten the 16 tokens, linear 320->20, ReLU, linear 20->57. The regression head is not published; this explicit assumption preserves patch positions.",
+      "biases": "No in/out/x projection biases; convolution and delta projection biases enabled, as in standard Mamba; embedding and regression biases enabled.",
+      "initialization": "Kaiming-uniform linear/conv; A=-exp(A_log), A initialized to -1..-8; D=1; positive log-uniform delta biases 0.01..0.1 for ReLU.",
+      "normalization": "Per-token range across D channels, learnable per-channel gamma and beta; denominator clamped to epsilon for constant inputs.",
+      "state_reset": "Zero convolution history and zero selective state independently for each 8x8x5 radar frame.",
+      "pwl": "Own secant coefficients at 18 SiLU knots and 12 exponential knots; 17 and 11 segments match the stated counts, but author coefficients and their error definition are unpublished.",
+      "parameter_count": "Head and other omitted details prevent exact recovery of the reported 16.8 KB INT8 parameter footprint. The actual count is measured and reported separately."
+    }
+  },
+  "training": {
+    "mode": "qat",
+    "checkpoint": "sw/results/mars_accuracy_20260922/fp32_at_qat_start.pt",
+    "data": "../../data/mars",
+    "output": "sw/results/mars_accuracy_20260922/qat",
+    "epochs": 40,
+    "batch_size": 64,
+    "threads": 2,
+    "seed": 20260922,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "clip_grad": 1.0,
+    "patience": 15,
+    "lr_patience": 5,
+    "min_delta": 0.0001,
+    "device": "cpu",
+    "calibration": null,
+    "calibration_samples": 2048,
+    "calibration_percentiles": [
+      99.9,
+      100.0
+    ],
+    "resume": "sw/results/mars_accuracy_20260922/qat/last.pt"
+  },
+  "dataset_sha256": {
+    "featuremap_train.npy": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+    "labels_train.npy": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+    "featuremap_validate.npy": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+    "labels_validate.npy": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da"
+  },
+  "source_checkpoint": "/workspace/scratch/839f8f1063a0/work/sway/sw/results/mars_accuracy_20260922/fp32_at_qat_start.pt",
+  "source_checkpoint_sha256": "ead1fce057b460f9fe527505ea740a7aadd8344f34797b5a1541594e5f8530a1",
+  "source_checkpoint_epoch": 241,
+  "source_sha256": {
+    "finetune.py": "36f12de56866a7cd769858272959bdbe26af005e173ee5b811d5e2f3cc475bca",
+    "train.py": "0a6a43a14a7ce426387f5bc7215bd867aa3b331fbc27cddb1a885703e839a009",
+    "model.py": "f3d3c4eb9d2a067008bfc0fc4d6ada7461d5ac45ef068170269786afb4488a11",
+    "quantize.py": "74d0c4592139caaefa95610c516278b78e0d46292a65de70671c6f10cca3e016"
+  },
+  "train_frames": 24066,
+  "validation_frames": 8033,
+  "parameters": 15717,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "torch": "2.8.0+cpu",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "device": "cpu",
+    "threads": 2,
+    "interop_threads": 9,
+    "cuda_version": null,
+    "device_name": "x86_64",
+    "deterministic_algorithms": false
+  },
+  "selection_metric": "validation mean of 57 coordinatewise RMSE values in cm",
+  "validation_forward": "quantizedForward",
+  "initial_validation": {
+    "frames": 8033,
+    "mae_cm": 7.952317825962755,
+    "rmse_coordinate_mean_cm": 10.421101567345817,
+    "rmse_global_cm": 10.936133857338136,
+    "axis_mae_cm": {
+      "x": 8.262996137970237,
+      "y": 6.8103553400167955,
+      "z": 8.783601999901233
+    },
+    "axis_rmse_cm": {
+      "x": 11.15844484408749,
+      "y": 8.586497454784018,
+      "z": 11.518362403165945
+    }
+  },
+  "quantization_selection": {
+    "source": "training_calibration",
+    "calibration_file_sha256": null,
+    "candidates": [
+      {
+        "percentile": 99.9,
+        "calibration_policy": "uniform_percentile_99.9",
+        "profile_sha256": "e275f0c20766505f83ea9b377f37e7775519d133853d3287b4794462f0d30830",
+        "validation_metrics": {
+          "frames": 8033,
+          "mae_cm": 8.196884524030482,
+          "rmse_coordinate_mean_cm": 10.727113540476507,
+          "rmse_global_cm": 11.243266577804505,
+          "axis_mae_cm": {
+            "x": 8.642372743342177,
+            "y": 7.596077915538486,
+            "z": 8.352202913210782
+          },
+          "axis_rmse_cm": {
+            "x": 11.662041347460686,
+            "y": 9.559228523064323,
+            "z": 10.960070750904508
+          }
+        }
+      },
+      {
+        "percentile": 100.0,
+        "calibration_policy": "uniform_percentile_100",
+        "profile_sha256": "0175fe6de280184d44b8b21064b415ef617eb91bf7da33f54eadf24ee65a7b06",
+        "validation_metrics": {
+          "frames": 8033,
+          "mae_cm": 8.166539454389975,
+          "rmse_coordinate_mean_cm": 10.655526621963938,
+          "rmse_global_cm": 11.162449634604547,
+          "axis_mae_cm": {
+            "x": 8.439271522908054,
+            "y": 7.118083655002771,
+            "z": 8.942263185259101
+          },
+          "axis_rmse_cm": {
+            "x": 11.37279973360486,
+            "y": 8.900515907948595,
+            "z": 11.693264224338366
+          }
+        }
+      },
+      {
+        "percentile": 100.0,
+        "calibration_policy": "input_99.9_other_nodes_100",
+        "profile_sha256": "0a5f4a59a3abdbb86256819a72bbfa1961c6f11afe325e82a9826512d40b47ac",
+        "validation_metrics": {
+          "frames": 8033,
+          "mae_cm": 7.952317825962755,
+          "rmse_coordinate_mean_cm": 10.421101567345817,
+          "rmse_global_cm": 10.936133857338136,
+          "axis_mae_cm": {
+            "x": 8.262996137970237,
+            "y": 6.8103553400167955,
+            "z": 8.783601999901233
+          },
+          "axis_rmse_cm": {
+            "x": 11.15844484408749,
+            "y": 8.586497454784018,
+            "z": 11.518362403165945
+          }
+        }
+      }
+    ],
+    "selected_percentile": 100.0,
+    "selected_policy": "input_99.9_other_nodes_100",
+    "criterion": "validation mean coordinatewise RMSE from quantizedForward",
+    "frozen_during_training": true,
+    "test_used": false
+  },
+  "quantization_profile_sha256": "0a5f4a59a3abdbb86256819a72bbfa1961c6f11afe325e82a9826512d40b47ac",
+  "calibration_file_sha256": null,
+  "test_used_for_selection": false,
+  "epochs_completed": 40,
+  "best_epoch": 35,
+  "best_validation_rmse_cm": 8.763667536568986,
+  "elapsed_seconds_this_invocation": 1289.0166382310053,
+  "stop_reason": "configured_epoch_limit",
+  "convergence_claimed": false,
+  "best_checkpoint_sha256": "e5c06bba8da13acdcc2341dc244d778e2d16f4bc99762173e59be24e51a8d2aa"
+}

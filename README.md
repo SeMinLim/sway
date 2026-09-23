@@ -4,9 +4,21 @@ Compact selective state-space model accelerator research for ECP5-class FPGAs.
 
 Latest hardware evaluation: [resource comparison at equal kernel throughput](#resource-comparison-at-equal-kernel-throughput).
 
+## Accuracy retraining (2026-09-22)
+
+| Numerical model | Previous RMSE (cm) | New RMSE (cm) | Decrease |
+|---|---:|---:|---:|
+| FP32, exact SiLU/exp | 8.9582 | 8.4884 | 5.25% |
+| FP32, PWL SiLU/exp | 9.6793 | 8.5476 | 11.69% |
+| INT8, PTQ to QAT | 10.4598 | 8.8135 | 15.74% |
+
+These measured software results preserve the original 7,984-frame test set and 15,717-parameter graph. FP32 training was continued and compared with a validation-selected coordinate-RMSE refinement. Separate PWL and INT8 QAT branches adapt the weights to inference arithmetic. QAT preserves exact integer-reference forward values, frozen train-only calibration, and INT24/INT17 state formats. The FP32, PWL, and INT8 checkpoints come from their documented separate branches. Direct PTQ of the selected exact-FP32 checkpoint gives 11.1471 cm; the 8.8135 cm result comes from the separate QAT branch.
+
+The eMamba reference is FP32 7.85 / INT8 8.83 cm using post-training quantization (PTQ). Our 8.8135 cm INT8 result uses quantization-aware training (QAT), which updates the weights under simulated quantization. It therefore does not reproduce eMamba's PTQ accuracy or establish an equivalent-method comparison. Different split membership and unpublished implementation details also prevent a matched reproduction. The new weights/scales have software validation only and are not installed in the historical RTL artifacts below. See [retraining results and commands](sw/results/mars_accuracy_20260922/README.md), [metrics](sw/results/mars_accuracy_20260922/summary.json), and [selection/provenance](sw/results/mars_accuracy_20260922/protocol.json).
+
 ## MARS software
 
-`sw/` implements, trains, evaluates, quantizes, and exports a MARS human-pose regression model reconstructed from the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). It uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, and ReLU for the selective step size. Exact SiLU and exponential functions are used in training; piecewise approximations are evaluated separately.
+`sw/` implements, trains, evaluates, quantizes, and exports a MARS human-pose regression model reconstructed from the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). It uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, and ReLU for the selective step size. The exact-FP32 branch trains with exact SiLU and exponential functions; the PWL adaptation and INT8 QAT branches train with the corresponding piecewise inference functions.
 
 This is our reimplementation, not an author checkpoint. The paper omits the regression head, several block details, training recipe, and approximation coefficients. Our choices are explicit in [model.json](sw/config/model.json). The implemented model has 15,717 trainable parameters, so it is not a parameter-exact recovery of the reported model.
 
@@ -26,7 +38,7 @@ python sw/evaluate.py --data ../data/mars --checkpoint sw/results/my_run/best.pt
 
 Training uses MSE, AdamW (learning rate 0.001, weight decay 0.0001), gradient clipping at 1, validation-based learning-rate reduction, and early stopping after 25 epochs without improvement. These are our training settings. The default seed is 20260917. The test split is excluded from fitting, calibration, learning-rate decisions, and checkpoint selection. Resume within the same output directory using `--resume sw/results/my_run/last.pt` and a larger `--epochs` limit.
 
-Quantization uses symmetric INT8 values and power-of-two scales calibrated on 2,048 training frames. Two clipping policies (99.9th percentile and maximum) are compared on validation data before final test evaluation. The affine/convolution reference uses integer accumulators; the SSM uses INT24 current state and INT17 retained state. Normalization, nonlinearities, and remaining elementwise operations use quantize/dequantize simulation. These results validate the software numerical model, not complete integer RTL equivalence.
+The PTQ workflow above uses symmetric INT8 values and power-of-two scales calibrated on 2,048 training frames. Two clipping policies (99.9th percentile and maximum) are compared on validation data before final test evaluation. The affine/convolution reference uses integer accumulators; the SSM uses INT24 current state and INT17 retained state. Normalization, nonlinearities, and remaining elementwise operations use quantize/dequantize simulation. These results validate the software numerical model, not complete integer RTL equivalence.
 
 ## Outputs
 
@@ -39,7 +51,7 @@ Quantization uses symmetric INT8 values and power-of-two scales calibrated on 2,
 
 No FPGA latency, utilization, power, or board result is claimed by this software experiment.
 
-## Measured run
+## Original measured run (2026-09-17)
 
 [Run 20260917](sw/results/mars_seed20260917/run.json) trained for 150 epochs on CPU with two PyTorch threads (942.26 seconds). Validation selected epoch 148, with coordinatewise mean RMSE 8.9315 cm. The epoch limit was reached; convergence is not claimed. Training history and checkpoints are included.
 
