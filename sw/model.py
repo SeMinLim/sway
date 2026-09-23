@@ -119,6 +119,19 @@ def createModel(config):
 	sequenceLength = (config["input_height"] // config["P"]) * (config["input_width"] // config["P"])
 	if sequenceLength != config["L"]:
 		raise ValueError("L differs from the number of non-overlapping patches")
+	divisors = config.get("input_channel_divisors")
+	if divisors is not None:
+		if len(divisors) != config["input_channels"] or any(
+				not math.isfinite(value) or value <= 0 or not math.log2(value).is_integer()
+				for value in divisors):
+			raise ValueError("Input channel divisors must be positive powers of two")
+	for name, count, lower, upper in [("silu_knots", 18, -7.0, 7.0),
+			("exp_knots", 12, -4.0, 1.0)]:
+		knots = config.get(name)
+		if knots is not None and (len(knots) != count or knots[0] != lower
+				or knots[-1] != upper or any(not math.isfinite(value) for value in knots)
+				or any(left >= right for left, right in zip(knots, knots[1:]))):
+			raise ValueError("Invalid fixed-segment PWL configuration: " + name)
 	return MARSModel(config)
 
 
@@ -143,8 +156,8 @@ def forwardBlock(block, value, config, prefix, observer=None, usePWL=False):
 		convolved = F.conv1d(padded, weight, bias, groups=innerDim).transpose(1, 2)
 		convolved = observe(observer, prefix + ".conv", convolved)
 	if usePWL:
-		x = piecewise(convolved, SILU_KNOTS, "silu")
-		gate = piecewise(gateInput, SILU_KNOTS, "silu")
+		x = piecewise(convolved, config.get("silu_knots", SILU_KNOTS), "silu")
+		gate = piecewise(gateInput, config.get("silu_knots", SILU_KNOTS), "silu")
 	else:
 		x = F.silu(convolved)
 		gate = F.silu(gateInput)
@@ -172,7 +185,7 @@ def forwardBlock(block, value, config, prefix, observer=None, usePWL=False):
 	if y is None:
 		argument = observe(observer, prefix + ".expInput", delta.unsqueeze(-1) * A)
 		if usePWL:
-			Abar = piecewise(argument, EXP_KNOTS, "exp")
+			Abar = piecewise(argument, config.get("exp_knots", EXP_KNOTS), "exp")
 		else:
 			Abar = torch.exp(argument)
 		Abar = observe(observer, prefix + ".Abar", Abar)
@@ -200,6 +213,8 @@ def forwardModel(model, value, observer=None, usePWL=False):
 	expected = (config["input_height"], config["input_width"], config["input_channels"])
 	if tuple(value.shape[1:]) != expected:
 		raise ValueError("Expected input [batch, %d, %d, %d]" % expected)
+	if "input_channel_divisors" in config:
+		value = value / value.new_tensor(config["input_channel_divisors"])
 	value = observe(observer, "input", value)
 	batchSize = value.shape[0]
 	patchSize = config["P"]

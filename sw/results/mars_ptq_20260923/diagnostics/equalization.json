@@ -1,0 +1,248 @@
+{
+  "scope": "Function-preserving PTQ preparation checks; training inputs only; no test inference or targets used.",
+  "tensor_quantization_checks": {
+    "checkpoint": "sw/results/mars_accuracy_20260922/fp32_rmse/best.pt",
+    "split": "train",
+    "equivalenceFrames": 128,
+    "quantizationErrorFrames": 2048,
+    "threads": 1,
+    "noLabelsLoaded": true,
+    "cases": {
+      "identity": {
+        "inputDivisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "headDivisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "exact": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "pwl": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "calibrationForwardFinite": true,
+        "input_99.9": {
+          "originalExponent": -4,
+          "equalizedExponent": -4,
+          "originalMSE": 0.0017973121721297503,
+          "equalizedMSEOriginalUnits": 0.0017973121721297503
+        },
+        "input_100": {
+          "originalExponent": -2,
+          "equalizedExponent": -2,
+          "originalMSE": 0.0030818290542811155,
+          "equalizedMSEOriginalUnits": 0.0030818290542811155
+        }
+      },
+      "input": {
+        "inputDivisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          4.0
+        ],
+        "headDivisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "exact": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "pwl": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "calibrationForwardFinite": true,
+        "input_99.9": {
+          "originalExponent": -4,
+          "equalizedExponent": -5,
+          "originalMSE": 0.0017973121721297503,
+          "equalizedMSEOriginalUnits": 0.00019284400332253426
+        },
+        "input_100": {
+          "originalExponent": -2,
+          "equalizedExponent": -4,
+          "originalMSE": 0.0030818290542811155,
+          "equalizedMSEOriginalUnits": 0.000713570392690599
+        }
+      },
+      "input_head": {
+        "inputDivisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          4.0
+        ],
+        "headDivisors": [
+          1.0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1.0,
+          0.5,
+          0.5,
+          1.0,
+          1.0,
+          1.0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1.0,
+          0.5,
+          1.0,
+          1.0
+        ],
+        "exact": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "pwl": {
+          "maxAbsPredictionDifference": 0.0
+        },
+        "calibrationForwardFinite": true,
+        "input_99.9": {
+          "originalExponent": -4,
+          "equalizedExponent": -5,
+          "originalMSE": 0.0017973121721297503,
+          "equalizedMSEOriginalUnits": 0.00019284400332253426
+        },
+        "input_100": {
+          "originalExponent": -2,
+          "equalizedExponent": -4,
+          "originalMSE": 0.0030818290542811155,
+          "equalizedMSEOriginalUnits": 0.000713570392690599
+        }
+      }
+    },
+    "sourceUnmodified": true,
+    "invalidDivisorsRejected": true,
+    "repeatInputTransformRejected": true
+  },
+  "cli_probe": {
+    "checkpoint": "ptq_probe_equalized.pt",
+    "checkpointSHA256": "f9e1e1be784e5ae015f4c9373bd8888962a51482ad28181cee094f4b9badb0fa",
+    "equalization": {
+      "schemaVersion": 1,
+      "method": "function_preserving_power_of_two_equalization",
+      "inputChannelDivisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        4.0
+      ],
+      "headHiddenDivisors": [
+        0.5,
+        0.5,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5
+      ],
+      "inputPreprocessing": "raw_input / inputChannelDivisors before input quantization",
+      "embeddingTransform": "weight columns multiplied by repeated inputChannelDivisors",
+      "headTransform": "headHidden rows and bias divided; headOutput columns multiplied",
+      "parametersAlreadyTransformed": true,
+      "usesGradients": false,
+      "usesTargets": false,
+      "trainingMode": "ptq",
+      "weightsChangedOnlyAlgebraically": true,
+      "retrainingPerformed": false,
+      "sourceCheckpointSHA256": "f1befa84ead613f1e263183949c1904d2b2135db216bdf099855e91dfc8e56fe",
+      "sourceCheckpointEpoch": 2,
+      "sourceMode": "fp32_head_refit",
+      "sourceBestValidationRMSECm": 8.363109071998997,
+      "sourceDatasetSHA256": {
+        "featuremap_train.npy": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+        "labels_train.npy": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+        "featuremap_validate.npy": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+        "labels_validate.npy": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da"
+      },
+      "equalizationSourceSHA256": {
+        "model.py": "9728619a1a1be6a852631f9ba77bcdca3502610937001a6f742c5e5a4de0b55c",
+        "ptq_equalize.py": "f59e4d021b1b91c08497d3021be03671be8e692701515a751c45991d6c51e637"
+      },
+      "verification": {
+        "split": "train",
+        "frames": 128,
+        "seed": 0,
+        "indexSHA256": "e4f58977df25609f6fc4ef9e0607756ece6c2030f1172708db243e4422522fd6",
+        "maxAbsoluteOutputDifference": {
+          "fp32": 0.0,
+          "fp32_pwl": 0.0
+        },
+        "bitIdentical": true,
+        "testUsed": false
+      },
+      "checkpointUse": "inference and PTQ calibration only; do not resume training",
+      "removedTrainingState": []
+    }
+  },
+  "focused_tests": {
+    "command": "PYTHONPATH=sw python -m unittest sw/test_ptq.py -v",
+    "passed": 5,
+    "failed": 0,
+    "syntheticFrames": 5,
+    "sourceSHA256": "26ce692086498a1e2bbafa2f898bc9c5cc172ffc207f73b80298b1eab3c9c138"
+  },
+  "rmse_claim": "Reduced input quantization MSE is a tensor-level diagnostic; this file makes no claim of improved pose RMSE."
+}

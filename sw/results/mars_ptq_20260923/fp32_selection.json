@@ -1,0 +1,25 @@
+{
+  "candidates": [
+    {
+      "name": "head_refit",
+      "checkpoint": "sw/results/mars_ptq_20260923/head_refit/best.pt",
+      "checkpoint_sha256": "27057d66fdee201d8f538a9255c7bd3150be30ddf199bc01e12f0980e2b5f0bb",
+      "validation_rmse_cm": 8.356902842244313
+    },
+    {
+      "name": "restart_head_refit",
+      "checkpoint": "sw/results/mars_ptq_20260923/restart_head_refit/best.pt",
+      "checkpoint_sha256": "6462f4ddec210047ed4c911ee54224f5bc9b7d6c73628a1da61dd21ddec56519",
+      "validation_rmse_cm": 7.959600116300266
+    }
+  ],
+  "selected": {
+    "name": "restart_head_refit",
+    "checkpoint": "sw/results/mars_ptq_20260923/restart_head_refit/best.pt",
+    "checkpoint_sha256": "6462f4ddec210047ed4c911ee54224f5bc9b7d6c73628a1da61dd21ddec56519",
+    "validation_rmse_cm": 7.959600116300266
+  },
+  "criterion": "minimum full-validation mean coordinatewise RMSE",
+  "test_used": false,
+  "training_forward": "exact FP32; no fake quantization"
+}

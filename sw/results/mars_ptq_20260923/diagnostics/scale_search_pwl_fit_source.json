@@ -1,0 +1,244 @@
+{
+  "scope": "Exploratory PTQ scale calibration after train-activation PWL knot fitting, before input equalization",
+  "test_used": false,
+  "checkpoint": "ptq_probe_pwl.pt",
+  "source_checkpoint_sha256": "f1befa84ead613f1e263183949c1904d2b2135db216bdf099855e91dfc8e56fe",
+  "calibration": {
+    "method": "PTQ train-output reconstruction by discrete exponent coordinate search",
+    "parameter_updates": false,
+    "gradients_used": false,
+    "test_used": false,
+    "teacher": "fp32_exact",
+    "source_checkpoint_sha256": "f1befa84ead613f1e263183949c1904d2b2135db216bdf099855e91dfc8e56fe",
+    "dataset_sha256": {
+      "featuremap_train.npy": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+      "labels_train.npy": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+      "featuremap_validate.npy": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+      "labels_validate.npy": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da"
+    },
+    "reconstruction_samples": 1024,
+    "reconstruction_seed": 0,
+    "reconstruction_index_sha256": "4cd2fb5a87e3c7cb6b084fba77951faa260ada9804552b7d29b4d80e8a873cdc",
+    "arguments": {
+      "data": "/workspace/scratch/839f8f1063a0/data/mars",
+      "checkpoint": "/workspace/scratch/839f8f1063a0/ptq_probe_pwl.pt",
+      "output": "/workspace/scratch/839f8f1063a0/ptq_audit/probe_pwlfit",
+      "initial_profile": null,
+      "calibration_samples": 2048,
+      "reconstruction_samples": 1024,
+      "batch_size": 256,
+      "rounds": 3,
+      "seed": 0,
+      "threads": 1,
+      "teacher_pwl": false
+    },
+    "source_sha256": {
+      "model.py": "9728619a1a1be6a852631f9ba77bcdca3502610937001a6f742c5e5a4de0b55c",
+      "quantize.py": "00d81b0ee8f2cbf80a9a4e2dcc6461fdad7bcfb63165f354572aed0a742c1154",
+      "calibrate_ptq.py": "ae4ba9325c2869ee8fc173ba02586d2c1682289abfa3d07abc2de34f64aaf61e"
+    }
+  },
+  "candidates": [
+    {
+      "name": "percentile_99.9",
+      "reconstruction_mse": 0.0072504579891557825,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 8.718122854918919,
+        "rmse_coordinate_mean_cm": 11.470686627473112,
+        "rmse_global_cm": 12.414612910234116,
+        "axis_mae_cm": {
+          "x": 9.770713977559064,
+          "y": 6.7530419122047505,
+          "z": 9.630612674992948
+        },
+        "axis_rmse_cm": {
+          "x": 12.849013543893065,
+          "y": 8.943568129512439,
+          "z": 12.61947820901383
+        }
+      }
+    },
+    {
+      "name": "percentile_99.9_exp_neg5",
+      "reconstruction_mse": 0.006438867135558996,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 8.434079537467992,
+        "rmse_coordinate_mean_cm": 11.174759989638957,
+        "rmse_global_cm": 12.09337790889849,
+        "axis_mae_cm": {
+          "x": 9.67617379572392,
+          "y": 6.197616329593138,
+          "z": 9.428448487086921
+        },
+        "axis_rmse_cm": {
+          "x": 12.835242736105856,
+          "y": 8.35113581672643,
+          "z": 12.337901416084584
+        }
+      }
+    },
+    {
+      "name": "percentile_100",
+      "reconstruction_mse": 0.0031414780674727644,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 7.624364473057111,
+        "rmse_coordinate_mean_cm": 10.076618717147738,
+        "rmse_global_cm": 10.645122425200457,
+        "axis_mae_cm": {
+          "x": 8.419931651281317,
+          "y": 5.992805626863384,
+          "z": 8.460356141026635
+        },
+        "axis_rmse_cm": {
+          "x": 11.335596700020035,
+          "y": 7.715723051170592,
+          "z": 11.178536400252588
+        }
+      }
+    },
+    {
+      "name": "percentile_100_exp_neg5",
+      "reconstruction_mse": 0.0022188265699949073,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 7.214479859549216,
+        "rmse_coordinate_mean_cm": 9.630314269537337,
+        "rmse_global_cm": 10.213568613111422,
+        "axis_mae_cm": {
+          "x": 8.239309768161869,
+          "y": 5.391152740142652,
+          "z": 8.012977070343126
+        },
+        "axis_rmse_cm": {
+          "x": 11.22047402516158,
+          "y": 7.078378155541769,
+          "z": 10.592090627908659
+        }
+      }
+    },
+    {
+      "name": "hybrid",
+      "reconstruction_mse": 0.0024324465015244526,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 7.380617303729225,
+        "rmse_coordinate_mean_cm": 9.744776720420724,
+        "rmse_global_cm": 10.309609695648554,
+        "axis_mae_cm": {
+          "x": 8.247767076570058,
+          "y": 5.690968824808976,
+          "z": 8.203116009808642
+        },
+        "axis_rmse_cm": {
+          "x": 11.072876088085955,
+          "y": 7.347224270861423,
+          "z": 10.814229802314793
+        }
+      }
+    },
+    {
+      "name": "hybrid_exp_neg5",
+      "reconstruction_mse": 0.001573173557380369,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.951513436432595,
+        "rmse_coordinate_mean_cm": 9.287875863401176,
+        "rmse_global_cm": 9.872683897975506,
+        "axis_mae_cm": {
+          "x": 8.006576091677529,
+          "y": 5.086864453608866,
+          "z": 7.76109976401139
+        },
+        "axis_rmse_cm": {
+          "x": 10.884577191043656,
+          "y": 6.70401756628648,
+          "z": 10.275032832873391
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_1",
+      "reconstruction_mse": 0.0010836955445112915,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.685381499600331,
+        "rmse_coordinate_mean_cm": 8.995833925313043,
+        "rmse_global_cm": 9.606361740343473,
+        "axis_mae_cm": {
+          "x": 7.81074603892383,
+          "y": 4.6442635308808375,
+          "z": 7.601134928996326
+        },
+        "axis_rmse_cm": {
+          "x": 10.659037338994695,
+          "y": 6.22943627379563,
+          "z": 10.099028163148807
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_2",
+      "reconstruction_mse": 0.0008734326407358822,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.554160397547804,
+        "rmse_coordinate_mean_cm": 8.867782539192186,
+        "rmse_global_cm": 9.483998781868193,
+        "axis_mae_cm": {
+          "x": 7.653643452278429,
+          "y": 4.492118462069919,
+          "z": 7.516719278295062
+        },
+        "axis_rmse_cm": {
+          "x": 10.555392960564836,
+          "y": 6.06665964326367,
+          "z": 9.981295013748051
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_3",
+      "reconstruction_mse": 0.0006608288559798302,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.475881496931731,
+        "rmse_coordinate_mean_cm": 8.752945590626943,
+        "rmse_global_cm": 9.374967274106563,
+        "axis_mae_cm": {
+          "x": 7.58582934355436,
+          "y": 4.381701611609943,
+          "z": 7.46011353563089
+        },
+        "axis_rmse_cm": {
+          "x": 10.414856594464474,
+          "y": 5.931914955772484,
+          "z": 9.91206522164387
+        }
+      }
+    }
+  ],
+  "selected_candidate": "reconstruction_round_3",
+  "best_validation_rmse_cm": 8.752945590626943,
+  "parameters_unchanged": true,
+  "search_seconds": 383.85022920899974,
+  "rounds": [
+    {
+      "round": 1,
+      "reconstruction_mse": 0.0010836955445112915,
+      "accepted_scale_group_changes": 29
+    },
+    {
+      "round": 2,
+      "reconstruction_mse": 0.0008734326407358822,
+      "accepted_scale_group_changes": 20
+    },
+    {
+      "round": 3,
+      "reconstruction_mse": 0.0006608288559798302,
+      "accepted_scale_group_changes": 18
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "provenance": {
+    "method": "PTQ train-output reconstruction by discrete exponent coordinate search",
+    "parameter_updates": false,
+    "gradients_used": false,
+    "test_used": false,
+    "teacher": "fp32_exact",
+    "source_checkpoint_sha256": "e3615a6133bad48594a99f20f0387074e8416a94f029bbe5e62dafdb579ab134",
+    "dataset_sha256": {
+      "featuremap_train.npy": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+      "labels_train.npy": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+      "featuremap_validate.npy": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+      "labels_validate.npy": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da"
+    },
+    "reconstruction_samples": 1024,
+    "reconstruction_seed": 0,
+    "reconstruction_index_sha256": "4cd2fb5a87e3c7cb6b084fba77951faa260ada9804552b7d29b4d80e8a873cdc",
+    "arguments": {
+      "data": "/workspace/scratch/839f8f1063a0/data/mars",
+      "checkpoint": "/workspace/scratch/839f8f1063a0/work/sway/sw/results/mars_ptq_20260923/prepared/pwl_source.pt",
+      "output": "/workspace/scratch/839f8f1063a0/work/sway/sw/results/mars_ptq_20260923/calibration_pwl",
+      "initial_profile": null,
+      "calibration_samples": 2048,
+      "reconstruction_samples": 1024,
+      "batch_size": 256,
+      "rounds": 5,
+      "seed": 0,
+      "threads": 1,
+      "teacher_pwl": false
+    },
+    "source_sha256": {
+      "model.py": "9728619a1a1be6a852631f9ba77bcdca3502610937001a6f742c5e5a4de0b55c",
+      "quantize.py": "15c8bd4f77a725edc4039176c9e417d56e1a4da9f3490418f0d1fe485484c4b8",
+      "calibrate_ptq.py": "d84df8bf1774142785131747b6c4eca284571c35c58e48ad52d7cdfa31becf16"
+    }
+  },
+  "candidates": [
+    {
+      "name": "percentile_99.9",
+      "reconstruction_mse": 0.006189540618279786,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 8.221243411072058,
+        "rmse_coordinate_mean_cm": 10.955434191681924,
+        "rmse_global_cm": 11.683810774004803,
+        "axis_mae_cm": {
+          "x": 9.54399828507355,
+          "y": 6.0900755624410525,
+          "z": 9.02965638570157
+        },
+        "axis_rmse_cm": {
+          "x": 12.527204743804203,
+          "y": 8.479771826099869,
+          "z": 11.8593260051417
+        }
+      }
+    },
+    {
+      "name": "percentile_99.9_exp_neg5",
+      "reconstruction_mse": 0.006070980153738693,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 8.10713178467694,
+        "rmse_coordinate_mean_cm": 10.883142376434662,
+        "rmse_global_cm": 11.609530660204607,
+        "axis_mae_cm": {
+          "x": 9.52147823225653,
+          "y": 5.789284651379752,
+          "z": 9.010632470394535
+        },
+        "axis_rmse_cm": {
+          "x": 12.616146176829652,
+          "y": 8.232945624796812,
+          "z": 11.800335327677523
+        }
+      }
+    },
+    {
+      "name": "percentile_100",
+      "reconstruction_mse": 0.006333298149807971,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 8.24297485332397,
+        "rmse_coordinate_mean_cm": 10.8770433353997,
+        "rmse_global_cm": 11.655196960359811,
+        "axis_mae_cm": {
+          "x": 9.458238837351795,
+          "y": 5.868737758382615,
+          "z": 9.401947964237497
+        },
+        "axis_rmse_cm": {
+          "x": 12.577389939854037,
+          "y": 7.642688253989513,
+          "z": 12.411051812355549
+        }
+      }
+    },
+    {
+      "name": "percentile_100_exp_neg5",
+      "reconstruction_mse": 0.0021074209824057557,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.793353930246355,
+        "rmse_coordinate_mean_cm": 9.17226303975921,
+        "rmse_global_cm": 9.810328106940835,
+        "axis_mae_cm": {
+          "x": 7.899640824421874,
+          "y": 4.7178661538111415,
+          "z": 7.7625548125060515
+        },
+        "axis_rmse_cm": {
+          "x": 10.912538753795738,
+          "y": 6.353005383151272,
+          "z": 10.251244982330618
+        }
+      }
+    },
+    {
+      "name": "hybrid",
+      "reconstruction_mse": 0.005422340010731072,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 7.976494948748144,
+        "rmse_coordinate_mean_cm": 10.53388962095057,
+        "rmse_global_cm": 11.338035192108583,
+        "axis_mae_cm": {
+          "x": 9.29088097793128,
+          "y": 5.486472899524497,
+          "z": 9.152130968788654
+        },
+        "axis_rmse_cm": {
+          "x": 12.370814345547,
+          "y": 7.1522513706377975,
+          "z": 12.078603146666913
+        }
+      }
+    },
+    {
+      "name": "hybrid_exp_neg5",
+      "reconstruction_mse": 0.0014761198279098055,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.50946998132024,
+        "rmse_coordinate_mean_cm": 8.7634190845747,
+        "rmse_global_cm": 9.425732903029962,
+        "axis_mae_cm": {
+          "x": 7.674506839290991,
+          "y": 4.326641959420228,
+          "z": 7.5272611452495
+        },
+        "axis_rmse_cm": {
+          "x": 10.530963156416554,
+          "y": 5.805657683204193,
+          "z": 9.953636414103354
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_1",
+      "reconstruction_mse": 0.0007502169930991573,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.121609525276366,
+        "rmse_coordinate_mean_cm": 8.405765803265197,
+        "rmse_global_cm": 9.061015974396227,
+        "axis_mae_cm": {
+          "x": 7.250142130216769,
+          "y": 3.945203528273988,
+          "z": 7.169482917338341
+        },
+        "axis_rmse_cm": {
+          "x": 10.122804921855513,
+          "y": 5.505332004983996,
+          "z": 9.589160482956084
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_2",
+      "reconstruction_mse": 0.0005316869298581762,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.040719551965762,
+        "rmse_coordinate_mean_cm": 8.286932763607359,
+        "rmse_global_cm": 8.936105501490665,
+        "axis_mae_cm": {
+          "x": 7.128309420998593,
+          "y": 3.8784571019573773,
+          "z": 7.115392132941316
+        },
+        "axis_rmse_cm": {
+          "x": 9.970413573359776,
+          "y": 5.395947161794675,
+          "z": 9.494437555667623
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_3",
+      "reconstruction_mse": 0.0005066095674782314,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.046500885249006,
+        "rmse_coordinate_mean_cm": 8.286797803162072,
+        "rmse_global_cm": 8.938059563675397,
+        "axis_mae_cm": {
+          "x": 7.146732598135856,
+          "y": 3.875950903532828,
+          "z": 7.116819154078331
+        },
+        "axis_rmse_cm": {
+          "x": 9.982785367613515,
+          "y": 5.391283343507922,
+          "z": 9.48632469836478
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_4",
+      "reconstruction_mse": 0.0004944892394283035,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.031393738328224,
+        "rmse_coordinate_mean_cm": 8.270994478914139,
+        "rmse_global_cm": 8.917422765524705,
+        "axis_mae_cm": {
+          "x": 7.1136396356179725,
+          "y": 3.877017873498244,
+          "z": 7.103523705868458
+        },
+        "axis_rmse_cm": {
+          "x": 9.963062470440724,
+          "y": 5.379397260884671,
+          "z": 9.47052370541702
+        }
+      }
+    },
+    {
+      "name": "reconstruction_round_5",
+      "reconstruction_mse": 0.0004892319773253168,
+      "validation_metrics": {
+        "frames": 8033,
+        "mae_cm": 6.027833361290482,
+        "rmse_coordinate_mean_cm": 8.258300820775457,
+        "rmse_global_cm": 8.904272027749139,
+        "axis_mae_cm": {
+          "x": 7.116090741078973,
+          "y": 3.864961879786235,
+          "z": 7.102447463006238
+        },
+        "axis_rmse_cm": {
+          "x": 9.951446004248625,
+          "y": 5.367894027376979,
+          "z": 9.455562430700766
+        }
+      }
+    }
+  ],
+  "selection": "minimum full-validation mean coordinatewise RMSE",
+  "best_validation_rmse_cm": 8.258300820775457,
+  "selected_candidate": "reconstruction_round_5"
+}

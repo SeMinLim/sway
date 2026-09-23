@@ -1,0 +1,141 @@
+{
+  "siluKnots": [
+    -7.0,
+    -4.95,
+    -3.5,
+    -1.65,
+    -1.2,
+    -0.9,
+    -0.65,
+    -0.45,
+    -0.3,
+    -0.15,
+    0.0,
+    0.15,
+    0.3,
+    0.5,
+    0.7,
+    0.95,
+    1.3,
+    7.0
+  ],
+  "expKnots": [
+    -4.0,
+    -2.88,
+    -2.2,
+    -1.7,
+    -1.32,
+    -1.02,
+    -0.76,
+    -0.54,
+    -0.34,
+    -0.16,
+    0.0,
+    1.0
+  ],
+  "method": "train-activation histogram minimum-MSE secant grid dynamic program",
+  "calibrationSplit": "train",
+  "calibrationSamples": 2048,
+  "calibrationSeed": 0,
+  "calibrationIndexSHA256": "d70dbf179f2a907bcbe90f4f420d0f4a2530ccfebdee4b928e943e66829d0169",
+  "modelParametersUpdated": false,
+  "testUsed": false,
+  "histogram": {
+    "bins": 14000,
+    "elements": {
+      "silu": 5242880,
+      "exp": 20971520
+    },
+    "outsideDomain": {
+      "silu": 0,
+      "exp": 514822
+    },
+    "expZeroValuesExcludedFromObjective": true
+  },
+  "endpointGridStep": {
+    "silu": 0.05,
+    "exp": 0.02
+  },
+  "trainHistogramMSE": {
+    "fitted": {
+      "silu": 2.7287013745551665e-06,
+      "exp": 6.731421812742342e-06
+    },
+    "baseline": {
+      "silu": 0.00010174637173658255,
+      "exp": 0.00017703884438252112
+    }
+  },
+  "checkpointSHA256": "ce4c956baae665033a3d99d2496dd79b1631b2f03375b74ab5b73bbc85e88c33",
+  "sourceCheckpoint": "sw/results/mars_accuracy_20260922/fp32_rmse/best.pt",
+  "sourceSHA256": "2def468cfe3b81a09c986c7042f1cdf0215a8957524b62120549bdc18f9c4d8f",
+  "trainFeaturesSHA256": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+  "validation": {
+    "exact": {
+      "frames": 8033,
+      "mae_cm": 6.1731984206347335,
+      "rmse_coordinate_mean_cm": 8.421804571178727,
+      "rmse_global_cm": 9.112290999691535,
+      "axis_mae_cm": {
+        "x": 7.405320150079289,
+        "y": 3.792861087394701,
+        "z": 7.321414024430208
+      },
+      "axis_rmse_cm": {
+        "x": 10.231255474139141,
+        "y": 5.317953602247563,
+        "z": 9.71620463714948
+      }
+    },
+    "baseline": {
+      "frames": 8033,
+      "mae_cm": 7.391303502876744,
+      "rmse_coordinate_mean_cm": 9.638559462211374,
+      "rmse_global_cm": 10.08169153295858,
+      "axis_mae_cm": {
+        "x": 7.611890747490891,
+        "y": 6.62489780380612,
+        "z": 7.937121957333223
+      },
+      "axis_rmse_cm": {
+        "x": 10.546737651874949,
+        "y": 8.049590408897759,
+        "z": 10.319350325861414
+      }
+    },
+    "exp_only": {
+      "frames": 8033,
+      "mae_cm": 7.372603280192231,
+      "rmse_coordinate_mean_cm": 9.6135168235718,
+      "rmse_global_cm": 10.050729719802272,
+      "axis_mae_cm": {
+        "x": 7.6044506218085,
+        "y": 6.6495026918492846,
+        "z": 7.863856526918909
+      },
+      "axis_rmse_cm": {
+        "x": 10.571273159200528,
+        "y": 8.047317439618917,
+        "z": 10.221959871895953
+      }
+    },
+    "both": {
+      "frames": 8033,
+      "mae_cm": 6.2181753904532,
+      "rmse_coordinate_mean_cm": 8.465162213952837,
+      "rmse_global_cm": 9.141774961503883,
+      "axis_mae_cm": {
+        "x": 7.404441831288121,
+        "y": 3.893961218531295,
+        "z": 7.356123121540181
+      },
+      "axis_rmse_cm": {
+        "x": 10.238799949941695,
+        "y": 5.418464631902778,
+        "z": 9.73822206001404
+      }
+    }
+  },
+  "validationLabelsSHA256": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da",
+  "validationFeaturesSHA256": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807"
+}

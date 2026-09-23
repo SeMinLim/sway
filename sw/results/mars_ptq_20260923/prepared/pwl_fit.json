@@ -1,0 +1,150 @@
+{
+  "siluKnots": [
+    -7.0,
+    -5.05,
+    -3.55,
+    -1.65,
+    -1.25,
+    -0.95,
+    -0.7,
+    -0.5,
+    -0.3,
+    -0.15,
+    0.0,
+    0.15,
+    0.3,
+    0.5,
+    0.7,
+    0.95,
+    1.3,
+    7.0
+  ],
+  "expKnots": [
+    -4.0,
+    -2.9,
+    -2.22,
+    -1.72,
+    -1.34,
+    -1.02,
+    -0.76,
+    -0.54,
+    -0.34,
+    -0.16,
+    0.0,
+    1.0
+  ],
+  "method": "train-activation histogram minimum-MSE secant grid dynamic program",
+  "calibrationSplit": "train",
+  "calibrationSamples": 2048,
+  "calibrationSeed": 0,
+  "calibrationIndexSHA256": "d70dbf179f2a907bcbe90f4f420d0f4a2530ccfebdee4b928e943e66829d0169",
+  "modelParametersUpdated": false,
+  "testUsed": false,
+  "histogram": {
+    "bins": 14000,
+    "elements": {
+      "silu": 5242880,
+      "exp": 20971520
+    },
+    "outsideDomain": {
+      "silu": 0,
+      "exp": 786545
+    },
+    "expZeroValuesExcludedFromObjective": true
+  },
+  "endpointGridStep": {
+    "silu": 0.05,
+    "exp": 0.02
+  },
+  "trainHistogramMSE": {
+    "fitted": {
+      "silu": 2.9291412612136964e-06,
+      "exp": 6.923475115338607e-06
+    },
+    "baseline": {
+      "silu": 9.956319612448289e-05,
+      "exp": 0.00017484931327759015
+    }
+  },
+  "checkpointSHA256": "6462f4ddec210047ed4c911ee54224f5bc9b7d6c73628a1da61dd21ddec56519",
+  "sourceCheckpoint": "/workspace/scratch/839f8f1063a0/work/sway/sw/results/mars_ptq_20260923/restart_head_refit/best.pt",
+  "sourceSHA256": "f8b159d50912cd74d2d7fb407073ba671798095d4a415542e4441d0161dafb51",
+  "datasetSHA256": {
+    "featuremap_train.npy": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+    "labels_train.npy": "14cc4f3e56dd2135f677fae68ba33d5973615136917cdc6b66d0a960da5324c7",
+    "featuremap_validate.npy": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+    "labels_validate.npy": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da"
+  },
+  "trainFeaturesSHA256": "f00c9266059e6367c688d4bff0a7f5add633994c50fe0addbc501ed6f3ea0462",
+  "validation": {
+    "exact": {
+      "frames": 8033,
+      "mae_cm": 5.762534911336631,
+      "rmse_coordinate_mean_cm": 7.959600116300266,
+      "rmse_global_cm": 8.646061330662175,
+      "axis_mae_cm": {
+        "x": 6.8817399447076815,
+        "y": 3.4896461013131566,
+        "z": 6.916218687989055
+      },
+      "axis_rmse_cm": {
+        "x": 9.686218422352608,
+        "y": 4.923841829895658,
+        "z": 9.268740096652532
+      }
+    },
+    "baseline": {
+      "frames": 8033,
+      "mae_cm": 6.594390858388933,
+      "rmse_coordinate_mean_cm": 8.861163065271866,
+      "rmse_global_cm": 9.415608540823598,
+      "axis_mae_cm": {
+        "x": 7.090376284263161,
+        "y": 5.237346241465045,
+        "z": 7.455450049438592
+      },
+      "axis_rmse_cm": {
+        "x": 9.97646673300647,
+        "y": 6.706035995729395,
+        "z": 9.900986467079727
+      }
+    },
+    "exp_only": {
+      "frames": 8033,
+      "mae_cm": 6.552841302584636,
+      "rmse_coordinate_mean_cm": 8.82151098903781,
+      "rmse_global_cm": 9.380273221705092,
+      "axis_mae_cm": {
+        "x": 7.114352785235948,
+        "y": 5.149342468871837,
+        "z": 7.394828653646128
+      },
+      "axis_rmse_cm": {
+        "x": 10.02743252135607,
+        "y": 6.606645362615875,
+        "z": 9.830455083141482
+      }
+    },
+    "both": {
+      "frames": 8033,
+      "mae_cm": 5.77674584675995,
+      "rmse_coordinate_mean_cm": 7.970867575232178,
+      "rmse_global_cm": 8.65185552623005,
+      "axis_mae_cm": {
+        "x": 6.874202098100195,
+        "y": 3.5317106500227076,
+        "z": 6.9243247921569475
+      },
+      "axis_rmse_cm": {
+        "x": 9.679256367370577,
+        "y": 4.957872128066358,
+        "z": 9.275474230259599
+      }
+    }
+  },
+  "validationLabelsSHA256": "613f6b83d4d4ca9a785be6693e4eee75b52f607b3ea887203a3114c77cb8d9da",
+  "validationFeaturesSHA256": "13b701b45fce07b2105b3ec5fa348f70f50a64909257e8a92772915266d30807",
+  "outputCheckpointSHA256": "e3615a6133bad48594a99f20f0387074e8416a94f029bbe5e62dafdb579ab134",
+  "parameterSHA256": "a9b951f4cfb2796df5286b64b8f5446e36066092687b50921251f1f2ef80ebae",
+  "exactOutputBitIdenticalOnTrainProbe": true
+}

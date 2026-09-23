@@ -1,0 +1,41 @@
+{
+  "source_fp32": {
+    "name": "restart_head_refit",
+    "checkpoint": "sw/results/mars_ptq_20260923/restart_head_refit/best.pt",
+    "checkpoint_sha256": "6462f4ddec210047ed4c911ee54224f5bc9b7d6c73628a1da61dd21ddec56519",
+    "validation_rmse_cm": 7.959600116300266
+  },
+  "candidates": [
+    {
+      "name": "pwl",
+      "checkpoint": "sw/results/mars_ptq_20260923/prepared/pwl_source.pt",
+      "checkpoint_sha256": "e3615a6133bad48594a99f20f0387074e8416a94f029bbe5e62dafdb579ab134",
+      "profile": "sw/results/mars_ptq_20260923/calibration_pwl/calibration.json",
+      "profile_sha256": "c1f937d22a8aab0afb89c21b4a06550021663916a09836d9ca53959e8b23ad6c",
+      "validation_rmse_cm": 8.258300820775457,
+      "selected_round": "reconstruction_round_5"
+    },
+    {
+      "name": "equalized",
+      "checkpoint": "sw/results/mars_ptq_20260923/prepared/equalized_source.pt",
+      "checkpoint_sha256": "d8893f6ce4dda8c19debd59bc99b1b7035557720627314ab715c27ad08ace01c",
+      "profile": "sw/results/mars_ptq_20260923/calibration_equalized/calibration.json",
+      "profile_sha256": "563cb047c0da1947888f12ac45a59e9cddfad3de664b7579d6530469fe2bbf67",
+      "validation_rmse_cm": 8.472428793916656,
+      "selected_round": "reconstruction_round_1"
+    }
+  ],
+  "selected": {
+    "name": "pwl",
+    "checkpoint": "sw/results/mars_ptq_20260923/prepared/pwl_source.pt",
+    "checkpoint_sha256": "e3615a6133bad48594a99f20f0387074e8416a94f029bbe5e62dafdb579ab134",
+    "profile": "sw/results/mars_ptq_20260923/calibration_pwl/calibration.json",
+    "profile_sha256": "c1f937d22a8aab0afb89c21b4a06550021663916a09836d9ca53959e8b23ad6c",
+    "validation_rmse_cm": 8.258300820775457,
+    "selected_round": "reconstruction_round_5"
+  },
+  "criterion": "minimum full-validation mean coordinatewise RMSE",
+  "frozen_before_test_evaluation": true,
+  "test_used_for_selection": false,
+  "method": "exact FP32 training followed by train-only PWL fitting and frozen-weight PTQ"
+}

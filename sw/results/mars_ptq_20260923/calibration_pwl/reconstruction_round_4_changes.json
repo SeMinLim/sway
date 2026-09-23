@@ -1,0 +1,71 @@
+{
+  "round": 4,
+  "reconstruction_mse": 0.0004944892394283035,
+  "changes": [
+    {
+      "nodes": [
+        "blocks.0.C"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005066095674782314,
+      "reconstruction_mse_after": 0.0005061187124856185
+    },
+    {
+      "nodes": [
+        "blocks.1.norm"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005061187124856185,
+      "reconstruction_mse_after": 0.0005036568726423072
+    },
+    {
+      "nodes": [
+        "blocks.1.gateInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005036568726423072,
+      "reconstruction_mse_after": 0.0005034776175352375
+    },
+    {
+      "nodes": [
+        "blocks.1.conv"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005034776175352375,
+      "reconstruction_mse_after": 0.0004978950842547105
+    },
+    {
+      "nodes": [
+        "blocks.1.delta"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0004978950842547105,
+      "reconstruction_mse_after": 0.0004974094745194877
+    },
+    {
+      "nodes": [
+        "blocks.1.state",
+        "blocks.1.currentState"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0004974094745194877,
+      "reconstruction_mse_after": 0.0004963352083474535
+    },
+    {
+      "nodes": [
+        "blocks.1.ssmY"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0004963352083474535,
+      "reconstruction_mse_after": 0.0004948516518289624
+    },
+    {
+      "nodes": [
+        "headHidden.bias"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0004948516518289624,
+      "reconstruction_mse_after": 0.0004944892394283035
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "method": "exact_fp32_coordinate_rmse_continuation",
+  "source_run": "sw/results/mars_accuracy_20260922/fp32_rmse",
+  "resume_epoch": 60,
+  "maximum_total_refinement_epochs": 180,
+  "preserved_optimizer_scheduler_rng": true,
+  "no_fake_quantization": true,
+  "test_used": false
+}

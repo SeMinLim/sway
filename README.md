@@ -4,7 +4,21 @@ Compact selective state-space model accelerator research for ECP5-class FPGAs.
 
 Latest hardware evaluation: [resource comparison at equal kernel throughput](#resource-comparison-at-equal-kernel-throughput).
 
-## Accuracy retraining (2026-09-22)
+## PTQ checkpoint (2026-09-23)
+
+The [frozen PTQ checkpoint](sw/results/mars_ptq_20260923/final/checkpoint.pt) contains the FP32 reference weights, their actual signed INT8 parameter tensors, and the selected inference configuration and quantization scales. Its FP32 and INT8 results use the same underlying checkpoint. All weight optimization uses exact FP32 SiLU/exp; PTQ calibrates the inference approximation and scales after training, without gradients or quantized weight training.
+
+| Numerical model | This checkpoint test RMSE (cm) | eMamba Table 4 (cm) | Difference (cm) |
+|---|---:|---:|---:|
+| FP32, exact SiLU/exp | 8.0681 | 7.85 | +0.2181 |
+| FP32, fitted PWL inference | 8.0754 | — | — |
+| INT8 PTQ | **8.3564** | 8.83 | -0.4736 |
+
+The workflow combines coordinate-RMSE FP32 refinement, a training-only output-head refit, train-observed PWL coefficients, and frozen-weight scale calibration. Validation selects the checkpoint and PTQ configuration before test evaluation. The published eMamba reference is FP32 7.85 / INT8 PTQ 8.83 cm. Our preserved official MARS split and reconstructed model details still differ from the paper, so numerical proximity does not establish an author-checkpoint reproduction. See [checkpoint contents and reproduction commands](sw/results/mars_ptq_20260923/README.md) and [paired test metrics](sw/results/mars_ptq_20260923/final/metrics.json).
+
+These are software numerical results. The historical RTL weights, ROMs, resource usage, and timing results below remain those of the original hardware experiment.
+
+## Historical QAT retraining (2026-09-22)
 
 | Numerical model | Previous RMSE (cm) | New RMSE (cm) | Decrease |
 |---|---:|---:|---:|
@@ -18,7 +32,7 @@ The eMamba reference is FP32 7.85 / INT8 8.83 cm using post-training quantizatio
 
 ## MARS software
 
-`sw/` implements, trains, evaluates, quantizes, and exports a MARS human-pose regression model reconstructed from the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). It uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, and ReLU for the selective step size. The exact-FP32 branch trains with exact SiLU and exponential functions; the PWL adaptation and INT8 QAT branches train with the corresponding piecewise inference functions.
+`sw/` implements, trains, evaluates, quantizes, and exports a MARS human-pose regression model reconstructed from the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). It uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, and ReLU for the selective step size. The current PTQ workflow trains with exact SiLU and exponential functions, then calibrates inference PWL functions and INT8 scales with frozen weights. The separate PWL adaptation and QAT branches remain documented in the historical experiment.
 
 This is our reimplementation, not an author checkpoint. The paper omits the regression head, several block details, training recipe, and approximation coefficients. Our choices are explicit in [model.json](sw/config/model.json). The implemented model has 15,717 trainable parameters, so it is not a parameter-exact recovery of the reported model.
 
@@ -38,7 +52,7 @@ python sw/evaluate.py --data ../data/mars --checkpoint sw/results/my_run/best.pt
 
 Training uses MSE, AdamW (learning rate 0.001, weight decay 0.0001), gradient clipping at 1, validation-based learning-rate reduction, and early stopping after 25 epochs without improvement. These are our training settings. The default seed is 20260917. The test split is excluded from fitting, calibration, learning-rate decisions, and checkpoint selection. Resume within the same output directory using `--resume sw/results/my_run/last.pt` and a larger `--epochs` limit.
 
-The PTQ workflow above uses symmetric INT8 values and power-of-two scales calibrated on 2,048 training frames. Two clipping policies (99.9th percentile and maximum) are compared on validation data before final test evaluation. The affine/convolution reference uses integer accumulators; the SSM uses INT24 current state and INT17 retained state. Normalization, nonlinearities, and remaining elementwise operations use quantize/dequantize simulation. These results validate the software numerical model, not complete integer RTL equivalence.
+The baseline PTQ workflow above uses symmetric INT8 values and power-of-two scales calibrated on 2,048 training frames. Two clipping policies (99.9th percentile and maximum) are compared on validation data before final test evaluation. The affine/convolution reference uses integer accumulators; the SSM uses INT24 current state and INT17 retained state. Normalization, nonlinearities, and remaining elementwise operations use quantize/dequantize simulation. These results validate the software numerical model, not complete integer RTL equivalence. Use the [frozen-checkpoint command](sw/results/mars_ptq_20260923/README.md#evaluate-the-frozen-checkpoint) to reproduce the newer PTQ result without rerunning calibration.
 
 ## Outputs
 

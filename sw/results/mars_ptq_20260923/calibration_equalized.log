@@ -1,0 +1,11 @@
+percentile_99.9 reconstruction MSE 0.0061837026 validation RMSE 10.963013 cm
+percentile_99.9_exp_neg5 reconstruction MSE 0.0060498943 validation RMSE 10.879673 cm
+percentile_100 reconstruction MSE 0.0057930439 validation RMSE 10.590575 cm
+percentile_100_exp_neg5 reconstruction MSE 0.0017785638 validation RMSE 8.878387 cm
+hybrid reconstruction MSE 0.0055832462 validation RMSE 10.613647 cm
+hybrid_exp_neg5 reconstruction MSE 0.0016600306 validation RMSE 8.887141 cm
+reconstruction_round_1 reconstruction MSE 0.00085112989 validation RMSE 8.472429 cm
+reconstruction_round_2 reconstruction MSE 0.00080855002 validation RMSE 8.494099 cm
+reconstruction_round_3 reconstruction MSE 0.0008010201 validation RMSE 8.498931 cm
+reconstruction_round_4 reconstruction MSE 0.00080056595 validation RMSE 8.499585 cm
+reconstruction_round_5 reconstruction MSE 0.00080056595 validation RMSE 8.499585 cm

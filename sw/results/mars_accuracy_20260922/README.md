@@ -1,5 +1,7 @@
 # MARS accuracy retraining, 2026-09-22
 
+This is the historical FP32/PWL/QAT experiment. Its QAT checkpoints pin the inference source hashes from [commit 0d2ceea](https://github.com/SeMinLim/sway/commit/0d2ceea72062772ceb0e320bba58b8ecb33889ab); run the archived QAT commands with that revision. The current [PTQ checkpoint](../mars_ptq_20260923/README.md) has a separate frozen-profile evaluator.
+
 | Numerical model | Previous RMSE (cm) | New RMSE (cm) | Decrease |
 |---|---:|---:|---:|
 | FP32, exact SiLU/exp | 8.9582 | 8.4884 | 5.25% |

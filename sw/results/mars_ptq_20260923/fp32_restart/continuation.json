@@ -1,0 +1,16 @@
+{
+  "resume_checkpoint": "last.pt",
+  "resume_checkpoint_sha256": "5559338760fa1107c2e54add8bf991a9de621d4131d8c66637cd7a79b69dd4c9",
+  "selected_checkpoint_at_resume_sha256": "c397134adbb70405ba14eb5ef8fb95b109d1c7767dfae044c52d09ebb05b17cb",
+  "completed_epochs_before_resume": 100,
+  "previous_epoch_limit": 100,
+  "new_epoch_limit": 160,
+  "reason": "full-validation RMSE still improving near prior cap; preserve the same FP32 optimizer/scheduler/RNG",
+  "configuration_changes": {
+    "epochs": [
+      100,
+      160
+    ]
+  },
+  "test_used": false
+}

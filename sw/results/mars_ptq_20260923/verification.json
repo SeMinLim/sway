@@ -1,0 +1,18 @@
+{
+  "bundle_roundtrip_exact": true,
+  "integer_exports_match_checkpoint": true,
+  "new_rtl_validation": false,
+  "saved_prediction_metric_recomputed": true,
+  "independent_metric_formula": "mean(sqrt(mean(((prediction.float64 - labels.float32.float64)*100)^2, frames)), 57 coordinates)",
+  "label_loading": "float32 conversion matches train.loadArrays; metric accumulation uses float64",
+  "bundle_fp32_weights_match_selected_source": true,
+  "signed_int8_parameter_count": 15717,
+  "test_used_for_selection": false,
+  "inference_and_evaluation_source_hashes_match": true,
+  "focused_tests": {
+    "run": 38,
+    "passed": 37,
+    "skipped": 1,
+    "log_sha256": "98135859540fc9cdcf686fc9f43c0db4f8b848ef1710754432b1312bfc5636cc"
+  }
+}

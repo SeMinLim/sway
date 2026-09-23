@@ -1,0 +1,199 @@
+{
+  "round": 1,
+  "reconstruction_mse": 0.0007502169930991573,
+  "changes": [
+    {
+      "nodes": [
+        "embedding.weight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0014761198279098055,
+      "reconstruction_mse_after": 0.0013457672258352007
+    },
+    {
+      "nodes": [
+        "blocks.0.convInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0013457672258352007,
+      "reconstruction_mse_after": 0.0013441995515788114
+    },
+    {
+      "nodes": [
+        "blocks.0.x"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0013441995515788114,
+      "reconstruction_mse_after": 0.0012782816793094854
+    },
+    {
+      "nodes": [
+        "blocks.0.xWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0012782816793094854,
+      "reconstruction_mse_after": 0.0012737038287174715
+    },
+    {
+      "nodes": [
+        "blocks.0.B"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0012737038287174715,
+      "reconstruction_mse_after": 0.0012681452429540057
+    },
+    {
+      "nodes": [
+        "blocks.0.A"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0012681452429540057,
+      "reconstruction_mse_after": 0.0012350067211932222
+    },
+    {
+      "nodes": [
+        "blocks.0.D"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0012350067211932222,
+      "reconstruction_mse_after": 0.0012068250717295458
+    },
+    {
+      "nodes": [
+        "blocks.0.expInput"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0012068250717295458,
+      "reconstruction_mse_after": 0.0012017582312104013
+    },
+    {
+      "nodes": [
+        "blocks.0.gated"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0012017582312104013,
+      "reconstruction_mse_after": 0.001094118865415211
+    },
+    {
+      "nodes": [
+        "blocks.0.outWeight"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.001094118865415211,
+      "reconstruction_mse_after": 0.0010534762556073684
+    },
+    {
+      "nodes": [
+        "blocks.1.normBias"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0010534762556073684,
+      "reconstruction_mse_after": 0.0010441940948863547
+    },
+    {
+      "nodes": [
+        "blocks.1.norm"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0010441940948863547,
+      "reconstruction_mse_after": 0.0010320814746549352
+    },
+    {
+      "nodes": [
+        "blocks.1.x"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0010320814746549352,
+      "reconstruction_mse_after": 0.000992591347765423
+    },
+    {
+      "nodes": [
+        "blocks.1.gate"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.000992591347765423,
+      "reconstruction_mse_after": 0.0009829687505154147
+    },
+    {
+      "nodes": [
+        "blocks.1.xProjection"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0009829687505154147,
+      "reconstruction_mse_after": 0.0009386300871933316
+    },
+    {
+      "nodes": [
+        "blocks.1.C"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0009386300871933316,
+      "reconstruction_mse_after": 0.0009380907338774198
+    },
+    {
+      "nodes": [
+        "blocks.1.delta"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0009380907338774198,
+      "reconstruction_mse_after": 0.0009255449726132519
+    },
+    {
+      "nodes": [
+        "blocks.1.A"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0009255449726132519,
+      "reconstruction_mse_after": 0.0008973509766901886
+    },
+    {
+      "nodes": [
+        "blocks.1.Bbar"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0008973509766901886,
+      "reconstruction_mse_after": 0.0008431166542425771
+    },
+    {
+      "nodes": [
+        "blocks.1.state",
+        "blocks.1.currentState"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0008431166542425771,
+      "reconstruction_mse_after": 0.0008365464876482519
+    },
+    {
+      "nodes": [
+        "blocks.1.ssmY"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0008365464876482519,
+      "reconstruction_mse_after": 0.0008284737034601601
+    },
+    {
+      "nodes": [
+        "blocks.1.gated"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0008284737034601601,
+      "reconstruction_mse_after": 0.0007739508933220481
+    },
+    {
+      "nodes": [
+        "headHidden.bias"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0007739508933220481,
+      "reconstruction_mse_after": 0.0007724049064345345
+    },
+    {
+      "nodes": [
+        "output"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0007724049064345345,
+      "reconstruction_mse_after": 0.0007502169930991573
+    }
+  ]
+}

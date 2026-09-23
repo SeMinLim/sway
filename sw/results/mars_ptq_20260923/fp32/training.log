@@ -1,0 +1,59 @@
+[STEP 1] Verifying source and train/validation arrays
+[STEP 2] FP32 RMSE refinement | source epoch 344 | epoch-0 validation RMSE 8.5469 cm
+Epoch  61 | train minibatch RMSE 0.081128 m | val MAE 6.1610 cm | val RMSE 8.4162 cm | 9.67 s *
+Epoch  62 | train minibatch RMSE 0.081141 m | val MAE 6.1811 cm | val RMSE 8.4307 cm | 9.42 s
+Epoch  63 | train minibatch RMSE 0.081126 m | val MAE 6.1807 cm | val RMSE 8.4216 cm | 8.37 s
+Epoch  64 | train minibatch RMSE 0.081112 m | val MAE 6.1778 cm | val RMSE 8.4276 cm | 8.97 s
+Epoch  65 | train minibatch RMSE 0.081079 m | val MAE 6.1687 cm | val RMSE 8.4219 cm | 8.87 s
+Epoch  66 | train minibatch RMSE 0.081051 m | val MAE 6.1619 cm | val RMSE 8.4290 cm | 9.25 s
+Epoch  67 | train minibatch RMSE 0.081042 m | val MAE 6.1651 cm | val RMSE 8.4223 cm | 8.77 s
+Epoch  68 | train minibatch RMSE 0.080911 m | val MAE 6.1554 cm | val RMSE 8.4150 cm | 8.21 s *
+Epoch  69 | train minibatch RMSE 0.080944 m | val MAE 6.1632 cm | val RMSE 8.4210 cm | 8.76 s
+Epoch  70 | train minibatch RMSE 0.080988 m | val MAE 6.1541 cm | val RMSE 8.4194 cm | 7.40 s
+Epoch  71 | train minibatch RMSE 0.080904 m | val MAE 6.1749 cm | val RMSE 8.4199 cm | 8.91 s
+Epoch  72 | train minibatch RMSE 0.080903 m | val MAE 6.1668 cm | val RMSE 8.4229 cm | 8.98 s
+Epoch  73 | train minibatch RMSE 0.080919 m | val MAE 6.1599 cm | val RMSE 8.4138 cm | 9.00 s *
+Epoch  74 | train minibatch RMSE 0.080873 m | val MAE 6.1721 cm | val RMSE 8.4242 cm | 8.57 s
+Epoch  75 | train minibatch RMSE 0.080899 m | val MAE 6.1645 cm | val RMSE 8.4343 cm | 10.16 s
+Epoch  76 | train minibatch RMSE 0.080916 m | val MAE 6.1625 cm | val RMSE 8.4070 cm | 9.47 s *
+Epoch  77 | train minibatch RMSE 0.080852 m | val MAE 6.1620 cm | val RMSE 8.4109 cm | 10.21 s
+Epoch  78 | train minibatch RMSE 0.080878 m | val MAE 6.1648 cm | val RMSE 8.4102 cm | 9.84 s
+Epoch  79 | train minibatch RMSE 0.080862 m | val MAE 6.1676 cm | val RMSE 8.4140 cm | 9.13 s
+Epoch  80 | train minibatch RMSE 0.080858 m | val MAE 6.1659 cm | val RMSE 8.4069 cm | 9.97 s *
+Epoch  81 | train minibatch RMSE 0.080855 m | val MAE 6.1459 cm | val RMSE 8.4054 cm | 10.08 s *
+Epoch  82 | train minibatch RMSE 0.080862 m | val MAE 6.1415 cm | val RMSE 8.4008 cm | 8.52 s *
+Epoch  83 | train minibatch RMSE 0.080864 m | val MAE 6.1602 cm | val RMSE 8.4231 cm | 9.34 s
+Epoch  84 | train minibatch RMSE 0.080821 m | val MAE 6.1615 cm | val RMSE 8.4186 cm | 9.67 s
+Epoch  85 | train minibatch RMSE 0.080873 m | val MAE 6.1639 cm | val RMSE 8.4117 cm | 10.81 s
+Epoch  86 | train minibatch RMSE 0.080836 m | val MAE 6.1475 cm | val RMSE 8.4105 cm | 9.62 s
+Epoch  87 | train minibatch RMSE 0.080832 m | val MAE 6.1457 cm | val RMSE 8.4065 cm | 9.62 s
+Epoch  88 | train minibatch RMSE 0.080804 m | val MAE 6.1558 cm | val RMSE 8.4004 cm | 9.27 s *
+Epoch  89 | train minibatch RMSE 0.080726 m | val MAE 6.1419 cm | val RMSE 8.4008 cm | 9.81 s
+Epoch  90 | train minibatch RMSE 0.080740 m | val MAE 6.1527 cm | val RMSE 8.4022 cm | 9.50 s
+Epoch  91 | train minibatch RMSE 0.080721 m | val MAE 6.1654 cm | val RMSE 8.4086 cm | 9.73 s
+Epoch  92 | train minibatch RMSE 0.080735 m | val MAE 6.1458 cm | val RMSE 8.3973 cm | 9.46 s *
+Epoch  93 | train minibatch RMSE 0.080762 m | val MAE 6.1455 cm | val RMSE 8.4058 cm | 8.71 s
+Epoch  94 | train minibatch RMSE 0.080762 m | val MAE 6.1425 cm | val RMSE 8.4004 cm | 9.68 s
+Epoch  95 | train minibatch RMSE 0.080739 m | val MAE 6.1497 cm | val RMSE 8.3979 cm | 10.04 s
+Epoch  96 | train minibatch RMSE 0.080736 m | val MAE 6.1483 cm | val RMSE 8.3985 cm | 9.81 s
+Epoch  97 | train minibatch RMSE 0.080743 m | val MAE 6.1660 cm | val RMSE 8.4057 cm | 9.51 s
+Epoch  98 | train minibatch RMSE 0.080714 m | val MAE 6.1406 cm | val RMSE 8.3964 cm | 10.25 s *
+Epoch  99 | train minibatch RMSE 0.080728 m | val MAE 6.1571 cm | val RMSE 8.4046 cm | 8.75 s
+Epoch 100 | train minibatch RMSE 0.080706 m | val MAE 6.1536 cm | val RMSE 8.4001 cm | 8.67 s
+Epoch 101 | train minibatch RMSE 0.080733 m | val MAE 6.1405 cm | val RMSE 8.3932 cm | 8.41 s *
+Epoch 102 | train minibatch RMSE 0.080707 m | val MAE 6.1472 cm | val RMSE 8.3980 cm | 8.63 s
+Epoch 103 | train minibatch RMSE 0.080714 m | val MAE 6.1376 cm | val RMSE 8.3942 cm | 8.93 s
+Epoch 104 | train minibatch RMSE 0.080699 m | val MAE 6.1517 cm | val RMSE 8.4014 cm | 9.94 s
+Epoch 105 | train minibatch RMSE 0.080681 m | val MAE 6.1542 cm | val RMSE 8.4022 cm | 8.90 s
+Epoch 106 | train minibatch RMSE 0.080710 m | val MAE 6.1391 cm | val RMSE 8.3943 cm | 8.94 s
+Epoch 107 | train minibatch RMSE 0.080688 m | val MAE 6.1479 cm | val RMSE 8.3963 cm | 9.14 s
+Epoch 108 | train minibatch RMSE 0.080655 m | val MAE 6.1531 cm | val RMSE 8.4012 cm | 8.99 s
+Epoch 109 | train minibatch RMSE 0.080623 m | val MAE 6.1467 cm | val RMSE 8.3962 cm | 11.10 s
+Epoch 110 | train minibatch RMSE 0.080645 m | val MAE 6.1439 cm | val RMSE 8.3946 cm | 10.73 s
+Epoch 111 | train minibatch RMSE 0.080647 m | val MAE 6.1469 cm | val RMSE 8.3944 cm | 10.02 s
+Epoch 112 | train minibatch RMSE 0.080680 m | val MAE 6.1523 cm | val RMSE 8.3976 cm | 10.39 s
+Epoch 113 | train minibatch RMSE 0.080642 m | val MAE 6.1455 cm | val RMSE 8.3974 cm | 10.17 s
+Epoch 114 | train minibatch RMSE 0.080627 m | val MAE 6.1419 cm | val RMSE 8.3940 cm | 10.72 s
+Epoch 115 | train minibatch RMSE 0.080639 m | val MAE 6.1437 cm | val RMSE 8.3936 cm | 9.92 s
+Epoch 116 | train minibatch RMSE 0.080633 m | val MAE 6.1472 cm | val RMSE 8.3961 cm | 10.50 s
+[STEP 3] Selected sw/results/mars_ptq_20260923/fp32/best.pt, epoch 101, validation RMSE 8.3932 cm

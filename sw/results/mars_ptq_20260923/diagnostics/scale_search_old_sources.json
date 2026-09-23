@@ -1,0 +1,481 @@
+{
+  "scope": "Exploratory PTQ calibration on previously trained FP32 models before PWL knot fitting and input equalization",
+  "test_used": false,
+  "metric": "Mean of 57 coordinatewise RMSE values across full official validation split, cm",
+  "cases": {
+    "exact": {
+      "checkpoint": "sw/results/mars_accuracy_20260922/fp32_rmse/best.pt",
+      "source_checkpoint_sha256": "ce4c956baae665033a3d99d2496dd79b1631b2f03375b74ab5b73bbc85e88c33",
+      "teacher": "fp32_exact",
+      "calibration": {
+        "method": "PTQ train-output reconstruction by discrete exponent coordinate search",
+        "parameter_updates": false,
+        "gradients_used": false,
+        "test_used": false,
+        "teacher": "fp32_exact",
+        "source_checkpoint_sha256": "ce4c956baae665033a3d99d2496dd79b1631b2f03375b74ab5b73bbc85e88c33",
+        "reconstruction_samples": 512,
+        "reconstruction_seed": 0,
+        "reconstruction_index_sha256": "fb488afc04d65147d66e13444a66c8cccada7ba9b7f19a2277f46720239485f4",
+        "arguments": {
+          "data": "/workspace/scratch/839f8f1063a0/data/mars",
+          "checkpoint": "sw/results/mars_accuracy_20260922/fp32_rmse/best.pt",
+          "output": "/workspace/scratch/839f8f1063a0/ptq_audit/exact",
+          "initial_profile": null,
+          "calibration_samples": 2048,
+          "reconstruction_samples": 512,
+          "batch_size": 256,
+          "rounds": 3,
+          "seed": 0,
+          "threads": 1,
+          "teacher_pwl": false
+        },
+        "source_sha256": {
+          "model.py": "f3d3c4eb9d2a067008bfc0fc4d6ada7461d5ac45ef068170269786afb4488a11",
+          "quantize.py": "74d0c4592139caaefa95610c516278b78e0d46292a65de70671c6f10cca3e016",
+          "calibrate_ptq.py": "4333cf3d79138b5e9299d3ae65849ca6caff69f3a3bdfe077eb5126b79798e6a"
+        }
+      },
+      "candidates": [
+        {
+          "name": "percentile_99.9",
+          "reconstruction_mse": 0.006608642280870048,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.550386782768285,
+            "rmse_coordinate_mean_cm": 11.16941122028207,
+            "rmse_global_cm": 12.096831340608876,
+            "axis_mae_cm": {
+              "x": 9.78098699918476,
+              "y": 6.508671957233673,
+              "z": 9.361501391886419
+            },
+            "axis_rmse_cm": {
+              "x": 12.874797630764093,
+              "y": 8.417473116797119,
+              "z": 12.215962913284995
+            }
+          }
+        },
+        {
+          "name": "percentile_99.9_exp_neg5",
+          "reconstruction_mse": 0.006354956086987849,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.559655171667094,
+            "rmse_coordinate_mean_cm": 11.150633096135389,
+            "rmse_global_cm": 12.023516860274155,
+            "axis_mae_cm": {
+              "x": 9.733413168565816,
+              "y": 6.630693617203667,
+              "z": 9.314858729231801
+            },
+            "axis_rmse_cm": {
+              "x": 12.892770125639347,
+              "y": 8.44426783629426,
+              "z": 12.11486132647256
+            }
+          }
+        },
+        {
+          "name": "percentile_100",
+          "reconstruction_mse": 0.005825104143654841,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 9.316916901579662,
+            "rmse_coordinate_mean_cm": 11.705177904594501,
+            "rmse_global_cm": 12.076767563670252,
+            "axis_mae_cm": {
+              "x": 8.718024948691221,
+              "y": 10.437372775114904,
+              "z": 8.795352980932858
+            },
+            "axis_rmse_cm": {
+              "x": 11.756804978994875,
+              "y": 12.004077139765723,
+              "z": 11.354651595022906
+            }
+          }
+        },
+        {
+          "name": "percentile_100_exp_neg5",
+          "reconstruction_mse": 0.004691548439728948,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.778453433772064,
+            "rmse_coordinate_mean_cm": 11.143481271035418,
+            "rmse_global_cm": 11.510487953069406,
+            "axis_mae_cm": {
+              "x": 8.434767122384113,
+              "y": 9.479909613566944,
+              "z": 8.420683565365136
+            },
+            "axis_rmse_cm": {
+              "x": 11.498684088957376,
+              "y": 11.047275095823244,
+              "z": 10.884484628325627
+            }
+          }
+        },
+        {
+          "name": "hybrid",
+          "reconstruction_mse": 0.005075548068709407,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 9.043828850073359,
+            "rmse_coordinate_mean_cm": 11.34136961575244,
+            "rmse_global_cm": 11.695638520645339,
+            "axis_mae_cm": {
+              "x": 8.540538605863835,
+              "y": 10.089503231895991,
+              "z": 8.501444712460248
+            },
+            "axis_rmse_cm": {
+              "x": 11.482568761619586,
+              "y": 11.575773098622085,
+              "z": 10.96576698701565
+            }
+          }
+        },
+        {
+          "name": "hybrid_exp_neg5",
+          "reconstruction_mse": 0.0039321185359839465,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.485134974056429,
+            "rmse_coordinate_mean_cm": 10.778158306094992,
+            "rmse_global_cm": 11.132880969310852,
+            "axis_mae_cm": {
+              "x": 8.200425117263912,
+              "y": 9.107597798828206,
+              "z": 8.147382006077171
+            },
+            "axis_rmse_cm": {
+              "x": 11.179585285631823,
+              "y": 10.616062531453938,
+              "z": 10.538827101199212
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_1",
+          "reconstruction_mse": 0.0009758133418568752,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.655657361950289,
+            "rmse_coordinate_mean_cm": 8.964712821025676,
+            "rmse_global_cm": 9.630995319337877,
+            "axis_mae_cm": {
+              "x": 7.960469414261257,
+              "y": 4.376116771169759,
+              "z": 7.630385900419848
+            },
+            "axis_rmse_cm": {
+              "x": 10.781777250885687,
+              "y": 5.975820748708906,
+              "z": 10.136540463482433
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_2",
+          "reconstruction_mse": 0.0007172419961504664,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.540157905212929,
+            "rmse_coordinate_mean_cm": 8.830659281559969,
+            "rmse_global_cm": 9.482842592802426,
+            "axis_mae_cm": {
+              "x": 7.766977372180371,
+              "y": 4.302997140070171,
+              "z": 7.550499203388246
+            },
+            "axis_rmse_cm": {
+              "x": 10.600125051676438,
+              "y": 5.896741718104535,
+              "z": 9.995111074898933
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_3",
+          "reconstruction_mse": 0.0006787529131591459,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.557140013987683,
+            "rmse_coordinate_mean_cm": 8.845716278064453,
+            "rmse_global_cm": 9.492947818816589,
+            "axis_mae_cm": {
+              "x": 7.764496864938595,
+              "y": 4.335625457353777,
+              "z": 7.571297719670677
+            },
+            "axis_rmse_cm": {
+              "x": 10.593667809848698,
+              "y": 5.924655294395056,
+              "z": 10.018825729949606
+            }
+          }
+        }
+      ],
+      "selected_candidate": "reconstruction_round_2",
+      "best_validation_rmse_cm": 8.830659281559969,
+      "parameters_unchanged": true,
+      "search_seconds": 195.3800954590006,
+      "rounds": [
+        {
+          "round": 1,
+          "reconstruction_mse": 0.0009758133418568752,
+          "accepted_scale_group_changes": 35
+        },
+        {
+          "round": 2,
+          "reconstruction_mse": 0.0007172419961504664,
+          "accepted_scale_group_changes": 20
+        },
+        {
+          "round": 3,
+          "reconstruction_mse": 0.0006787529131591459,
+          "accepted_scale_group_changes": 8
+        }
+      ]
+    },
+    "pwl": {
+      "checkpoint": "sw/results/mars_accuracy_20260922/fp32_pwl/best.pt",
+      "source_checkpoint_sha256": "c43da583f81ac3b611f354f5c03fd171a6aeba2181a13a4b1f3b1e7a961cfd2c",
+      "teacher": "fp32_pwl",
+      "calibration": {
+        "method": "PTQ train-output reconstruction by discrete exponent coordinate search",
+        "parameter_updates": false,
+        "gradients_used": false,
+        "test_used": false,
+        "teacher": "fp32_pwl",
+        "source_checkpoint_sha256": "c43da583f81ac3b611f354f5c03fd171a6aeba2181a13a4b1f3b1e7a961cfd2c",
+        "reconstruction_samples": 512,
+        "reconstruction_seed": 0,
+        "reconstruction_index_sha256": "fb488afc04d65147d66e13444a66c8cccada7ba9b7f19a2277f46720239485f4",
+        "arguments": {
+          "data": "/workspace/scratch/839f8f1063a0/data/mars",
+          "checkpoint": "sw/results/mars_accuracy_20260922/fp32_pwl/best.pt",
+          "output": "/workspace/scratch/839f8f1063a0/ptq_audit/pwl",
+          "initial_profile": null,
+          "calibration_samples": 2048,
+          "reconstruction_samples": 512,
+          "batch_size": 256,
+          "rounds": 3,
+          "seed": 0,
+          "threads": 1,
+          "teacher_pwl": true
+        },
+        "source_sha256": {
+          "model.py": "f3d3c4eb9d2a067008bfc0fc4d6ada7461d5ac45ef068170269786afb4488a11",
+          "quantize.py": "74d0c4592139caaefa95610c516278b78e0d46292a65de70671c6f10cca3e016",
+          "calibrate_ptq.py": "4333cf3d79138b5e9299d3ae65849ca6caff69f3a3bdfe077eb5126b79798e6a"
+        }
+      },
+      "candidates": [
+        {
+          "name": "percentile_99.9",
+          "reconstruction_mse": 0.006734911164643489,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.612249526949062,
+            "rmse_coordinate_mean_cm": 11.233407785166657,
+            "rmse_global_cm": 12.237054947812918,
+            "axis_mae_cm": {
+              "x": 9.707632596748498,
+              "y": 6.488377313896882,
+              "z": 9.64073867020181
+            },
+            "axis_rmse_cm": {
+              "x": 12.565692578681693,
+              "y": 8.601477306607812,
+              "z": 12.533053470210465
+            }
+          }
+        },
+        {
+          "name": "percentile_99.9_exp_neg5",
+          "reconstruction_mse": 0.006161731411158922,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 8.375315218365143,
+            "rmse_coordinate_mean_cm": 11.00184410715459,
+            "rmse_global_cm": 12.007313738046204,
+            "axis_mae_cm": {
+              "x": 9.71347100840262,
+              "y": 5.960683233501585,
+              "z": 9.451791413191224
+            },
+            "axis_rmse_cm": {
+              "x": 12.617023010490229,
+              "y": 8.095184320551626,
+              "z": 12.293324990421917
+            }
+          }
+        },
+        {
+          "name": "percentile_100",
+          "reconstruction_mse": 0.0019481624508322184,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 7.192110046085422,
+            "rmse_coordinate_mean_cm": 9.574943846937074,
+            "rmse_global_cm": 10.202474882741605,
+            "axis_mae_cm": {
+              "x": 8.35989685582618,
+              "y": 5.15822530174719,
+              "z": 8.0582079806829
+            },
+            "axis_rmse_cm": {
+              "x": 11.26393680746834,
+              "y": 6.902918612687004,
+              "z": 10.557976120655882
+            }
+          }
+        },
+        {
+          "name": "percentile_100_exp_neg5",
+          "reconstruction_mse": 0.001982189179625386,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 7.140989695800464,
+            "rmse_coordinate_mean_cm": 9.543689608874214,
+            "rmse_global_cm": 10.179609884814752,
+            "axis_mae_cm": {
+              "x": 8.313854180610432,
+              "y": 5.086706997872155,
+              "z": 8.022407908918805
+            },
+            "axis_rmse_cm": {
+              "x": 11.277831198667064,
+              "y": 6.818806532657196,
+              "z": 10.53443109529838
+            }
+          }
+        },
+        {
+          "name": "hybrid",
+          "reconstruction_mse": 0.001546356703401459,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.981786473461594,
+            "rmse_coordinate_mean_cm": 9.283013151264841,
+            "rmse_global_cm": 9.913252728603696,
+            "axis_mae_cm": {
+              "x": 8.156770858300417,
+              "y": 4.921530009548537,
+              "z": 7.86705855253583
+            },
+            "axis_rmse_cm": {
+              "x": 10.938258887092385,
+              "y": 6.5690120346254925,
+              "z": 10.341768532076646
+            }
+          }
+        },
+        {
+          "name": "hybrid_exp_neg5",
+          "reconstruction_mse": 0.0016036443564876567,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.950283259260313,
+            "rmse_coordinate_mean_cm": 9.284318498824321,
+            "rmse_global_cm": 9.92899850708036,
+            "axis_mae_cm": {
+              "x": 8.107338002764635,
+              "y": 4.841670840216122,
+              "z": 7.901840934800183
+            },
+            "axis_rmse_cm": {
+              "x": 10.947216880820358,
+              "y": 6.482822173200326,
+              "z": 10.42291644245228
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_1",
+          "reconstruction_mse": 0.0009626192564444272,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.782041256093769,
+            "rmse_coordinate_mean_cm": 9.063937501491727,
+            "rmse_global_cm": 9.68939394534104,
+            "axis_mae_cm": {
+              "x": 7.977342985951897,
+              "y": 4.60107551434293,
+              "z": 7.7677052679864795
+            },
+            "axis_rmse_cm": {
+              "x": 10.784032655504816,
+              "y": 6.214253384188505,
+              "z": 10.193526464781858
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_2",
+          "reconstruction_mse": 0.0005846605578665797,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.586389381926511,
+            "rmse_coordinate_mean_cm": 8.823548236990693,
+            "rmse_global_cm": 9.459870310673212,
+            "axis_mae_cm": {
+              "x": 7.739017214491846,
+              "y": 4.382076495680706,
+              "z": 7.638074435606982
+            },
+            "axis_rmse_cm": {
+              "x": 10.505393494657989,
+              "y": 5.939916699106645,
+              "z": 10.025334517207444
+            }
+          }
+        },
+        {
+          "name": "reconstruction_round_3",
+          "reconstruction_mse": 0.0004951619427159556,
+          "validation_metrics": {
+            "frames": 8033,
+            "mae_cm": 6.508468965253752,
+            "rmse_coordinate_mean_cm": 8.770085378514066,
+            "rmse_global_cm": 9.408254769706128,
+            "axis_mae_cm": {
+              "x": 7.679825376289153,
+              "y": 4.272684352893276,
+              "z": 7.572897166578828
+            },
+            "axis_rmse_cm": {
+              "x": 10.489868840676582,
+              "y": 5.865560906180078,
+              "z": 9.954826388685536
+            }
+          }
+        }
+      ],
+      "selected_candidate": "reconstruction_round_3",
+      "best_validation_rmse_cm": 8.770085378514066,
+      "parameters_unchanged": true,
+      "search_seconds": 205.70902174399998,
+      "rounds": [
+        {
+          "round": 1,
+          "reconstruction_mse": 0.0009626192564444272,
+          "accepted_scale_group_changes": 23
+        },
+        {
+          "round": 2,
+          "reconstruction_mse": 0.0005846605578665797,
+          "accepted_scale_group_changes": 18
+        },
+        {
+          "round": 3,
+          "reconstruction_mse": 0.0004951619427159556,
+          "accepted_scale_group_changes": 19
+        }
+      ]
+    }
+  }
+}

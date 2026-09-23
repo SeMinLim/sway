@@ -199,6 +199,9 @@ def calibrateModel(model, trainX, batchSize=256, maxSamples=2048,
             "calibrationSeed": int(seed), "percentile": float(percentile),
             "calibrationIndexSHA256": hashlib.sha256(indices.astype("<i8").tobytes()).hexdigest(),
             "usePWL": bool(usePWL), "nodes": entries,
+            "modelConfig": dict(model.config),
+            "pwlKnots": {name: model.config[name] for name in ["silu_knots", "exp_knots"]
+                         if name in model.config},
             "rounding": "nearest_ties_to_even; recurrent_state_store=arithmetic_right_shift_7",
             "overflow": "saturate signed INT8, current state INT24, retained state INT17",
             "simulationScope": "INT8 affine and convolution operands with INT64 reference MACs; integer SSM recurrence; normalization/nonlinearities/remaining elementwise graph use quantize-dequantize simulation; no RTL validation"}
@@ -287,7 +290,7 @@ class QuantizationObserver:
         exponentInput = delta[:, :, :, None] * A[None, None, :, :]
         exponentInput = self(prefix + ".expInput", exponentInput)
         if self.profile["usePWL"]:
-            aBar = piecewise(exponentInput, EXP_KNOTS, "exp")
+            aBar = piecewise(exponentInput, self.profile.get("pwlKnots", {}).get("exp_knots", EXP_KNOTS), "exp")
         else:
             aBar = torch.exp(exponentInput)
         bBar = delta[:, :, :, None] * B[:, :, None, :]
@@ -306,7 +309,20 @@ class QuantizationObserver:
         return output.to(x.dtype) * (2.0 ** outputExponent)
 
 
+def validateModelProfile(model, profile):
+    if profile.get("modelConfig", model.config) != model.config:
+        raise ValueError("PTQ profile and model configuration differ")
+    try:
+        from .model import SILU_KNOTS, EXP_KNOTS
+    except ImportError:
+        from model import SILU_KNOTS, EXP_KNOTS
+    for name, default in [("silu_knots", SILU_KNOTS), ("exp_knots", EXP_KNOTS)]:
+        if profile.get("pwlKnots", {}).get(name, default) != model.config.get(name, default):
+            raise ValueError("PTQ profile and model PWL knots differ: " + name)
+
+
 def quantizedForward(model, x, profile, returnStatistics=False):
+    validateModelProfile(model, profile)
     observer = QuantizationObserver(profile)
     with torch.no_grad():
         output = forwardModel(model, x, observer=observer, usePWL=profile["usePWL"])
@@ -360,7 +376,7 @@ class QATObserver(QuantizationObserver):
             from model import piecewise, EXP_KNOTS
         exponentInput = self(prefix + ".expInput", delta[:, :, :, None] * A)
         if self.profile["usePWL"]:
-            aBar = piecewise(exponentInput, EXP_KNOTS, "exp")
+            aBar = piecewise(exponentInput, self.profile.get("pwlKnots", {}).get("exp_knots", EXP_KNOTS), "exp")
         else:
             aBar = torch.exp(exponentInput)
         aBar = self(prefix + ".Abar", aBar)
@@ -444,6 +460,7 @@ def exportIntegerTensor(outputDir, name, integerArray, bits=8):
 
 
 def exportQuantizedModel(model, profile, outputDir):
+    validateModelProfile(model, profile)
     try:
         from .model import SILU_KNOTS, EXP_KNOTS
     except ImportError:
@@ -488,7 +505,8 @@ def exportQuantizedModel(model, profile, outputDir):
                 "int8ParameterBytes": sum(entry["bytes"] for entry in entries),
                 "tensors": entries, "quantization": "quantization.json", "cArrays": "parameters.h",
                 "fp32Parameters": "parameters_fp32.npz",
-                "piecewiseApproximation": {"siluKnots": SILU_KNOTS, "expKnots": EXP_KNOTS,
+                "piecewiseApproximation": {"siluKnots": model.config.get("silu_knots", SILU_KNOTS),
+                                            "expKnots": model.config.get("exp_knots", EXP_KNOTS),
                                             "ordinates": "exact function evaluated at each knot",
                                             "scope": "Reimplementation choices, original coefficients unpublished"},
                 "stateFormat": {"currentBits": 24, "retainedBits": 17, "AbarScaleExponent": -7,

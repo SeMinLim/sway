@@ -1,0 +1,96 @@
+{
+  "round": 3,
+  "reconstruction_mse": 0.0005066095674782314,
+  "changes": [
+    {
+      "nodes": [
+        "blocks.0.convBias"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005316869298581762,
+      "reconstruction_mse_after": 0.0005304762884435033
+    },
+    {
+      "nodes": [
+        "blocks.0.xWeight"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005304762884435033,
+      "reconstruction_mse_after": 0.0005273628128664373
+    },
+    {
+      "nodes": [
+        "blocks.0.C"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0005273628128664373,
+      "reconstruction_mse_after": 0.000527090193903867
+    },
+    {
+      "nodes": [
+        "blocks.0.state",
+        "blocks.0.currentState"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.000527090193903867,
+      "reconstruction_mse_after": 0.0005251491461303602
+    },
+    {
+      "nodes": [
+        "blocks.1.norm"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0005251491461303602,
+      "reconstruction_mse_after": 0.000523043206731073
+    },
+    {
+      "nodes": [
+        "blocks.1.convBias"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.000523043206731073,
+      "reconstruction_mse_after": 0.0005215517199054419
+    },
+    {
+      "nodes": [
+        "blocks.1.xWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0005215517199054419,
+      "reconstruction_mse_after": 0.0005188535639026943
+    },
+    {
+      "nodes": [
+        "blocks.1.deltaInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005188535639026943,
+      "reconstruction_mse_after": 0.0005127022043745268
+    },
+    {
+      "nodes": [
+        "blocks.1.D"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0005127022043745268,
+      "reconstruction_mse_after": 0.000511130528779244
+    },
+    {
+      "nodes": [
+        "blocks.1.expInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.000511130528779244,
+      "reconstruction_mse_after": 0.0005078070635202075
+    },
+    {
+      "nodes": [
+        "blocks.1.state",
+        "blocks.1.currentState"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0005078070635202075,
+      "reconstruction_mse_after": 0.0005066095674782314
+    }
+  ]
+}
