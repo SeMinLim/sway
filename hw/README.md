@@ -15,6 +15,7 @@ make runsim PROJECT=sway_observation BOARD=ulx3s-85f
 make runsim PROJECT=sway_observation BOARD=ulx3s-85f SIM_BACKEND=iverilog
 make verilog PROJECT=sway_observation BOARD=ulx3s-85f
 make netlist PROJECT=sway_observation BOARD=ulx3s-85f
+make pnr PROJECT=sway_observation BOARD=ulx3s-85f
 ```
 
 The full FPGA flow uses `make synth PROJECT=sway_observation BOARD=ulx3s-85f` with Yosys, nextpnr-ecp5 and ecppack installed. A 100 MHz configuration alone does not establish timing closure or a physical-board result.
@@ -37,6 +38,8 @@ make -C hw runsim ROOTDIR=/absolute/path/to/blueyosys
 
 The integer reference measures **8.3579082742 cm** RMSE on 7,984 MARS test frames. The paired PTQ software value is **8.3563735004 cm**. The difference comes from exact rational integer range normalization; weights, scales and fitted PWL functions are frozen. See [reference report](generated/reference_report.json) and [software contract verification](generated/software_contract_verification.json).
 
-Validation passed with BSC 2025.07, Icarus 12.0, and Yosys 0.33: Bluesim and generated Verilog agree on all 798 outputs and event cycles; the restored core has the same 115-rule compiler schedule as the first baseline. Project-top Verilog generation and ECP5 netlist synthesis pass, with zero Yosys check problems. See [validation](results/validation.json). Placement, routing, timing closure, and physical-board operation have not been verified.
+Simulation and netlist checks passed with BSC 2025.07, Icarus 12.0, and Yosys 0.33: Bluesim and generated Verilog agree on all 798 outputs and event cycles; the restored core has the same 115-rule compiler schedule as the first baseline. Project-top Verilog generation and ECP5 netlist synthesis pass, with zero Yosys check problems. See [validation](results/validation.json).
+
+The physical build fails during placement on ULX3S-85F: nextpnr requires **145,239 / 83,640 TRELLIS_COMB sites (173.65%)**. The actual core clock receives the 100 MHz constraint, but routing is never reached, so no routed Fmax or slack is available. See the [physical result](results/physical/result.json) and [nextpnr log](results/physical/nextpnr.log). Physical-board operation has not been tested.
 
 Normal hardware builds use the checked-in tables and fixtures and need neither dataset downloads nor PyTorch. To regenerate coefficients and fixtures from the included model, install NumPy/PyTorch and run `python3 reference/generate.py` in this directory. Add `--data /path/to/mars` to recompute the full held-out integer-reference metric. The generator performs no training or calibration.

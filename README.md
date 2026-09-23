@@ -75,6 +75,7 @@ The matching project is [`blueyosys/projects/sway_observation`](https://github.c
 make runsim PROJECT=sway_observation BOARD=ulx3s-85f
 make runsim PROJECT=sway_observation BOARD=ulx3s-85f SIM_BACKEND=iverilog
 make netlist PROJECT=sway_observation BOARD=ulx3s-85f
+make pnr PROJECT=sway_observation BOARD=ulx3s-85f
 ```
 
 Or run the same hardware directory from Sway:
@@ -83,4 +84,6 @@ Or run the same hardware directory from Sway:
 make -C hw runsim ROOTDIR=/absolute/path/to/blueyosys
 ```
 
-Bluesim and Icarus pass the fixed 14-frame, 798-output test, including input bubbles, output backpressure, and per-frame state reset. The restored core matches the first baseline’s outputs, event cycles, and 115-rule compiler schedule. Project-top Verilog generation and ECP5 netlist synthesis also pass: [validation](hw/results/validation.json). The configured core clock is 100 MHz; timing closure and physical-board operation require separate FPGA validation.
+Bluesim and Icarus pass the fixed 14-frame, 798-output test, including input bubbles, output backpressure, and per-frame state reset. The restored core matches the first baseline’s outputs, event cycles, and 115-rule compiler schedule. Project-top Verilog generation and ECP5 netlist synthesis also pass: [validation](hw/results/validation.json).
+
+The physical build fails during placement on ULX3S-85F because **145,239 / 83,640 TRELLIS_COMB sites (173.65%)** are required. The core clock is correctly constrained to 100 MHz, but routing and post-route timing are not reached; no routed Fmax or slack is available. See the [physical result](hw/results/physical/result.json). Physical-board operation has not been tested.

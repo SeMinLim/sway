@@ -7,7 +7,8 @@
   "tools": {
     "bsc": "2025.07 build 282e82e9",
     "iverilog": "12.0",
-    "yosys": "0.33 git 2584903a060"
+    "yosys": "0.33 git 2584903a060",
+    "nextpnr-ecp5": "nextpnr-0.11.1-31-g3edea68e"
   },
   "checks": {
     "bluesim": {
@@ -63,6 +64,18 @@
         "TRELLIS_DPR16X4": 252,
         "TRELLIS_FF": 50644
       }
+    },
+    "physical_implementation": {
+      "status": "failed",
+      "failure_stage": "placement",
+      "reason": "device_capacity_exceeded",
+      "report": "physical/result.json",
+      "comb_used": 145239,
+      "comb_available": 83640,
+      "comb_percent": 173.65,
+      "core_constraint_mhz": 100.0,
+      "routing": "not_started",
+      "post_route_timing": "not_evaluated"
     }
   },
   "source_sha256": {
@@ -88,7 +101,7 @@
   "scope": {
     "simulation": "Baseline inference core; 14 fixed real/extreme/repeated-frame fixtures, input bubbles, output stalls, state reset and trailing-output checks. UART/PLL behavior is not simulated by TbSway.",
     "synthesis": "Project mkTop including UART/clock wrapper, default synth_ecp5 DSP mapping.",
-    "physical_implementation": "Not run: placement, routing, timing closure and physical-board operation are unverified."
+    "physical_implementation": "Attempted on LFE5U-85F/CABGA381, speed grade 6. Legal placement failed because TRELLIS_COMB use is 145239/83640 (173.65%). Routing and post-route timing were not reached; no Fmax or slack is available. Physical-board operation was not tested."
   },
   "warnings": {
     "bsc": "Duplicate search path and unfolding notices; UART top methods have internal reset metadata not exported at the top boundary (G0046).",
