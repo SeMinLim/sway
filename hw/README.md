@@ -10,6 +10,8 @@ Main projection feeds convolution and its SiLU stage. Gate projection feeds an i
 
 The nonlinear INT8 lookup and checkpoint remain unchanged. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. Static bounds check the frozen scales before elaboration.
 
+Affine weight ROM pages use fixed 256-bit truth tables for each output bit, followed by the existing upper-address page selection. Weight order, signed INT8 values, lane banks, and combinational read latency are unchanged.
+
 ## Parallelism
 
 Change one typedef in `bsv/SwayTypes.bsv`:
@@ -59,6 +61,7 @@ Icarus Verilog is required for generated-Verilog simulation. The FPGA flow also 
 * `sim/TbSwayKernel.bsv`: continuous-source, immediate-sink regression using the same golden outputs.
 * `reference/`: integer reference, parameter generator, and test runners.
 * `results/engine_refactor/`: validation for the independent-engine revision.
+* `results/lut_rom/`: weight ROM verification and before/after synthesis statistics.
 
 ## Validation
 
@@ -73,3 +76,7 @@ The runner builds isolated copies, checks every output against the fixed 14-fram
 All three configurations pass both 14-frame tests, with all 798 outputs matching in each run. The 329,988 rounding/saturation cases also pass. Tests used BSC 2026.01 and Icarus Verilog 12.0. Default-configuration project-top Verilog generation passes. [Validation results](results/engine_refactor/validation.json) and [top compilation](results/engine_refactor/top_verilog.json) record the checked sources and scope. Historical records elsewhere in `results/`, including the 173.65% placement failure, describe the earlier fused implementation. They are not resource or timing measurements of this revision. Physical-board operation is untested.
 
 Normal builds use the checked-in tables and fixtures. Regeneration requires NumPy/PyTorch and `python3 reference/generate.py` from this directory; it performs no training or calibration. The saved [integer-reference report](generated/reference_report.json) and [software contract verification](generated/software_contract_verification.json) describe the frozen numerical model.
+
+The weight LUT-ROM update passes all 974,848 addresses across 119 banks, including padding and out-of-range zero values. Divisor 4 stress and kernel regressions pass all 1,596 outputs; every recorded output value and cycle matches the preceding implementation. [ROM verification](results/lut_rom/weight_rom_verification.json), [regression](results/lut_rom/validation.json), and [cycle comparison](results/lut_rom/timing_comparison.json) record this check.
+
+With blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33, full `mkTop` synthesis for ULX3S-85F reduces LUT4 use from 67,982 to 64,204. Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, falls from 96,204 (115.02%) to 92,426 (110.50%). FF (47,887), DSP (78), and BRAM (2) are unchanged. [Synthesis comparison](results/lut_rom/synthesis_comparison.json) and [Yosys statistics](results/lut_rom/after.yosys.rpt) contain the measured counts. Logic capacity is still exceeded; this run does not include packing, placement/routing, or timing closure.

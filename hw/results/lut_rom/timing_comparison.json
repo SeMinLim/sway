@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "comparison": "Every SWAY event, output value and recorded cycle equals the pre-change Divisor4 regression",
+  "modes": {
+    "stress": {
+      "all_sway_records_identical": true,
+      "outputs_checked": 798,
+      "pass_record": "SWAY_PASS frames=14 outputs=798 cycles=212704 drain_cycles=2048",
+      "records_sha256": "4ba62d3804caa06902467d1e6ac5b323957be7c9513bd3f9063055f056c4d840",
+      "baseline_log": "hw/results/engine_refactor/divisor4_stress/simulation.log"
+    },
+    "kernel": {
+      "all_sway_records_identical": true,
+      "outputs_checked": 798,
+      "pass_record": "SWAY_PASS frames=14 outputs=798 cycles=204461 drain_cycles=2048",
+      "records_sha256": "352e60ba36e6908d6cdda8bc857b0a5d755ddb8fb54f73af57aac5f2f72548ab",
+      "baseline_log": "hw/results/engine_refactor/divisor4_kernel/simulation.log"
+    }
+  }
+}

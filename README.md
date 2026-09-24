@@ -11,6 +11,7 @@
   * `model/` & `generated/`: frozen checkpoint, parameter tables, and reference outputs.
   * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
   * `results/engine_refactor/`: validation results for the current baseline.
+  * `results/lut_rom/`: weight ROM verification and synthesis comparison.
 * sw/
   * Model implementation, training, quantization, and evaluation scripts.
   * `config/`: model settings and reconstruction choices.
@@ -91,10 +92,16 @@ python sw/evaluate_ptq.py \
   * All three parallelism settings pass both the stall regression and continuous-input kernel test, with 798 matching outputs per run.
   * Default-configuration Verilog generation also passes.
   * [Simulation results](hw/results/engine_refactor/validation.json) & [Verilog generation](hw/results/engine_refactor/top_verilog.json).
+  * The updated weight LUT-ROM passes all 974,848 bank/address checks. Default-configuration stress and kernel tests pass with identical output values and cycles.
+  * [ROM verification](hw/results/lut_rom/weight_rom_verification.json) & [regression results](hw/results/lut_rom/validation.json).
+* Hardware Synthesis
+  * blueYosys synthesis of `mkTop` for ULX3S-85F at divisor 4 reduces LUT4 use from **67,982 to 64,204** with the updated weight LUT-ROM.
+  * Logic use before packing is **92,426 / 83,640 (110.50%)**, down from **96,204 (115.02%)**. The design still exceeds logic capacity.
+  * FF: **47,887**; DSP: **78**; BRAM: **2**, unchanged. [Synthesis comparison](hw/results/lut_rom/synthesis_comparison.json).
 
 ## Notes
 
 * Maintained by Se-Min Lim.
 * The checkpoint is independently trained from the published eMamba settings. Model details and reconstruction choices are recorded in [model.json](sw/config/model.json); dataset membership is recorded in [data_manifest.json](sw/results/data_manifest.json).
 * Hardware uses exact rational range normalization. Its comparison with software QDQ normalization is recorded in [numerical verification](hw/generated/software_contract_verification.json).
-* Resource use, placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier hardware reports describe the fused implementation.
+* Logic use is calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`; it is not a packed `TRELLIS_COMB` measurement. Placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier hardware reports describe the fused implementation.

@@ -536,7 +536,7 @@
     "labels_test.npy": "a1f29ebee5d5b4a63810997e9eda811af97bd222dcf4d4766777ccaea1b256e8"
   },
   "generatedSHA256": {
-    "SwayParameters.bsv": "fee265578475e74b58151cb92c402b3220e6b5a259b75906b7f5756d4c429fc3",
+    "SwayParameters.bsv": "0690aed361908f89e93fd1e7be3d3f1644f82ef67b13692af736b2305e9b6ab5",
     "nonlinear_tables.npy": "2bad6648b11e4ff7fa793ee867c81f122df802a6214e9c7b4d304572b97f2a48",
     "GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "test_input.hex": "bff0e0a7e6eb3044228153400ada59360959abb4a4779df584efe15343ed54eb",
@@ -546,7 +546,15 @@
   },
   "referenceSHA256": {
     "integer_model.py": "62d8f5f99e9a95e1f784662f98a283db0b7660297be3b1a0182cb08ae3236ee9",
-    "generate.py": "863abda0223d57c1c8a897cf2e0259aac18546b5cbadbd015e3ca2495537975b"
+    "generate.py": "3f5e401f3e32c557e4ccdf574c7a188f740c41b910a084813bf605f1bbfb12ab"
   },
-  "hardwareRevisionUpdate": "ROM layout and hardware-width checks refreshed for independent projection engines; frozen fixtures, nonlinear values, checkpoint, and saved numerical evaluation are unchanged."
+  "hardwareRevisionUpdate": "ROM layout and hardware-width checks refreshed for independent projection engines; frozen fixtures, nonlinear values, checkpoint, and saved numerical evaluation are unchanged.",
+  "affineWeightROM": {
+    "encoding": "256-bit fixed truth tables per output bit and upper-page selection",
+    "readLatencyCycles": 0,
+    "addressWidth": 13,
+    "pageAddressBits": 8,
+    "parameterMapping": "unchanged independent projection slices and 1/2/4-lane banks",
+    "invalidAddressValue": 0
+  }
 }
