@@ -8,19 +8,16 @@ permissions:
 jobs:
   snapshot:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
-      - name: Collect public build dependencies
+      - name: Collect public synthesis dependency
         run: |
           sudo apt-get update -qq
-          mkdir -p /tmp/sway-tools/packages
-          cd /tmp/sway-tools/packages
-          apt-get download iverilog yosys
-          git clone --depth 1 https://github.com/SeMinLim/blueyosys.git /tmp/sway-tools/blueyosys
-          git -C /tmp/sway-tools/blueyosys rev-parse HEAD > /tmp/sway-tools/blueyosys-commit.txt
-          tar --exclude=.git -czf /tmp/sway-tools.tar.gz -C /tmp/sway-tools .
+          mkdir -p /tmp/sway-abc
+          cd /tmp/sway-abc
+          apt-get download yosys-abc
       - uses: actions/upload-artifact@v4
         with:
-          name: sway-build-dependencies
-          path: /tmp/sway-tools.tar.gz
+          name: sway-abc-dependency
+          path: /tmp/sway-abc/*.deb
           retention-days: 1
