@@ -1,0 +1,22 @@
+name: Baseline source snapshot
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/sway-source-snapshot.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Package the exact baseline sources and fixtures
+        run: tar -czf /tmp/sway-source.tar.gz hw README.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sway-baseline-source
+          path: /tmp/sway-source.tar.gz
+          retention-days: 1
