@@ -68,7 +68,7 @@ module mkSwayBaseline(SwayIfc);
 				Integer channel = i % valueOf(InputChannels);
 				Integer address = (row * valueOf(InputWidth) + column)
 					* valueOf(InputChannels) + channel;
-				patches[p][i] = requant(signExtend(frameR[address]), nodeScale("input"), nodeScale("patches"));
+				patches[p][i] = requant32(signExtend(frameR[address]), nodeScale("input"), nodeScale("patches"));
 			end
 		end
 		embedding.put(Token { index: patchCnt, data: patches[patchCnt] });
@@ -101,7 +101,7 @@ module mkSwayBaseline(SwayIfc);
 		let value <- block1.get;
 		Vector#(ModelDim, Int#(8)) token = newVector;
 		for ( Integer i = 0; i < valueOf(ModelDim); i = i + 1 ) begin
-			token[i] = requant(signExtend(value.data[i]),
+			token[i] = requant32(signExtend(value.data[i]),
 				blockScale(1, "residual"), nodeScale("headInput"));
 		end
 		headR[value.index] <= token;
@@ -121,7 +121,7 @@ module mkSwayBaseline(SwayIfc);
 		Token#(ModelDim) value <- headHidden.get;
 		for ( Integer i = 0; i < valueOf(ModelDim); i = i + 1 ) begin
 			Int#(8) relu = value.data[i] < 0 ? 0 : value.data[i];
-			value.data[i] = requant(signExtend(relu), nodeScale("headHidden"), nodeScale("headActivation"));
+			value.data[i] = requant32(signExtend(relu), nodeScale("headHidden"), nodeScale("headActivation"));
 		end
 		headOutput.put(value);
 	endrule

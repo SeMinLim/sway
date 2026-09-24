@@ -1,0 +1,41 @@
+checking package dependencies
+compiling generated/GeneratedTestConfig.bsv
+compiling generated/SwayParameters.bsv
+compiling bsv/SwayLinear.bsv
+compiling bsv/SwayNorm.bsv
+compiling bsv/SwayScan.bsv
+compiling bsv/SwayBlock.bsv
+compiling bsv/SwayBaseline.bsv
+compiling sim/TbSway.bsv
+code generation for mkTbSway starts
+Warning: "Prelude.bs", line 1335, column 9: (G0024)
+  The function unfolding steps interval has been exceeded when unfolding
+  `Prelude.Ord~Prelude.Integer'. The current number of steps is 100000. Next
+  warning at 200000 steps. Elaboration terminates at 1000000 steps.
+  During elaboration of the body of rule `process6B' at "bsv/SwayBlock.bsv",
+  line 217, column 14.
+  During elaboration of `block0' at "bsv/SwayBaseline.bsv", line 21, column
+  18.
+  During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
+  During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
+Warning: "Prelude.bs", line 598, column 0: (G0024)
+  The function unfolding steps interval has been exceeded when unfolding
+  `indexableToBits'. The current number of steps is 200000. Next warning at
+  300000 steps. Elaboration terminates at 1000000 steps.
+  During elaboration of the body of rule `gateSiLU1' at "bsv/SwayBlock.bsv",
+  line 172, column 14.
+  During elaboration of `block1' at "bsv/SwayBaseline.bsv", line 22, column
+  18.
+  During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
+  During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
+Warning: "Prelude.bs", line 1335, column 9: (G0024)
+  The function unfolding steps interval has been exceeded when unfolding
+  `Prelude.Ord~Prelude.Integer'. The current number of steps is 300000. Next
+  warning at 400000 steps. Elaboration terminates at 1000000 steps.
+  During elaboration of the body of rule `process2' at "bsv/SwayBaseline.bsv",
+  line 51, column 14.
+  During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
+  During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
+Schedule dump file created: /tmp/sway-refactor-1xtdqgf5/divisor1/build/mkTbSway.sched
+Verilog file created: /tmp/sway-refactor-1xtdqgf5/divisor1/build/mkTbSway.v
+All packages are up to date.

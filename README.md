@@ -61,29 +61,35 @@ Artifacts are under [`sw/results/mars_ptq_20260923/`](sw/results/mars_ptq_202609
 
 ## Baseline hardware
 
-`hw/` is a self-contained blueYosys project implementing the dedicated-engine MARS baseline. Patch embedding feeds two Mamba blocks and the regression head through explicit FIFOs. All 11 affine layers retain separate four-lane engines; each block has its own normalization, convolution, delta projection, scan, and output projection. Input frames and flattened head inputs use the baseline register/FIFO organization.
+`hw/` contains the dedicated-engine MARS baseline for ULX3S-85F. Patch embedding feeds two independent Mamba blocks and the regression head through explicit FIFOs.
 
-The hardware uses the current PTQ checkpoint's INT8 parameters, scales, and fitted PWL functions. Its exact rational range normalization gives integer-reference test RMSE **8.3579082742 cm**, compared with **8.3563735004 cm** for the software QDQ path. [Numerical verification](hw/generated/software_contract_verification.json) checks the checkpoint/export, all PWL table entries, and normalization correspondence.
+* Each block has separate main and gate input projections. Gate SiLU follows the gate projection in its own stage.
+* Delta-input, B, and C projections use independent engines. Delta expansion and the output projection also retain their own engines.
+* The complete kernel has 17 affine engines. No engine is shared between blocks or projections.
+* The checkpoint, scales, INT8 nonlinear lookup, INT24 current state, and INT17 retained state are preserved.
 
-The source follows the supplied BSV style: explicit FIFO boundaries, numbered stage rules, visible control/counter updates, named static dimensions, and thin input/output methods. [Project README](hw/README.md) documents the architecture, files, and validation.
+Set `ParallelismDivisor` in [`SwayTypes.bsv`](hw/bsv/SwayTypes.bsv) to select the lane allocation. Weight-bank mapping, counters, state addresses, and reductions follow this single typedef; parameter regeneration is unnecessary.
 
-## Run the baseline in blueYosys
+| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
+| --- | ---: | ---: |
+| 1 | 4 | 2 |
+| 2 | 2 | 1 |
+| 4 (default) | 1 | 1 |
 
-The matching project is [`blueyosys/projects/sway_observation`](https://github.com/SeMinLim/blueyosys/tree/main/projects/sway_observation). From the blueYosys repository root:
+The hardware retains exact rational range normalization. The saved integer-reference test RMSE is **8.3579082742 cm**, compared with **8.3563735004 cm** for software QDQ normalization. See [numerical verification](hw/generated/software_contract_verification.json).
 
-```sh
-make runsim PROJECT=sway_observation BOARD=ulx3s-85f
-make runsim PROJECT=sway_observation BOARD=ulx3s-85f SIM_BACKEND=iverilog
-make netlist PROJECT=sway_observation BOARD=ulx3s-85f
-make pnr PROJECT=sway_observation BOARD=ulx3s-85f
-```
+## How to build the baseline
 
-Or run the same hardware directory from Sway:
+Install BSC/Bluesim and keep [blueYosys](https://github.com/SeMinLim/blueyosys) beside Sway. Run from the Sway repository root:
 
-```sh
-make -C hw runsim ROOTDIR=/absolute/path/to/blueyosys
-```
+| Task | Command |
+| --- | --- |
+| Run the regression | `make -C hw runsim` |
+| Generate Verilog | `make -C hw verilog` |
+| Synthesize the netlist | `make -C hw netlist` |
+| Place and route | `make -C hw pnr` |
+| Generate the bitstream | `make -C hw synth` |
 
-Bluesim and Icarus pass the fixed 14-frame, 798-output test, including input bubbles, output backpressure, and per-frame state reset. The restored core matches the first baseline’s outputs, event cycles, and 115-rule compiler schedule. Project-top Verilog generation and ECP5 netlist synthesis also pass: [validation](hw/results/validation.json).
+Set `ROOTDIR=/absolute/path/to/blueyosys` when blueYosys is elsewhere. To use this revision inside blueYosys, copy `hw/` into `blueyosys/projects/sway_observation/` first. Rebuild from clean outputs after changing the divisor.
 
-The physical build fails during placement on ULX3S-85F because **145,239 / 83,640 TRELLIS_COMB sites (173.65%)** are required. The core clock is correctly constrained to 100 MHz, but routing and post-route timing are not reached; no routed Fmax or slack is available. See the [physical result](hw/results/physical/result.json). Physical-board operation has not been tested.
+[Hardware README](hw/README.md) covers the interfaces, tests, and validation scope. Historical synthesis and placement records under `hw/results/` describe the earlier fused implementation; they do not establish resource use or timing for this revision.

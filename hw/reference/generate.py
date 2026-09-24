@@ -86,6 +86,32 @@ def bsv_rom(name, signature, choices, width):
     return lines
 
 
+def bsv_linear_rom(banks):
+    # Keep each function small so BSC does not type-check one enormous case body.
+    # These are combinational ROM pages, with no added register or clock cycle.
+    lines = []
+    dispatch = ["function Int#(8) linearWeight(Integer laneCount, Integer layerId, Integer rowOffset, Integer outputNum, Integer lane, Bit#(13) addr);",
+                "\tInt#(8) result = 0;"]
+    for bank_index, (condition, _, entries) in enumerate(banks):
+        bank_name = "linearWeightBank%d" % bank_index
+        pages = {}
+        for address, value in entries:
+            if value:
+                pages.setdefault(address // 256, []).append((address % 256, value))
+        bank_lines = ["function Int#(8) " + bank_name + "(Bit#(13) addr);",
+                      "\tInt#(8) result = 0;", "\tcase ( addr[12:8] )"]
+        for page, rows in pages.items():
+            page_name = bank_name + "Page%d" % page
+            lines += ["function Int#(8) " + page_name + "(Bit#(8) addr);",
+                      "\tInt#(8) result = 0;", "\tcase ( addr )"]
+            lines += ["\t\t8'd%d: result = %d;" % (address, value) for address, value in rows]
+            lines += ["\t\tdefault: result = 0;", "\tendcase", "\treturn result;", "endfunction", ""]
+            bank_lines += ["\t\t5'd%d: result = %s(addr[7:0]);" % (page, page_name)]
+        lines += bank_lines + ["\t\tdefault: result = 0;", "\tendcase", "\treturn result;", "endfunction", ""]
+        dispatch += ["\tif ( " + condition + " ) result = " + bank_name + "(addr);"]
+    return lines + dispatch + ["\treturn result;", "endfunction", ""]
+
+
 def bsv_integer_function(name, signature, variable, values):
     lines = ["function Integer " + name + "(" + signature + ");", "\tInteger result = 0;"]
     for key, value in values:
@@ -100,19 +126,42 @@ def write_bsv(model):
              "package SwayParameters;", ""]
     banks = []
     biases = []
+    supported_slices = []
     for layer, (output, input_name, weight_name, bias_name) in enumerate(LAYERS):
         weight = model.parameters[weight_name]
-        for lane in range(4):
-            entries = []
-            for group in range((len(weight) + 3) // 4):
-                row = group * 4 + lane
-                for column in range(weight.shape[1]):
-                    entries.append((group * weight.shape[1] + column, int(weight[row, column]) if row < len(weight) else 0))
-            banks.append(("layerId == %d && lane == %d" % (layer, lane), "addr", entries))
+        slices = [(0, len(weight))]
+        if weight_name.endswith(".inWeight"):
+            inner = len(weight) // 2
+            slices = [(0, inner), (inner, inner)]
+        elif weight_name.endswith(".xWeight"):
+            rank = model.config["dt_rank"]
+            state = model.config["N"]
+            slices = [(0, rank), (rank, state), (rank + state, state)]
+        for offset, outputs in slices:
+            supported_slices.append((layer, offset, outputs))
+            # Each independent engine elaborates only its own weight rows.
+            # All lane mappings are static, so changing ParallelismDivisor
+            # requires neither parameter regeneration nor a checkpoint edit.
+            for lanes in (1, 2, 4):
+                for lane in range(lanes):
+                    entries = []
+                    for group in range((outputs + lanes - 1) // lanes):
+                        row = group * lanes + lane
+                        for column in range(weight.shape[1]):
+                            entries.append((group * weight.shape[1] + column,
+                                            int(weight[offset + row, column]) if row < outputs else 0))
+                    condition = "laneCount == %d && layerId == %d && rowOffset == %d && outputNum == %d && lane == %d"
+                    banks.append((condition % (lanes, layer, offset, outputs, lane), "addr", entries))
         if bias_name:
             biases.append(("layerId == %d" % layer, "row", list(enumerate(model.parameters[bias_name].tolist()))))
-    lines += bsv_rom("linearWeight", "Integer layerId, Integer lane, Bit#(13) addr", banks, 13)
+    lines += bsv_linear_rom(banks)
+    lines += ["function Bool layerSliceSupported(Integer layerId, Integer rowOffset, Integer outputNum);", "\tBool result = False;"]
+    for layer, offset, outputs in supported_slices:
+        lines.append("\tif ( layerId == %d && rowOffset == %d && outputNum == %d ) result = True;" % (layer, offset, outputs))
+    lines += ["\treturn result;", "endfunction", ""]
     lines += bsv_rom("linearBias", "Integer layerId, Bit#(9) row", biases, 9)
+    lines += bsv_integer_function("layerInputSize", "Integer layerId", "layerId", [(layer, model.parameters[names[2]].shape[1]) for layer, names in enumerate(LAYERS)])
+    lines += bsv_integer_function("layerOutputSize", "Integer layerId", "layerId", [(layer, model.parameters[names[2]].shape[0]) for layer, names in enumerate(LAYERS)])
     for function, index in [("layerInputScale", 1), ("layerWeightScale", 2), ("layerOutputScale", 0)]:
         lines += bsv_integer_function(function, "Integer layerId", "layerId", [(layer, model.exponent(names[index])) for layer, names in enumerate(LAYERS)])
     lines += bsv_integer_function("layerBiasScale", "Integer layerId", "layerId", [(layer, model.exponent(names[3]) if names[3] else 0) for layer, names in enumerate(LAYERS)])
@@ -186,7 +235,9 @@ def verify_model_bundle(export):
 
 
 def hardware_width_checks(model):
-    """Conservative full-INT8-domain bounds for the first baseline datapath."""
+    """Conservative full-INT8-domain bounds for the bounded baseline datapath."""
+    # INT8 requantization clamps before any left shift; no wide shifted
+    # intermediate exists beyond the explicitly checked aligned accumulators.
     checks = []
     def bounded(name, magnitude, bits, signed=True):
         limit = (1 << (bits - 1 if signed else bits)) - 1
@@ -201,14 +252,13 @@ def hardware_width_checks(model):
     for layer, (output, input_name, weight_name, bias_name) in enumerate(LAYERS):
         weight = model.parameters[weight_name]
         bound = int(np.max(np.sum(np.abs(weight), axis=1))) * 128
-        bounded("linear%d accumulation" % layer, bound, 32)
+        bounded("linear%d accumulation" % layer, bound, 24)
         exponent = model.exponent(input_name) + model.exponent(weight_name)
         common = min(exponent, model.exponent(bias_name)) if bias_name else exponent
         bound = aligned_bound(bound, exponent, common)
         if bias_name:
             bound += aligned_bound(int(np.abs(model.parameters[bias_name]).max()), model.exponent(bias_name), common)
-        bounded("linear%d aligned bias" % layer, bound, 64)
-        bounded("linear%d output rescale" % layer, aligned_bound(bound, common, model.exponent(output)), 64)
+        bounded("linear%d aligned bias" % layer, bound, 24)
     for block in range(2):
         prefix = "blocks.%d." % block
         exp = lambda name: model.exponent(prefix + name)
@@ -223,31 +273,28 @@ def hardware_width_checks(model):
         common = min(exp("convInput") + exp("convWeight"), exp("convBias"))
         convolution_bound = aligned_bound(convolution_bound, exp("convInput") + exp("convWeight"), common)
         convolution_bound += aligned_bound(int(np.abs(model.parameters[prefix + "convBias"]).max()), exp("convBias"), common)
-        bounded(prefix + "convolution aligned bias", convolution_bound, 64)
-        bounded(prefix + "convolution output rescale", aligned_bound(convolution_bound, common, exp("conv")), 64)
+        bounded(prefix + "convolution aligned bias", convolution_bound, 18)
         drive_bound = aligned_bound(128 * 128, exp("Bbar") + exp("x"), exp("currentState"))
-        bounded(prefix + "recurrent and drive", 128 * (1 << 16) + drive_bound, 64)
+        bounded(prefix + "recurrent and drive", 128 * (1 << 16) + drive_bound, 26)
         state_output = (1 << 23) * 128 * 8
         bounded(prefix + "state reduction", state_output, 35)
         common = min(exp("currentState") + exp("C"), exp("x") + exp("D"))
         output_bound = aligned_bound(state_output, exp("currentState") + exp("C"), common)
         output_bound += aligned_bound(128 * 128, exp("x") + exp("D"), common)
-        bounded(prefix + "SSM aligned output", output_bound, 64)
-        bounded(prefix + "SSM output rescale", aligned_bound(output_bound, common, exp("ssmY")), 64)
+        bounded(prefix + "SSM aligned output", output_bound, 35)
         for source, target in [("in", "convInput"), ("in", "gateInput"),
                                ("xProjection", "deltaInput"), ("xProjection", "B"),
                                ("xProjection", "C"), ("deltaProjection", "delta")]:
-            bounded(prefix + source + " to " + target, aligned_bound(128, exp(source), exp(target)), 64)
+            bounded(prefix + source + " to " + target, aligned_bound(128, exp(source), exp(target)), 32)
         for left, right, target in [("delta", "A", "expInput"), ("delta", "B", "Bbar"),
                                     ("ssmY", "gate", "gated")]:
-            bounded(prefix + target + " product rescale", aligned_bound(128 * 128, exp(left) + exp(right), exp(target)), 64)
+            bounded(prefix + target + " product rescale", aligned_bound(128 * 128, exp(left) + exp(right), exp(target)), 32)
         input_exp = model.exponent("embedding" if block == 0 else "blocks.0.residual")
         common = min(input_exp, exp("out"))
         residual_bound = aligned_bound(128, input_exp, common) + aligned_bound(128, exp("out"), common)
-        bounded(prefix + "residual aligned sum", residual_bound, 64)
-        bounded(prefix + "residual output rescale", aligned_bound(residual_bound, common, exp("residual")), 64)
+        bounded(prefix + "residual aligned sum", residual_bound, 10)
     for source, target in [("input", "patches"), ("blocks.1.residual", "headInput"), ("headHidden", "headActivation")]:
-        bounded(source + " to " + target, aligned_bound(128, model.exponent(source), model.exponent(target)), 64)
+        bounded(source + " to " + target, aligned_bound(128, model.exponent(source), model.exponent(target)), 32)
     return checks
 
 

@@ -24,9 +24,14 @@ typedef TMul#(TokenNum, ModelDim) HeadInputDim;
 typedef 19 JointNum;
 typedef TMul#(3, JointNum) OutputDim;
 
-// Parallelism and queue depths are the original baseline allocation.
-typedef 4 LinearLanes;
-typedef 2 NormLanes;
+// Change only this divisor to scale the independent engines: 1, 2, or 4.
+// Each engine retains at least one lane; model dimensions and weights stay fixed.
+typedef 4 ParallelismDivisor;
+typedef TMax#(1, TDiv#(4, ParallelismDivisor)) LinearLanes;
+typedef TMax#(1, TDiv#(2, ParallelismDivisor)) NormLanes;
+typedef TMax#(1, TDiv#(2, ParallelismDivisor)) ConvLanes;
+typedef TMax#(1, TDiv#(2, ParallelismDivisor)) GateLanes;
+typedef TMax#(1, TDiv#(2, ParallelismDivisor)) ScanLanes;
 typedef 4 ConvTaps;
 typedef TSub#(ConvTaps, 1) ConvHistory;
 typedef 32 SerialFifoDepth;
@@ -59,18 +64,21 @@ interface SwayIfc;
 	method ActionValue#(Int#(8)) get;
 endinterface
 
+// The caller selects a proven width for aligned values. No helper widens it.
 // Power-of-two scaling uses nearest ties-to-even, also for negative operands.
-function Int#(64) shiftRound(Int#(64) value, Integer fromExp, Integer toExp);
-	Int#(64) result = value;
+function Int#(n) shiftRoundN(Int#(n) value, Integer fromExp, Integer toExp);
+	Int#(n) result = value;
 	if ( fromExp >= toExp ) begin
 		result = value << (fromExp - toExp);
+	end else if ( toExp - fromExp >= valueOf(n) ) begin
+		result = 0;
 	end else begin
 		Integer shift = toExp - fromExp;
-		UInt#(64) magnitude = unpack(pack(value < 0 ? -value : value));
-		UInt#(64) quotient = magnitude >> shift;
-		UInt#(64) remainder = magnitude - (quotient << shift);
-		UInt#(64) half = fromInteger(2 ** (shift - 1));
-		Bit#(64) quotientBits = pack(quotient);
+		UInt#(n) magnitude = unpack(pack(value < 0 ? -value : value));
+		UInt#(n) quotient = magnitude >> shift;
+		UInt#(n) remainder = magnitude - (quotient << shift);
+		UInt#(n) half = fromInteger(2 ** (shift - 1));
+		Bit#(n) quotientBits = pack(quotient);
 		if ( remainder > half || (remainder == half && quotientBits[0] == 1) ) begin
 			quotient = quotient + 1;
 		end
@@ -82,27 +90,42 @@ function Int#(64) shiftRound(Int#(64) value, Integer fromExp, Integer toExp);
 	return result;
 endfunction
 
-function Int#(8) clip8(Int#(64) value);
+function Int#(8) clip8N(Int#(n) value) provisos(Add#(8, padding, n));
 	return value > 127 ? 127 : (value < -128 ? -128 : truncate(value));
 endfunction
 
-function Int#(24) clip24(Int#(64) value);
+function Int#(24) clip24N(Int#(n) value) provisos(Add#(24, padding, n));
 	return value > 8388607 ? 8388607 : (value < -8388608 ? -8388608 : truncate(value));
 endfunction
 
-function Int#(8) requant(Int#(64) value, Integer fromExp, Integer toExp);
+function Int#(8) requantN(Int#(n) value, Integer fromExp, Integer toExp)
+	provisos(Add#(9, padding9, n), Add#(8, padding8, n));
 	Int#(8) result = 0;
 	if ( fromExp >= toExp ) begin
-		result = clip8(value << (fromExp - toExp));
+		// Compare in the source domain before shifting so saturation cannot wrap.
+		Integer shift = fromExp - toExp;
+		if ( shift >= 8 ) begin
+			result = value > 0 ? 127 : (value < 0 ? -128 : 0);
+		end else begin
+			Int#(n) upper = fromInteger(127 / (2 ** shift));
+			Int#(n) lower = fromInteger(-128 / (2 ** shift));
+			if ( value > upper ) begin
+				result = 127;
+			end else if ( value < lower ) begin
+				result = -128;
+			end else begin
+				result = truncate(value << shift);
+			end
+		end
+	end else if ( toExp - fromExp >= valueOf(n) ) begin
+		result = 0;
 	end else begin
 		Integer shift = toExp - fromExp;
-		Int#(64) floorValue = value >> shift;
-		Bit#(64) remainder = pack(value) & fromInteger((2 ** shift) - 1);
-		Bit#(64) half = fromInteger(2 ** (shift - 1));
-		Bit#(64) quotientBits = pack(floorValue);
+		Int#(n) floorValue = value >> shift;
+		Bit#(n) remainder = pack(value) & fromInteger((2 ** shift) - 1);
+		Bit#(n) half = fromInteger(2 ** (shift - 1));
+		Bit#(n) quotientBits = pack(floorValue);
 		Bool increment = remainder > half || (remainder == half && quotientBits[0] == 1);
-		// Clamp before the increment. The remaining quotient fits in nine bits;
-		// arithmetic-floor rounding also handles negative ties without a wide negate.
 		if ( floorValue >= 127 ) begin
 			result = 127;
 		end else if ( floorValue <= -129 ) begin
@@ -116,6 +139,31 @@ function Int#(8) requant(Int#(64) value, Integer fromExp, Integer toExp);
 		end
 	end
 	return result;
+endfunction
+
+function Int#(32) shiftRound32(Int#(32) value, Integer fromExp, Integer toExp);
+	return shiftRoundN(value, fromExp, toExp);
+endfunction
+
+function Int#(8) requant32(Int#(32) value, Integer fromExp, Integer toExp);
+	return requantN(value, fromExp, toExp);
+endfunction
+
+// Compatibility for untouched interfaces; bounded datapaths use the helpers above.
+function Int#(64) shiftRound(Int#(64) value, Integer fromExp, Integer toExp);
+	return shiftRoundN(value, fromExp, toExp);
+endfunction
+
+function Int#(8) clip8(Int#(64) value);
+	return clip8N(value);
+endfunction
+
+function Int#(24) clip24(Int#(64) value);
+	return clip24N(value);
+endfunction
+
+function Int#(8) requant(Int#(64) value, Integer fromExp, Integer toExp);
+	return requantN(value, fromExp, toExp);
 endfunction
 
 endpackage

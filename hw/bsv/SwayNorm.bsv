@@ -7,6 +7,9 @@ import Vector::*;
 import SwayTypes::*;
 import SwayParameters::*;
 
+typedef TDiv#(ModelDim, NormLanes) NormGroups;
+typedef TMax#(1, TLog#(NormGroups)) NormGroupWidth;
+
 module mkSwayNorm#(Integer blockId)(NormIfc);
 	Integer weightExp = blockScale(blockId, "normWeight");
 	Integer biasExp = blockScale(blockId, "normBias");
@@ -15,7 +18,10 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 	Integer weightShift = weightExp - commonExp;
 	Integer biasShift = biasExp - commonExp;
 	Integer outputShift = outputExp - commonExp;
-	Integer groupNum = valueOf(ModelDim) / valueOf(NormLanes);
+	Integer groupNum = valueOf(NormGroups);
+
+	staticAssert(valueOf(ModelDim) % valueOf(NormLanes) == 0,
+		"Normalization lanes must divide the model dimension");
 
 	// |20*x-sum| <= 4845, gamma/bias <= 128, 20*(max-min) <= 5100.
 	// These bounds keep the signed numerator below 2^31 and denominator below 2^32.
@@ -31,7 +37,7 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 	Reg#(Int#(8)) minimumR <- mkReg(127);
 	Reg#(Int#(8)) maximumR <- mkReg(-128);
 	Reg#(Bit#(5)) channelCnt <- mkReg(0);
-	Reg#(Bit#(4)) groupCnt <- mkReg(0);
+	Reg#(Bit#(NormGroupWidth)) groupCnt <- mkReg(0);
 	Reg#(Bit#(6)) divideCnt <- mkReg(0);
 	Reg#(UInt#(32)) denominatorR <- mkReg(1);
 	Reg#(Vector#(NormLanes, UInt#(32))) quotientR <- mkReg(replicate(0));
@@ -106,7 +112,7 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 3]
-	// Two unsigned restoring dividers, one quotient bit per cycle for 32 cycles.
+	// One unsigned restoring divider per lane, one quotient bit per cycle for 32 cycles.
 	//------------------------------------------------------------------------------------
 	rule process4 ( activeOn && divideOn );
 		Vector#(NormLanes, UInt#(32)) quotients = newVector;
@@ -146,12 +152,18 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 				|| (twiceRemainder == zeroExtend(denominatorR) && quotientBits[0] == 1) ) begin
 				quotient = quotient + 1;
 			end
-			Int#(64) signedResult = unpack(zeroExtend(pack(quotient)));
-			if ( negativeR[lane] ) begin
-				signedResult = -signedResult;
+			Int#(8) clipped = negativeR[lane] ? -128 : 127;
+			UInt#(33) limit = negativeR[lane] ? 128 : 127;
+			if ( quotient <= limit ) begin
+				Bit#(8) magnitude = truncate(pack(quotient));
+				Int#(9) signedResult = unpack({1'b0, magnitude});
+				if ( negativeR[lane] ) begin
+					signedResult = -signedResult;
+				end
+				clipped = truncate(signedResult);
 			end
 			Bit#(6) channel = zeroExtend(groupCnt) * fromInteger(valueOf(NormLanes)) + fromInteger(lane);
-			result[channel] = clip8(signedResult);
+			result[channel] = clipped;
 		end
 		outputR <= result;
 		roundOn <= False;

@@ -1,45 +1,75 @@
 # MARS baseline for blueYosys
 
-Self-contained MARS inference project with the current frozen INT8 PTQ checkpoint. Copy this directory to `blueyosys/projects/sway_observation`, or use the project already included there.
+Dedicated-engine MARS inference for ULX3S-85F, using the frozen INT8 PTQ checkpoint in `model/`.
 
-The baseline has 11 dedicated four-lane affine engines, separate normalization/convolution/scan engines, whole-frame registers, and explicit FIFO token handoff. Both Mamba blocks have their own delta projection. The BSV uses numbered stage rules, explicit counters/control registers, and FIFO input/output methods.
+## Architecture
 
-Inputs are 320 signed INT8 values in HWC order; each result is 57 signed INT8 coordinates in X19/Y19/Z19 order. Input and output scales are in `model/export/quantization.json`. The UART protocol sends one complete frame, then reads its 57-byte reply. The configured core clock is 100 MHz and UART is 115200 baud.
+Patch embedding feeds two independent Mamba blocks and the regression head through FIFOs. Each block contains separate main/gate input projections, normalization, convolution, gate SiLU, delta-input/B/C projections, delta expansion, scan, and output projection. The complete kernel has 17 affine engines; no engine is shared across projections or blocks.
 
-## Run in blueYosys
+Main projection feeds convolution and its SiLU stage. Gate projection feeds an independent SiLU stage, then waits in an ordered FIFO for the scan result. Delta-input, B, and C projections run in independent engines and rejoin before scan. Each split preserves the original matrix rows and the original affine-then-branch requantization sequence.
 
-Install BSC/Bluesim; generated-Verilog simulation also requires Icarus Verilog. From the blueYosys repository root:
+The nonlinear INT8 lookup and checkpoint remain unchanged. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. Static bounds check the frozen scales before elaboration.
 
-```sh
-make runsim PROJECT=sway_observation BOARD=ulx3s-85f
-make runsim PROJECT=sway_observation BOARD=ulx3s-85f SIM_BACKEND=iverilog
-make verilog PROJECT=sway_observation BOARD=ulx3s-85f
-make netlist PROJECT=sway_observation BOARD=ulx3s-85f
-make pnr PROJECT=sway_observation BOARD=ulx3s-85f
+## Parallelism
+
+Change one typedef in `bsv/SwayTypes.bsv`:
+
+```bsv
+typedef 4 ParallelismDivisor;
 ```
 
-The full FPGA flow uses `make synth PROJECT=sway_observation BOARD=ulx3s-85f` with Yosys, nextpnr-ecp5 and ecppack installed. A 100 MHz configuration alone does not establish timing closure or a physical-board result.
+| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
+| --- | ---: | ---: |
+| 1 | 4 | 2 |
+| 2 | 2 | 1 |
+| 4 (default) | 1 | 1 |
 
-From the Sway repository, the same project runs with:
+Counters, bank selection, state addresses, and reductions follow the selected divisor. The checked-in parameter tables support all three settings without regeneration. Clean and rebuild after changing it.
+
+## Interfaces
+
+* Input: 320 signed INT8 values per frame in HWC order.
+* Output: 57 signed INT8 coordinates in X19/Y19/Z19 order.
+* Scales: `model/export/quantization.json`.
+* UART: send one complete frame, then receive its 57-byte reply, at 115200 baud.
+* Configured core clock: 100 MHz.
+
+## How to build
+
+Install BSC/Bluesim and [blueYosys](https://github.com/SeMinLim/blueyosys). From the Sway repository root:
+
+| Task | Command |
+| --- | --- |
+| Run the regression | `make -C hw runsim ROOTDIR=/path/to/blueyosys` |
+| Run generated Verilog | `make -C hw runsim ROOTDIR=/path/to/blueyosys SIM_BACKEND=iverilog` |
+| Generate Verilog | `make -C hw verilog ROOTDIR=/path/to/blueyosys` |
+| Synthesize the netlist | `make -C hw netlist ROOTDIR=/path/to/blueyosys` |
+| Place and route | `make -C hw pnr ROOTDIR=/path/to/blueyosys` |
+| Generate the bitstream | `make -C hw synth ROOTDIR=/path/to/blueyosys` |
+
+Icarus Verilog is required for generated-Verilog simulation. The FPGA flow also requires Yosys, nextpnr-ecp5, and ecppack. To build inside blueYosys, copy this directory into `projects/sway_observation/` and select `PROJECT=sway_observation`.
+
+## File structure
+
+* `HwMain.bsv`, `Top.bsv`: UART adapter, clock crossing, and PLL wrapper.
+* `bsv/`: compute modules and clock wrapper.
+* `model/`: frozen checkpoint, INT8 export, and provenance.
+* `generated/`: parameter tables and fixed golden fixtures.
+* `sim/TbSway.bsv`: regression with source bubbles, output stalls, repeated frames, and trailing-output checks.
+* `sim/TbSwayKernel.bsv`: continuous-source, immediate-sink regression using the same golden outputs.
+* `reference/`: integer reference, parameter generator, and test runners.
+* `results/engine_refactor/`: validation for the independent-engine revision.
+
+## Validation
+
+Run all three lane configurations and both testbenches with:
 
 ```sh
-make -C hw runsim ROOTDIR=/absolute/path/to/blueyosys
+python3 hw/reference/check_refactor.py --backend iverilog
 ```
 
-## Files and validation
+The runner builds isolated copies, checks every output against the fixed 14-frame / 798-coordinate fixtures, and tests rounding and saturation boundaries. Kernel cycle counts exclude intentional source/sink stalls and do not establish physical timing.
 
-- `HwMain.bsv`, `Top.bsv`: UART adapter, clock crossing, and PLL reset conversion.
-- `bsv/`: dedicated-engine baseline compute modules and clock wrapper.
-- `model/`: frozen PTQ checkpoint, INT8 export, and provenance.
-- `generated/`: combinational parameter tables and fixed golden fixtures.
-- `sim/TbSway.bsv`: 14-frame regression checking all 798 outputs, input bubbles, output stalls, repeated-frame state reset, and trailing output.
-- `reference/`: standalone integer reference, coefficient/fixture generator, and simulation checker.
-- `results/`: validation records for this baseline and checkpoint.
+All three configurations pass both 14-frame tests, with all 798 outputs matching in each run. The 329,988 rounding/saturation cases also pass. Tests used BSC 2026.01 and Icarus Verilog 12.0. Default-configuration project-top Verilog generation passes. [Validation results](results/engine_refactor/validation.json) and [top compilation](results/engine_refactor/top_verilog.json) record the checked sources and scope. Historical records elsewhere in `results/`, including the 173.65% placement failure, describe the earlier fused implementation. They are not resource or timing measurements of this revision. Physical-board operation is untested.
 
-The integer reference measures **8.3579082742 cm** RMSE on 7,984 MARS test frames. The paired PTQ software value is **8.3563735004 cm**. The difference comes from exact rational integer range normalization; weights, scales and fitted PWL functions are frozen. See [reference report](generated/reference_report.json) and [software contract verification](generated/software_contract_verification.json).
-
-Simulation and netlist checks passed with BSC 2025.07, Icarus 12.0, and Yosys 0.33: Bluesim and generated Verilog agree on all 798 outputs and event cycles; the restored core has the same 115-rule compiler schedule as the first baseline. Project-top Verilog generation and ECP5 netlist synthesis pass, with zero Yosys check problems. See [validation](results/validation.json).
-
-The physical build fails during placement on ULX3S-85F: nextpnr requires **145,239 / 83,640 TRELLIS_COMB sites (173.65%)**. The actual core clock receives the 100 MHz constraint, but routing is never reached, so no routed Fmax or slack is available. See the [physical result](results/physical/result.json) and [nextpnr log](results/physical/nextpnr.log). Physical-board operation has not been tested.
-
-Normal hardware builds use the checked-in tables and fixtures and need neither dataset downloads nor PyTorch. To regenerate coefficients and fixtures from the included model, install NumPy/PyTorch and run `python3 reference/generate.py` in this directory. Add `--data /path/to/mars` to recompute the full held-out integer-reference metric. The generator performs no training or calibration.
+Normal builds use the checked-in tables and fixtures. Regeneration requires NumPy/PyTorch and `python3 reference/generate.py` from this directory; it performs no training or calibration. The saved [integer-reference report](generated/reference_report.json) and [software contract verification](generated/software_contract_verification.json) describe the frozen numerical model.

@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "compiler": "BSC 2026.01 (9bd39e6f)",
+  "parallelism_divisor": 4,
+  "command": "make -C hw verilog ROOTDIR=/path/to/blueyosys",
+  "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
+  "top": "mkTop",
+  "scope": "BSV-to-Verilog compilation including UART, clock crossing and PLL wrapper; no synthesis, placement, routing or board test",
+  "verilog_sha256": "bcbef5598e8255287bb1f1346f933890a135963b5c422225fb0117d47ef474b6",
+  "verilog_bytes": 2394132,
+  "schedule_sha256": "48564b70bf605fad7186b55febab865a98e6fb696525a933f24e47d4ae53020d",
+  "source_sha256": {
+    "Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
+    "HwMain.bsv": "4a2a3ddb9cb8a6ce9e15658d56f768b7e1e7fee279055a9dca389bfb942c02cc",
+    "Makefile": "2c1c90b79b0c026dc220423ccbe27699c98ba0b9880c1041006ee8860df66ff8",
+    "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
+    "bsv/SwayScan.bsv": "d063b78ff8ce5a336d60562884180f1823522b6b455a5ede686b9f84b1caaaf2",
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
+    "bsv/SwayLinear.bsv": "ca329e2a02579b2bbe5f60253d0035004ac6800784a886f625b0a055f8649613",
+    "bsv/SwayBlock.bsv": "ffd57c2991fc64085a38ec6696b1e6d3eafb692e6779b17e8c26e5d5eb6b40d3",
+    "bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
+    "generated/SwayParameters.bsv": "fee265578475e74b58151cb92c402b3220e6b5a259b75906b7f5756d4c429fc3"
+  }
+}
