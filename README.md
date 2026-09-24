@@ -1,37 +1,74 @@
 # Sway
 
-Compact selective state-space model accelerator research for ECP5-class FPGAs. The repository contains a MARS pose-regression model with FP32 training and INT8 post-training quantization, plus a Bluespec implementation of the dedicated-engine baseline.
+* A selective state-space model accelerator project for Lattice ECP5 FPGAs using Bluespec SystemVerilog (BSV).
+* Includes a MARS pose-regression model, FP32 training, INT8 post-training quantization (PTQ), and a dedicated-engine baseline for ULX3S-85F.
 
-## FP32 and INT8 PTQ checkpoint
+## File structure
 
-The [checkpoint](sw/results/mars_ptq_20260923/final/checkpoint.pt) contains FP32 reference weights, signed INT8 parameter tensors, and the frozen inference configuration and quantization scales. FP32 and INT8 evaluation use the same learned weights.
+* hw/
+  * Baseline hardware, UART interface, simulation, and FPGA build configuration.
+  * `bsv/`: compute modules and parallelism settings.
+  * `model/` & `generated/`: frozen checkpoint, parameter tables, and reference outputs.
+  * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
+  * `results/engine_refactor/`: validation results for the current baseline.
+* sw/
+  * Model implementation, training, quantization, and evaluation scripts.
+  * `config/`: model settings and reconstruction choices.
+  * `results/mars_ptq_20260923/`: selected checkpoint, INT8 exports, metrics, and reproduction commands.
 
-| Numerical model | Test RMSE (cm) | eMamba Table 4 (cm) | Difference (cm) |
-|---|---:|---:|---:|
-| FP32, exact SiLU/exp | 8.0681 | 7.85 | +0.2181 |
-| FP32, fitted PWL inference | 8.0754 | — | — |
-| INT8 PTQ | **8.3564** | 8.83 | -0.4736 |
+## Prerequisites & Dependencies
 
-RMSE is the mean of 57 coordinatewise RMSE values over all 7,984 official MARS test frames, in centimetres. Lower is better. Checkpoint reload, exported INT8 tensor equality, and independent metric recomputation from saved predictions pass: [metrics](sw/results/mars_ptq_20260923/final/metrics.json), [verification](sw/results/mars_ptq_20260923/verification.json).
+* blueYosys (Required for hardware builds)
+  * Sway uses the shared build flow provided by [blueYosys](https://github.com/SeMinLim/blueyosys).
+  * Keep blueYosys at the same level as Sway, or pass `ROOTDIR=/absolute/path/to/blueyosys` to Make.
+* Environment Setup
+  * Operating System: Linux with GNU Make, GCC/G++, and Python 3.
+  * Compiler: Bluespec Compiler (BSC) with Bluesim.
+  * FPGA Tools: Yosys, nextpnr-ecp5, and ecppack.
+  * Icarus Verilog is required when using `SIM_BACKEND=iverilog`.
+* Software Evaluation
+  * Python 3.10 or newer, NumPy, and PyTorch.
+  * Install the Python dependencies with `python -m pip install -r sw/requirements.txt`.
 
-All weight optimization uses exact FP32 SiLU and exponential functions. Training combines coordinate-RMSE refinement and an output-head ridge refit. After training, PWL coefficients and power-of-two quantization scales are calibrated on training frames with frozen weights. Validation selects the checkpoint and PTQ configuration before test evaluation. The selected PTQ configuration uses fitted PWL functions and five scale-reconstruction rounds.
+## How to build
 
-## Model and dataset
+Run commands from the Sway repository root. The default board is ULX3S-85F.
 
-The model uses D=20, E=2, P=2, M=2, N=8, 16 spatial tokens, range normalization, ReLU selective step sizes, and 15,717 learned parameters. Inputs are 8×8×5 radar features; outputs are 19 X, 19 Y, and 19 Z coordinates in metres. Implementation choices are recorded in [model.json](sw/config/model.json).
+* Simulation (Bluesim)
+  * Run the baseline regression with input bubbles and output stalls:
+  * `make -C hw runsim`
+* Simulation (Generated Verilog)
+  * Run the same regression with Icarus Verilog:
+  * `make -C hw runsim SIM_BACKEND=iverilog`
+* Verilog Generation
+  * Compile the BSV kernel and UART wrapper:
+  * `make -C hw verilog`
+* Actual Hardware Synthesis (Bitstream Generation)
+  * Run synthesis, placement, routing, and bitstream generation:
+  * `make -C hw synth`
+  * Use `make -C hw netlist` or `make -C hw pnr` to stop at an intermediate stage.
 
-The [official MARS arrays](https://github.com/SizheAn/MARS/tree/dc902822f864ca0d5df90d559d53d3cd919d3c7c/feature) contain 24,066 training, 8,033 validation, and 7,984 test frames. Dataset identities and preprocessing are recorded in [data_manifest.json](sw/results/data_manifest.json).
+## Baseline configuration
 
-This is a reconstruction of the published [eMamba configuration](https://arxiv.org/html/2508.10370v1). The official MARS membership is approximately 60/20/20, while eMamba states 64/16/20. Author split indices, checkpoint, regression-head details, and PWL coefficients were not supplied. The table therefore compares reported numbers across different implementation and split conditions.
+* Patch embedding, two independent Mamba blocks, and a regression head are connected through FIFOs.
+* Each block uses separate main/gate input projections and separate delta-input/B/C projections. Gate SiLU runs in its own stage after the gate projection.
+* The kernel has 17 affine engines, with no sharing across projections or blocks.
+* Change `ParallelismDivisor` in [SwayTypes.bsv](hw/bsv/SwayTypes.bsv) to select parallelism:
 
-The INT8 software path uses symmetric signed INT8 parameters and ordinary activation nodes, power-of-two scales, INT24 current state, and INT17 retained recurrent state. Affine/convolution operations and SSM recurrence use the integer reference; normalization and remaining nonlinear/elementwise operations use quantize/dequantize simulation.
+| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
+| --- | ---: | ---: |
+| 1 | 4 | 2 |
+| 2 | 2 | 1 |
+| 4 (Default) | 1 | 1 |
 
-## Run the checkpoint
+* Run `make -C hw clean` and rebuild after changing the divisor. Parameter tables do not need regeneration.
+* See the [hardware README](hw/README.md) for interfaces, numerical formats, and verification commands.
 
-Python 3.10 or newer and PyTorch are required. The measured environment used Python 3.12.14, PyTorch 2.8.0+cpu, and NumPy 2.3.5. From the repository root:
+## How to run the checkpoint
+
+Run from the repository root after installing the Python dependencies:
 
 ```sh
-python -m pip install -r sw/requirements.txt
 python sw/prepare_data.py --data-dir ../data/mars --download
 python sw/evaluate_ptq.py \
   --data ../data/mars \
@@ -40,56 +77,24 @@ python sw/evaluate_ptq.py \
   --batch-size 256 --threads 2
 ```
 
-Use a fresh output directory. The command loads the frozen profile, evaluates exact FP32, PWL FP32, and INT8 PTQ, and exports the INT8 tensors. It performs no fitting or checkpoint selection.
+* Use a fresh output directory. This evaluates the frozen checkpoint without fitting or checkpoint selection.
+* Evaluation covers exact FP32, piecewise-linear FP32, and INT8 PTQ, and exports the INT8 tensors.
+* [Training and PTQ commands](sw/results/mars_ptq_20260923/README.md#reproduce-training-and-ptq-selection) cover checkpoint reproduction.
 
-[Training and PTQ reproduction commands](sw/results/mars_ptq_20260923/README.md#reproduce-training-and-ptq-selection) cover the included restart source, FP32 refinement, head refit, PWL fitting, calibration, and validation selection.
+## Results
 
-## Checkpoint artifacts
+* Software Evaluation
+  * Test RMSE: **8.0681 cm** for exact FP32 and **8.3564 cm** for INT8 PTQ.
+  * RMSE is the mean of 57 coordinatewise RMSE values over 7,984 official MARS test frames.
+  * [Metrics](sw/results/mars_ptq_20260923/final/metrics.json) & [verification](sw/results/mars_ptq_20260923/verification.json).
+* Hardware Verification
+  * All three parallelism settings pass both the stall regression and continuous-input kernel test, with 798 matching outputs per run.
+  * Default-configuration Verilog generation also passes.
+  * [Simulation results](hw/results/engine_refactor/validation.json) & [Verilog generation](hw/results/engine_refactor/top_verilog.json).
 
-Artifacts are under [`sw/results/mars_ptq_20260923/`](sw/results/mars_ptq_20260923/README.md).
+## Notes
 
-| Artifact | Contents |
-|---|---|
-| [final/checkpoint.pt](sw/results/mars_ptq_20260923/final/checkpoint.pt) | FP32 reference, INT8 tensors, model configuration, and frozen PTQ profile |
-| [restart_head_refit/best.pt](sw/results/mars_ptq_20260923/restart_head_refit/best.pt) | Selected FP32 checkpoint before inference preparation |
-| [final/metrics.json](sw/results/mars_ptq_20260923/final/metrics.json) | Test metrics, source/data hashes, and export checks |
-| [final/calibration.json](sw/results/mars_ptq_20260923/final/calibration.json) | Quantization scales and calibration provenance |
-| [final/export/](sw/results/mars_ptq_20260923/final/export/) | INT8 binary/hex tensors and layout metadata |
-| `final/predictions_*.npy` | Saved predictions for all three arithmetic modes |
-| [selection.json](sw/results/mars_ptq_20260923/selection.json) | Frozen validation-based checkpoint/profile selection |
-| [verification.json](sw/results/mars_ptq_20260923/verification.json) | Metric recomputation, checkpoint checks, and software-test results |
-
-## Baseline hardware
-
-`hw/` contains the dedicated-engine MARS baseline for ULX3S-85F. Patch embedding feeds two independent Mamba blocks and the regression head through explicit FIFOs.
-
-* Each block has separate main and gate input projections. Gate SiLU follows the gate projection in its own stage.
-* Delta-input, B, and C projections use independent engines. Delta expansion and the output projection also retain their own engines.
-* The complete kernel has 17 affine engines. No engine is shared between blocks or projections.
-* The checkpoint, scales, INT8 nonlinear lookup, INT24 current state, and INT17 retained state are preserved.
-
-Set `ParallelismDivisor` in [`SwayTypes.bsv`](hw/bsv/SwayTypes.bsv) to select the lane allocation. Weight-bank mapping, counters, state addresses, and reductions follow this single typedef; parameter regeneration is unnecessary.
-
-| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
-| --- | ---: | ---: |
-| 1 | 4 | 2 |
-| 2 | 2 | 1 |
-| 4 (default) | 1 | 1 |
-
-The hardware retains exact rational range normalization. The saved integer-reference test RMSE is **8.3579082742 cm**, compared with **8.3563735004 cm** for software QDQ normalization. See [numerical verification](hw/generated/software_contract_verification.json).
-
-## How to build the baseline
-
-Install BSC/Bluesim and keep [blueYosys](https://github.com/SeMinLim/blueyosys) beside Sway. Run from the Sway repository root:
-
-| Task | Command |
-| --- | --- |
-| Run the regression | `make -C hw runsim` |
-| Generate Verilog | `make -C hw verilog` |
-| Synthesize the netlist | `make -C hw netlist` |
-| Place and route | `make -C hw pnr` |
-| Generate the bitstream | `make -C hw synth` |
-
-Set `ROOTDIR=/absolute/path/to/blueyosys` when blueYosys is elsewhere. To use this revision inside blueYosys, copy `hw/` into `blueyosys/projects/sway_observation/` first. Rebuild from clean outputs after changing the divisor.
-
-[Hardware README](hw/README.md) covers the interfaces, tests, and validation scope. Historical synthesis and placement records under `hw/results/` describe the earlier fused implementation; they do not establish resource use or timing for this revision.
+* Maintained by Se-Min Lim.
+* The checkpoint is independently trained from the published eMamba settings. Model details and reconstruction choices are recorded in [model.json](sw/config/model.json); dataset membership is recorded in [data_manifest.json](sw/results/data_manifest.json).
+* Hardware uses exact rational range normalization. Its comparison with software QDQ normalization is recorded in [numerical verification](hw/generated/software_contract_verification.json).
+* Resource use, placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier hardware reports describe the fused implementation.
