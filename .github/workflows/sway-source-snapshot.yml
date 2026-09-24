@@ -15,7 +15,7 @@ jobs:
           sudo apt-get update -qq
           mkdir -p /tmp/sway-tools/packages
           cd /tmp/sway-tools/packages
-          apt-get download iverilog yosys berkeley-abc
+          apt-get download iverilog yosys
           git clone --depth 1 https://github.com/SeMinLim/blueyosys.git /tmp/sway-tools/blueyosys
           git -C /tmp/sway-tools/blueyosys rev-parse HEAD > /tmp/sway-tools/blueyosys-commit.txt
           tar --exclude=.git -czf /tmp/sway-tools.tar.gz -C /tmp/sway-tools .
