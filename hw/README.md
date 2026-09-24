@@ -12,6 +12,8 @@ The nonlinear INT8 lookup and checkpoint remain unchanged. Current recurrent sta
 
 Affine weight ROM pages use fixed 256-bit truth tables for each output bit, followed by the existing upper-address page selection. Weight order, signed INT8 values, lane banks, and combinational read latency are unchanged.
 
+Each affine engine retains its output vector in per-element INT8 registers with explicit group write enables. The final group feeds the output FIFO directly in the same cycle; earlier groups come from their registers. Input storage and selection, vector dimensions, arithmetic, and computation order are unchanged.
+
 ## Parallelism
 
 Change one typedef in `bsv/SwayTypes.bsv`:
@@ -62,6 +64,7 @@ Icarus Verilog is required for generated-Verilog simulation. The FPGA flow also 
 * `reference/`: integer reference, parameter generator, and test runners.
 * `results/engine_refactor/`: validation for the independent-engine revision.
 * `results/lut_rom/`: weight ROM verification and before/after synthesis statistics.
+* `results/linear_output_registers/`: output register verification and before/after synthesis statistics.
 
 ## Validation
 
@@ -79,4 +82,8 @@ Normal builds use the checked-in tables and fixtures. Regeneration requires NumP
 
 The weight LUT-ROM update passes all 974,848 addresses across 119 banks, including padding and out-of-range zero values. Divisor 4 stress and kernel regressions pass all 1,596 outputs; every recorded output value and cycle matches the preceding implementation. [ROM verification](results/lut_rom/weight_rom_verification.json), [regression](results/lut_rom/validation.json), and [cycle comparison](results/lut_rom/timing_comparison.json) record this check.
 
-With blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33, full `mkTop` synthesis for ULX3S-85F reduces LUT4 use from 67,982 to 64,204. Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, falls from 96,204 (115.02%) to 92,426 (110.50%). FF (47,887), DSP (78), and BRAM (2) are unchanged. [Synthesis comparison](results/lut_rom/synthesis_comparison.json) and [Yosys statistics](results/lut_rom/after.yosys.rpt) contain the measured counts. Logic capacity is still exceeded; this run does not include packing, placement/routing, or timing closure.
+The weight LUT-ROM step reduced full `mkTop` LUT4 use from 67,982 to 64,204. Its [synthesis comparison](results/lut_rom/synthesis_comparison.json) records the preceding baseline.
+
+The output register update passes all six stress/kernel tests at divisors 1, 2, and 4: 4,788 INT8 outputs match, and every recorded output cycle and BSC schedule is unchanged. [Regression results](results/linear_output_registers/validation.json) and [cycle/schedule comparison](results/linear_output_registers/timing_comparison.json) record these checks.
+
+With the same blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33 flow, full `mkTop` synthesis for ULX3S-85F at divisor 4 reduces LUT4 use from 64,204 to 60,517. Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, falls from 92,426 (110.50%) to 88,739 (106.10%). FF falls from 47,887 to 47,751; DSP (78) and BRAM (2) are unchanged. The declared output storage remains 413 INT8 elements across 17 engines; synthesis removes the 136 unused register bits of the directly forwarded final groups. [Synthesis comparison](results/linear_output_registers/synthesis_comparison.json), [Yosys statistics](results/linear_output_registers/after.yosys.rpt), and [netlist audit](results/linear_output_registers/netlist_resource_audit.json) contain the evidence. Logic capacity is still exceeded by 5,099 sites; packing, placement/routing, and timing closure are not verified.

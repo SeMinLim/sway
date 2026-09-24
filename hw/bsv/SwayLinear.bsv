@@ -37,7 +37,7 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) sumQ <- mkFIFO;
 
 	Reg#(Vector#(n, Int#(8))) inputR <- mkReg(replicate(0));
-	Reg#(Vector#(m, Int#(8))) outputR <- mkReg(replicate(0));
+	Vector#(m, Reg#(Int#(8))) outputR <- replicateM(mkReg(0));
 	Reg#(Vector#(LinearLanes, Int#(24))) sumR <- mkReg(replicate(0));
 	Reg#(Bit#(4)) indexR <- mkReg(0);
 	Reg#(Bit#(9)) inputCnt <- mkReg(0);
@@ -119,7 +119,7 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	rule process4 ( activeOn );
 		let value = sumQ.first;
 		sumQ.deq;
-		Vector#(m, Int#(8)) result = outputR;
+		Vector#(LinearLanes, Int#(8)) laneResults = replicate(0);
 		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
 			Bit#(9) row = zeroExtend(tpl_2(value)) * fromInteger(valueOf(LinearLanes)) + fromInteger(lane);
 			Int#(24) affine = tpl_1(value)[lane];
@@ -129,10 +129,23 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 				affine = affine + (bias << (biasExp - commonExp));
 			end
 			if ( row < fromInteger(outputNum) ) begin
-				result[row] = requantN(affine, commonExp, outputExp);
+				laneResults[lane] = requantN(affine, commonExp, outputExp);
 			end
 		end
-		outputR <= result;
+		Vector#(m, Int#(8)) result = newVector;
+		for ( Integer row = 0; row < outputNum; row = row + 1 ) begin
+			Integer group = row / valueOf(LinearLanes);
+			Integer lane = row % valueOf(LinearLanes);
+			if ( tpl_2(value) == fromInteger(group) ) begin
+				outputR[row] <= laneResults[lane];
+			end
+			// The final group enters outputQ in this cycle, before register writes take effect.
+			if ( group == groupNum - 1 ) begin
+				result[row] = laneResults[lane];
+			end else begin
+				result[row] = outputR[row];
+			end
+		end
 		if ( tpl_2(value) == fromInteger(groupNum - 1) ) begin
 			outputQ.enq(Token { index: indexR, data: result });
 			activeOn <= False;

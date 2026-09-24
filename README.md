@@ -12,6 +12,7 @@
   * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
   * `results/engine_refactor/`: validation results for the current baseline.
   * `results/lut_rom/`: weight ROM verification and synthesis comparison.
+  * `results/linear_output_registers/`: output register verification and synthesis comparison.
 * sw/
   * Model implementation, training, quantization, and evaluation scripts.
   * `config/`: model settings and reconstruction choices.
@@ -91,13 +92,14 @@ python sw/evaluate_ptq.py \
 * Hardware Verification
   * All three parallelism settings pass both the stall regression and continuous-input kernel test, with 798 matching outputs per run.
   * Default-configuration Verilog generation also passes.
-  * [Simulation results](hw/results/engine_refactor/validation.json) & [Verilog generation](hw/results/engine_refactor/top_verilog.json).
+  * [Simulation results](hw/results/linear_output_registers/validation.json) & [output/cycle comparison](hw/results/linear_output_registers/timing_comparison.json).
   * The updated weight LUT-ROM passes all 974,848 bank/address checks. Default-configuration stress and kernel tests pass with identical output values and cycles.
   * [ROM verification](hw/results/lut_rom/weight_rom_verification.json) & [regression results](hw/results/lut_rom/validation.json).
 * Hardware Synthesis
-  * blueYosys synthesis of `mkTop` for ULX3S-85F at divisor 4 reduces LUT4 use from **67,982 to 64,204** with the updated weight LUT-ROM.
-  * Logic use before packing is **92,426 / 83,640 (110.50%)**, down from **96,204 (115.02%)**. The design still exceeds logic capacity.
-  * FF: **47,887**; DSP: **78**; BRAM: **2**, unchanged. [Synthesis comparison](hw/results/lut_rom/synthesis_comparison.json).
+  * blueYosys synthesis of `mkTop` for ULX3S-85F at divisor 4 reduces LUT4 use from **64,204 to 60,517** with per-element output registers and write enables.
+  * Logic use before packing is **88,739 / 83,640 (106.10%)**, down from **92,426 (110.50%)**. The design still exceeds logic capacity.
+  * FF: **47,751**, down from **47,887**; DSP: **78**; BRAM: **2**, unchanged. [Synthesis comparison](hw/results/linear_output_registers/synthesis_comparison.json).
+  * Output arrays retain their element counts. Direct forwarding of the final group lets synthesis remove 136 unused register bits; all six regression runs preserve output values, cycles, and BSC schedules.
 
 ## Notes
 
