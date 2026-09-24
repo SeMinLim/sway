@@ -8,15 +8,19 @@ permissions:
 jobs:
   snapshot:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Package the exact baseline sources and fixtures
-        run: tar -czf /tmp/sway-source.tar.gz hw README.md
+      - name: Collect public build dependencies
+        run: |
+          sudo apt-get update -qq
+          mkdir -p /tmp/sway-tools/packages
+          cd /tmp/sway-tools/packages
+          apt-get download iverilog yosys berkeley-abc
+          git clone --depth 1 https://github.com/SeMinLim/blueyosys.git /tmp/sway-tools/blueyosys
+          git -C /tmp/sway-tools/blueyosys rev-parse HEAD > /tmp/sway-tools/blueyosys-commit.txt
+          tar --exclude=.git -czf /tmp/sway-tools.tar.gz -C /tmp/sway-tools .
       - uses: actions/upload-artifact@v4
         with:
-          name: sway-baseline-source
-          path: /tmp/sway-source.tar.gz
+          name: sway-build-dependencies
+          path: /tmp/sway-tools.tar.gz
           retention-days: 1
