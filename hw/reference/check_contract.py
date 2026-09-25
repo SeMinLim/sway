@@ -104,7 +104,6 @@ def main():
     difference = integer - np.rint(ordinary.astype(np.float64) / output_scale).astype(np.int64)
     report = {
         "schemaVersion": 2,
-        "architectureVersion": checkpoint["config"]["architecture_version"],
         "checkpointSHA256": file_hash(MODEL / "checkpoint.pt"),
         "sourceCommit": provenance["sourceCommit"],
         "sourceSHA256": {"sw/" + name: file_hash(source / name) for name in ["model.py", "quantize.py", "evaluate_ptq.py"]},

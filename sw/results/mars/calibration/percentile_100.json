@@ -9,28 +9,28 @@
   "usePWL": true,
   "nodes": {
     "input": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -2,
+      "scale": 0.25,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 16.66047477722168,
       "observedElements": 655360,
       "sampledElements": 32768,
-      "percentile": 99.9
+      "percentile": 100.0
     },
     "patches": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -2,
+      "scale": 0.25,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 16.66047477722168,
       "observedElements": 655360,
       "sampledElements": 32768,
-      "percentile": 99.9
+      "percentile": 100.0
     },
     "embedding.weight": {
-      "exponent": -8,
-      "scale": 0.00390625,
+      "exponent": -9,
+      "scale": 0.001953125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.24767504632472992,
@@ -59,8 +59,8 @@
       "percentile": 100.0
     },
     "blocks.0.normWeight": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.2284303903579712,
@@ -69,8 +69,8 @@
       "percentile": 100.0
     },
     "blocks.0.normBias": {
-      "exponent": -10,
-      "scale": 0.0009765625,
+      "exponent": -9,
+      "scale": 0.001953125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.14924490451812744,
@@ -79,8 +79,8 @@
       "percentile": 100.0
     },
     "blocks.0.norm": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.9643703699111938,
@@ -99,8 +99,8 @@
       "percentile": 100.0
     },
     "blocks.0.in": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.1430678367614746,
@@ -119,8 +119,8 @@
       "percentile": 100.0
     },
     "blocks.0.gateInput": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.1430678367614746,
@@ -129,8 +129,8 @@
       "percentile": 100.0
     },
     "blocks.0.convWeight": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.6959617137908936,
@@ -139,8 +139,8 @@
       "percentile": 100.0
     },
     "blocks.0.convBias": {
-      "exponent": -7,
-      "scale": 0.0078125,
+      "exponent": -9,
+      "scale": 0.001953125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.1765231043100357,
@@ -149,8 +149,8 @@
       "percentile": 100.0
     },
     "blocks.0.conv": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.1996811628341675,
@@ -159,8 +159,8 @@
       "percentile": 100.0
     },
     "blocks.0.x": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.1996811628341675,
@@ -169,8 +169,8 @@
       "percentile": 100.0
     },
     "blocks.0.gate": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.207859992980957,
@@ -199,8 +199,8 @@
       "percentile": 100.0
     },
     "blocks.0.deltaInput": {
-      "exponent": -9,
-      "scale": 0.001953125,
+      "exponent": -8,
+      "scale": 0.00390625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.31765806674957275,
@@ -229,8 +229,8 @@
       "percentile": 100.0
     },
     "blocks.0.dtWeight": {
-      "exponent": -7,
-      "scale": 0.0078125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.8692221641540527,
@@ -249,8 +249,8 @@
       "percentile": 100.0
     },
     "blocks.0.deltaProjection": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.2049895524978638,
@@ -259,8 +259,8 @@
       "percentile": 100.0
     },
     "blocks.0.delta": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.2049895524978638,
@@ -269,8 +269,8 @@
       "percentile": 100.0
     },
     "blocks.0.A": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -3,
+      "scale": 0.125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 13.10149097442627,
@@ -279,8 +279,8 @@
       "percentile": 100.0
     },
     "blocks.0.D": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.9720187187194824,
@@ -289,8 +289,8 @@
       "percentile": 100.0
     },
     "blocks.0.expInput": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -3,
+      "scale": 0.125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 9.562790870666504,
@@ -319,8 +319,8 @@
       "percentile": 100.0
     },
     "blocks.0.currentState": {
-      "exponent": -17,
-      "scale": 7.62939453125e-06,
+      "exponent": -16,
+      "scale": 1.52587890625e-05,
       "bits": 24,
       "zeroPoint": 0,
       "calibrationAbsMax": 119.74480438232422,
@@ -329,8 +329,8 @@
       "percentile": 100.0
     },
     "blocks.0.state": {
-      "exponent": -10,
-      "scale": 0.0009765625,
+      "exponent": -9,
+      "scale": 0.001953125,
       "bits": 17,
       "zeroPoint": 0,
       "calibrationAbsMax": 119.74480438232422,
@@ -339,8 +339,8 @@
       "percentile": 100.0
     },
     "blocks.0.ssmY": {
-      "exponent": -2,
-      "scale": 0.25,
+      "exponent": -1,
+      "scale": 0.5,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 52.11103439331055,
@@ -349,8 +349,8 @@
       "percentile": 100.0
     },
     "blocks.0.gated": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -3,
+      "scale": 0.125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 12.69114875793457,
@@ -359,8 +359,8 @@
       "percentile": 100.0
     },
     "blocks.0.outWeight": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.1886546611785889,
@@ -369,8 +369,8 @@
       "percentile": 100.0
     },
     "blocks.0.out": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 4.44315767288208,
@@ -379,8 +379,8 @@
       "percentile": 100.0
     },
     "blocks.0.residual": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 4.256599426269531,
@@ -389,8 +389,8 @@
       "percentile": 100.0
     },
     "blocks.1.normWeight": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.4537843465805054,
@@ -399,8 +399,8 @@
       "percentile": 100.0
     },
     "blocks.1.normBias": {
-      "exponent": -10,
-      "scale": 0.0009765625,
+      "exponent": -9,
+      "scale": 0.001953125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.1511671245098114,
@@ -409,8 +409,8 @@
       "percentile": 100.0
     },
     "blocks.1.norm": {
-      "exponent": -7,
-      "scale": 0.0078125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.036804437637329,
@@ -419,8 +419,8 @@
       "percentile": 100.0
     },
     "blocks.1.inWeight": {
-      "exponent": -5,
-      "scale": 0.03125,
+      "exponent": -6,
+      "scale": 0.015625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.1031655073165894,
@@ -429,8 +429,8 @@
       "percentile": 100.0
     },
     "blocks.1.in": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.4362032413482666,
@@ -459,8 +459,8 @@
       "percentile": 100.0
     },
     "blocks.1.convWeight": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.7623637914657593,
@@ -509,8 +509,8 @@
       "percentile": 100.0
     },
     "blocks.1.xWeight": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.9310833811759949,
@@ -539,8 +539,8 @@
       "percentile": 100.0
     },
     "blocks.1.B": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.7052063941955566,
@@ -549,8 +549,8 @@
       "percentile": 100.0
     },
     "blocks.1.C": {
-      "exponent": -3,
-      "scale": 0.125,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 3.253223180770874,
@@ -599,8 +599,8 @@
       "percentile": 100.0
     },
     "blocks.1.A": {
-      "exponent": -1,
-      "scale": 0.5,
+      "exponent": -2,
+      "scale": 0.25,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 16.133895874023438,
@@ -619,8 +619,8 @@
       "percentile": 100.0
     },
     "blocks.1.expInput": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -3,
+      "scale": 0.125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 11.148917198181152,
@@ -649,8 +649,8 @@
       "percentile": 100.0
     },
     "blocks.1.currentState": {
-      "exponent": -19,
-      "scale": 1.9073486328125e-06,
+      "exponent": -17,
+      "scale": 7.62939453125e-06,
       "bits": 24,
       "zeroPoint": 0,
       "calibrationAbsMax": 37.939022064208984,
@@ -659,8 +659,8 @@
       "percentile": 100.0
     },
     "blocks.1.state": {
-      "exponent": -12,
-      "scale": 0.000244140625,
+      "exponent": -10,
+      "scale": 0.0009765625,
       "bits": 17,
       "zeroPoint": 0,
       "calibrationAbsMax": 37.939022064208984,
@@ -669,8 +669,8 @@
       "percentile": 100.0
     },
     "blocks.1.ssmY": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -2,
+      "scale": 0.25,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 16.648906707763672,
@@ -679,8 +679,8 @@
       "percentile": 100.0
     },
     "blocks.1.gated": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 5.534785270690918,
@@ -699,8 +699,8 @@
       "percentile": 100.0
     },
     "blocks.1.out": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.373973846435547,
@@ -709,8 +709,8 @@
       "percentile": 100.0
     },
     "blocks.1.residual": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 4.262643814086914,
@@ -719,8 +719,8 @@
       "percentile": 100.0
     },
     "headInput": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 4.262643814086914,
@@ -789,8 +789,8 @@
       "percentile": 100.0
     },
     "output": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.1562552452087402,
@@ -900,10 +900,6 @@
   "rounding": "nearest_ties_to_even; recurrent_state_store=arithmetic_right_shift_7",
   "overflow": "saturate signed INT8, current state INT24, retained state INT17",
   "simulationScope": "INT8 affine and convolution operands with INT64 reference MACs; integer SSM recurrence; normalization/nonlinearities/remaining elementwise graph use quantize-dequantize simulation; no RTL validation",
-  "percentileOverrides": {
-    "input": 99.9,
-    "patches": 99.9
-  },
   "ptq_calibration": {
     "method": "PTQ train-output reconstruction by discrete exponent coordinate search",
     "parameter_updates": false,

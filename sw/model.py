@@ -112,9 +112,6 @@ class MARSModel(nn.Module):
 
 
 def createModel(config):
-	# Unversioned checkpoints predate the corrected activation placement.
-	if type(config.get("architecture_version", 1)) is not int or config.get("architecture_version", 1) not in [1, 2]:
-		raise ValueError("Unsupported MARS architecture_version")
 	if config["D"] <= 0 or config["E"] <= 0 or config["N"] <= 0:
 		raise ValueError("Model dimensions must be positive")
 	if config["input_height"] % config["P"] or config["input_width"] % config["P"]:
@@ -140,7 +137,6 @@ def createModel(config):
 
 def forwardBlock(block, value, config, prefix, observer=None, usePWL=False):
 	# Phase 1: normalize and form the two expanded branches.
-	legacy = config.get("architecture_version", 1) == 1
 	innerDim = config["D"] * config["E"]
 	stateDim = config["N"]
 	weight = observe(observer, prefix + ".normWeight", block.normWeight)
@@ -160,27 +156,24 @@ def forwardBlock(block, value, config, prefix, observer=None, usePWL=False):
 		convolved = F.conv1d(padded, weight, bias, groups=innerDim).transpose(1, 2)
 		convolved = observe(observer, prefix + ".conv", convolved)
 	if usePWL:
-		x = piecewise(convolved, config.get("silu_knots", SILU_KNOTS), "silu") if legacy else convolved
 		gate = piecewise(gateInput, config.get("silu_knots", SILU_KNOTS), "silu")
 	else:
-		x = F.silu(convolved) if legacy else convolved
 		gate = F.silu(gateInput)
-	x = observe(observer, prefix + ".x", x)
+	x = observe(observer, prefix + ".x", convolved)
 	gate = observe(observer, prefix + ".gate", gate)
 
 	# Phase 2: form input-dependent state parameters.
 	weight = observe(observer, prefix + ".xWeight", block.xWeight)
 	projected = linear(observer, prefix + ".xProjection", x, weight, None)
 	deltaInput, B, C = projected.split([config["dt_rank"], stateDim, stateDim], dim=-1)
-	if not legacy:
-		deltaInput = F.relu(deltaInput)
+	deltaInput = F.relu(deltaInput)
 	deltaInput = observe(observer, prefix + ".deltaInput", deltaInput)
 	B = observe(observer, prefix + ".B", B)
 	C = observe(observer, prefix + ".C", C)
 	weight = observe(observer, prefix + ".dtWeight", block.dtWeight)
 	bias = observe(observer, prefix + ".dtBias", block.dtBias)
 	delta = linear(observer, prefix + ".deltaProjection", deltaInput, weight, bias)
-	delta = observe(observer, prefix + ".delta", F.relu(delta) if legacy else delta)
+	delta = observe(observer, prefix + ".delta", delta)
 	A = observe(observer, prefix + ".A", -torch.exp(block.A_log))
 	D = observe(observer, prefix + ".D", block.D)
 

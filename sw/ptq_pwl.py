@@ -25,17 +25,16 @@ def functionValues(value, kind):
 
 
 class ActivationHistogram:
-    def __init__(self, bins=14000, architectureVersion=1):
-        self.architectureVersion = architectureVersion
+    def __init__(self, bins=14000):
         self.edges = {'silu': np.linspace(-7.0, 7.0, bins + 1),
-                      'exp': np.linspace(-4.0, 0.0 if architectureVersion == 1 else 1.0, bins + 1)}
+                      'exp': np.linspace(-4.0, 1.0, bins + 1)}
         self.counts = {kind: np.zeros(bins, dtype=np.int64) for kind in self.edges}
         self.elements = {kind: 0 for kind in self.edges}
         self.outside = {kind: 0 for kind in self.edges}
 
     def __call__(self, name, value):
         kind = None
-        if name.endswith('.gateInput') or (self.architectureVersion == 1 and name.endswith('.conv')):
+        if name.endswith('.gateInput'):
             kind = 'silu'
         elif name.endswith('.expInput'):
             kind = 'exp'
@@ -106,8 +105,7 @@ def histogramMSE(edges, counts, knots, kind):
 def calibrateKnots(network, trainFeatures, maxSamples=2048, seed=0, batchSize=256):
     generator = np.random.default_rng(seed)
     indices = generator.permutation(len(trainFeatures))[:min(maxSamples, len(trainFeatures))]
-    architectureVersion = network.config.get('architecture_version', 1)
-    histogram = ActivationHistogram(architectureVersion=architectureVersion)
+    histogram = ActivationHistogram()
     network.eval()
     with torch.no_grad():
         for offset in range(0, len(indices), batchSize):
@@ -116,9 +114,7 @@ def calibrateKnots(network, trainFeatures, maxSamples=2048, seed=0, batchSize=25
     silu, siluObjective = fitSecants(histogram.edges['silu'], histogram.counts['silu'],
                                    'silu', 17, 0.05)
     exp, expObjective = fitSecants(histogram.edges['exp'], histogram.counts['exp'],
-                                 'exp', 10 if architectureVersion == 1 else 11, 0.02)
-    if architectureVersion == 1:
-        exp.append(1.0)
+                                 'exp', 11, 0.02)
     result = {'siluKnots': silu, 'expKnots': exp,
               'method': 'train-activation histogram minimum-MSE secant grid dynamic program',
               'calibrationSplit': 'train', 'calibrationSamples': len(indices),

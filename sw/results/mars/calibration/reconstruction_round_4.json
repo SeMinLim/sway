@@ -289,8 +289,8 @@
       "percentile": 100.0
     },
     "blocks.0.expInput": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 9.562790870666504,
@@ -499,8 +499,8 @@
       "percentile": 100.0
     },
     "blocks.1.gate": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 1.6168599128723145,
@@ -509,8 +509,8 @@
       "percentile": 100.0
     },
     "blocks.1.xWeight": {
-      "exponent": -6,
-      "scale": 0.015625,
+      "exponent": -7,
+      "scale": 0.0078125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 0.9310833811759949,
@@ -539,8 +539,8 @@
       "percentile": 100.0
     },
     "blocks.1.B": {
-      "exponent": -4,
-      "scale": 0.0625,
+      "exponent": -5,
+      "scale": 0.03125,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 2.7052063941955566,
@@ -549,8 +549,8 @@
       "percentile": 100.0
     },
     "blocks.1.C": {
-      "exponent": -3,
-      "scale": 0.125,
+      "exponent": -4,
+      "scale": 0.0625,
       "bits": 8,
       "zeroPoint": 0,
       "calibrationAbsMax": 3.253223180770874,
@@ -649,8 +649,8 @@
       "percentile": 100.0
     },
     "blocks.1.currentState": {
-      "exponent": -19,
-      "scale": 1.9073486328125e-06,
+      "exponent": -18,
+      "scale": 3.814697265625e-06,
       "bits": 24,
       "zeroPoint": 0,
       "calibrationAbsMax": 37.939022064208984,
@@ -659,8 +659,8 @@
       "percentile": 100.0
     },
     "blocks.1.state": {
-      "exponent": -12,
-      "scale": 0.000244140625,
+      "exponent": -11,
+      "scale": 0.00048828125,
       "bits": 17,
       "zeroPoint": 0,
       "calibrationAbsMax": 37.939022064208984,

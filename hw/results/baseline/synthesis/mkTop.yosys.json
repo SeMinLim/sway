@@ -1,0 +1,48 @@
+{
+  "creator": "Yosys 0.33 (git sha1 2584903a060)",
+  "invocation": "stat -json -top mkTop ",
+  "modules": {
+    "\\mkTop": {
+      "num_wires": 56004,
+      "num_wire_bits": 696383,
+      "num_pub_wires": 56004,
+      "num_pub_wire_bits": 696383,
+      "num_memories": 0,
+      "num_memory_bits": 0,
+      "num_processes": 0,
+      "num_cells": 126733,
+      "num_cells_by_type": {
+        "CCU2C": 12774,
+        "DP16KD": 2,
+        "EHXPLLL": 1,
+        "L6MUX21": 2386,
+        "LUT4": 57345,
+        "MULT18X18D": 78,
+        "PFUMX": 6091,
+        "TRELLIS_DPR16X4": 252,
+        "TRELLIS_FF": 47804
+      }
+    }
+  },
+  "design": {
+    "num_wires": 56004,
+    "num_wire_bits": 696383,
+    "num_pub_wires": 56004,
+    "num_pub_wire_bits": 696383,
+    "num_memories": 0,
+    "num_memory_bits": 0,
+    "num_processes": 0,
+    "num_cells": 126733,
+    "num_cells_by_type": {
+      "CCU2C": 12774,
+      "DP16KD": 2,
+      "EHXPLLL": 1,
+      "L6MUX21": 2386,
+      "LUT4": 57345,
+      "MULT18X18D": 78,
+      "PFUMX": 6091,
+      "TRELLIS_DPR16X4": 252,
+      "TRELLIS_FF": 47804
+    }
+  }
+}

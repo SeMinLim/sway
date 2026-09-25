@@ -372,8 +372,7 @@ def main():
     model = IntegerModel(EXPORT, tables)
     widths = hardware_width_checks(model)
     write_bsv(model)
-    report = {"schemaVersion": 3, "architecture": "MARS v2 dedicated-engine baseline, combinational coefficient lookup",
-              "architectureVersion": model.config["architecture_version"],
+    report = {"schemaVersion": 3, "architecture": "MARS dedicated-engine baseline, combinational coefficient lookup",
               "activationPlacement": {"convolutionOutput": "Direct requantization from conv to x, no SiLU",
                                       "delta": "xProjection -> ReLU -> deltaInput -> deltaProjection -> signed delta",
                                       "gate": "Separate SiLU stage retained"},

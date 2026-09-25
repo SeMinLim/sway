@@ -1,0 +1,32 @@
+{
+  "activation_graph": {
+    "ssm_input": "depthwise convolution output; no SiLU",
+    "gate": "Linear -> SiLU",
+    "delta": "Linear -> ReLU -> Linear; signed final output"
+  },
+  "base_commit": "036bc7cc9af2c1a10403b69cde210c63a265d11c",
+  "initialization": "fresh random initialization; seed20260925",
+  "training_budget": {
+    "max_epochs": 150,
+    "validation_patience": 25
+  },
+  "data_membership": {
+    "train": 24066,
+    "validation": 8033,
+    "test": 7984
+  },
+  "selection": "FP32 epoch and optional linear-head refit by validation; PWL fixed both fitted functions; PTQ scales by validation",
+  "test_used_for_selection": false,
+  "quantization_policy": "Existing signed INT8 affine/activation formats, Abar Q0.7, INT24/INT17 state retained; no added clamp after delta projection",
+  "hardware_updated": false,
+  "source_sha256": {
+    "model.py": "c6b7b85847858d16855ebaafdee04f1f9edf7d1f28974a0721b056549f1e6d56",
+    "quantize.py": "aa09f588e6786e55daa1003e5d11ff9a184abf89c410f0c5bcd6d3ab60b20b09",
+    "train.py": "0a6a43a14a7ce426387f5bc7215bd867aa3b331fbc27cddb1a885703e839a009",
+    "refit_head.py": "8962ab2b97263a7b6009c9ad8b4a94cfa265a2c5d1fa3fdb58ace3ad6f7b5e23",
+    "ptq_pwl.py": "ee80bc1bd48987c4ff9fb0d2eed64e776c46b73e0bdaf80f4087944736741530",
+    "calibrate_ptq.py": "7f29daf5cacba1197ad8fd7ba9c839de501b7e0c9178bec9c47f68fdae6402cc",
+    "evaluate_ptq.py": "7984537d49a626d7db2c304a0193362b24a126603883c3d003cc37e0901120cf",
+    "config/model.json": "e4aaabca8b6cce01ab9be918f2e6b5b3faf6f3fb2607e37a2470c65271c45b65"
+  }
+}

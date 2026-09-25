@@ -17,13 +17,13 @@ class InitialProfileProvenanceTests(unittest.TestCase):
     def validate(self, profile):
         validateInitialProvenance(profile, {'D': 20}, 'checkpoint-current', self.hashes)
 
-    def test_matching_current_and_legacy_metadata(self):
+    def test_matching_top_level_and_nested_metadata(self):
         self.validate(self.profile)
-        legacy = copy.deepcopy(self.profile)
-        del legacy['inference_source_sha256']
-        self.validate(legacy)
+        nestedOnly = copy.deepcopy(self.profile)
+        del nestedOnly['inference_source_sha256']
+        self.validate(nestedOnly)
 
-    def test_legacy_inference_hash_is_checked(self):
+    def test_nested_inference_hash_is_checked(self):
         for topPresent in [False, True]:
             profile = copy.deepcopy(self.profile)
             if not topPresent:

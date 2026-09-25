@@ -310,9 +310,9 @@ class QuantizationObserver:
 
 
 def validateModelProfile(model, profile):
-    if model.config.get("architecture_version", 1) == 2 and "modelConfig" not in profile:
-        raise ValueError("PTQ profile requires model configuration for architecture_version 2")
-    if profile.get("modelConfig", model.config) != model.config:
+    if "modelConfig" not in profile:
+        raise ValueError("PTQ profile requires model configuration")
+    if profile["modelConfig"] != model.config:
         raise ValueError("PTQ profile and model configuration differ")
     try:
         from .model import SILU_KNOTS, EXP_KNOTS

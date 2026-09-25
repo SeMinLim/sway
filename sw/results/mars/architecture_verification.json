@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "software_suite": {
+    "command": "python -m unittest discover -s sw -p 'test_*.py'",
+    "tests": 35,
+    "skipped": 0,
+    "log": "software_tests.log",
+    "scope": "Current-only software suite, including the checked-in checkpoint and real hardware fixtures; no external training arrays required."
+  }
+}

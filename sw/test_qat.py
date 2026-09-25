@@ -107,12 +107,12 @@ class QATTests(unittest.TestCase):
         self.assertTrue(torch.isfinite(x.grad).all().item())
         self.assertGreater(float(x.grad.abs().sum()), 0)
 
-    def test_saved_checkpoint_and_training_frames(self):
-        checkpointPath = self.root / "results" / "mars_ptq_20260925" / "final" / "checkpoint.pt"
+    def test_saved_checkpoint_and_fixtures(self):
+        checkpointPath = self.root / "results" / "mars" / "final" / "checkpoint.pt"
         profilePath = checkpointPath.parent / "calibration.json"
-        dataPath = self.root.parent.parent / "data" / "mars" / "featuremap_train.npy"
-        if not all(path.exists() for path in [checkpointPath, profilePath, dataPath]):
-            self.skipTest("Saved checkpoint, calibration or training frames unavailable")
+        dataPath = self.root.parent / "hw" / "model" / "real_fixture_features.npy"
+        for path in [checkpointPath, profilePath, dataPath]:
+            self.assertTrue(path.is_file(), "Required checked-in file missing: " + str(path))
         import numpy as np
         checkpoint = torch.load(checkpointPath, map_location="cpu", weights_only=False)
         model = createModel(checkpoint["config"])

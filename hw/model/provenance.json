@@ -2,9 +2,9 @@
   "schemaVersion": 2,
   "sourceRepository": "https://github.com/SeMinLim/sway",
   "sourceCommit": "32f1872373a48221c56be881632dd137e9ecfe59",
-  "sourceDirectory": "sw/results/mars_ptq_20260925/final",
+  "sourceDirectory": "sw/results/mars/final",
   "quantizationMethod": "PTQ",
-  "checkpointSHA256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+  "checkpointSHA256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "noTrainingOrCalibration": true,
   "fixtureTestIndices": [
     0,
@@ -18,7 +18,7 @@
   ],
   "fixtureDescription": "Eight fixed held-out frames for hardware validation; no parameter or profile selection",
   "filesSHA256": {
-    "checkpoint.pt": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+    "checkpoint.pt": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
     "export/blocks_0_A.bin": "5e041a636da8185ba51cbd9bc52d70a10114b1c0e5d2eb59973ccc7018358877",
     "export/blocks_0_A.hex": "49cf04e99845964216e1aa64fc3ad11b1f73be18483275754bd7913835ad512d",
     "export/blocks_0_D.bin": "4a9f20d71830fd04f765f686cef6b6e08d1928268eceb259e9f8d06454b5cd5f",
@@ -75,13 +75,12 @@
     "export/headOutput_bias.hex": "145c263535d2ab12a4e1ee0a104d11cbf924267674e90e3c3f447aefdb3c1da4",
     "export/headOutput_weight.bin": "705b7ae6d441347765a12a70858f6bf4e74a285e2bb4ab64cd17209bcad8fdcf",
     "export/headOutput_weight.hex": "ea5ec338c84612fb5b0d1a6a4c0ff4f17acf5c58542f5587ecf6e1849e616045",
-    "export/manifest.json": "fa94e997f47d298d8aabeb39f07acea465427232e2920b98b1ae634dd7aa2dbd",
+    "export/manifest.json": "ee8eb5147b61577c0877b4baaef0dcd37a34d5f80761cd18e01abd280591a0f6",
     "export/parameters.h": "252cd19474f07c5c8f0806e30d9499dc53d0e2acbdea9159d266f35823ba107a",
     "export/parameters_fp32.npz": "74e32fab7a234464bd042129651dece6ddc6feb4adf1d98753ed3514fddfb960",
-    "export/quantization.json": "cde95722944751c68aaa5cba2fc20af34d8cbad51b50275af48a5e4ccfb6374d",
-    "metrics.json": "0efb1a46e7680bfeb7f3987a64a48d23c6082042e12f4431d3c14f679490551b",
+    "export/quantization.json": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
+    "metrics.json": "769e82bcefedc7f6df711ffa7ffbab6adf6c8d0df18e02487684d04e40233717",
     "predictions_int8_ptq.npy": "69a12037205b4f69ea12996a87219972b9943b0150507691d05027f6357c2a75",
     "real_fixture_features.npy": "1ac75b47763f223d558bc92588f59da641d2128a060ec8afba9d90b36841b9b9"
-  },
-  "architectureVersion": 2
+  }
 }

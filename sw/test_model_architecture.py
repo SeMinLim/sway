@@ -16,7 +16,7 @@ class ArchitectureTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         torch.set_num_threads(1)
-        cls.config = {'architecture_version': 2, 'D': 2, 'E': 1, 'P': 1,
+        cls.config = {'D': 2, 'E': 1, 'P': 1,
                       'M': 1, 'N': 1, 'L': 4, 'input_height': 2,
                       'input_width': 2, 'input_channels': 2, 'outputs': 3,
                       'dt_rank': 2, 'conv_kernel': 1, 'head_hidden': 2,
@@ -34,7 +34,7 @@ class ArchitectureTests(unittest.TestCase):
             block.A_log.zero_()
         cls.features = torch.arange(16, dtype=torch.float32).reshape(2, 2, 2, 2) / 8
 
-    def assertCorrectedBranches(self, values):
+    def assertCurrentBranches(self, values):
         prefix = 'blocks.0.'
         self.assertTrue(torch.equal(values[prefix + 'conv'], values[prefix + 'x']))
         self.assertTrue((values[prefix + 'x'][..., 0] < 0).all())
@@ -54,7 +54,7 @@ class ArchitectureTests(unittest.TestCase):
                 return value
             output = forwardModel(self.model, self.features, observer=record, usePWL=usePWL)
             self.assertTrue(torch.isfinite(output).all())
-            self.assertCorrectedBranches(values)
+            self.assertCurrentBranches(values)
             gateInput = values['blocks.0.gateInput']
             gate = piecewise(gateInput, SILU_KNOTS, 'silu') if usePWL else F.silu(gateInput)
             self.assertTrue(torch.equal(values['blocks.0.gate'], gate))
@@ -85,34 +85,13 @@ class ArchitectureTests(unittest.TestCase):
                 observer = Recorder(profile)
                 observer.values = {}
                 result = forwardModel(self.model, self.features, observer, usePWL)
-                self.assertCorrectedBranches(observer.values)
+                self.assertCurrentBranches(observer.values)
                 records.append(result.detach())
             self.assertTrue(torch.equal(records[0], records[1]))
             self.assertTrue(torch.equal(quantizedForward(self.model, self.features, profile),
                                         qatForward(self.model, self.features, profile)))
 
-    def test_unversioned_checkpoint_retains_legacy_graph(self):
-        config = dict(self.config)
-        del config['architecture_version']
-        legacy = createModel(config)
-        legacy.load_state_dict(self.model.state_dict())
-        explicit = createModel(dict(config, architecture_version=1))
-        explicit.load_state_dict(self.model.state_dict())
-        for usePWL in [False, True]:
-            values = {}
-            def record(name, value):
-                values[name] = value.detach().clone()
-                return value
-            output = forwardModel(legacy, self.features, record, usePWL)
-            self.assertTrue(torch.equal(output, forwardModel(explicit, self.features, usePWL=usePWL)))
-            conv = values['blocks.0.conv']
-            expectedX = piecewise(conv, SILU_KNOTS, 'silu') if usePWL else F.silu(conv)
-            self.assertTrue(torch.equal(values['blocks.0.x'], expectedX))
-            self.assertTrue(torch.equal(values['blocks.0.delta'],
-                                        F.relu(values['blocks.0.deltaProjection'])))
-            self.assertTrue((values['blocks.0.deltaInput'][..., 0] < 0).all())
-
-    def test_profile_version_and_alias_guards(self):
+    def test_profile_configuration_and_alias_guards(self):
         profile = calibrateModel(self.model, self.features, maxSamples=2)
         groups = scaleGroups(profile)
         self.assertIn(['blocks.0.conv', 'blocks.0.x'], groups)
@@ -131,21 +110,21 @@ class ArchitectureTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'requires model configuration'):
             validateInitialProvenance(missing, self.config, 'unused', {})
         mismatched = copy.deepcopy(profile)
-        mismatched['modelConfig']['architecture_version'] = 1
+        mismatched['modelConfig']['norm_epsilon'] *= 2
         with self.assertRaisesRegex(ValueError, 'configuration differ'):
             quantizedForward(self.model, self.features, mismatched)
-        for version in [0, 3, True, '2']:
-            with self.subTest(version=version), self.assertRaisesRegex(ValueError, 'architecture_version'):
-                createModel(dict(self.config, architecture_version=version))
+        with self.assertRaisesRegex(ValueError, 'configuration differs'):
+            validateInitialProvenance(mismatched, self.config, 'unused', {})
 
     def test_pwl_histogram_follows_only_existing_activations(self):
         values = torch.tensor([-.5, 0., .5, 1.5])
-        for version in [1, 2]:
-            histogram = ActivationHistogram(bins=100, architectureVersion=version)
-            for name in ['blocks.0.conv', 'blocks.0.gateInput', 'blocks.0.expInput']:
-                histogram(name, values)
-            self.assertEqual(histogram.elements['silu'], 8 if version == 1 else 4)
-            self.assertEqual(histogram.outside['exp'], 2 if version == 1 else 1)
+        histogram = ActivationHistogram(bins=100)
+        for name in ['blocks.0.conv', 'blocks.0.gateInput', 'blocks.0.expInput']:
+            histogram(name, values)
+        self.assertEqual(histogram.elements['silu'], 4)
+        self.assertEqual(histogram.outside['exp'], 1)
+        self.assertEqual(histogram.edges['exp'][0], -4.)
+        self.assertEqual(histogram.edges['exp'][-1], 1.)
         fitted = calibrateKnots(self.model, self.features, maxSamples=2, batchSize=2)
         self.assertEqual(len(fitted['expKnots']), len(EXP_KNOTS))
         self.assertEqual(fitted['expKnots'][0], -4.)

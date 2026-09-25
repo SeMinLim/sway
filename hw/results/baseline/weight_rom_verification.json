@@ -1,0 +1,37 @@
+{
+  "status": "pass",
+  "method": "Independent strict BSV parser of 256-bit bit-plane truth tables and direct bit-selector interpreter; direct frozen export bytes; generator not imported",
+  "lanes_checked": [
+    1,
+    2,
+    4
+  ],
+  "banks_checked": 119,
+  "pages_checked": 234,
+  "bit_plane_truth_tables_checked": 1872,
+  "addresses_per_bank": 8192,
+  "coefficient_addresses_checked": 974848,
+  "valid_weight_addresses": 43020,
+  "padded_lane_zero_addresses": 240,
+  "out_of_range_zero_addresses": 931588,
+  "dispatch_and_selectors": "All function signatures, complete statement grammar, direct 8-bit address selects, signed return, page/bank identity, default-zero behavior, dispatch tuple and order checked",
+  "non_affine_suffix_sha256": "09873b17a0a99066541064c0907151a60ed2f2526be55ea2b67432723da99c52",
+  "source_sha256": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
+  "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
+  "manifest_sha256": "ee8eb5147b61577c0877b4baaef0dcd37a34d5f80761cd18e01abd280591a0f6",
+  "frozen_weight_tensor_sha256": {
+    "embedding.weight": "f34bb689eb4c1e8f1c35be1d7ea21bebe7ecccab2f6a4ab3cd63e1b9650bab0d",
+    "blocks.0.inWeight": "caf57ed861712ed90c47ccde7a9ac19c1dfecf22b59ff973f0d303dfb79ced6e",
+    "blocks.0.xWeight": "36ad14eb28c3ba279dd7e6d0188e958c4e018deb09cf872ae5e80fc329b196a8",
+    "blocks.0.dtWeight": "d57b2b0725e182c1b64c699d119df39b3253220dcda661b3c360736987775efc",
+    "blocks.0.outWeight": "29f56bab0056a8be35e020296adbb6834725929ffafc9fc81873522bf9b87da0",
+    "blocks.1.inWeight": "1618989a8a2563d7aa481850042f56b90bde4a318e1d20643cb8412f05246444",
+    "blocks.1.xWeight": "929c29b7a8c9e5a5c273cfb9869edc5f122cbf01ca1211ef76f26a01470cce90",
+    "blocks.1.dtWeight": "000a897dbdc6157066b8ff1c0cd828e16d6370c780bee92beeb448016c02b1d2",
+    "blocks.1.outWeight": "4bea5c99ef8323575bedd2fdda5029151d2c6091b35cfea72c18b323aeacfcd6",
+    "headHidden.weight": "75440fcbdaf2741e978d3e6ab9824c56156665c01aad6c1dd1953af065d226a6",
+    "headOutput.weight": "705b7ae6d441347765a12a70858f6bf4e74a285e2bb4ab64cd17209bcad8fdcf"
+  },
+  "checker_sha256": "3efb0d8057bad675590944a484c0c9202cbb4d1f7330b55fec9398ca4ddae371",
+  "scope": "Exhaustive combinational ROM interpretation; HDL compilation and kernel regression are separate checks"
+}

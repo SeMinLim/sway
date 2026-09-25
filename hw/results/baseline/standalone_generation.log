@@ -21,7 +21,7 @@
   "parameterCount": 15717,
   "parameterVerification": "Every binary SHA256, size, shape, hex value and INT8 checkpoint tensor matched",
   "nonlinearROM": {
-    "backend": "torch 2.8.0+cpu",
+    "backend": "torch 2.14.0+cpu",
     "dtype": "float32",
     "definition": "reference/generate.py:piecewise (frozen checkpoint operation order)",
     "pwlKnots": {
@@ -498,63 +498,16 @@
     "inputExponent": -4,
     "outputExponent": -6
   },
-  "fullTest": {
-    "integerReference": {
-      "frames": 7984,
-      "mae_cm": 6.885589930102654,
-      "rmse_coordinate_mean_cm": 9.30149342326338,
-      "rmse_global_cm": 9.93139902144428,
-      "axis_mae_cm": {
-        "x": 8.375411790410938,
-        "y": 4.75161609776902,
-        "z": 7.529741902128003
-      },
-      "axis_rmse_cm": {
-        "x": 11.380589653929425,
-        "y": 6.537515805605563,
-        "z": 9.986374810255152
-      }
-    },
-    "existingSwQDQ": {
-      "frames": 7984,
-      "mae_cm": 6.886637695100944,
-      "rmse_coordinate_mean_cm": 9.302228427068036,
-      "rmse_global_cm": 9.932315279940227,
-      "axis_mae_cm": {
-        "x": 8.375543245170077,
-        "y": 4.752619897887974,
-        "z": 7.531749942244784
-      },
-      "axis_rmse_cm": {
-        "x": 11.380486818263796,
-        "y": 6.538214706492523,
-        "z": 9.987983756447784
-      }
-    },
-    "evaluationSeconds": 6.180030028000147,
-    "matchedOutputElements": 435831,
-    "totalOutputElements": 455088,
-    "matchedFrames": 6624,
-    "maxOutputDifferenceLSB": 3,
-    "meanAbsoluteOutputDifferenceLSB": 0.04318505431916465,
-    "differenceRMSE_cm": 0.33145662738527076,
-    "comparison": "Integer rational normalization replaces float32 QDQ normalization; no blanket bit-exact SW claim"
-  },
-  "datasetSHA256": {
-    "featuremap_test.npy": "331551d42039e97a0afc260029d605dec29f4a0d11ede65e4c1328c49cb5c145",
-    "labels_test.npy": "a1f29ebee5d5b4a63810997e9eda811af97bd222dcf4d4766777ccaea1b256e8"
-  },
   "generatedSHA256": {
     "SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
     "GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
     "test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-    "test_trace.npz": "d65686362a20b5e2103af1b89fff5b0faeaa419e62ae7662c14ca0ab8be887c6",
-    "predictions_integer.npy": "bc04bbd138e8f710cccc08cf2cadca29c9e8bcb7a62a76083af501051dfe4247"
+    "test_trace.npz": "d65686362a20b5e2103af1b89fff5b0faeaa419e62ae7662c14ca0ab8be887c6"
   },
   "referenceSHA256": {
-    "integer_model.py": "885437b893f7a92a07a82266c411417218ddfeff82eb88fb6fd10249751b3e87",
-    "generate.py": "981988f4d34636d891d92fe72f321dba4d89e428e9790cda629496baabcc46ab"
+    "integer_model.py": "523bb8c5b25e8d3bcefe4f07d6dbf1e51caf63a169b367f36cf6a98f396bc863",
+    "generate.py": "0bd8c5e35fbdee9719b78a6cfb53de4c981e377200e19db8bf306c00e39a46b8"
   }
 }

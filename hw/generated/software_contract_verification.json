@@ -1,7 +1,6 @@
 {
   "schemaVersion": 2,
-  "architectureVersion": 2,
-  "checkpointSHA256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+  "checkpointSHA256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "sourceCommit": "32f1872373a48221c56be881632dd137e9ecfe59",
   "sourceSHA256": {
     "sw/model.py": "c6b7b85847858d16855ebaafdee04f1f9edf7d1f28974a0721b056549f1e6d56",

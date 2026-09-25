@@ -35,7 +35,7 @@ class PTQPWLTests(unittest.TestCase):
         with torch.no_grad():
             self.assertTrue(torch.equal(forwardModel(network, features), forwardModel(newNetwork, features)))
 
-    def test_ssm_uses_custom_exp_knots_and_legacy_default(self):
+    def test_ssm_uses_custom_exp_knots_and_default(self):
         values = {'x': 0, 'Bbar': -2, 'C': -2, 'D': 0, 'state': -8,
                   'ssmY': -8, 'expInput': -4, 'Abar': -7}
         nodes = {'block.' + name: {'exponent': exponent, 'scale': 2.0 ** exponent,

@@ -85,7 +85,7 @@ class IntegerModel:
         self.manifest = json.loads((self.export / "manifest.json").read_text())
         self.profile = json.loads((self.export / "quantization.json").read_text())
         self.config = self.manifest["modelConfig"]
-        expected = {"architecture_version": 2, "D": 20, "E": 2, "P": 2, "M": 2, "N": 8, "L": 16,
+        expected = {"D": 20, "E": 2, "P": 2, "M": 2, "N": 8, "L": 16,
                     "input_height": 8, "input_width": 8, "input_channels": 5,
                     "outputs": 57, "dt_rank": 2, "conv_kernel": 4, "head_hidden": 20}
         if any(self.config.get(key) != value for key, value in expected.items()):

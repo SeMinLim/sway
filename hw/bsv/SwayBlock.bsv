@@ -45,7 +45,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		"Aligned convolution or residual sum exceeds its datapath width");
 	staticAssert(blockScale(blockId, "conv") == blockScale(blockId, "x")
 		&& blockScale(blockId, "deltaProjection") == blockScale(blockId, "delta"),
-		"MARS v2 convolution and delta aliases must retain their source scales");
+		"MARS convolution and delta aliases must retain their source scales");
 
 	NormIfc normalization <- mkSwayNorm(blockId);
 	// Slices retain the frozen affine output scale before each branch's requantization.

@@ -1,0 +1,77 @@
+{
+  "status": "pass",
+  "scope": "Current-architecture cleanup and path/metadata migration; no training, recalibration or new full-test/PnR measurement",
+  "base_commit": "1698b00d18b221f7e9c606c0bbcefa04f46624b1",
+  "fixture_frames": 8,
+  "synthetic_frames": 256,
+  "seed": 20260925,
+  "inference_comparison": {
+    "fp32": {
+      "output_elements": 15048,
+      "bit_exact": true,
+      "max_absolute_difference": 0.0
+    },
+    "fp32_pwl": {
+      "output_elements": 15048,
+      "bit_exact": true,
+      "max_absolute_difference": 0.0
+    },
+    "int8_ptq": {
+      "output_elements": 15048,
+      "bit_exact": true,
+      "max_absolute_difference": 0.0
+    }
+  },
+  "checkpoint_reload": "standalone PTQ bundle and FP32-plus-profile pass all identity/INT8 guards",
+  "checkpoints": [
+    {
+      "path": "hw/model/checkpoint.pt",
+      "original_sha256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+      "sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
+      "parameter_tensors_equal": true
+    },
+    {
+      "path": "sw/results/mars/final/checkpoint.pt",
+      "original_sha256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+      "sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
+      "parameter_tensors_equal": true
+    },
+    {
+      "path": "sw/results/mars/fp32/best.pt",
+      "original_sha256": "34b148c39fea933235b63cee3a2afe11984d12a895080992df5634fe6a99d37d",
+      "sha256": "02c3086583b45d8108d44b6b8c26c436ba4c828dd64a569eaae254a10a1e4545",
+      "parameter_tensors_equal": true
+    },
+    {
+      "path": "sw/results/mars/fp32/last.pt",
+      "original_sha256": "7c9419e2fbafcacb6c701b9475de8e35c7871b6cd567a10385ac1c6f13b91eb8",
+      "sha256": "4778034e67cd719d91aa7b6c8de2fb97257455a33ac1e575077c280172b16923",
+      "parameter_tensors_equal": true
+    },
+    {
+      "path": "sw/results/mars/head_refit/best.pt",
+      "original_sha256": "8f6bbb29ec131f9f9792e4a87d28567cd16c2ffe69c5c1583676bd2622effed6",
+      "sha256": "f5bce00f8567f630648d4b075f14ea0c2988a07cd81f35991f49473c35afa5cc",
+      "parameter_tensors_equal": true
+    },
+    {
+      "path": "sw/results/mars/prepared/pwl_source.pt",
+      "original_sha256": "bfac8b64451177357894490342906ae0f1701664560e07109c57c22de9a760d8",
+      "sha256": "132289ecbac9000b1642b3422cd4b046dcc54c42975db3f1aad46f9f0a8f8f58",
+      "parameter_tensors_equal": true
+    }
+  ],
+  "unchanged_binary_arrays_and_exports": 124,
+  "unchanged_quantization_nodes_and_pwl_coefficients": true,
+  "unchanged_recorded_test_metrics": true,
+  "hardware_fixture_frames": 14,
+  "hardware_fixture_outputs": 798,
+  "hardware_fixture_outputs_equal": true,
+  "nonlinear_table_entries_equal": 1024,
+  "current_inference_source_sha256": {
+    "model.py": "e762a5eadc5d0bc864836e253a951a7b815af2b932944bc61d9a55fa3c7ecac6",
+    "quantize.py": "9ba3e8bcbf5b981eaaf9f9c8c37c049fe9225d91135e8466e36acbc953a577f5",
+    "evaluate_ptq.py": "7984537d49a626d7db2c304a0193362b24a126603883c3d003cc37e0901120cf"
+  },
+  "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428"
+}

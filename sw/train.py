@@ -107,7 +107,7 @@ def loadResume(args, output, config, datasetHashes, device):
     bestHash = fileSHA256(output / 'best.pt')
     if checkpoint.get('format_version', 1) == 1:
         # Version 1 predates the stored digest. Match its best-model metadata;
-        # the next saved version 2 checkpoint also binds the exact file bytes.
+        # the next saved checkpoint also binds the exact file bytes.
         best = torch.load(output / 'best.pt', map_location='cpu', weights_only=False)
         if (best['config'] != config or best['dataset_sha256'] != datasetHashes
                 or best['epoch'] != checkpoint['best_epoch']

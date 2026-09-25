@@ -1,0 +1,40 @@
+test_conflicting_nested_checkpoint_hash_is_rejected (test_calibrate_ptq.InitialProfileProvenanceTests.test_conflicting_nested_checkpoint_hash_is_rejected) ... ok
+test_matching_top_level_and_nested_metadata (test_calibrate_ptq.InitialProfileProvenanceTests.test_matching_top_level_and_nested_metadata) ... ok
+test_nested_inference_hash_is_checked (test_calibrate_ptq.InitialProfileProvenanceTests.test_nested_inference_hash_is_checked) ... ok
+test_checkpoint_selection_and_source_identity_are_enforced (test_evaluate_ptq.EvaluatePTQTests.test_checkpoint_selection_and_source_identity_are_enforced) ... ok
+test_inconsistent_integer_formats_are_rejected (test_evaluate_ptq.EvaluatePTQTests.test_inconsistent_integer_formats_are_rejected) ... ok
+test_inference_exp_knots_cannot_disagree_with_export_configuration (test_evaluate_ptq.EvaluatePTQTests.test_inference_exp_knots_cannot_disagree_with_export_configuration) ... ok
+test_inference_source_and_model_configuration_are_enforced (test_evaluate_ptq.EvaluatePTQTests.test_inference_source_and_model_configuration_are_enforced) ... ok
+test_integer_parameter_tampering_is_rejected (test_evaluate_ptq.EvaluatePTQTests.test_integer_parameter_tampering_is_rejected) ... ok
+test_profile_digest_and_external_profile_override_are_rejected (test_evaluate_ptq.EvaluatePTQTests.test_profile_digest_and_external_profile_override_are_rejected) ... ok
+test_qat_provenance_is_rejected_at_all_supported_locations (test_evaluate_ptq.EvaluatePTQTests.test_qat_provenance_is_rejected_at_all_supported_locations) ... ok
+test_raw_and_bundle_outputs_and_integer_exports_match (test_evaluate_ptq.EvaluatePTQTests.test_raw_and_bundle_outputs_and_integer_exports_match) ... ok
+test_actual_qat_resume_matches_two_uninterrupted_epochs (test_finetune.FineTuneTests.test_actual_qat_resume_matches_two_uninterrupted_epochs) ... ok
+test_checkpoint_score_uses_exact_quantized_validation (test_finetune.FineTuneTests.test_checkpoint_score_uses_exact_quantized_validation) ... ok
+test_epoch_zero_fallback_retains_source_weights (test_finetune.FineTuneTests.test_epoch_zero_fallback_retains_source_weights) ... ok
+test_no_test_arrays_are_required_or_loaded (test_finetune.FineTuneTests.test_no_test_arrays_are_required_or_loaded) ... ok
+test_overwrite_guard_preserves_existing_artifacts (test_finetune.FineTuneTests.test_overwrite_guard_preserves_existing_artifacts) ... ok
+test_profile_is_frozen_and_resume_does_not_recalibrate (test_finetune.FineTuneTests.test_profile_is_frozen_and_resume_does_not_recalibrate) ... ok
+test_resume_rejects_changed_profile_and_source_metadata (test_finetune.FineTuneTests.test_resume_rejects_changed_profile_and_source_metadata) ... ok
+test_source_rejects_nonselected_epoch_and_changed_dataset (test_finetune.FineTuneTests.test_source_rejects_nonselected_epoch_and_changed_dataset) ... ok
+test_exact_and_pwl_activation_placement (test_model_architecture.ArchitectureTests.test_exact_and_pwl_activation_placement) ... ok
+test_profile_configuration_and_alias_guards (test_model_architecture.ArchitectureTests.test_profile_configuration_and_alias_guards) ... ok
+test_pwl_histogram_follows_only_existing_activations (test_model_architecture.ArchitectureTests.test_pwl_histogram_follows_only_existing_activations) ... ok
+test_quantized_and_qat_signed_branches (test_model_architecture.ArchitectureTests.test_quantized_and_qat_signed_branches) ... ok
+test_fitted_checkpoint_preserves_exact_model (test_ptq_pwl.PTQPWLTests.test_fitted_checkpoint_preserves_exact_model) ... ok
+test_fitting_checks_only_requested_data_identity (test_ptq_pwl.PTQPWLTests.test_fitting_checks_only_requested_data_identity) ... ok
+test_fitting_rejects_nonexact_training_and_nonselected_checkpoint (test_ptq_pwl.PTQPWLTests.test_fitting_rejects_nonexact_training_and_nonselected_checkpoint) ... ok
+test_ssm_uses_custom_exp_knots_and_default (test_ptq_pwl.PTQPWLTests.test_ssm_uses_custom_exp_knots_and_default) ... ok
+test_exact_forward_both_nonlinearity_modes (test_qat.QATTests.test_exact_forward_both_nonlinearity_modes) ... ok
+test_finite_nonzero_parameter_gradients (test_qat.QATTests.test_finite_nonzero_parameter_gradients) ... ok
+test_intermediate_affine_conv_and_ssm_values (test_qat.QATTests.test_intermediate_affine_conv_and_ssm_values) ... ok
+test_negative_recurrent_truncation (test_qat.QATTests.test_negative_recurrent_truncation) ... ok
+test_saturation_gradient_and_exact_values (test_qat.QATTests.test_saturation_gradient_and_exact_values) ... ok
+test_saved_checkpoint_and_fixtures (test_qat.QATTests.test_saved_checkpoint_and_fixtures) ... ok
+test_affine_recovery_and_unpenalized_intercept (test_refit_head.HeadRefitTests.test_affine_recovery_and_unpenalized_intercept) ... ok
+test_real_refit_preserves_backbone_and_never_needs_test_arrays (test_refit_head.HeadRefitTests.test_real_refit_preserves_backbone_and_never_needs_test_arrays) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 1.986s
+
+OK

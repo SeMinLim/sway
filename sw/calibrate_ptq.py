@@ -33,21 +33,20 @@ def scaleGroups(profile):
     names = list(profile['nodes'])
     groups = []
     consumed = set()
-    correctedGraph = profile.get('modelConfig', {}).get('architecture_version', 1) == 2
     for name in names:
         if name in consumed or name.endswith('.Abar'):
             continue
         if name.endswith('.currentState'):
             continue
-        if correctedGraph and (name.endswith('.x') or name.endswith('.delta')):
+        if name.endswith('.x') or name.endswith('.delta'):
             # Alias grouping must not depend on JSON object key order.
             continue
         group = [name]
         if name == 'input' and 'patches' in names:
             group.append('patches')
-        if correctedGraph and name.endswith('.conv'):
+        if name.endswith('.conv'):
             group.append(name[:-len('.conv')] + '.x')
-        if correctedGraph and name.endswith('.deltaProjection'):
+        if name.endswith('.deltaProjection'):
             group.append(name[:-len('.deltaProjection')] + '.delta')
         if name.endswith('.state'):
             current = name[:-len('.state')] + '.currentState'
@@ -68,13 +67,13 @@ def shiftGroup(profile, group, shift):
 
 
 def validateInitialProvenance(profile, config, checkpointHash, inferenceHashes):
-    """Check both current and legacy provenance locations without precedence."""
+    """Check both top-level and nested provenance without precedence."""
     if profile.get('calibrationSplit') != 'train':
         raise ValueError('Initial PTQ profile must be calibrated on training data')
     suppliedConfig = profile.get('modelConfig')
-    if config.get('architecture_version', 1) == 2 and suppliedConfig is None:
-        raise ValueError('Initial profile requires model configuration for architecture_version 2')
-    if suppliedConfig is not None and suppliedConfig != config:
+    if suppliedConfig is None:
+        raise ValueError('Initial profile requires model configuration')
+    if suppliedConfig != config:
         raise ValueError('Initial profile model configuration differs from checkpoint')
     nested = profile.get('ptq_calibration', {})
     for suppliedHash in [profile.get('source_checkpoint_sha256'),

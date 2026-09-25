@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "command": "python reference/generate.py",
+  "sourceTreeAvailable": false,
+  "rawDatasetAvailable": false,
+  "trainingOrCalibrationPerformed": false,
+  "checkpointSHA256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
+  "byteExactArtifacts": {
+    "SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
+    "GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
+    "test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "test_trace.npz": "d65686362a20b5e2103af1b89fff5b0faeaa419e62ae7662c14ca0ab8be887c6"
+  },
+  "referenceSHA256": {
+    "generate.py": "0bd8c5e35fbdee9719b78a6cfb53de4c981e377200e19db8bf306c00e39a46b8",
+    "check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
+    "check_contract.py": "a7fcfeed59bcb541dc7d9829a8996e5ad6f4d177918f91190dc7206d98ba0a84",
+    "integer_model.py": "523bb8c5b25e8d3bcefe4f07d6dbf1e51caf63a169b367f36cf6a98f396bc863",
+    "check_refactor.py": "ebc11333d4b88dd07e78764e52b525051ace3a276f80bc88dc80699dbcf4e219"
+  },
+  "result": "Standalone regeneration reproduced all six checked-in BSV/table/fixture artifacts byte for byte",
+  "base_commit": "1698b00d18b221f7e9c606c0bbcefa04f46624b1"
+}
