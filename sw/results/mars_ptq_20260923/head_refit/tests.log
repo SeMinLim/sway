@@ -1,7 +1,0 @@
-test_affine_recovery_and_unpenalized_intercept (test_refit_head.HeadRefitTests.test_affine_recovery_and_unpenalized_intercept) ... ok
-test_real_refit_preserves_backbone_and_never_needs_test_arrays (test_refit_head.HeadRefitTests.test_real_refit_preserves_backbone_and_never_needs_test_arrays) ... ok
-
-----------------------------------------------------------------------
-Ran 2 tests in 0.050s
-
-OK

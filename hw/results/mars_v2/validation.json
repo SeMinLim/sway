@@ -1031,5 +1031,6 @@
     "divisor2/validation.json",
     "divisor4/validation.json"
   ],
-  "scope": "Generated-Verilog simulation of the frozen 14-frame fixtures; source bubbles/output stalls plus continuous-source immediate-sink modes; not physical timing or full-dataset RTL evaluation"
+  "scope": "Generated-Verilog simulation of the frozen 14-frame fixtures; source bubbles/output stalls plus continuous-source immediate-sink modes; not physical timing or full-dataset RTL evaluation",
+  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
 }

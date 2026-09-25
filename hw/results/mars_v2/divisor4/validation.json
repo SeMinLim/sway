@@ -370,5 +370,6 @@
     "vector_sha256": "a1d9b7aafa39a39ee9961550af91673f7dc69c9136d27e9e34eb4fb0fd0b71e1",
     "compiler_warnings": [],
     "status": "pass"
-  }
+  },
+  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
 }

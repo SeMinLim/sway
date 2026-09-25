@@ -11,12 +11,10 @@
   * `model/` & `generated/`: frozen checkpoint, parameter tables, and reference outputs.
   * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
   * `results/mars_v2/`: validation and synthesis results for the current baseline.
-  * `results/engine_refactor/`, `results/lut_rom/`, & `results/linear_output_registers/`: previous architecture and optimization records.
 * sw/
   * Model implementation, training, quantization, and evaluation scripts.
   * `config/`: model settings and reconstruction choices.
   * `results/mars_ptq_20260925/`: corrected model checkpoint, INT8 exports, and training/evaluation records.
-  * `results/mars_ptq_20260923/`: previous version 1 checkpoint.
 
 ## Prerequisites & Dependencies
 
@@ -72,7 +70,6 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * `architecture_version=2` in [model.json](sw/config/model.json).
 * Convolution output enters the SSM path directly. SiLU remains on the gate branch.
 * Delta path: `Linear -> ReLU -> Linear`, without an activation after the second Linear.
-* Unversioned and version 1 checkpoints retain the previous activation order. Historical PTQ bundles require their recorded source revision because the evaluator checks source hashes.
 * `hw/` uses the same version 2 checkpoint, with regenerated INT8 parameters, nonlinear tables, and reference outputs.
 
 ## How to run the checkpoint
@@ -134,7 +131,7 @@ python sw/evaluate_ptq.py \
   * Test RMSE: **8.1461 cm** for exact FP32, **8.1567 cm** for PWL FP32, and **9.3022 cm** for INT8 PTQ.
   * RMSE is the mean of 57 coordinatewise RMSE values over 7,984 official MARS test frames.
   * [Checkpoint](sw/results/mars_ptq_20260925/final/checkpoint.pt), [metrics](sw/results/mars_ptq_20260925/final/metrics.json), and [verification](sw/results/mars_ptq_20260925/verification.json).
-  * All 43 software tests pass, including signed convolution outputs and `Linear -> ReLU -> Linear` checks in exact, PWL, PTQ, and QAT execution.
+  * All 36 software tests pass, including signed convolution outputs and `Linear -> ReLU -> Linear` checks in exact, PWL, PTQ, and QAT execution.
   * [Training protocol](sw/results/mars_ptq_20260925/protocol.json) & [architecture checks](sw/results/mars_ptq_20260925/architecture_verification.json).
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 * Hardware Verification (Version 2)
@@ -154,4 +151,4 @@ python sw/evaluate_ptq.py \
 * Maintained by Se-Min Lim.
 * The checkpoint is independently trained from the published eMamba settings. Model details and reconstruction choices are recorded in [model.json](sw/config/model.json); dataset membership is recorded in [data_manifest.json](sw/results/data_manifest.json).
 * Hardware uses exact rational range normalization. Its comparison with software QDQ normalization is recorded in [numerical verification](hw/generated/software_contract_verification.json).
-* Logic use is calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`; it is not a packed `TRELLIS_COMB` measurement. Placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier reports retain version 1 architecture and optimization measurements.
+* Logic use is calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`; it is not a packed `TRELLIS_COMB` measurement. Placement/routing, timing closure, and physical-board operation remain unverified for the current baseline.

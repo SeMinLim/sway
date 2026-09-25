@@ -153,8 +153,8 @@
     "device": "LFE5U-85F, CABGA381",
     "fabric_site_counts": "Existing nextpnr --85k CABGA381 device report (capacity denominators only)",
     "BRAM_DSP_PLL": "https://www.latticesemi.com/en/Products/FPGAandCPLD/ECP5",
-    "prior_report_path": "hw/results/physical/nextpnr.log",
-    "prior_used_counts_not_reused": true
+    "prior_used_counts_not_reused": true,
+    "capacity_source_url": "https://github.com/SeMinLim/sway/blob/7063f477e7ea7741d93432a37bca07ae0484683c/hw/results/physical/nextpnr.log"
   },
   "fits_logic_capacity_before_packing": false,
   "placement_routing_executed": false,

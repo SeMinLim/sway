@@ -194,7 +194,7 @@ def main():
     parser.add_argument("--ivl-dir")
     parser.add_argument("--divisors", nargs="+", type=int, choices=(1, 2, 4), default=[1, 2, 4])
     parser.add_argument("--modes", nargs="+", choices=("stress", "kernel"), default=["stress", "kernel"])
-    parser.add_argument("--output", type=Path, default=ROOT / "results/engine_refactor")
+    parser.add_argument("--output", type=Path, default=ROOT / "results/mars_v2/recheck")
     parser.add_argument("--skip-arithmetic", action="store_true")
     args = parser.parse_args()
     bsc = shutil.which(args.bsc)

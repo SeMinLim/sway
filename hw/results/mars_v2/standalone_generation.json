@@ -21,5 +21,6 @@
     "generate.py": "981988f4d34636d891d92fe72f321dba4d89e428e9790cda629496baabcc46ab",
     "check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36"
   },
-  "result": "Isolated standalone generation with only reference and frozen model directories reproduced all six BSV/table/fixture artifacts byte for byte"
+  "result": "Isolated standalone generation with only reference and frozen model directories reproduced all six BSV/table/fixture artifacts byte for byte",
+  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
 }

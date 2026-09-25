@@ -1,5 +1,0 @@
-Source validation RMSE 7.973186 cm
-Ridge 0 | validation RMSE 7.971161 cm
-Ridge 0.0001 | validation RMSE 7.966597 cm
-Ridge 0.001 | validation RMSE 7.959600 cm
-Selected index 3 | validation RMSE 7.959600 cm

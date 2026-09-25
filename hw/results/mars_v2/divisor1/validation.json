@@ -343,5 +343,6 @@
       ],
       "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
     }
-  ]
+  ],
+  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
 }

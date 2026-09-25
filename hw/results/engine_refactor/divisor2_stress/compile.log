@@ -1,9 +1,0 @@
-checking package dependencies
-compiling bsv/SwayTypes.bsv
-compiling bsv/SwayLinear.bsv
-compiling bsv/SwayNorm.bsv
-compiling bsv/SwayScan.bsv
-compiling bsv/SwayBlock.bsv
-compiling bsv/SwayBaseline.bsv
-compiling sim/TbSway.bsv
-code generation for mkTbSway starts

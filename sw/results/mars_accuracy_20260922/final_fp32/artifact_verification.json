@@ -1,8 +1,0 @@
-{
-  "status": "passed",
-  "checkpoint_sha256": "ce4c956baae665033a3d99d2496dd79b1631b2f03375b74ab5b73bbc85e88c33",
-  "exported_fp32_matches_checkpoint": true,
-  "int8_binary_hex_and_parameter_values_match": true,
-  "int8_parameters": 15717,
-  "int8_parameter_bytes": 15717
-}

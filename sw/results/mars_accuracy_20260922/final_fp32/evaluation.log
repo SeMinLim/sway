@@ -1,6 +1,0 @@
-[STEP 1] PTQ percentile 99.900 validation RMSE 11.1694 cm
-[STEP 1] PTQ percentile 100.000 validation RMSE 11.7052 cm
-[STEP 2] fp32: {'frames': 7984, 'mae_cm': 6.233576534169525, 'rmse_coordinate_mean_cm': 8.48836963274273, 'rmse_global_cm': 9.179298826622338, 'axis_mae_cm': {'x': 7.534084296149585, 'y': 3.8463854200980063, 'z': 7.320259886260985}, 'axis_rmse_cm': {'x': 10.32508409616259, 'y': 5.4271747109998065, 'z': 9.712850091065791}, 'evaluation_seconds': 0.4197824020011467}
-[STEP 2] fp32_pwl: {'frames': 7984, 'mae_cm': 7.415552598868508, 'rmse_coordinate_mean_cm': 9.665801287583939, 'rmse_global_cm': 10.111429851109888, 'axis_mae_cm': {'x': 7.709028930335642, 'y': 6.618642970383664, 'z': 7.918985895886215}, 'axis_rmse_cm': {'x': 10.572693617967564, 'y': 8.121959754391481, 'z': 10.30275049039277}, 'evaluation_seconds': 1.9739011799974833}
-[STEP 3] int8_ptq: {'frames': 7984, 'mae_cm': 8.554884276365698, 'rmse_coordinate_mean_cm': 11.147073876810685, 'rmse_global_cm': 12.095968995201183, 'axis_mae_cm': {'x': 9.77819423242701, 'y': 6.509884281753677, 'z': 9.376574314916406}, 'axis_rmse_cm': {'x': 12.788818573780818, 'y': 8.445750759431474, 'z': 12.206652297219764}, 'evaluation_seconds': 3.2186231989981025}
-[STEP 4] Evaluation saved: /workspace/scratch/839f8f1063a0/work/sway/sw/results/mars_accuracy_20260922/final_fp32/metrics.json

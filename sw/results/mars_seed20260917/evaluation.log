@@ -1,6 +1,0 @@
-[STEP 1] PTQ percentile 99.900 validation RMSE 11.5742 cm
-[STEP 1] PTQ percentile 100.000 validation RMSE 10.4574 cm
-[STEP 2] fp32: {'frames': 7984, 'mae_cm': 6.648470119700993, 'rmse_coordinate_mean_cm': 8.958240618257841, 'rmse_global_cm': 9.651265388855702, 'axis_mae_cm': {'x': 7.9457125074246635, 'y': 4.226703286035795, 'z': 7.772994565642521}, 'axis_rmse_cm': {'x': 10.760529815232715, 'y': 5.9428498025989684, 'z': 10.171342236941843}, 'evaluation_seconds': 0.4178997540002456}
-[STEP 2] fp32_pwl: {'frames': 7984, 'mae_cm': 7.3937533884237014, 'rmse_coordinate_mean_cm': 9.679250288802884, 'rmse_global_cm': 10.167487149473942, 'axis_mae_cm': {'x': 8.027197597683504, 'y': 6.070077046162593, 'z': 8.08398552142501}, 'axis_rmse_cm': {'x': 10.900345477546404, 'y': 7.713402208015218, 'z': 10.424003180847029}, 'evaluation_seconds': 3.195023931002652}
-[STEP 3] INT8 PTQ: {'frames': 7984, 'mae_cm': 7.979911854925035, 'rmse_coordinate_mean_cm': 10.459829861960658, 'rmse_global_cm': 10.920819318597486, 'axis_mae_cm': {'x': 8.557906061123404, 'y': 6.971177456091255, 'z': 8.410652047560449}, 'axis_rmse_cm': {'x': 11.63390188984767, 'y': 8.917556313757032, 'z': 10.828031382277274}, 'evaluation_seconds': 5.1005904779995035}
-[STEP 4] Evaluation saved: sw/results/mars_seed20260917/evaluation/metrics.json

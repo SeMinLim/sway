@@ -108,8 +108,8 @@ class QATTests(unittest.TestCase):
         self.assertGreater(float(x.grad.abs().sum()), 0)
 
     def test_saved_checkpoint_and_training_frames(self):
-        checkpointPath = self.root / "results" / "mars_seed20260917" / "best.pt"
-        profilePath = checkpointPath.parent / "evaluation" / "calibration.json"
+        checkpointPath = self.root / "results" / "mars_ptq_20260925" / "final" / "checkpoint.pt"
+        profilePath = checkpointPath.parent / "calibration.json"
         dataPath = self.root.parent.parent / "data" / "mars" / "featuremap_train.npy"
         if not all(path.exists() for path in [checkpointPath, profilePath, dataPath]):
             self.skipTest("Saved checkpoint, calibration or training frames unavailable")

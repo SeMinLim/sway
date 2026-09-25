@@ -63,7 +63,6 @@ Icarus Verilog is required for generated-Verilog simulation. The FPGA flow also 
 * `sim/TbSwayKernel.bsv`: continuous-source, immediate-sink regression using the same golden outputs.
 * `reference/`: integer reference, parameter generator, and test runners.
 * `results/mars_v2/`: validation and synthesis for the current checkpoint and activation order.
-* `results/engine_refactor/`, `results/lut_rom/`, `results/linear_output_registers/`: historical version 1 architecture and optimization records.
 
 ## Validation
 
@@ -84,8 +83,6 @@ Normal builds use the checked-in tables and fixtures. Regeneration requires NumP
 The frozen checkpoint SHA-256 is `5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa`. Its parameters and scales are unchanged from the software bundle. The [integer-reference report](generated/reference_report.json) records generation and width checks; [software contract verification](generated/software_contract_verification.json) covers all 7,984 official test frames and all 1,024 nonlinear table entries.
 
 All 455,088 integer outputs match the v2 software graph when only range normalization is replaced with the baseline's existing exact-rational definition. Against original float32 QDQ normalization, 435,831 outputs match exactly and the maximum difference is 3 LSB. Integer-reference coordinate-mean RMSE is **9.3015 cm**, versus **9.3022 cm** for software PTQ. This is reference evaluation; RTL regression uses the 14 fixed frames.
-
-Historical version 1 reports remain in `results/engine_refactor/`, `results/lut_rom/`, and `results/linear_output_registers/`. The current baseline retains their 17 independent affine engines, weight LUT-ROM encoding, and per-element output registers. Their resource and cycle measurements apply to the earlier checkpoint and activation order.
 
 ## Synthesis
 
