@@ -58,7 +58,7 @@ def make_tables(export):
     tables = []
     definitions = []
     for block in range(2):
-        for source, target, operation in [("conv", "x", "silu"), ("gateInput", "gate", "silu"), ("expInput", "Abar", "exp")]:
+        for source, target, operation in [("gateInput", "gate", "silu"), ("expInput", "Abar", "exp")]:
             prefix = "blocks.%d." % block
             input_exp = int(profile["nodes"][prefix + source]["exponent"])
             output_exp = int(profile["nodes"][prefix + target]["exponent"])
@@ -203,7 +203,7 @@ def write_bsv(model):
         for state in range(8):
             choices.append(("blockId == %d && n == %d" % (block, state), "channel", list(enumerate(model.parameters["blocks.%d.A" % block][:, state].tolist()))))
     lines += bsv_rom("stateA", "Integer blockId, Integer n, Bit#(6) channel", choices, 6)
-    choices = [("tableId == %d" % table, "pack(inputValue)", [((value & 255), int(model.tables[table, value + 128])) for value in range(-128, 128)]) for table in range(6)]
+    choices = [("tableId == %d" % table, "pack(inputValue)", [((value & 255), int(model.tables[table, value + 128])) for value in range(-128, 128)]) for table in range(len(model.tables))]
     lines += bsv_rom("nonlinearLookup", "Integer tableId, Int#(8) inputValue", choices, 8)
     lines += ["endpackage", ""]
     (GENERATED / "SwayParameters.bsv").write_text("\n".join(lines))
@@ -292,7 +292,7 @@ def hardware_width_checks(model):
         output_bound = aligned_bound(state_output, exp("currentState") + exp("C"), common)
         output_bound += aligned_bound(128 * 128, exp("x") + exp("D"), common)
         bounded(prefix + "SSM aligned output", output_bound, 35)
-        for source, target in [("in", "convInput"), ("in", "gateInput"),
+        for source, target in [("in", "convInput"), ("in", "gateInput"), ("conv", "x"),
                                ("xProjection", "deltaInput"), ("xProjection", "B"),
                                ("xProjection", "C"), ("deltaProjection", "delta")]:
             bounded(prefix + source + " to " + target, aligned_bound(128, exp(source), exp(target)), 32)
@@ -372,7 +372,11 @@ def main():
     model = IntegerModel(EXPORT, tables)
     widths = hardware_width_checks(model)
     write_bsv(model)
-    report = {"schemaVersion": 2, "architecture": "first baseline, combinational coefficient lookup",
+    report = {"schemaVersion": 3, "architecture": "MARS v2 dedicated-engine baseline, combinational coefficient lookup",
+              "architectureVersion": model.config["architecture_version"],
+              "activationPlacement": {"convolutionOutput": "Direct requantization from conv to x, no SiLU",
+                                      "delta": "xProjection -> ReLU -> deltaInput -> deltaProjection -> signed delta",
+                                      "gate": "Separate SiLU stage retained"},
               "affineWeightROM": {"encoding": "256-bit fixed truth tables per output bit and upper-page selection",
                                   "readLatencyCycles": 0, "addressWidth": 13, "pageAddressBits": 8,
                                   "parameterMapping": "unchanged independent projection slices and 1/2/4-lane banks",

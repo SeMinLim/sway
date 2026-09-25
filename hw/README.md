@@ -1,14 +1,14 @@
 # MARS baseline for blueYosys
 
-Dedicated-engine MARS inference for ULX3S-85F, using the frozen INT8 PTQ checkpoint in `model/`.
+Dedicated-engine MARS v2 inference for ULX3S-85F, using the frozen INT8 PTQ checkpoint in `model/` from `sw/results/mars_ptq_20260925/final/`.
 
 ## Architecture
 
 Patch embedding feeds two independent Mamba blocks and the regression head through FIFOs. Each block contains separate main/gate input projections, normalization, convolution, gate SiLU, delta-input/B/C projections, delta expansion, scan, and output projection. The complete kernel has 17 affine engines; no engine is shared across projections or blocks.
 
-Main projection feeds convolution and its SiLU stage. Gate projection feeds an independent SiLU stage, then waits in an ordered FIFO for the scan result. Delta-input, B, and C projections run in independent engines and rejoin before scan. Each split preserves the original matrix rows and the original affine-then-branch requantization sequence.
+Main projection feeds convolution; its quantized output enters the SSM path without SiLU. Gate projection feeds an independent SiLU stage, then waits in an ordered FIFO for the scan result. Delta-input, B, and C projections run in independent engines and rejoin before scan. Delta follows `Linear -> ReLU -> Linear`: ReLU applies before delta-input branch requantization, and delta expansion remains signed. Each split preserves the original matrix rows and affine-then-branch requantization sequence.
 
-The nonlinear INT8 lookup and checkpoint remain unchanged. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. Static bounds check the frozen scales before elaboration.
+The four nonlinear INT8 tables contain gate SiLU and exponential values for each block. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. All 61 static bounds pass for the new frozen scales. The existing `Abar` scale remains `2^-7`, saturating at `127/128`, including when signed delta produces a larger exponential.
 
 Affine weight ROM pages use fixed 256-bit truth tables for each output bit, followed by the existing upper-address page selection. Weight order, signed INT8 values, lane banks, and combinational read latency are unchanged.
 
@@ -62,28 +62,33 @@ Icarus Verilog is required for generated-Verilog simulation. The FPGA flow also 
 * `sim/TbSway.bsv`: regression with source bubbles, output stalls, repeated frames, and trailing-output checks.
 * `sim/TbSwayKernel.bsv`: continuous-source, immediate-sink regression using the same golden outputs.
 * `reference/`: integer reference, parameter generator, and test runners.
-* `results/engine_refactor/`: validation for the independent-engine revision.
-* `results/lut_rom/`: weight ROM verification and before/after synthesis statistics.
-* `results/linear_output_registers/`: output register verification and before/after synthesis statistics.
+* `results/mars_v2/`: validation and synthesis for the current checkpoint and activation order.
+* `results/engine_refactor/`, `results/lut_rom/`, `results/linear_output_registers/`: historical version 1 architecture and optimization records.
 
 ## Validation
 
 Run all three lane configurations and both testbenches with:
 
 ```sh
-python3 hw/reference/check_refactor.py --backend iverilog
+python3 hw/reference/check_refactor.py --backend iverilog --output hw/results/mars_v2/recheck
 ```
 
 The runner builds isolated copies, checks every output against the fixed 14-frame / 798-coordinate fixtures, and tests rounding and saturation boundaries. Kernel cycle counts exclude intentional source/sink stalls and do not establish physical timing.
 
-All three configurations pass both 14-frame tests, with all 798 outputs matching in each run. The 329,988 rounding/saturation cases also pass. Tests used BSC 2026.01 and Icarus Verilog 12.0. Default-configuration project-top Verilog generation passes. [Validation results](results/engine_refactor/validation.json) and [top compilation](results/engine_refactor/top_verilog.json) record the checked sources and scope. Historical records elsewhere in `results/`, including the 173.65% placement failure, describe the earlier fused implementation. They are not resource or timing measurements of this revision. Physical-board operation is untested.
+All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. All **329,988** rounding/saturation boundary cases pass. Tests use BSC 2026.01 and Icarus Verilog 12.0. [Regression results](results/mars_v2/validation.json) record the checked source hashes and test scope.
 
-Normal builds use the checked-in tables and fixtures. Regeneration requires NumPy/PyTorch and `python3 reference/generate.py` from this directory; it performs no training or calibration. The saved [integer-reference report](generated/reference_report.json) and [software contract verification](generated/software_contract_verification.json) describe the frozen numerical model.
+The new weight ROMs pass all **974,848 addresses** across 119 banks, including padding and out-of-range zeros. [ROM verification](results/mars_v2/weight_rom_verification.json) records the exact v2 weights. [Standalone regeneration](results/mars_v2/standalone_generation.json) reproduces the parameter BSV, nonlinear tables, and golden fixtures byte for byte without the software tree or original dataset.
 
-The weight LUT-ROM update passes all 974,848 addresses across 119 banks, including padding and out-of-range zero values. Divisor 4 stress and kernel regressions pass all 1,596 outputs; every recorded output value and cycle matches the preceding implementation. [ROM verification](results/lut_rom/weight_rom_verification.json), [regression](results/lut_rom/validation.json), and [cycle comparison](results/lut_rom/timing_comparison.json) record this check.
+Normal builds use the checked-in tables and fixtures. Regeneration requires NumPy/PyTorch and `python3 reference/generate.py` from this directory; it performs no training or calibration. With the official dataset, run `python3 hw/reference/check_contract.py --data /path/to/mars` from the repository root to reproduce the software comparison.
 
-The weight LUT-ROM step reduced full `mkTop` LUT4 use from 67,982 to 64,204. Its [synthesis comparison](results/lut_rom/synthesis_comparison.json) records the preceding baseline.
+The frozen checkpoint SHA-256 is `5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa`. Its parameters and scales are unchanged from the software bundle. The [integer-reference report](generated/reference_report.json) records generation and width checks; [software contract verification](generated/software_contract_verification.json) covers all 7,984 official test frames and all 1,024 nonlinear table entries.
 
-The output register update passes all six stress/kernel tests at divisors 1, 2, and 4: 4,788 INT8 outputs match, and every recorded output cycle and BSC schedule is unchanged. [Regression results](results/linear_output_registers/validation.json) and [cycle/schedule comparison](results/linear_output_registers/timing_comparison.json) record these checks.
+All 455,088 integer outputs match the v2 software graph when only range normalization is replaced with the baseline's existing exact-rational definition. Against original float32 QDQ normalization, 435,831 outputs match exactly and the maximum difference is 3 LSB. Integer-reference coordinate-mean RMSE is **9.3015 cm**, versus **9.3022 cm** for software PTQ. This is reference evaluation; RTL regression uses the 14 fixed frames.
 
-With the same blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33 flow, full `mkTop` synthesis for ULX3S-85F at divisor 4 reduces LUT4 use from 64,204 to 60,517. Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, falls from 92,426 (110.50%) to 88,739 (106.10%). FF falls from 47,887 to 47,751; DSP (78) and BRAM (2) are unchanged. The declared output storage remains 413 INT8 elements across 17 engines; synthesis removes the 136 unused register bits of the directly forwarded final groups. [Synthesis comparison](results/linear_output_registers/synthesis_comparison.json), [Yosys statistics](results/linear_output_registers/after.yosys.rpt), and [netlist audit](results/linear_output_registers/netlist_resource_audit.json) contain the evidence. Logic capacity is still exceeded by 5,099 sites; packing, placement/routing, and timing closure are not verified.
+Historical version 1 reports remain in `results/engine_refactor/`, `results/lut_rom/`, and `results/linear_output_registers/`. The current baseline retains their 17 independent affine engines, weight LUT-ROM encoding, and per-element output registers. Their resource and cycle measurements apply to the earlier checkpoint and activation order.
+
+## Synthesis
+
+Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **57,345 LUT4**, **12,774 CCU2C**, **252 TRELLIS_DPR16X4**, **47,804 FF**, **78 DSP**, and **2 BRAM**.
+
+Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **84,405 / 83,640 (100.91%)**. This exceeds capacity by **765 sites**. [Synthesis results](results/mars_v2/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.

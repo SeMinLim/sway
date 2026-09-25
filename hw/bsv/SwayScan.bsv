@@ -132,7 +132,7 @@ module mkSwayScan#(Integer blockId)(ScanIfc);
 			Int#(16) deltaA = signExtend(inputR.delta[channel]) * signExtend(a);
 			Int#(8) expInput = requantN(deltaA, deltaExp + aExp, blockScale(blockId, "expInput"));
 			Int#(16) deltaB = signExtend(inputR.delta[channel]) * signExtend(inputR.b[stateIndex]);
-			value.aBar[lane] = nonlinearLookup(blockId * 3 + 2, expInput);
+			value.aBar[lane] = nonlinearLookup(blockId * 2 + 1, expInput);
 			value.bBar[lane] = requantN(deltaB, deltaExp + bExp, bBarExp);
 			value.c[lane] = inputR.c[stateIndex];
 			value.previous[lane] = inputR.index == 0 ? 0 : stateR[lane].sub(truncate(groupCnt));

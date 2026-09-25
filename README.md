@@ -10,14 +10,13 @@
   * `bsv/`: compute modules and parallelism settings.
   * `model/` & `generated/`: frozen checkpoint, parameter tables, and reference outputs.
   * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
-  * `results/engine_refactor/`: validation results for the current baseline.
-  * `results/lut_rom/`: weight ROM verification and synthesis comparison.
-  * `results/linear_output_registers/`: output register verification and synthesis comparison.
+  * `results/mars_v2/`: validation and synthesis results for the current baseline.
+  * `results/engine_refactor/`, `results/lut_rom/`, & `results/linear_output_registers/`: previous architecture and optimization records.
 * sw/
   * Model implementation, training, quantization, and evaluation scripts.
   * `config/`: model settings and reconstruction choices.
   * `results/mars_ptq_20260925/`: corrected model checkpoint, INT8 exports, and training/evaluation records.
-  * `results/mars_ptq_20260923/`: previous checkpoint used by the frozen hardware baseline.
+  * `results/mars_ptq_20260923/`: previous version 1 checkpoint.
 
 ## Prerequisites & Dependencies
 
@@ -55,6 +54,7 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 
 * Patch embedding, two independent Mamba blocks, and a regression head are connected through FIFOs.
 * Each block uses separate main/gate input projections and separate delta-input/B/C projections. Gate SiLU runs in its own stage after the gate projection.
+* Convolution feeds the SSM path without SiLU. Delta follows `Linear -> ReLU -> Linear`, retaining the signed second projection.
 * The kernel has 17 affine engines, with no sharing across projections or blocks.
 * Change `ParallelismDivisor` in [SwayTypes.bsv](hw/bsv/SwayTypes.bsv) to select parallelism:
 
@@ -73,7 +73,7 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * Convolution output enters the SSM path directly. SiLU remains on the gate branch.
 * Delta path: `Linear -> ReLU -> Linear`, without an activation after the second Linear.
 * Unversioned and version 1 checkpoints retain the previous activation order. Historical PTQ bundles require their recorded source revision because the evaluator checks source hashes.
-* `hw/` still uses the version 1 checkpoint and its verified RTL. The new software checkpoint has not been integrated into hardware.
+* `hw/` uses the same version 2 checkpoint, with regenerated INT8 parameters, nonlinear tables, and reference outputs.
 
 ## How to run the checkpoint
 
@@ -137,21 +137,21 @@ python sw/evaluate_ptq.py \
   * All 43 software tests pass, including signed convolution outputs and `Linear -> ReLU -> Linear` checks in exact, PWL, PTQ, and QAT execution.
   * [Training protocol](sw/results/mars_ptq_20260925/protocol.json) & [architecture checks](sw/results/mars_ptq_20260925/architecture_verification.json).
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
-* Hardware Verification (Version 1)
-  * All three parallelism settings pass both the stall regression and continuous-input kernel test, with 798 matching outputs per run.
-  * Default-configuration Verilog generation also passes.
-  * [Simulation results](hw/results/linear_output_registers/validation.json) & [output/cycle comparison](hw/results/linear_output_registers/timing_comparison.json).
-  * The updated weight LUT-ROM passes all 974,848 bank/address checks. Default-configuration stress and kernel tests pass with identical output values and cycles.
-  * [ROM verification](hw/results/lut_rom/weight_rom_verification.json) & [regression results](hw/results/lut_rom/validation.json).
-* Hardware Synthesis (Version 1)
-  * blueYosys synthesis of `mkTop` for ULX3S-85F at divisor 4 reduces LUT4 use from **64,204 to 60,517** with per-element output registers and write enables.
-  * Logic use before packing is **88,739 / 83,640 (106.10%)**, down from **92,426 (110.50%)**. The design still exceeds logic capacity.
-  * FF: **47,751**, down from **47,887**; DSP: **78**; BRAM: **2**, unchanged. [Synthesis comparison](hw/results/linear_output_registers/synthesis_comparison.json).
-  * Output arrays retain their element counts. Direct forwarding of the final group lets synthesis remove 136 unused register bits; all six regression runs preserve output values, cycles, and BSC schedules.
+* Hardware Verification (Version 2)
+  * All three parallelism settings pass both the stall regression and continuous-input kernel test: **4,788 matching INT8 outputs** across six runs.
+  * All **329,988** rounding/saturation cases and **974,848** affine ROM address checks pass.
+  * [Simulation results](hw/results/mars_v2/validation.json), [ROM verification](hw/results/mars_v2/weight_rom_verification.json), and [standalone regeneration](hw/results/mars_v2/standalone_generation.json).
+  * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match v2 software when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
+  * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
+* Hardware Synthesis (Version 2)
+  * Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33.
+  * LUT4: **57,345**; FF: **47,804**; DSP: **78**; BRAM: **2**.
+  * Logic use before packing is **84,405 / 83,640 (100.91%)**, exceeding capacity by **765 sites**. Placement/routing and timing closure remain unverified.
+  * [Synthesis results](hw/results/mars_v2/synthesis/report.json).
 
 ## Notes
 
 * Maintained by Se-Min Lim.
 * The checkpoint is independently trained from the published eMamba settings. Model details and reconstruction choices are recorded in [model.json](sw/config/model.json); dataset membership is recorded in [data_manifest.json](sw/results/data_manifest.json).
 * Hardware uses exact rational range normalization. Its comparison with software QDQ normalization is recorded in [numerical verification](hw/generated/software_contract_verification.json).
-* Logic use is calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`; it is not a packed `TRELLIS_COMB` measurement. Placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier hardware reports describe the fused implementation.
+* Logic use is calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`; it is not a packed `TRELLIS_COMB` measurement. Placement/routing, timing closure, and physical-board operation remain unverified for the current baseline. Earlier reports retain version 1 architecture and optimization measurements.

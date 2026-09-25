@@ -1,0 +1,347 @@
+{
+  "status": "pass",
+  "compiler": "/workspace/scratch/e434e059b77a/tools/bsc-2026.01-debian-12.13/bin/bsc",
+  "source_sha256": {
+    "bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
+    "bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
+    "bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
+    "bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
+    "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
+    "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
+    "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "reference/check_refactor.py": "87d117ce40112831c4bf4523784b89b53bdd69f94ae9ccb2d0febc468b6a5716",
+    "reference/check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
+    "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
+    "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
+  },
+  "configurations": [
+    {
+      "status": "pass",
+      "evidence": "generated-Verilog simulation",
+      "frames_checked": 14,
+      "scalar_outputs_checked": 798,
+      "input_words": 4480,
+      "finish_cycle": 127588,
+      "post_completion_drain_cycles": 2048,
+      "source_bubbles": "cycles modulo 17 equal to 0 or 1",
+      "sink_stalls": "8192 cycles after each first output, plus cycles modulo 11 equal to 0",
+      "repeated_frame_pairs_checked": [
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ]
+      ],
+      "timing_scope": "testbench cycles include deliberate source and sink stalls; not unstalled kernel performance",
+      "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+      "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+      "log_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd",
+      "sway_records_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd",
+      "frames": [
+        {
+          "frame": 0,
+          "input_first_cycle": 2,
+          "input_last_cycle": 363,
+          "output_first_cycle": 9975,
+          "output_last_cycle": 18229,
+          "first_input_to_last_output_cycles": 18227,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 1,
+          "input_first_cycle": 364,
+          "input_last_cycle": 725,
+          "output_first_cycle": 18230,
+          "output_last_cycle": 26483,
+          "first_input_to_last_output_cycles": 26119,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 2,
+          "input_first_cycle": 726,
+          "input_last_cycle": 4463,
+          "output_first_cycle": 26484,
+          "output_last_cycle": 34737,
+          "first_input_to_last_output_cycles": 34011,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 3,
+          "input_first_cycle": 4464,
+          "input_last_cycle": 10239,
+          "output_first_cycle": 34739,
+          "output_last_cycle": 42993,
+          "first_input_to_last_output_cycles": 38529,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 4,
+          "input_first_cycle": 10240,
+          "input_last_cycle": 16017,
+          "output_first_cycle": 42994,
+          "output_last_cycle": 51247,
+          "first_input_to_last_output_cycles": 41007,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 5,
+          "input_first_cycle": 16018,
+          "input_last_cycle": 21791,
+          "output_first_cycle": 51248,
+          "output_last_cycle": 59502,
+          "first_input_to_last_output_cycles": 43484,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 6,
+          "input_first_cycle": 21792,
+          "input_last_cycle": 27567,
+          "output_first_cycle": 59503,
+          "output_last_cycle": 67756,
+          "first_input_to_last_output_cycles": 45964,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 7,
+          "input_first_cycle": 27568,
+          "input_last_cycle": 33343,
+          "output_first_cycle": 67757,
+          "output_last_cycle": 76011,
+          "first_input_to_last_output_cycles": 48443,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 8,
+          "input_first_cycle": 33344,
+          "input_last_cycle": 39121,
+          "output_first_cycle": 76012,
+          "output_last_cycle": 84266,
+          "first_input_to_last_output_cycles": 50922,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 9,
+          "input_first_cycle": 39122,
+          "input_last_cycle": 44895,
+          "output_first_cycle": 84267,
+          "output_last_cycle": 92520,
+          "first_input_to_last_output_cycles": 53398,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 10,
+          "input_first_cycle": 44896,
+          "input_last_cycle": 50671,
+          "output_first_cycle": 92522,
+          "output_last_cycle": 100776,
+          "first_input_to_last_output_cycles": 55880,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 11,
+          "input_first_cycle": 50672,
+          "input_last_cycle": 56447,
+          "output_first_cycle": 100777,
+          "output_last_cycle": 109030,
+          "first_input_to_last_output_cycles": 58358,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 12,
+          "input_first_cycle": 56448,
+          "input_last_cycle": 62224,
+          "output_first_cycle": 109031,
+          "output_last_cycle": 117285,
+          "first_input_to_last_output_cycles": 60837,
+          "sink_pause_cycles": 8192
+        },
+        {
+          "frame": 13,
+          "input_first_cycle": 62225,
+          "input_last_cycle": 67999,
+          "output_first_cycle": 117286,
+          "output_last_cycle": 125539,
+          "first_input_to_last_output_cycles": 63314,
+          "sink_pause_cycles": 8192
+        }
+      ],
+      "parallelism_divisor": 1,
+      "mode": "stress",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+      ],
+      "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
+    },
+    {
+      "status": "pass",
+      "evidence": "generated-Verilog simulation (Icarus)",
+      "frames_checked": 14,
+      "scalar_outputs_checked": 798,
+      "input_words": 4480,
+      "finish_cycle": 87124,
+      "post_completion_drain_cycles": 2048,
+      "source_bubbles": "none inserted",
+      "sink_stalls": "none inserted",
+      "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+      "output_frame_start_intervals_cycles": [
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776,
+        5776
+      ],
+      "repeated_frame_pairs_checked": [
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ]
+      ],
+      "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+      "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+      "log_sha256": "1a41ad3003c10a4ddc6cfae1599679b64bbe727bcdb7fe401496b767e7e9f7af",
+      "frames": [
+        {
+          "frame": 0,
+          "input_first_cycle": 0,
+          "input_last_cycle": 319,
+          "output_first_cycle": 9931,
+          "output_last_cycle": 9987,
+          "first_input_to_last_output_cycles": 9987
+        },
+        {
+          "frame": 1,
+          "input_first_cycle": 320,
+          "input_last_cycle": 639,
+          "output_first_cycle": 15707,
+          "output_last_cycle": 15763,
+          "first_input_to_last_output_cycles": 15443
+        },
+        {
+          "frame": 2,
+          "input_first_cycle": 640,
+          "input_last_cycle": 4381,
+          "output_first_cycle": 21483,
+          "output_last_cycle": 21539,
+          "first_input_to_last_output_cycles": 20899
+        },
+        {
+          "frame": 3,
+          "input_first_cycle": 4382,
+          "input_last_cycle": 10157,
+          "output_first_cycle": 27259,
+          "output_last_cycle": 27315,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 4,
+          "input_first_cycle": 10158,
+          "input_last_cycle": 15933,
+          "output_first_cycle": 33035,
+          "output_last_cycle": 33091,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 5,
+          "input_first_cycle": 15934,
+          "input_last_cycle": 21709,
+          "output_first_cycle": 38811,
+          "output_last_cycle": 38867,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 6,
+          "input_first_cycle": 21710,
+          "input_last_cycle": 27485,
+          "output_first_cycle": 44587,
+          "output_last_cycle": 44643,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 7,
+          "input_first_cycle": 27486,
+          "input_last_cycle": 33261,
+          "output_first_cycle": 50363,
+          "output_last_cycle": 50419,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 8,
+          "input_first_cycle": 33262,
+          "input_last_cycle": 39037,
+          "output_first_cycle": 56139,
+          "output_last_cycle": 56195,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 9,
+          "input_first_cycle": 39038,
+          "input_last_cycle": 44813,
+          "output_first_cycle": 61915,
+          "output_last_cycle": 61971,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 10,
+          "input_first_cycle": 44814,
+          "input_last_cycle": 50589,
+          "output_first_cycle": 67691,
+          "output_last_cycle": 67747,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 11,
+          "input_first_cycle": 50590,
+          "input_last_cycle": 56365,
+          "output_first_cycle": 73467,
+          "output_last_cycle": 73523,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 12,
+          "input_first_cycle": 56366,
+          "input_last_cycle": 62141,
+          "output_first_cycle": 79243,
+          "output_last_cycle": 79299,
+          "first_input_to_last_output_cycles": 22933
+        },
+        {
+          "frame": 13,
+          "input_first_cycle": 62142,
+          "input_last_cycle": 67917,
+          "output_first_cycle": 85019,
+          "output_last_cycle": 85075,
+          "first_input_to_last_output_cycles": 22933
+        }
+      ],
+      "parallelism_divisor": 1,
+      "mode": "kernel",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+      ],
+      "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
+    }
+  ]
+}

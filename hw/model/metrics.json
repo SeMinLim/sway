@@ -1,8 +1,8 @@
 {
   "quantization_method": "PTQ",
-  "checkpoint_sha256": "866604ec36154035d4f23f9c9ff246657772af06bad2a626cf43bd6420fb22e7",
-  "source_checkpoint_sha256": "e3615a6133bad48594a99f20f0387074e8416a94f029bbe5e62dafdb579ab134",
-  "ptq_profile_sha256": "6dce3f0e773579c99977250363ece401ab57336c7d37f2109656c7c8c39dd180",
+  "checkpoint_sha256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+  "source_checkpoint_sha256": "bfac8b64451177357894490342906ae0f1701664560e07109c57c22de9a760d8",
+  "ptq_profile_sha256": "1d8af9dacc11ae6c367de6bd19596dacc828161bfcef98b4ac0c73e0f6ddf6eb",
   "selection": "Frozen full-validation selection; test is used only for final reporting",
   "test_used_for_selection": false,
   "test_frames": 7984,
@@ -14,60 +14,60 @@
   "evaluation_source_sha256": {
     "evaluate_ptq.py": "7984537d49a626d7db2c304a0193362b24a126603883c3d003cc37e0901120cf",
     "train.py": "0a6a43a14a7ce426387f5bc7215bd867aa3b331fbc27cddb1a885703e839a009",
-    "model.py": "9728619a1a1be6a852631f9ba77bcdca3502610937001a6f742c5e5a4de0b55c",
-    "quantize.py": "15c8bd4f77a725edc4039176c9e417d56e1a4da9f3490418f0d1fe485484c4b8"
+    "model.py": "c6b7b85847858d16855ebaafdee04f1f9edf7d1f28974a0721b056549f1e6d56",
+    "quantize.py": "aa09f588e6786e55daa1003e5d11ff9a184abf89c410f0c5bcd6d3ab60b20b09"
   },
   "metrics": {
     "fp32": {
       "frames": 7984,
-      "mae_cm": 5.853564531189892,
-      "rmse_coordinate_mean_cm": 8.068096948153178,
-      "rmse_global_cm": 8.755268570961288,
+      "mae_cm": 5.939176979274941,
+      "rmse_coordinate_mean_cm": 8.146104805401196,
+      "rmse_global_cm": 8.799717667860897,
       "axis_mae_cm": {
-        "x": 7.0017243811117265,
-        "y": 3.5694157346562863,
-        "z": 6.98955347780166
+        "x": 7.027815331119458,
+        "y": 3.7999858397017197,
+        "z": 6.989729767003645
       },
       "axis_rmse_cm": {
-        "x": 9.791338887762521,
-        "y": 5.064722856639226,
-        "z": 9.348229100057786
+        "x": 9.782961640724626,
+        "y": 5.304446400137756,
+        "z": 9.350906375341205
       },
-      "evaluation_seconds": 0.5451834359992063
+      "evaluation_seconds": 0.4199771969997528
     },
     "fp32_pwl": {
       "frames": 7984,
-      "mae_cm": 5.864741176358556,
-      "rmse_coordinate_mean_cm": 8.075390595595648,
-      "rmse_global_cm": 8.755967860959753,
+      "mae_cm": 5.9576184557335,
+      "rmse_coordinate_mean_cm": 8.156715044753037,
+      "rmse_global_cm": 8.81047045659288,
       "axis_mae_cm": {
-        "x": 6.9916855118761445,
-        "y": 3.607556873368835,
-        "z": 6.994981143830688
+        "x": 7.074390077080558,
+        "y": 3.8059573004849536,
+        "z": 6.992507989634987
       },
       "axis_rmse_cm": {
-        "x": 9.777989182995956,
-        "y": 5.096908755184953,
-        "z": 9.351273848606038
+        "x": 9.813406392848444,
+        "y": 5.307021033256676,
+        "z": 9.349717708153989
       },
-      "evaluation_seconds": 2.554406363000453
+      "evaluation_seconds": 2.0248409109999557
     },
     "int8_ptq": {
       "frames": 7984,
-      "mae_cm": 6.10705499712151,
-      "rmse_coordinate_mean_cm": 8.356373500431944,
-      "rmse_global_cm": 8.998808838575384,
+      "mae_cm": 6.886637695100944,
+      "rmse_coordinate_mean_cm": 9.302228427068036,
+      "rmse_global_cm": 9.932315279940227,
       "axis_mae_cm": {
-        "x": 7.219886161696558,
-        "y": 3.9595027907137856,
-        "z": 7.141776038954185
+        "x": 8.375543245170077,
+        "y": 4.752619897887974,
+        "z": 7.531749942244784
       },
       "axis_rmse_cm": {
-        "x": 10.022033774356297,
-        "y": 5.541711310039382,
-        "z": 9.505375416900158
+        "x": 11.380486818263796,
+        "y": 6.538214706492523,
+        "z": 9.987983756447784
       },
-      "evaluation_seconds": 4.366919174999566
+      "evaluation_seconds": 3.844843974000014
     }
   },
   "quantization_scope": "INT8 affine and convolution operands with INT64 reference MACs; integer SSM recurrence; normalization/nonlinearities/remaining elementwise graph use quantize-dequantize simulation; no RTL validation",

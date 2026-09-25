@@ -43,6 +43,9 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	staticAssert(convolutionBound < 2 ** (valueOf(ConvAccumulatorWidth) - 1)
 		&& residualBound < 2 ** (valueOf(ResidualAccumulatorWidth) - 1),
 		"Aligned convolution or residual sum exceeds its datapath width");
+	staticAssert(blockScale(blockId, "conv") == blockScale(blockId, "x")
+		&& blockScale(blockId, "deltaProjection") == blockScale(blockId, "delta"),
+		"MARS v2 convolution and delta aliases must retain their source scales");
 
 	NormIfc normalization <- mkSwayNorm(blockId);
 	// Slices retain the frozen affine output scale before each branch's requantization.
@@ -62,7 +65,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	FIFO#(Token#(InnerDim)) mainQ <- mkFIFO1;
 	FIFO#(Token#(InnerDim)) gateInputQ <- mkFIFO1;
 	FIFO#(ConvPartial) convolvedQ <- mkFIFO;
-	FIFO#(Token#(InnerDim)) activatedQ <- mkFIFO1;
+	FIFO#(Token#(InnerDim)) xQ <- mkFIFO1;
 	FIFO#(Token#(InnerDim)) xDelayQ <- mkFIFO1;
 	FIFO#(Token#(InnerDim)) gateDelayQ <- mkSizedFIFO(valueOf(ResidualSlots));
 	FIFO#(Token#(StateDim)) bQ <- mkFIFO1;
@@ -71,7 +74,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	// Three causal samples per channel, banked across the convolution lanes.
 	Vector#(ConvHistory, Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8))))) historyR <- replicateM(replicateM(replicateM(mkReg(0))));
 	Reg#(Token#(InnerDim)) mainR <- mkRegU;
-	Reg#(Vector#(InnerDim, Int#(8))) activatedR <- mkRegU;
+	Reg#(Vector#(InnerDim, Int#(8))) xR <- mkRegU;
 	Reg#(Bit#(ConvCountWidth)) convGroupCnt <- mkReg(0);
 	Reg#(Bool) convolutionOn <- mkReg(False);
 
@@ -116,6 +119,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	//------------------------------------------------------------------------------------
 	// [STAGE 2]
 	// Depthwise channels use all four taps in parallel. Token zero replaces history.
+	// The quantized convolution output enters the SSM path without an activation.
 	// Gate SiLU has its own stage and does not wait for convolution.
 	//------------------------------------------------------------------------------------
 	rule process4_1 ( !convolutionOn );
@@ -154,17 +158,17 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	rule process4_3 ( convolutionOn );
 		let value = convolvedQ.first;
 		convolvedQ.deq;
-		Vector#(InnerDim, Int#(8)) x = activatedR;
+		Vector#(InnerDim, Int#(8)) x = xR;
 		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = (zeroExtend(value.group) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
 			Int#(ConvAccumulatorWidth) accumulator = shiftRoundN(signExtend(value.sum[lane]), convProductExp, convAccumulatorExp);
 			accumulator = accumulator + shiftRoundN(signExtend(convBias(blockId, channel)), convBiasExp, convAccumulatorExp);
 			Int#(8) convolved = requantN(accumulator, convAccumulatorExp, blockScale(blockId, "conv"));
-			x[channel] = nonlinearLookup(blockId * 3, convolved);
+			x[channel] = convolved;
 		end
-		activatedR <= x;
+		xR <= x;
 		if ( value.group == fromInteger(valueOf(ConvGroups) - 1) ) begin
-			activatedQ.enq(Token {index: mainR.index, data: x});
+			xQ.enq(Token {index: mainR.index, data: x});
 			convolutionOn <= False;
 		end
 	endrule
@@ -181,7 +185,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		for ( Integer lane = 0; lane < valueOf(GateLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = zeroExtend(gateActivationCnt) * fromInteger(valueOf(GateLanes)) + fromInteger(lane);
 			Int#(8) inputValue = requant32(signExtend(gateInputR.data[channel]), inExp, gateInputExp);
-			gate[channel] = nonlinearLookup(blockId * 3 + 1, inputValue);
+			gate[channel] = nonlinearLookup(blockId * 2, inputValue);
 		end
 		gateR <= gate;
 		if ( gateActivationCnt == fromInteger(valueOf(GateGroups) - 1) ) begin
@@ -195,10 +199,11 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	//------------------------------------------------------------------------------------
 	// [STAGE 3]
 	// Independent delta-input, B and C engines retain their split calibration scales.
+	// Delta follows Linear -> ReLU -> Linear; the second projection remains signed.
 	//------------------------------------------------------------------------------------
 	rule process5;
-		let value = activatedQ.first;
-		activatedQ.deq;
+		let value = xQ.first;
+		xQ.deq;
 		deltaInputProjection.put(value);
 		bProjection.put(value);
 		cProjection.put(value);
@@ -209,7 +214,8 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		let value <- deltaInputProjection.get;
 		Vector#(DeltaRank, Int#(8)) deltaInput = newVector;
 		for ( Integer lane = 0; lane < valueOf(DeltaRank); lane = lane + 1 ) begin
-			deltaInput[lane] = requant32(signExtend(value.data[lane]), projectionExp, blockScale(blockId, "deltaInput"));
+			Int#(8) reluValue = value.data[lane] < 0 ? 0 : value.data[lane];
+			deltaInput[lane] = requant32(signExtend(reluValue), projectionExp, blockScale(blockId, "deltaInput"));
 		end
 		deltaProjection.put(Token {index: value.index, data: deltaInput});
 	endrule
@@ -240,12 +246,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		bQ.deq;
 		let c = cQ.first;
 		cQ.deq;
-		Vector#(InnerDim, Int#(8)) positiveDelta = newVector;
-		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
-			Int#(8) reluValue = delta.data[channel] < 0 ? 0 : delta.data[channel];
-			positiveDelta[channel] = requant32(signExtend(reluValue), blockScale(blockId, "deltaProjection"), blockScale(blockId, "delta"));
-		end
-		scan.put(ScanToken {index: x.index, x: x.data, delta: positiveDelta, b: b.data, c: c.data});
+		scan.put(ScanToken {index: x.index, x: x.data, delta: delta.data, b: b.data, c: c.data});
 	endrule
 
 	//------------------------------------------------------------------------------------

@@ -1,42 +1,55 @@
 {
-  "schemaVersion": 1,
-  "checkpointSHA256": "866604ec36154035d4f23f9c9ff246657772af06bad2a626cf43bd6420fb22e7",
-  "sourceCommit": "ecb38e7f4c645052111a65c015c3e821bce96bcc",
+  "schemaVersion": 2,
+  "architectureVersion": 2,
+  "checkpointSHA256": "5a9ebcc932923fc1e1b6e9e1d4376eed8e821b3d4d9559bc6af1a3b8571553aa",
+  "sourceCommit": "32f1872373a48221c56be881632dd137e9ecfe59",
   "sourceSHA256": {
-    "sw/model.py": "9728619a1a1be6a852631f9ba77bcdca3502610937001a6f742c5e5a4de0b55c",
-    "sw/quantize.py": "15c8bd4f77a725edc4039176c9e417d56e1a4da9f3490418f0d1fe485484c4b8"
+    "sw/model.py": "c6b7b85847858d16855ebaafdee04f1f9edf7d1f28974a0721b056549f1e6d56",
+    "sw/quantize.py": "aa09f588e6786e55daa1003e5d11ff9a184abf89c410f0c5bcd6d3ab60b20b09",
+    "sw/evaluate_ptq.py": "7984537d49a626d7db2c304a0193362b24a126603883c3d003cc37e0901120cf"
   },
   "referenceSHA256": {
-    "reference/generate.py": "ec1241c1790ec0ab52a7f6ec828728fd96a165d2ea22962865a72d9ab5938f78",
-    "reference/integer_model.py": "62d8f5f99e9a95e1f784662f98a283db0b7660297be3b1a0182cb08ae3236ee9"
+    "reference/generate.py": "981988f4d34636d891d92fe72f321dba4d89e428e9790cda629496baabcc46ab",
+    "reference/integer_model.py": "885437b893f7a92a07a82266c411417218ddfeff82eb88fb6fd10249751b3e87",
+    "reference/check_contract.py": "0c33f4f1f8a1d9b18a6f552baf42e672bff5b6b55286bdb790e2ddc6af01bea7"
   },
-  "nonlinearTableSHA256": "2bad6648b11e4ff7fa793ee867c81f122df802a6214e9c7b4d304572b97f2a48",
+  "nonlinearTableSHA256": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
   "nonlinearVerification": {
-    "entries": 1536,
+    "entries": 1024,
     "float32PWLValuesMatch": true,
     "int8TableEntriesMatch": true,
-    "knotSource": "Frozen PTQ profile, checked against checkpoint config and export manifest"
+    "tableOrder": "block0 gate, block0 exp, block1 gate, block1 exp"
   },
   "normalizationIsolation": {
     "frames": 7984,
     "totalOutputElements": 455088,
     "integerVersusSwWithOnlyNormalizationReplacedMatches": 455088,
     "currentSwVersusSavedQDQMatches": 455088,
+    "input": "Identical host-quantized INT8 values, reconstructed at the software input boundary",
     "result": "Every integer output matches the PTQ software graph after replacing only float32 range normalization with exact rational normalization"
   },
-  "testUsedForTuning": false,
-  "portableGeneration": {
-    "sourceTreeAvailable": false,
-    "rawDatasetAvailable": false,
-    "checkpointOrCalibrationChanged": false,
-    "byteExactArtifacts": [
-      "SwayParameters.bsv",
-      "GeneratedTestConfig.bsv",
-      "nonlinear_tables.npy",
-      "test_input.hex",
-      "test_expected.hex",
-      "test_trace.npz"
+  "integerVersusOriginalQDQ": {
+    "matchedOutputElements": 435831,
+    "totalOutputElements": 455088,
+    "matchedFrames": 6624,
+    "maxOutputDifferenceLSB": 3,
+    "meanAbsoluteOutputDifferenceLSB": 0.04318505431916465,
+    "differenceRMSE_cm": 0.33145662738527076,
+    "comparison": "Exact-rational hardware normalization differs from original float32 QDQ; no blanket bit-exact SW claim"
+  },
+  "activationVerification": {
+    "convToXUnchanged": true,
+    "deltaInputNonnegative": true,
+    "deltaProjectionToDeltaUnchanged": true,
+    "negativeDeltaElementsByBlock": [
+      1557399,
+      1569282
     ],
-    "result": "Standalone generation in a temporary project directory reproduced all six artifacts byte for byte"
-  }
+    "negativeConvOutputElementsByBlock": [
+      2047851,
+      2597505
+    ]
+  },
+  "testUsedForTuning": false,
+  "checkpointOrCalibrationChanged": false
 }

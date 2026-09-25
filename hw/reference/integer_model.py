@@ -85,7 +85,7 @@ class IntegerModel:
         self.manifest = json.loads((self.export / "manifest.json").read_text())
         self.profile = json.loads((self.export / "quantization.json").read_text())
         self.config = self.manifest["modelConfig"]
-        expected = {"D": 20, "E": 2, "P": 2, "M": 2, "N": 8, "L": 16,
+        expected = {"architecture_version": 2, "D": 20, "E": 2, "P": 2, "M": 2, "N": 8, "L": 16,
                     "input_height": 8, "input_width": 8, "input_channels": 5,
                     "outputs": 57, "dt_rank": 2, "conv_kernel": 4, "head_hidden": 20}
         if any(self.config.get(key) != value for key, value in expected.items()):
@@ -112,8 +112,8 @@ class IntegerModel:
                 raise ValueError("Export hex/binary mismatch: " + entry["parameterName"])
             self.parameters[entry["parameterName"]] = values.reshape(entry["shape"])
         self.tables = np.load(GENERATED / "nonlinear_tables.npy", allow_pickle=False).astype(np.int64) if tables is None else np.asarray(tables, dtype=np.int64)
-        if self.tables.shape != (6, 256):
-            raise ValueError("Expected six complete signed-INT8 nonlinear tables")
+        if self.tables.shape != (4, 256):
+            raise ValueError("Expected four complete signed-INT8 nonlinear tables")
 
     def exponent(self, name):
         return int(self.profile["nodes"][name]["exponent"])
@@ -165,16 +165,16 @@ class IntegerModel:
         common = min(accumulator_exponent, exp("convBias"))
         accumulator = rescale(accumulator, accumulator_exponent, common) + rescale(self.parameters[prefix + ".convBias"], exp("convBias"), common)
         convolved = emit("conv", requantize(accumulator, common, exp("conv")))
-        x = emit("x", self.tables[block * 3, convolved + 128])
-        gate = emit("gate", self.tables[block * 3 + 1, gate_input + 128])
+        x = req(convolved, "conv", "x")
+        gate = emit("gate", self.tables[block * 2, gate_input + 128])
         projected = emit("xProjection", self.linear(x, 2 + block * 4))
-        delta_input = req(projected[:, :, :2], "xProjection", "deltaInput")
+        delta_input = req(np.maximum(projected[:, :, :2], 0), "xProjection", "deltaInput")
         b = req(projected[:, :, 2:10], "xProjection", "B")
         c = req(projected[:, :, 10:18], "xProjection", "C")
         delta_projection = emit("deltaProjection", self.linear(delta_input, 3 + block * 4))
-        delta = req(np.maximum(delta_projection, 0), "deltaProjection", "delta")
+        delta = req(delta_projection, "deltaProjection", "delta")
         exp_input = emit("expInput", requantize(delta[:, :, :, None] * self.parameters[prefix + ".A"], exp("delta") + exp("A"), exp("expInput")))
-        abar = emit("Abar", self.tables[block * 3 + 2, exp_input + 128])
+        abar = emit("Abar", self.tables[block * 2 + 1, exp_input + 128])
         bbar = emit("Bbar", requantize(delta[:, :, :, None] * b[:, :, None, :], exp("delta") + exp("B"), exp("Bbar")))
         state = np.zeros((len(value), 40, 8), dtype=np.int64)
         outputs = []
