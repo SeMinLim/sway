@@ -1,0 +1,55 @@
+{
+  "round": 5,
+  "reconstruction_mse": 0.0021639362842324743,
+  "changes": [
+    {
+      "nodes": [
+        "blocks.0.expInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002178496886376324,
+      "reconstruction_mse_after": 0.0021723309389400742
+    },
+    {
+      "nodes": [
+        "blocks.1.gate"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0021723309389400742,
+      "reconstruction_mse_after": 0.002172055133708914
+    },
+    {
+      "nodes": [
+        "blocks.1.xWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002172055133708914,
+      "reconstruction_mse_after": 0.002170681185605586
+    },
+    {
+      "nodes": [
+        "blocks.1.B"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002170681185605586,
+      "reconstruction_mse_after": 0.002170019581871729
+    },
+    {
+      "nodes": [
+        "blocks.1.C"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002170019581871729,
+      "reconstruction_mse_after": 0.0021664751036659575
+    },
+    {
+      "nodes": [
+        "blocks.1.state",
+        "blocks.1.currentState"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0021664751036659575,
+      "reconstruction_mse_after": 0.0021639362842324743
+    }
+  ]
+}

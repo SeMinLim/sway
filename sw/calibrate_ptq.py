@@ -33,14 +33,22 @@ def scaleGroups(profile):
     names = list(profile['nodes'])
     groups = []
     consumed = set()
+    correctedGraph = profile.get('modelConfig', {}).get('architecture_version', 1) == 2
     for name in names:
         if name in consumed or name.endswith('.Abar'):
             continue
         if name.endswith('.currentState'):
             continue
+        if correctedGraph and (name.endswith('.x') or name.endswith('.delta')):
+            # Alias grouping must not depend on JSON object key order.
+            continue
         group = [name]
         if name == 'input' and 'patches' in names:
             group.append('patches')
+        if correctedGraph and name.endswith('.conv'):
+            group.append(name[:-len('.conv')] + '.x')
+        if correctedGraph and name.endswith('.deltaProjection'):
+            group.append(name[:-len('.deltaProjection')] + '.delta')
         if name.endswith('.state'):
             current = name[:-len('.state')] + '.currentState'
             if current in names:
@@ -64,6 +72,8 @@ def validateInitialProvenance(profile, config, checkpointHash, inferenceHashes):
     if profile.get('calibrationSplit') != 'train':
         raise ValueError('Initial PTQ profile must be calibrated on training data')
     suppliedConfig = profile.get('modelConfig')
+    if config.get('architecture_version', 1) == 2 and suppliedConfig is None:
+        raise ValueError('Initial profile requires model configuration for architecture_version 2')
     if suppliedConfig is not None and suppliedConfig != config:
         raise ValueError('Initial profile model configuration differs from checkpoint')
     nested = profile.get('ptq_calibration', {})

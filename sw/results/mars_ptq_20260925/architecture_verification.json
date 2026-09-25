@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "software_suite": {
+    "command": "python -m unittest discover -s sw -p 'test_*.py'",
+    "tests": 43,
+    "skipped": 0,
+    "log": "software_tests.log"
+  },
+  "legacy_graph_comparison": {
+    "base_commit": "036bc7cc9af2c1a10403b69cde210c63a265d11c",
+    "checkpoint": "sw/results/mars_ptq_20260923/final/checkpoint.pt",
+    "frames": 14,
+    "modes": [
+      "fp32_exact",
+      "fp32_pwl",
+      "int8_ptq"
+    ],
+    "scalar_outputs": 2394,
+    "bit_identical": true,
+    "output_sha256": {
+      "fp32_exact": "7e92665ba5903ba360e9de20f490980d8f241294df39f8a1e3873972aa3c4be1",
+      "fp32_pwl": "44fc1deda37b0daa5acebc2cde0064faad445d26d3af07a12ec6195bb78905ca",
+      "int8_ptq": "e616779ded310987a02157952984b1e1f59d6a921d7829bf29f97c8651b13620"
+    }
+  },
+  "legacy_evaluator_note": "Historical PTQ source hashes remain enforced; use original recorded revision for the historical evaluate_ptq command."
+}

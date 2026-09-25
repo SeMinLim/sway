@@ -1,0 +1,3 @@
+fp32 RMSE 8.14610481 cm
+fp32_pwl RMSE 8.15671504 cm
+int8_ptq RMSE 9.30222843 cm

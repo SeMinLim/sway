@@ -25,23 +25,24 @@ def functionValues(value, kind):
 
 
 class ActivationHistogram:
-    def __init__(self, bins=14000):
+    def __init__(self, bins=14000, architectureVersion=1):
+        self.architectureVersion = architectureVersion
         self.edges = {'silu': np.linspace(-7.0, 7.0, bins + 1),
-                      'exp': np.linspace(-4.0, 0.0, bins + 1)}
+                      'exp': np.linspace(-4.0, 0.0 if architectureVersion == 1 else 1.0, bins + 1)}
         self.counts = {kind: np.zeros(bins, dtype=np.int64) for kind in self.edges}
         self.elements = {kind: 0 for kind in self.edges}
         self.outside = {kind: 0 for kind in self.edges}
 
     def __call__(self, name, value):
         kind = None
-        if name.endswith('.conv') or name.endswith('.gateInput'):
+        if name.endswith('.gateInput') or (self.architectureVersion == 1 and name.endswith('.conv')):
             kind = 'silu'
         elif name.endswith('.expInput'):
             kind = 'exp'
         if kind is not None:
             array = value.detach().cpu().numpy().ravel()
             lower, upper = self.edges[kind][0], self.edges[kind][-1]
-            # Zero-valued ReLU branches are exact with the required exp knot 0.
+            # exp(0) is exact with the required zero knot.
             active = array[(array >= lower) & (array <= upper)]
             if kind == 'exp':
                 active = active[active != 0.0]
@@ -72,7 +73,7 @@ def fitSecants(edges, counts, kind, segments, gridStep):
         cost = syy + slope * slope * sxx + intercept * intercept * mass
         cost += 2 * slope * intercept * sx - 2 * slope * sxy - 2 * intercept * sy
         costs[start, ends] = np.maximum(cost, 0.0)
-    # Keep SiLU(0)=0 exact as well as the domain endpoints.
+    # Keep the function value at zero exact as well as the domain endpoints.
     if lower < 0.0 < upper:
         zero = int(np.argmin(np.abs(grid)))
         costs[:zero, zero + 1:] = np.inf
@@ -105,7 +106,8 @@ def histogramMSE(edges, counts, knots, kind):
 def calibrateKnots(network, trainFeatures, maxSamples=2048, seed=0, batchSize=256):
     generator = np.random.default_rng(seed)
     indices = generator.permutation(len(trainFeatures))[:min(maxSamples, len(trainFeatures))]
-    histogram = ActivationHistogram()
+    architectureVersion = network.config.get('architecture_version', 1)
+    histogram = ActivationHistogram(architectureVersion=architectureVersion)
     network.eval()
     with torch.no_grad():
         for offset in range(0, len(indices), batchSize):
@@ -114,8 +116,9 @@ def calibrateKnots(network, trainFeatures, maxSamples=2048, seed=0, batchSize=25
     silu, siluObjective = fitSecants(histogram.edges['silu'], histogram.counts['silu'],
                                    'silu', 17, 0.05)
     exp, expObjective = fitSecants(histogram.edges['exp'], histogram.counts['exp'],
-                                 'exp', 10, 0.02)
-    exp.append(1.0)
+                                 'exp', 10 if architectureVersion == 1 else 11, 0.02)
+    if architectureVersion == 1:
+        exp.append(1.0)
     result = {'siluKnots': silu, 'expKnots': exp,
               'method': 'train-activation histogram minimum-MSE secant grid dynamic program',
               'calibrationSplit': 'train', 'calibrationSamples': len(indices),

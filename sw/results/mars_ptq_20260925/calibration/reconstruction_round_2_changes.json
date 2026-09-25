@@ -1,0 +1,138 @@
+{
+  "round": 2,
+  "reconstruction_mse": 0.002198231843654074,
+  "changes": [
+    {
+      "nodes": [
+        "embedding.weight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002403770489225042,
+      "reconstruction_mse_after": 0.0023607844793092562
+    },
+    {
+      "nodes": [
+        "blocks.0.convInput"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0023607844793092562,
+      "reconstruction_mse_after": 0.0023546554794223696
+    },
+    {
+      "nodes": [
+        "blocks.0.convWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0023546554794223696,
+      "reconstruction_mse_after": 0.002315689008312274
+    },
+    {
+      "nodes": [
+        "blocks.0.convBias"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002315689008312274,
+      "reconstruction_mse_after": 0.0023153388087627904
+    },
+    {
+      "nodes": [
+        "blocks.0.conv",
+        "blocks.0.x"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0023153388087627904,
+      "reconstruction_mse_after": 0.002297700873234676
+    },
+    {
+      "nodes": [
+        "blocks.0.xWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002297700873234676,
+      "reconstruction_mse_after": 0.0022865558206555166
+    },
+    {
+      "nodes": [
+        "blocks.0.C"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0022865558206555166,
+      "reconstruction_mse_after": 0.002285930314302651
+    },
+    {
+      "nodes": [
+        "blocks.0.deltaProjection",
+        "blocks.0.delta"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002285930314302651,
+      "reconstruction_mse_after": 0.002266158259590662
+    },
+    {
+      "nodes": [
+        "blocks.0.D"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002266158259590662,
+      "reconstruction_mse_after": 0.002256200401161617
+    },
+    {
+      "nodes": [
+        "blocks.1.gateInput"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002256200401161617,
+      "reconstruction_mse_after": 0.0022541500006491603
+    },
+    {
+      "nodes": [
+        "blocks.1.B"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0022541500006491603,
+      "reconstruction_mse_after": 0.0022532384828696664
+    },
+    {
+      "nodes": [
+        "blocks.1.state",
+        "blocks.1.currentState"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0022532384828696664,
+      "reconstruction_mse_after": 0.002252472882420633
+    },
+    {
+      "nodes": [
+        "blocks.1.ssmY"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002252472882420633,
+      "reconstruction_mse_after": 0.0022218169466088435
+    },
+    {
+      "nodes": [
+        "blocks.1.gated"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0022218169466088435,
+      "reconstruction_mse_after": 0.0022059500381777122
+    },
+    {
+      "nodes": [
+        "blocks.1.out"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0022059500381777122,
+      "reconstruction_mse_after": 0.0021984752759364058
+    },
+    {
+      "nodes": [
+        "blocks.1.residual",
+        "headInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0021984752759364058,
+      "reconstruction_mse_after": 0.002198231843654074
+    }
+  ]
+}

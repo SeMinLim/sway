@@ -1,0 +1,32 @@
+{
+  "output": "sw/results/mars_ptq_20260925/verification.json",
+  "test_metrics": {
+    "fp32": {
+      "frames": 7984,
+      "all_finite": true,
+      "prediction_sha256": "382d77fb9cff081064c57122f4d89846b3a60bb06e30268ed9fbc4adb7af7b8e",
+      "rmse_coordinate_mean_cm": 8.146104805401196,
+      "recorded_rmse_coordinate_mean_cm": 8.146104805401196,
+      "absolute_recomputation_difference_cm": 0.0,
+      "independent_recomputation_passed": true
+    },
+    "fp32_pwl": {
+      "frames": 7984,
+      "all_finite": true,
+      "prediction_sha256": "1d25495b2c5bce2aca0f378c9de4fc7f23986cea9b05ffb766471622b8316066",
+      "rmse_coordinate_mean_cm": 8.156715044753035,
+      "recorded_rmse_coordinate_mean_cm": 8.156715044753037,
+      "absolute_recomputation_difference_cm": 1.7763568394002505e-15,
+      "independent_recomputation_passed": true
+    },
+    "int8_ptq": {
+      "frames": 7984,
+      "all_finite": true,
+      "prediction_sha256": "69a12037205b4f69ea12996a87219972b9943b0150507691d05027f6357c2a75",
+      "rmse_coordinate_mean_cm": 9.302228427068034,
+      "recorded_rmse_coordinate_mean_cm": 9.302228427068036,
+      "absolute_recomputation_difference_cm": 1.7763568394002505e-15,
+      "independent_recomputation_passed": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "round": 4,
+  "reconstruction_mse": 0.002178496886376324,
+  "changes": [
+    {
+      "nodes": [
+        "blocks.0.convBias"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002187499554393706,
+      "reconstruction_mse_after": 0.002187496758799712
+    },
+    {
+      "nodes": [
+        "blocks.1.ssmY"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002187496758799712,
+      "reconstruction_mse_after": 0.0021845469879912486
+    },
+    {
+      "nodes": [
+        "headHidden.weight"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0021845469879912486,
+      "reconstruction_mse_after": 0.002178496886376324
+    }
+  ]
+}

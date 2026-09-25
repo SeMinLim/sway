@@ -1,0 +1,289 @@
+{
+  "round": 1,
+  "reconstruction_mse": 0.002403770489225042,
+  "changes": [
+    {
+      "nodes": [
+        "input",
+        "patches"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.003828893065707618,
+      "reconstruction_mse_after": 0.0037599565261443994
+    },
+    {
+      "nodes": [
+        "blocks.0.normWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0037599565261443994,
+      "reconstruction_mse_after": 0.0036264704190374568
+    },
+    {
+      "nodes": [
+        "blocks.0.normBias"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0036264704190374568,
+      "reconstruction_mse_after": 0.0034881150092198276
+    },
+    {
+      "nodes": [
+        "blocks.0.norm"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0034881150092198276,
+      "reconstruction_mse_after": 0.0034544317194125733
+    },
+    {
+      "nodes": [
+        "blocks.0.in"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0034544317194125733,
+      "reconstruction_mse_after": 0.00344801840508628
+    },
+    {
+      "nodes": [
+        "blocks.0.convInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.00344801840508628,
+      "reconstruction_mse_after": 0.0034352509061661637
+    },
+    {
+      "nodes": [
+        "blocks.0.gateInput"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0034352509061661637,
+      "reconstruction_mse_after": 0.003398951225791723
+    },
+    {
+      "nodes": [
+        "blocks.0.convBias"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.003398951225791723,
+      "reconstruction_mse_after": 0.003373234557111809
+    },
+    {
+      "nodes": [
+        "blocks.0.gate"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.003373234557111809,
+      "reconstruction_mse_after": 0.0033650287465911556
+    },
+    {
+      "nodes": [
+        "blocks.0.deltaInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0033650287465911556,
+      "reconstruction_mse_after": 0.0033644657624298776
+    },
+    {
+      "nodes": [
+        "blocks.0.C"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0033644657624298776,
+      "reconstruction_mse_after": 0.0033556865395141062
+    },
+    {
+      "nodes": [
+        "blocks.0.dtWeight"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0033556865395141062,
+      "reconstruction_mse_after": 0.0033245134556337307
+    },
+    {
+      "nodes": [
+        "blocks.0.state",
+        "blocks.0.currentState"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0033245134556337307,
+      "reconstruction_mse_after": 0.0033110324263326356
+    },
+    {
+      "nodes": [
+        "blocks.0.ssmY"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0033110324263326356,
+      "reconstruction_mse_after": 0.0032250365227603247
+    },
+    {
+      "nodes": [
+        "blocks.0.gated"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0032250365227603247,
+      "reconstruction_mse_after": 0.0030093106453014805
+    },
+    {
+      "nodes": [
+        "blocks.0.outWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0030093106453014805,
+      "reconstruction_mse_after": 0.0029621118455192517
+    },
+    {
+      "nodes": [
+        "blocks.0.out"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0029621118455192517,
+      "reconstruction_mse_after": 0.0028795356544129846
+    },
+    {
+      "nodes": [
+        "blocks.0.residual"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0028795356544129846,
+      "reconstruction_mse_after": 0.0026983437789866436
+    },
+    {
+      "nodes": [
+        "blocks.1.normWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0026983437789866436,
+      "reconstruction_mse_after": 0.002694291917280262
+    },
+    {
+      "nodes": [
+        "blocks.1.normBias"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002694291917280262,
+      "reconstruction_mse_after": 0.002679139696838855
+    },
+    {
+      "nodes": [
+        "blocks.1.norm"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002679139696838855,
+      "reconstruction_mse_after": 0.0026782351586643097
+    },
+    {
+      "nodes": [
+        "blocks.1.inWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0026782351586643097,
+      "reconstruction_mse_after": 0.002644155670427047
+    },
+    {
+      "nodes": [
+        "blocks.1.in"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002644155670427047,
+      "reconstruction_mse_after": 0.0026382690676068515
+    },
+    {
+      "nodes": [
+        "blocks.1.gateInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0026382690676068515,
+      "reconstruction_mse_after": 0.002628538114016709
+    },
+    {
+      "nodes": [
+        "blocks.1.convWeight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002628538114016709,
+      "reconstruction_mse_after": 0.002624280812092881
+    },
+    {
+      "nodes": [
+        "blocks.1.gate"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002624280812092881,
+      "reconstruction_mse_after": 0.0026145585195589535
+    },
+    {
+      "nodes": [
+        "blocks.1.B"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0026145585195589535,
+      "reconstruction_mse_after": 0.002612267617659707
+    },
+    {
+      "nodes": [
+        "blocks.1.C"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002612267617659707,
+      "reconstruction_mse_after": 0.002603854815138656
+    },
+    {
+      "nodes": [
+        "blocks.1.A"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.002603854815138656,
+      "reconstruction_mse_after": 0.0026010628690350452
+    },
+    {
+      "nodes": [
+        "blocks.1.expInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0026010628690350452,
+      "reconstruction_mse_after": 0.0025871535784668773
+    },
+    {
+      "nodes": [
+        "blocks.1.gated"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0025871535784668773,
+      "reconstruction_mse_after": 0.002559336386507907
+    },
+    {
+      "nodes": [
+        "blocks.1.out"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.002559336386507907,
+      "reconstruction_mse_after": 0.0025026544875426625
+    },
+    {
+      "nodes": [
+        "blocks.1.residual",
+        "headInput"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0025026544875426625,
+      "reconstruction_mse_after": 0.0024374994420083554
+    },
+    {
+      "nodes": [
+        "headHidden.weight"
+      ],
+      "shift": 1,
+      "reconstruction_mse_before": 0.0024374994420083554,
+      "reconstruction_mse_after": 0.0024373513414917094
+    },
+    {
+      "nodes": [
+        "output"
+      ],
+      "shift": -1,
+      "reconstruction_mse_before": 0.0024373513414917094,
+      "reconstruction_mse_after": 0.002403770489225042
+    }
+  ]
+}
