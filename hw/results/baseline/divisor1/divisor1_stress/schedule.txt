@@ -328,11 +328,17 @@ Predicate: dut_block0_mainQ.i_notEmpty && (! dut_block0_convolutionOn)
 Blocking rules: (none)
  
 Rule: dut_block0_process4_2
-Predicate: dut_block0_convolvedQ.i_notFull &&
-	   dut_block0_convolutionOn && (dut_block0_convGroupCnt < 5'd20)
+Predicate: dut_block0_convolutionOn && (dut_block0_convGroupCnt < 6'd40) &&
+	   (dut_block0_convTapCnt < 3'd4)
 Blocking rules: (none)
  
 Rule: dut_block0_process4_3
+Predicate: dut_block0_convolvedQ.i_notFull &&
+	   dut_block0_convolutionOn && (dut_block0_convGroupCnt < 6'd40) &&
+	   (dut_block0_convTapCnt == 3'd4)
+Blocking rules: (none)
+ 
+Rule: dut_block0_process4_4
 Predicate: dut_block0_convolvedQ.i_notEmpty && dut_block0_xQ.i_notFull &&
 	   dut_block0_convolutionOn
 Blocking rules: (none)
@@ -687,11 +693,17 @@ Predicate: dut_block1_mainQ.i_notEmpty && (! dut_block1_convolutionOn)
 Blocking rules: (none)
  
 Rule: dut_block1_process4_2
-Predicate: dut_block1_convolvedQ.i_notFull &&
-	   dut_block1_convolutionOn && (dut_block1_convGroupCnt < 5'd20)
+Predicate: dut_block1_convolutionOn && (dut_block1_convGroupCnt < 6'd40) &&
+	   (dut_block1_convTapCnt < 3'd4)
 Blocking rules: (none)
  
 Rule: dut_block1_process4_3
+Predicate: dut_block1_convolvedQ.i_notFull &&
+	   dut_block1_convolutionOn && (dut_block1_convGroupCnt < 6'd40) &&
+	   (dut_block1_convTapCnt == 3'd4)
+Blocking rules: (none)
+ 
+Rule: dut_block1_process4_4
 Predicate: dut_block1_convolvedQ.i_notEmpty && dut_block1_xQ.i_notFull &&
 	   dut_block1_convolutionOn
 Blocking rules: (none)
@@ -908,6 +920,7 @@ Logical execution order: watchdog,
 			 dut_block0_process4_1,
 			 dut_block0_process4_2,
 			 dut_block0_process4_3,
+			 dut_block0_process4_4,
 			 dut_block0_gateSiLU1,
 			 dut_block0_gateSiLU2,
 			 dut_block0_process5,
@@ -970,6 +983,7 @@ Logical execution order: watchdog,
 			 dut_block1_process4_1,
 			 dut_block1_process4_2,
 			 dut_block1_process4_3,
+			 dut_block1_process4_4,
 			 dut_block1_gateSiLU1,
 			 dut_block1_gateSiLU2,
 			 dut_block1_process5,

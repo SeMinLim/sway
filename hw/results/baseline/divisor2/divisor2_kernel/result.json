@@ -4,7 +4,7 @@
   "frames_checked": 14,
   "scalar_outputs_checked": 798,
   "input_words": 4480,
-  "finish_cycle": 167022,
+  "finish_cycle": 167342,
   "post_completion_drain_cycles": 2048,
   "source_bubbles": "none inserted",
   "sink_stalls": "none inserted",
@@ -24,6 +24,10 @@
     11216,
     11216
   ],
+  "within_frame_scalar_output_interval_cycles": {
+    "minimum": 1,
+    "maximum": 1
+  },
   "repeated_frame_pairs_checked": [
     [
       0,
@@ -36,127 +40,127 @@
   ],
   "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
   "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-  "log_sha256": "366b3db40504d7661d5956531e81199d19fb4dc139267f0779d094ec6ce01986",
+  "log_sha256": "27d4acc8d151dea26d9e89edcbe248226b745c9e4e7016d3af1f8afc41bf840f",
   "frames": [
     {
       "frame": 0,
       "input_first_cycle": 0,
       "input_last_cycle": 319,
-      "output_first_cycle": 19109,
-      "output_last_cycle": 19165,
-      "first_input_to_last_output_cycles": 19165
+      "output_first_cycle": 19429,
+      "output_last_cycle": 19485,
+      "first_input_to_last_output_cycles": 19485
     },
     {
       "frame": 1,
       "input_first_cycle": 320,
       "input_last_cycle": 639,
-      "output_first_cycle": 30325,
-      "output_last_cycle": 30381,
-      "first_input_to_last_output_cycles": 30061
+      "output_first_cycle": 30645,
+      "output_last_cycle": 30701,
+      "first_input_to_last_output_cycles": 30381
     },
     {
       "frame": 2,
       "input_first_cycle": 640,
-      "input_last_cycle": 8001,
-      "output_first_cycle": 41541,
-      "output_last_cycle": 41597,
-      "first_input_to_last_output_cycles": 40957
+      "input_last_cycle": 8161,
+      "output_first_cycle": 41861,
+      "output_last_cycle": 41917,
+      "first_input_to_last_output_cycles": 41277
     },
     {
       "frame": 3,
-      "input_first_cycle": 8002,
-      "input_last_cycle": 19217,
-      "output_first_cycle": 52757,
-      "output_last_cycle": 52813,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 8162,
+      "input_last_cycle": 19377,
+      "output_first_cycle": 53077,
+      "output_last_cycle": 53133,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 4,
-      "input_first_cycle": 19218,
-      "input_last_cycle": 30433,
-      "output_first_cycle": 63973,
-      "output_last_cycle": 64029,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 19378,
+      "input_last_cycle": 30593,
+      "output_first_cycle": 64293,
+      "output_last_cycle": 64349,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 5,
-      "input_first_cycle": 30434,
-      "input_last_cycle": 41649,
-      "output_first_cycle": 75189,
-      "output_last_cycle": 75245,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 30594,
+      "input_last_cycle": 41809,
+      "output_first_cycle": 75509,
+      "output_last_cycle": 75565,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 6,
-      "input_first_cycle": 41650,
-      "input_last_cycle": 52865,
-      "output_first_cycle": 86405,
-      "output_last_cycle": 86461,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 41810,
+      "input_last_cycle": 53025,
+      "output_first_cycle": 86725,
+      "output_last_cycle": 86781,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 7,
-      "input_first_cycle": 52866,
-      "input_last_cycle": 64081,
-      "output_first_cycle": 97621,
-      "output_last_cycle": 97677,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 53026,
+      "input_last_cycle": 64241,
+      "output_first_cycle": 97941,
+      "output_last_cycle": 97997,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 8,
-      "input_first_cycle": 64082,
-      "input_last_cycle": 75297,
-      "output_first_cycle": 108837,
-      "output_last_cycle": 108893,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 64242,
+      "input_last_cycle": 75457,
+      "output_first_cycle": 109157,
+      "output_last_cycle": 109213,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 9,
-      "input_first_cycle": 75298,
-      "input_last_cycle": 86513,
-      "output_first_cycle": 120053,
-      "output_last_cycle": 120109,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 75458,
+      "input_last_cycle": 86673,
+      "output_first_cycle": 120373,
+      "output_last_cycle": 120429,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 10,
-      "input_first_cycle": 86514,
-      "input_last_cycle": 97729,
-      "output_first_cycle": 131269,
-      "output_last_cycle": 131325,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 86674,
+      "input_last_cycle": 97889,
+      "output_first_cycle": 131589,
+      "output_last_cycle": 131645,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 11,
-      "input_first_cycle": 97730,
-      "input_last_cycle": 108945,
-      "output_first_cycle": 142485,
-      "output_last_cycle": 142541,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 97890,
+      "input_last_cycle": 109105,
+      "output_first_cycle": 142805,
+      "output_last_cycle": 142861,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 12,
-      "input_first_cycle": 108946,
-      "input_last_cycle": 120161,
-      "output_first_cycle": 153701,
-      "output_last_cycle": 153757,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 109106,
+      "input_last_cycle": 120321,
+      "output_first_cycle": 154021,
+      "output_last_cycle": 154077,
+      "first_input_to_last_output_cycles": 44971
     },
     {
       "frame": 13,
-      "input_first_cycle": 120162,
-      "input_last_cycle": 131377,
-      "output_first_cycle": 164917,
-      "output_last_cycle": 164973,
-      "first_input_to_last_output_cycles": 44811
+      "input_first_cycle": 120322,
+      "input_last_cycle": 131537,
+      "output_first_cycle": 165237,
+      "output_last_cycle": 165293,
+      "first_input_to_last_output_cycles": 44971
     }
   ],
   "parallelism_divisor": 2,
   "mode": "kernel",
   "compiler_warnings": [
-    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-    "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+    "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
   ],
-  "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
+  "configured_types_sha256": "1d23aac45358f322c7af8136c30416bc28477fcb6d095ab59329acaa7766e34d"
 }

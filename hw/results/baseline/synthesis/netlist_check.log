@@ -22,7 +22,7 @@
  Yosys 0.33 (git sha1 2584903a060)
 
 
--- Running command `read_json /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/mkTop.json; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop' --
+-- Running command `read_json /workspace/scratch/839f8f1063a0/conv_synthesis/build/mkTop.json; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop' --
 
 1. Executing JSON frontend.
 Importing module mkTop from JSON tree.
@@ -112,181 +112,181 @@ Importing module \$__ABC9_LUT7 from JSON tree.
 Importing module \$__ABC9_LUT6 from JSON tree.
 Importing module \$__ABC9_LUT5 from JSON tree.
 
-2. Executing Verilog-2005 frontend: /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v
-Parsing Verilog input from `/workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v' to AST representation.
-Replacing existing blackbox module `\LUT4' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:4.1-16.10.
+2. Executing Verilog-2005 frontend: /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v
+Parsing Verilog input from `/workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v' to AST representation.
+Replacing existing blackbox module `\LUT4' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:4.1-16.10.
 Generating RTLIL representation for module `\LUT4'.
-Replacing existing blackbox module `\$__ABC9_LUT5' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:22.1-30.10.
+Replacing existing blackbox module `\$__ABC9_LUT5' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:22.1-30.10.
 Generating RTLIL representation for module `\$__ABC9_LUT5'.
-Replacing existing blackbox module `\$__ABC9_LUT6' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:36.1-45.10.
+Replacing existing blackbox module `\$__ABC9_LUT6' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:36.1-45.10.
 Generating RTLIL representation for module `\$__ABC9_LUT6'.
-Replacing existing blackbox module `\$__ABC9_LUT7' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:51.1-61.10.
+Replacing existing blackbox module `\$__ABC9_LUT7' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:51.1-61.10.
 Generating RTLIL representation for module `\$__ABC9_LUT7'.
-Replacing existing blackbox module `\L6MUX21' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:65.1-72.10.
+Replacing existing blackbox module `\L6MUX21' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:65.1-72.10.
 Generating RTLIL representation for module `\L6MUX21'.
-Replacing existing blackbox module `\CCU2C' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:76.1-134.10.
+Replacing existing blackbox module `\CCU2C' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:76.1-134.10.
 Generating RTLIL representation for module `\CCU2C'.
-Replacing existing blackbox module `\TRELLIS_RAM16X2' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:138.1-175.10.
+Replacing existing blackbox module `\TRELLIS_RAM16X2' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:138.1-175.10.
 Generating RTLIL representation for module `\TRELLIS_RAM16X2'.
-Replacing existing blackbox module `\PFUMX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:179.1-186.10.
+Replacing existing blackbox module `\PFUMX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:179.1-186.10.
 Generating RTLIL representation for module `\PFUMX'.
-Replacing existing blackbox module `\TRELLIS_DPR16X4' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:190.1-231.10.
+Replacing existing blackbox module `\TRELLIS_DPR16X4' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:190.1-231.10.
 Generating RTLIL representation for module `\TRELLIS_DPR16X4'.
-Replacing existing blackbox module `\DPR16X4C' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:236.1-295.10.
+Replacing existing blackbox module `\DPR16X4C' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:236.1-295.10.
 Generating RTLIL representation for module `\DPR16X4C'.
-Replacing existing blackbox module `\LUT2' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:300.1-304.10.
+Replacing existing blackbox module `\LUT2' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:300.1-304.10.
 Generating RTLIL representation for module `\LUT2'.
-Replacing existing blackbox module `\TRELLIS_FF' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:311.1-376.10.
+Replacing existing blackbox module `\TRELLIS_FF' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:311.1-376.10.
 Generating RTLIL representation for module `\TRELLIS_FF'.
-Replacing existing blackbox module `\TRELLIS_IO' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:380.1-406.10.
+Replacing existing blackbox module `\TRELLIS_IO' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:380.1-406.10.
 Generating RTLIL representation for module `\TRELLIS_IO'.
-Replacing existing blackbox module `\INV' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:410.1-412.10.
+Replacing existing blackbox module `\INV' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:410.1-412.10.
 Generating RTLIL representation for module `\INV'.
-Replacing existing blackbox module `\TRELLIS_COMB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:416.1-457.10.
+Replacing existing blackbox module `\TRELLIS_COMB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:416.1-457.10.
 Generating RTLIL representation for module `\TRELLIS_COMB'.
-Replacing existing blackbox module `\DP16KD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:460.1-674.10.
+Replacing existing blackbox module `\DP16KD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_sim.v:460.1-674.10.
 Generating RTLIL representation for module `\DP16KD'.
-Replacing existing blackbox module `\FD1P3AX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:2.1-2.261.
+Replacing existing blackbox module `\FD1P3AX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:2.1-2.261.
 Generating RTLIL representation for module `\FD1P3AX'.
-Replacing existing blackbox module `\FD1P3AY' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:3.1-3.261.
+Replacing existing blackbox module `\FD1P3AY' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:3.1-3.261.
 Generating RTLIL representation for module `\FD1P3AY'.
-Replacing existing blackbox module `\FD1P3BX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:4.1-4.261.
+Replacing existing blackbox module `\FD1P3BX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:4.1-4.261.
 Generating RTLIL representation for module `\FD1P3BX'.
-Replacing existing blackbox module `\FD1P3DX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:5.1-5.261.
+Replacing existing blackbox module `\FD1P3DX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:5.1-5.261.
 Generating RTLIL representation for module `\FD1P3DX'.
-Replacing existing blackbox module `\FD1P3IX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:6.1-6.261.
+Replacing existing blackbox module `\FD1P3IX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:6.1-6.261.
 Generating RTLIL representation for module `\FD1P3IX'.
-Replacing existing blackbox module `\FD1P3JX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:7.1-7.261.
+Replacing existing blackbox module `\FD1P3JX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:7.1-7.261.
 Generating RTLIL representation for module `\FD1P3JX'.
-Replacing existing blackbox module `\FD1S3AX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:8.1-8.261.
+Replacing existing blackbox module `\FD1S3AX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:8.1-8.261.
 Generating RTLIL representation for module `\FD1S3AX'.
-Replacing existing blackbox module `\FD1S3AY' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:9.1-9.261.
+Replacing existing blackbox module `\FD1S3AY' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:9.1-9.261.
 Generating RTLIL representation for module `\FD1S3AY'.
-Replacing existing blackbox module `\FD1S3BX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:10.1-10.261.
+Replacing existing blackbox module `\FD1S3BX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:10.1-10.261.
 Generating RTLIL representation for module `\FD1S3BX'.
-Replacing existing blackbox module `\FD1S3DX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:11.1-11.261.
+Replacing existing blackbox module `\FD1S3DX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:11.1-11.261.
 Generating RTLIL representation for module `\FD1S3DX'.
-Replacing existing blackbox module `\FD1S3IX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:12.1-12.261.
+Replacing existing blackbox module `\FD1S3IX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:12.1-12.261.
 Generating RTLIL representation for module `\FD1S3IX'.
-Replacing existing blackbox module `\FD1S3JX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:13.1-13.261.
+Replacing existing blackbox module `\FD1S3JX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:13.1-13.261.
 Generating RTLIL representation for module `\FD1S3JX'.
-Replacing existing blackbox module `\IFS1P3BX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:26.1-26.301.
+Replacing existing blackbox module `\IFS1P3BX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:26.1-26.301.
 Generating RTLIL representation for module `\IFS1P3BX'.
-Replacing existing blackbox module `\IFS1P3DX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:27.1-27.301.
+Replacing existing blackbox module `\IFS1P3DX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:27.1-27.301.
 Generating RTLIL representation for module `\IFS1P3DX'.
-Replacing existing blackbox module `\IFS1P3IX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:28.1-28.301.
+Replacing existing blackbox module `\IFS1P3IX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:28.1-28.301.
 Generating RTLIL representation for module `\IFS1P3IX'.
-Replacing existing blackbox module `\IFS1P3JX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:29.1-29.301.
+Replacing existing blackbox module `\IFS1P3JX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:29.1-29.301.
 Generating RTLIL representation for module `\IFS1P3JX'.
-Replacing existing blackbox module `\OFS1P3BX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:31.1-31.302.
+Replacing existing blackbox module `\OFS1P3BX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:31.1-31.302.
 Generating RTLIL representation for module `\OFS1P3BX'.
-Replacing existing blackbox module `\OFS1P3DX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:32.1-32.302.
+Replacing existing blackbox module `\OFS1P3DX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:32.1-32.302.
 Generating RTLIL representation for module `\OFS1P3DX'.
-Replacing existing blackbox module `\OFS1P3IX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:33.1-33.302.
+Replacing existing blackbox module `\OFS1P3IX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:33.1-33.302.
 Generating RTLIL representation for module `\OFS1P3IX'.
-Replacing existing blackbox module `\OFS1P3JX' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:34.1-34.302.
+Replacing existing blackbox module `\OFS1P3JX' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_ff.vh:34.1-34.302.
 Generating RTLIL representation for module `\OFS1P3JX'.
-Replacing existing blackbox module `\IB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:2.1-2.157.
+Replacing existing blackbox module `\IB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:2.1-2.157.
 Generating RTLIL representation for module `\IB'.
-Replacing existing blackbox module `\IBPU' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:3.1-3.157.
+Replacing existing blackbox module `\IBPU' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:3.1-3.157.
 Generating RTLIL representation for module `\IBPU'.
-Replacing existing blackbox module `\IBPD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:4.1-4.157.
+Replacing existing blackbox module `\IBPD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:4.1-4.157.
 Generating RTLIL representation for module `\IBPD'.
-Replacing existing blackbox module `\OB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:5.1-5.157.
+Replacing existing blackbox module `\OB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:5.1-5.157.
 Generating RTLIL representation for module `\OB'.
-Replacing existing blackbox module `\OBZ' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:6.1-6.164.
+Replacing existing blackbox module `\OBZ' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:6.1-6.164.
 Generating RTLIL representation for module `\OBZ'.
-Replacing existing blackbox module `\OBZPU' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:7.1-7.164.
+Replacing existing blackbox module `\OBZPU' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:7.1-7.164.
 Generating RTLIL representation for module `\OBZPU'.
-Replacing existing blackbox module `\OBZPD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:8.1-8.164.
+Replacing existing blackbox module `\OBZPD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:8.1-8.164.
 Generating RTLIL representation for module `\OBZPD'.
-Replacing existing blackbox module `\OBCO' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:9.1-9.90.
+Replacing existing blackbox module `\OBCO' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:9.1-9.90.
 Generating RTLIL representation for module `\OBCO'.
-Replacing existing blackbox module `\BB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:10.1-10.179.
+Replacing existing blackbox module `\BB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:10.1-10.179.
 Generating RTLIL representation for module `\BB'.
-Replacing existing blackbox module `\BBPU' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:11.1-11.179.
+Replacing existing blackbox module `\BBPU' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:11.1-11.179.
 Generating RTLIL representation for module `\BBPU'.
-Replacing existing blackbox module `\BBPD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:12.1-12.179.
+Replacing existing blackbox module `\BBPD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:12.1-12.179.
 Generating RTLIL representation for module `\BBPD'.
-Replacing existing blackbox module `\ILVDS' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:13.1-13.139.
+Replacing existing blackbox module `\ILVDS' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:13.1-13.139.
 Generating RTLIL representation for module `\ILVDS'.
-Replacing existing blackbox module `\OLVDS' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:14.1-14.146.
+Replacing existing blackbox module `\OLVDS' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_io.vh:14.1-14.146.
 Generating RTLIL representation for module `\OLVDS'.
 Successfully finished Verilog frontend.
 
-3. Executing Verilog-2005 frontend: /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v
-Parsing Verilog input from `/workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v' to AST representation.
-Replacing existing blackbox module `\MULT18X18D' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:5.1-48.10.
+3. Executing Verilog-2005 frontend: /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v
+Parsing Verilog input from `/workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v' to AST representation.
+Replacing existing blackbox module `\MULT18X18D' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:5.1-48.10.
 Generating RTLIL representation for module `\MULT18X18D'.
-Replacing existing blackbox module `\ALU54B' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:51.1-117.10.
+Replacing existing blackbox module `\ALU54B' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:51.1-117.10.
 Generating RTLIL representation for module `\ALU54B'.
-Replacing existing blackbox module `\EHXPLLL' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:120.1-165.10.
+Replacing existing blackbox module `\EHXPLLL' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:120.1-165.10.
 Generating RTLIL representation for module `\EHXPLLL'.
-Replacing existing blackbox module `\DTR' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:168.1-172.10.
+Replacing existing blackbox module `\DTR' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:168.1-172.10.
 Generating RTLIL representation for module `\DTR'.
-Replacing existing blackbox module `\OSCG' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:175.1-179.10.
+Replacing existing blackbox module `\OSCG' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:175.1-179.10.
 Generating RTLIL representation for module `\OSCG'.
-Replacing existing blackbox module `\USRMCLK' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:182.1-186.10.
+Replacing existing blackbox module `\USRMCLK' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:182.1-186.10.
 Generating RTLIL representation for module `\USRMCLK'.
-Replacing existing blackbox module `\JTAGG' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:189.1-204.10.
+Replacing existing blackbox module `\JTAGG' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:189.1-204.10.
 Generating RTLIL representation for module `\JTAGG'.
-Replacing existing blackbox module `\DELAYF' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:207.1-213.10.
+Replacing existing blackbox module `\DELAYF' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:207.1-213.10.
 Generating RTLIL representation for module `\DELAYF'.
-Replacing existing blackbox module `\DELAYG' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:216.1-222.10.
+Replacing existing blackbox module `\DELAYG' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:216.1-222.10.
 Generating RTLIL representation for module `\DELAYG'.
-Replacing existing blackbox module `\IDDRX1F' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:225.1-230.10.
+Replacing existing blackbox module `\IDDRX1F' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:225.1-230.10.
 Generating RTLIL representation for module `\IDDRX1F'.
-Replacing existing blackbox module `\IDDRX2F' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:233.1-238.10.
+Replacing existing blackbox module `\IDDRX2F' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:233.1-238.10.
 Generating RTLIL representation for module `\IDDRX2F'.
-Replacing existing blackbox module `\IDDR71B' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:241.1-246.10.
+Replacing existing blackbox module `\IDDR71B' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:241.1-246.10.
 Generating RTLIL representation for module `\IDDR71B'.
-Replacing existing blackbox module `\IDDRX2DQA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:249.1-255.10.
+Replacing existing blackbox module `\IDDRX2DQA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:249.1-255.10.
 Generating RTLIL representation for module `\IDDRX2DQA'.
-Replacing existing blackbox module `\ODDRX1F' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:258.1-263.10.
+Replacing existing blackbox module `\ODDRX1F' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:258.1-263.10.
 Generating RTLIL representation for module `\ODDRX1F'.
-Replacing existing blackbox module `\ODDRX2F' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:266.1-271.10.
+Replacing existing blackbox module `\ODDRX2F' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:266.1-271.10.
 Generating RTLIL representation for module `\ODDRX2F'.
-Replacing existing blackbox module `\ODDR71B' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:274.1-279.10.
+Replacing existing blackbox module `\ODDR71B' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:274.1-279.10.
 Generating RTLIL representation for module `\ODDR71B'.
-Replacing existing blackbox module `\OSHX2A' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:282.1-287.10.
+Replacing existing blackbox module `\OSHX2A' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:282.1-287.10.
 Generating RTLIL representation for module `\OSHX2A'.
-Replacing existing blackbox module `\ODDRX2DQA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:290.1-295.10.
+Replacing existing blackbox module `\ODDRX2DQA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:290.1-295.10.
 Generating RTLIL representation for module `\ODDRX2DQA'.
-Replacing existing blackbox module `\ODDRX2DQSB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:298.1-303.10.
+Replacing existing blackbox module `\ODDRX2DQSB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:298.1-303.10.
 Generating RTLIL representation for module `\ODDRX2DQSB'.
-Replacing existing blackbox module `\TSHX2DQA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:306.1-312.10.
+Replacing existing blackbox module `\TSHX2DQA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:306.1-312.10.
 Generating RTLIL representation for module `\TSHX2DQA'.
-Replacing existing blackbox module `\TSHX2DQSA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:315.1-321.10.
+Replacing existing blackbox module `\TSHX2DQSA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:315.1-321.10.
 Generating RTLIL representation for module `\TSHX2DQSA'.
-Replacing existing blackbox module `\DQSBUFM' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:324.1-339.10.
+Replacing existing blackbox module `\DQSBUFM' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:324.1-339.10.
 Generating RTLIL representation for module `\DQSBUFM'.
-Replacing existing blackbox module `\DDRDLLA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:342.1-348.10.
+Replacing existing blackbox module `\DDRDLLA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:342.1-348.10.
 Generating RTLIL representation for module `\DDRDLLA'.
-Replacing existing blackbox module `\DLLDELD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:351.1-357.10.
+Replacing existing blackbox module `\DLLDELD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:351.1-357.10.
 Generating RTLIL representation for module `\DLLDELD'.
-Replacing existing blackbox module `\CLKDIVF' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:360.1-366.10.
+Replacing existing blackbox module `\CLKDIVF' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:360.1-366.10.
 Generating RTLIL representation for module `\CLKDIVF'.
-Replacing existing blackbox module `\ECLKSYNCB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:369.1-373.10.
+Replacing existing blackbox module `\ECLKSYNCB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:369.1-373.10.
 Generating RTLIL representation for module `\ECLKSYNCB'.
-Replacing existing blackbox module `\ECLKBRIDGECS' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:376.1-380.10.
+Replacing existing blackbox module `\ECLKBRIDGECS' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:376.1-380.10.
 Generating RTLIL representation for module `\ECLKBRIDGECS'.
-Replacing existing blackbox module `\DCCA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:383.1-387.10.
+Replacing existing blackbox module `\DCCA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:383.1-387.10.
 Generating RTLIL representation for module `\DCCA'.
-Replacing existing blackbox module `\DCSC' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:390.1-397.10.
+Replacing existing blackbox module `\DCSC' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:390.1-397.10.
 Generating RTLIL representation for module `\DCSC'.
-Replacing existing blackbox module `\DCUA' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:400.1-715.10.
+Replacing existing blackbox module `\DCUA' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:400.1-715.10.
 Generating RTLIL representation for module `\DCUA'.
-Replacing existing blackbox module `\EXTREFB' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:718.1-728.10.
+Replacing existing blackbox module `\EXTREFB' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:718.1-728.10.
 Generating RTLIL representation for module `\EXTREFB'.
-Replacing existing blackbox module `\PCSCLKDIV' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:731.1-736.10.
+Replacing existing blackbox module `\PCSCLKDIV' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:731.1-736.10.
 Generating RTLIL representation for module `\PCSCLKDIV'.
-Replacing existing blackbox module `\PUR' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:740.1-744.10.
+Replacing existing blackbox module `\PUR' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:740.1-744.10.
 Generating RTLIL representation for module `\PUR'.
-Replacing existing blackbox module `\GSR' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:747.1-750.10.
+Replacing existing blackbox module `\GSR' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:747.1-750.10.
 Generating RTLIL representation for module `\GSR'.
-Replacing existing blackbox module `\SGSR' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:753.1-756.10.
+Replacing existing blackbox module `\SGSR' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:753.1-756.10.
 Generating RTLIL representation for module `\SGSR'.
-Replacing existing blackbox module `\PDPW16KD' at /workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:760.1-850.10.
+Replacing existing blackbox module `\PDPW16KD' at /workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/../share/yosys/ecp5/cells_bb.v:760.1-850.10.
 Generating RTLIL representation for module `\PDPW16KD'.
 Successfully finished Verilog frontend.
 
@@ -307,24 +307,24 @@ Found and reported 0 problems.
 
 === mkTop ===
 
-   Number of wires:              56004
-   Number of wire bits:         696383
-   Number of public wires:       56004
-   Number of public wire bits:  696383
+   Number of wires:              56243
+   Number of wire bits:         696145
+   Number of public wires:       56243
+   Number of public wire bits:  696145
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:             126733
-     CCU2C                       12774
+   Number of cells:             127113
+     CCU2C                       12738
      DP16KD                          2
      EHXPLLL                         1
-     L6MUX21                      2386
-     LUT4                        57345
-     MULT18X18D                     78
-     PFUMX                        6091
+     L6MUX21                      2395
+     LUT4                        57673
+     MULT18X18D                     72
+     PFUMX                        6134
      TRELLIS_DPR16X4               252
-     TRELLIS_FF                  47804
+     TRELLIS_FF                  47846
 
-End of script. Logfile hash: d4a709906c, CPU: user 7.56s system 4.15s, MEM: 2071.80 MB peak
+End of script. Logfile hash: 7ebb9d3894, CPU: user 8.58s system 3.12s, MEM: 2076.38 MB peak
 Yosys 0.33 (git sha1 2584903a060)
-Time spent: 87% 2x read_json (10 sec), 6% 1x hierarchy (0 sec), ...
+Time spent: 82% 2x read_json (9 sec), 8% 1x check (0 sec), ...

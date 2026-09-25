@@ -49,14 +49,15 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * Patch embedding, two independent Mamba blocks, and a regression head are connected through FIFOs.
 * Each block uses separate main/gate input projections and separate delta-input/B/C projections. Gate SiLU runs in its own stage after the gate projection.
 * Convolution feeds the SSM path without SiLU. Delta follows `Linear -> ReLU -> Linear`, retaining the signed second projection.
+* Each block retains its own convolution engine with one multiplier: four signed tap products accumulate in INT18 before bias alignment and requantization. History advances once when the completed sum enters its output FIFO.
 * The kernel has 17 affine engines, with no sharing across projections or blocks.
 * Change `ParallelismDivisor` in [SwayTypes.bsv](hw/bsv/SwayTypes.bsv) to select parallelism:
 
-| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
-| --- | ---: | ---: |
-| 1 | 4 | 2 |
-| 2 | 2 | 1 |
-| 4 (Default) | 1 | 1 |
+| Divisor | Affine lanes per engine | Norm / Gate / Scan lanes | Conv multipliers per block |
+| --- | ---: | ---: | ---: |
+| 1 | 4 | 2 | 1 |
+| 2 | 2 | 1 | 1 |
+| 4 (Default) | 1 | 1 | 1 |
 
 * Run `make -C hw clean` and rebuild after changing the divisor. Parameter tables do not need regeneration.
 * See the [hardware README](hw/README.md) for interfaces, numerical formats, and verification commands.
@@ -80,13 +81,15 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * Hardware Verification
   * All three parallelism settings pass both the stall regression and continuous-input kernel test: **4,788 matching INT8 outputs** across six runs.
   * All **329,988** rounding/saturation cases and **974,848** affine ROM address checks pass.
+  * [Convolution backpressure verification](hw/results/baseline/convolution/result.json) checks 71,680 tap products and 17,920 history commits, with stable state across 196,426 full-FIFO wait cycles summed over both engines.
+  * At divisor 4, first-frame kernel latency is **27,596 cycles**; output frame starts are **13,472 cycles** apart, with one coordinate per cycle within a frame. These exclude UART and physical timing.
   * [Simulation results](hw/results/baseline/validation.json), [ROM verification](hw/results/baseline/weight_rom_verification.json), and [standalone regeneration](hw/results/baseline/standalone_generation.json).
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Synthesis
   * Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33.
-  * LUT4: **57,345**; FF: **47,804**; DSP: **78**; BRAM: **2**.
-  * Logic use before packing is **84,405 / 83,640 (100.91%)**, exceeding capacity by **765 sites**. Placement/routing and timing closure remain unverified.
+  * LUT4: **57,673**; FF: **47,846**; DSP: **72**; BRAM: **2**. Each block retains one distinct convolution DSP.
+  * Logic use before packing is **84,661 / 83,640 (101.22%)**, exceeding capacity by **1,021 sites**. Placement/routing and timing closure remain unverified.
   * [Synthesis results](hw/results/baseline/synthesis/report.json).
 
 ## Notes

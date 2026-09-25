@@ -5,7 +5,7 @@
   "device": "LFE5U-85F, CABGA381",
   "top": "mkTop",
   "parallelism_divisor": 4,
-  "software_source_commit": "32f1872373a48221c56be881632dd137e9ecfe59",
+  "base_source_commit": "7d9a2207632f7cd5cf2221d738aa23027403f5f7",
   "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
   "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "quantization_sha256": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
@@ -14,12 +14,12 @@
     "hw/Makefile": "2c1c90b79b0c026dc220423ccbe27699c98ba0b9880c1041006ee8860df66ff8",
     "hw/Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
     "hw/bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
-    "hw/bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
+    "hw/bsv/SwayBlock.bsv": "ffbcfb32a9e8e46e9129604ab005487a0c56a89d7b73c07160bbd9bd3d3a6948",
     "hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "hw/bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
     "hw/bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
     "hw/bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
-    "hw/bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
+    "hw/bsv/SwayTypes.bsv": "f0df274c0ed8cfeb2397901335a46f198c8e1609de8cdf9461b5870ab8b6c40b",
     "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "hw/generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "hw/generated/nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
@@ -99,33 +99,49 @@
     "bsc": "Bluespec Compiler, version 2026.01 (build 9bd39e6f)",
     "yosys": "Yosys 0.33 (git sha1 2584903a060)"
   },
+  "convolution": {
+    "independent_engines": 2,
+    "multipliers_per_engine": 1,
+    "taps_per_channel": 4,
+    "accumulator_width_bits": 18,
+    "mapped_engine_cells": {
+      "block0": {
+        "rtl_multiply_signal": "SEXT_SEL_ARR_IF_main_core_block0_mainR_375_BIT_ETC___d3759",
+        "mapped_dsp_cell": "SEXT_SEL_ARR_IF_main_core_block0_mainR_375_BIT_ETC__q1260_MULT18X18D_P0"
+      },
+      "block1": {
+        "rtl_multiply_signal": "SEXT_SEL_ARR_IF_main_core_block1_mainR_422_BIT_ETC___d8807",
+        "mapped_dsp_cell": "SEXT_SEL_ARR_IF_main_core_block1_mainR_422_BIT_ETC__q1268_MULT18X18D_P0"
+      }
+    }
+  },
   "mapped_cells": {
-    "CCU2C": 12774,
+    "CCU2C": 12738,
     "DP16KD": 2,
     "EHXPLLL": 1,
-    "L6MUX21": 2386,
-    "LUT4": 57345,
-    "MULT18X18D": 78,
-    "PFUMX": 6091,
+    "L6MUX21": 2395,
+    "LUT4": 57673,
+    "MULT18X18D": 72,
+    "PFUMX": 6134,
     "TRELLIS_DPR16X4": 252,
-    "TRELLIS_FF": 47804
+    "TRELLIS_FF": 47846
   },
-  "total_mapped_cells": 126733,
+  "total_mapped_cells": 127113,
   "resources": {
     "logic_lut_equivalent": {
-      "used": 84405,
+      "used": 84661,
       "capacity": 83640,
-      "used_percent": 100.91463414634147
+      "used_percent": 101.22070779531325
     },
     "TRELLIS_FF": {
-      "used": 47804,
+      "used": 47846,
       "capacity": 83640,
-      "used_percent": 57.15447154471545
+      "used_percent": 57.20468675274988
     },
     "MULT18X18D": {
-      "used": 78,
+      "used": 72,
       "capacity": 156,
-      "used_percent": 50.0
+      "used_percent": 46.15384615384615
     },
     "DP16KD": {
       "used": 2,
@@ -142,8 +158,8 @@
     "classification": "calculated before packing, not measured packed TRELLIS_COMB utilization",
     "formula": "LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4",
     "terms": {
-      "logic_LUT4": 57345,
-      "carry_LUT4_equivalent": 25548,
+      "logic_LUT4": 57673,
+      "carry_LUT4_equivalent": 25476,
       "distributed_RAM_LUT4_equivalent": 1512
     },
     "source": "https://github.com/YosysHQ/nextpnr/blob/main/ecp5/pack.cc",
@@ -165,22 +181,22 @@
     "generic_processes": 0,
     "source_hashes_unchanged_during_synthesis": true,
     "netlist_check_command": [
-      "/workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/yosys",
+      "/workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/yosys",
       "-p",
-      "read_json /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/mkTop.json; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop"
+      "read_json /workspace/scratch/839f8f1063a0/conv_synthesis/build/mkTop.json; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop"
     ],
     "netlist_check_exit_code": 0,
     "netlist_check_problems": 0
   },
   "artifact_sha256": {
-    "mkTop.v": "15305a75c1f5898b2d87b7db629a97816a87b2ca898e2185f2e1af0e211926b0",
-    "mkTop.json": "e80b9e9b0bd5807adb00062f76901a6e4bf7ac891bd5f6a5449f737ce8e8f04f",
-    "mkTop.yosys.rpt": "e93de0547f4983e1740e1aada57f40e98aee58b46719192ce76c7c922fad9d1a",
-    "mkTop.yosys.json": "7e46d0930a7d9b4055d35e335b9a8e4fd7c9ed71423f93e368cc487bdfff1a4e"
+    "mkTop.v": "4df0e955df78b64afbbbd2c22177f3c101db13f753574cc943c87da330882882",
+    "mkTop.json": "0833817ac219fb64483b5df4314aaba99b0078c63ccc3d0bda13f95cb1cb4446",
+    "mkTop.yosys.rpt": "2044f18e5038909fe7a289fd64315e2ea5110ff0c7e90ba8148f42cf6ab2b308",
+    "mkTop.yosys.json": "2165da1c1fff4ac260c22d5769dd316d014151ab2963683274ae06804495b650"
   },
-  "build_log_sha256": "58e3fe802f50f80fc9b67e3a0b0d1b8dac7972241e05954cd2fb22352a040a11",
-  "netlist_check_log_sha256": "c1f90e09f7d3e6e722d3cbe99ec13c848b2822940c9bce8825f850f5e31009e2",
-  "elapsed_seconds": 604.1169357299805,
+  "build_log_sha256": "a9d1385d75f1892dbc35f72c9c819c315a259e1f42dee551f0d1ad9014018d20",
+  "netlist_check_log_sha256": "43eb0a283451397120b32b3c96a2ca92718226e8deead7d29d7f190b3f0e9c3f",
+  "elapsed_seconds": 710.4177477359772,
   "build_log_complete": false,
-  "build_log_limitation": "Captured make output ends during BSC package compilation despite successful make exit. Final Yosys text/JSON statistics, mapped netlist counts, and a separate completed hierarchy/connectivity check verify the resulting netlist."
+  "build_log_limitation": "Captured make output ends during BSC package compilation despite successful make completion. Final Yosys text/JSON statistics, actual mapped-netlist cell counts, and a separate completed hierarchy/connectivity check verify the resulting netlist."
 }

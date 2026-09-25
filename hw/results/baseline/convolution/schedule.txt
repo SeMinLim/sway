@@ -1,4 +1,4 @@
-=== Generated schedule for mkTbSwayKernel ===
+=== Generated schedule for mkTbSway ===
 
 Rule schedule
 -------------
@@ -301,6 +301,14 @@ Predicate: dut_block0_scan_partialQ.i_notEmpty &&
 	   dut_block0_scan_processOn
 Blocking rules: (none)
  
+Rule: dut_block0_probeTick
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: dut_block0_probeState
+Predicate: dut_block0_convolutionOn && (dut_block0_convGroupCnt < 6'd40)
+Blocking rules: (none)
+ 
 Rule: dut_block0_process1
 Predicate: dut_block0_inputQ.i_notEmpty &&
 	   dut_block0_normalization_inputQ.i_notFull &&
@@ -340,7 +348,7 @@ Blocking rules: (none)
  
 Rule: dut_block0_process4_4
 Predicate: dut_block0_convolvedQ.i_notEmpty && dut_block0_xQ.i_notFull &&
-	   dut_block0_convolutionOn
+	   dut_block0_convolutionOn && (dut_block0_probeCycleCnt[5:0] < 6'd8)
 Blocking rules: (none)
  
 Rule: dut_block0_gateSiLU1
@@ -666,6 +674,14 @@ Predicate: dut_block1_scan_partialQ.i_notEmpty &&
 	   dut_block1_scan_processOn
 Blocking rules: (none)
  
+Rule: dut_block1_probeTick
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: dut_block1_probeState
+Predicate: dut_block1_convolutionOn && (dut_block1_convGroupCnt < 6'd40)
+Blocking rules: (none)
+ 
 Rule: dut_block1_process1
 Predicate: dut_block1_inputQ.i_notEmpty &&
 	   dut_block1_normalization_inputQ.i_notFull &&
@@ -705,7 +721,7 @@ Blocking rules: (none)
  
 Rule: dut_block1_process4_4
 Predicate: dut_block1_convolvedQ.i_notEmpty && dut_block1_xQ.i_notFull &&
-	   dut_block1_convolutionOn
+	   dut_block1_convolutionOn && (dut_block1_probeCycleCnt[5:0] < 6'd8)
 Blocking rules: (none)
  
 Rule: dut_block1_gateSiLU1
@@ -870,11 +886,14 @@ Predicate: ! (cycleCnt <= 64'd14000000)
 Blocking rules: (none)
  
 Rule: process1
-Predicate: dut_inputQ.i_notFull && (sentCnt < 32'd4480)
+Predicate: dut_inputQ.i_notFull &&
+	   (sentCnt < 32'd4480) && (! ((cycleCnt % 64'd17) <= 64'd1))
 Blocking rules: (none)
  
 Rule: process2
-Predicate: dut_outputQ.i_notEmpty && (! finishOn)
+Predicate: dut_outputQ.i_notEmpty &&
+	   (! finishOn) && (! (cycleCnt < pauseUntilR)) &&
+	   (! ((cycleCnt % 64'd11) == 64'd0))
 Blocking rules: (none)
  
 Rule: process3
@@ -910,6 +929,7 @@ Logical execution order: watchdog,
 			 dut_embedding_engine_process3,
 			 dut_embedding_engine_process3Last,
 			 dut_embedding_engine_process4,
+			 dut_block0_probeState,
 			 dut_block0_process1,
 			 dut_block0_process2,
 			 dut_block0_process3Main,
@@ -918,6 +938,7 @@ Logical execution order: watchdog,
 			 dut_block0_process4_2,
 			 dut_block0_process4_3,
 			 dut_block0_process4_4,
+			 dut_block0_probeTick,
 			 dut_block0_gateSiLU1,
 			 dut_block0_gateSiLU2,
 			 dut_block0_process5,
@@ -973,6 +994,7 @@ Logical execution order: watchdog,
 			 dut_block0_scan_process3,
 			 dut_block0_scan_process4,
 			 dut_block0_scan_process5,
+			 dut_block1_probeState,
 			 dut_block1_process1,
 			 dut_block1_process2,
 			 dut_block1_process3Main,
@@ -981,6 +1003,7 @@ Logical execution order: watchdog,
 			 dut_block1_process4_2,
 			 dut_block1_process4_3,
 			 dut_block1_process4_4,
+			 dut_block1_probeTick,
 			 dut_block1_gateSiLU1,
 			 dut_block1_gateSiLU2,
 			 dut_block1_process5,
@@ -1047,4 +1070,4 @@ Logical execution order: watchdog,
 			 dut_headOutput_engine_process3Last,
 			 dut_headOutput_engine_process4
 
-==============================================
+========================================

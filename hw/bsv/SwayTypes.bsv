@@ -25,11 +25,12 @@ typedef 19 JointNum;
 typedef TMul#(3, JointNum) OutputDim;
 
 // Change only this divisor to scale the independent engines: 1, 2, or 4.
-// Each engine retains at least one lane; model dimensions and weights stay fixed.
+// Convolution retains one lane and serializes its taps for every divisor.
+// Model dimensions, independent engines, and weights stay fixed.
 typedef 4 ParallelismDivisor;
 typedef TMax#(1, TDiv#(4, ParallelismDivisor)) LinearLanes;
 typedef TMax#(1, TDiv#(2, ParallelismDivisor)) NormLanes;
-typedef TMax#(1, TDiv#(2, ParallelismDivisor)) ConvLanes;
+typedef 1 ConvLanes;
 typedef TMax#(1, TDiv#(2, ParallelismDivisor)) GateLanes;
 typedef TMax#(1, TDiv#(2, ParallelismDivisor)) ScanLanes;
 typedef 4 ConvTaps;

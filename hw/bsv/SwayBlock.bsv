@@ -14,12 +14,13 @@ typedef 18 ConvAccumulatorWidth;
 typedef 10 ResidualAccumulatorWidth;
 typedef TDiv#(InnerDim, ConvLanes) ConvGroups;
 typedef TLog#(TAdd#(ConvGroups, 1)) ConvCountWidth;
+typedef TLog#(TAdd#(ConvTaps, 1)) ConvTapCountWidth;
 typedef TDiv#(InnerDim, GateLanes) GateGroups;
 typedef TLog#(TAdd#(GateGroups, 1)) GateCountWidth;
 
 typedef struct {
 	Bit#(ConvCountWidth) group;
-	Vector#(ConvLanes, Int#(18)) sum;
+	Vector#(ConvLanes, Int#(ConvAccumulatorWidth)) sum;
 } ConvPartial deriving (Bits, Eq, FShow);
 
 module mkSwayBlock#(Integer blockId)(BlockIfc);
@@ -40,6 +41,8 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		+ 128 * (2 ** (residualInputExp - residualAccumulatorExp));
 	staticAssert(valueOf(InnerDim) % valueOf(ConvLanes) == 0 && valueOf(InnerDim) % valueOf(GateLanes) == 0,
 		"Convolution and gate lanes must divide the channel count");
+	staticAssert(valueOf(ConvLanes) == 1,
+		"Each independent convolution engine uses one multiplier");
 	staticAssert(convolutionBound < 2 ** (valueOf(ConvAccumulatorWidth) - 1)
 		&& residualBound < 2 ** (valueOf(ResidualAccumulatorWidth) - 1),
 		"Aligned convolution or residual sum exceeds its datapath width");
@@ -76,6 +79,8 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	Reg#(Token#(InnerDim)) mainR <- mkRegU;
 	Reg#(Vector#(InnerDim, Int#(8))) xR <- mkRegU;
 	Reg#(Bit#(ConvCountWidth)) convGroupCnt <- mkReg(0);
+	Reg#(Bit#(ConvTapCountWidth)) convTapCnt <- mkReg(0);
+	Reg#(Vector#(ConvLanes, Int#(ConvAccumulatorWidth))) convSumR <- mkReg(replicate(0));
 	Reg#(Bool) convolutionOn <- mkReg(False);
 
 	Reg#(Token#(InnerDim)) gateInputR <- mkRegU;
@@ -118,7 +123,8 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 2]
-	// Depthwise channels use all four taps in parallel. Token zero replaces history.
+	// One multiplier accumulates four taps in INT18 within each block's engine.
+	// History advances once when the completed sum enters the next-stage FIFO.
 	// The quantized convolution output enters the SSM path without an activation.
 	// Gate SiLU has its own stage and does not wait for convolution.
 	//------------------------------------------------------------------------------------
@@ -126,12 +132,14 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 		mainR <= mainQ.first;
 		mainQ.deq;
 		convGroupCnt <= 0;
+		convTapCnt <= 0;
+		convSumR <= replicate(0);
 		convolutionOn <= True;
 	endrule
 
-	rule process4_2 ( convolutionOn && convGroupCnt < fromInteger(valueOf(ConvGroups)) );
-		ConvPartial value = unpack(0);
-		value.group = convGroupCnt;
+	rule process4_2 ( convolutionOn && convGroupCnt < fromInteger(valueOf(ConvGroups))
+		&& convTapCnt < fromInteger(valueOf(ConvTaps)) );
+		Vector#(ConvLanes, Int#(ConvAccumulatorWidth)) sum = convSumR;
 		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = (zeroExtend(convGroupCnt) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
 			Int#(8) inputValue = requant32(signExtend(mainR.data[channel]), inExp, convInputExp);
@@ -139,23 +147,35 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 			for ( Integer tap = 0; tap < valueOf(ConvHistory); tap = tap + 1 ) begin
 				samples[tap] = mainR.index == 0 ? 0 : historyR[tap][lane][convGroupCnt];
 			end
-			samples[3] = inputValue;
-			Vector#(ConvTaps, Int#(16)) products = newVector;
+			samples[valueOf(ConvHistory)] = inputValue;
+			Vector#(ConvTaps, Int#(8)) weights = newVector;
 			for ( Integer tap = 0; tap < valueOf(ConvTaps); tap = tap + 1 ) begin
-				products[tap] = signExtend(samples[tap]) * signExtend(convWeight(blockId, tap, channel));
+				weights[tap] = convWeight(blockId, tap, channel);
 			end
-			Int#(17) firstSum = signExtend(products[0]) + signExtend(products[1]);
-			Int#(17) secondSum = signExtend(products[2]) + signExtend(products[3]);
-			value.sum[lane] = signExtend(firstSum) + signExtend(secondSum);
-			historyR[0][lane][convGroupCnt] <= samples[1];
-			historyR[1][lane][convGroupCnt] <= samples[2];
-			historyR[2][lane][convGroupCnt] <= samples[3];
+			Int#(16) product = signExtend(samples[convTapCnt]) * signExtend(weights[convTapCnt]);
+			sum[lane] = sum[lane] + signExtend(product);
 		end
-		convolvedQ.enq(value);
+		convSumR <= sum;
+		convTapCnt <= convTapCnt + 1;
+	endrule
+
+	rule process4_3 ( convolutionOn && convGroupCnt < fromInteger(valueOf(ConvGroups))
+		&& convTapCnt == fromInteger(valueOf(ConvTaps)) );
+		// Enqueue and history writes are atomic; a full FIFO leaves all state intact.
+		convolvedQ.enq(ConvPartial {group: convGroupCnt, sum: convSumR});
+		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
+			Bit#(6) channel = (zeroExtend(convGroupCnt) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
+			for ( Integer tap = 0; tap < valueOf(ConvHistory) - 1; tap = tap + 1 ) begin
+				historyR[tap][lane][convGroupCnt] <= mainR.index == 0 ? 0 : historyR[tap + 1][lane][convGroupCnt];
+			end
+			historyR[valueOf(ConvHistory) - 1][lane][convGroupCnt] <= requant32(signExtend(mainR.data[channel]), inExp, convInputExp);
+		end
+		convSumR <= replicate(0);
+		convTapCnt <= 0;
 		convGroupCnt <= convGroupCnt + 1;
 	endrule
 
-	rule process4_3 ( convolutionOn );
+	rule process4_4 ( convolutionOn );
 		let value = convolvedQ.first;
 		convolvedQ.deq;
 		Vector#(InnerDim, Int#(8)) x = xR;
