@@ -100,6 +100,8 @@ def check_kernel(log, input_path, expected_path, backend):
         _, first_output, last_output = records["SWAY_FRAME"][frame]
         assert first_input + 319 <= last_input < first_output <= last_output
         assert (first_output, last_output) == (outputs[frame * 57][2], outputs[(frame + 1) * 57 - 1][2])
+        assert all(b[2] == a[2] + 1 for a, b in zip(outputs[frame * 57:(frame + 1) * 57 - 1],
+                                                   outputs[frame * 57 + 1:(frame + 1) * 57]))
         if frame:
             assert first_input > records["SWAY_INPUT_FRAME"][frame - 1][2]
         timing.append({"frame": frame, "input_first_cycle": first_input,
@@ -113,8 +115,6 @@ def check_kernel(log, input_path, expected_path, backend):
                 break
     assert repeated
     intervals = [b[1] - a[1] for a, b in zip(records["SWAY_FRAME"], records["SWAY_FRAME"][1:])]
-    scalar_intervals = [outputs[frame * 57 + coordinate + 1][2] - outputs[frame * 57 + coordinate][2]
-                        for frame in range(frames) for coordinate in range(56)]
     return {"status": "pass", "evidence": "BSV Bluesim simulation" if backend == "bluesim" else "generated-Verilog simulation (Icarus)",
             "frames_checked": frames, "scalar_outputs_checked": len(expected),
             "input_words": len(inputs), "finish_cycle": finish_cycle,
@@ -122,8 +122,6 @@ def check_kernel(log, input_path, expected_path, backend):
             "source_bubbles": "none inserted", "sink_stalls": "none inserted",
             "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
             "output_frame_start_intervals_cycles": intervals,
-            "within_frame_scalar_output_interval_cycles": {
-                "minimum": min(scalar_intervals), "maximum": max(scalar_intervals)},
             "repeated_frame_pairs_checked": repeated,
             "input_sha256": file_hash(input_path), "expected_sha256": file_hash(expected_path),
             "log_sha256": file_hash(log), "frames": timing}

@@ -10,8 +10,6 @@ Main projection feeds convolution; its quantized output enters the SSM path with
 
 The four nonlinear INT8 tables contain gate SiLU and exponential values for each block. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. All 61 static bounds pass for the frozen scales. The `Abar` scale is `2^-7`, saturating at `127/128`, including when signed delta produces a larger exponential.
 
-Each block retains one independent convolution multiplier. `process4_2` accumulates four signed INT8 products in INT18 over four cycles; `process4_3` enqueues the complete sum and advances that channel's history once. A full FIFO stalls this commit with the sum, tap counter, and history unchanged. `process4_4` performs the existing bias alignment, addition, and requantization. A channel takes five cycles before downstream stalls; no tap is rounded or saturated separately.
-
 Affine weight ROM pages use fixed 256-bit truth tables for each signed INT8 output bit, followed by upper-address page selection. Each lane reads its weight bank combinationally.
 
 Each affine engine retains its output vector in per-element INT8 registers with explicit group write enables. The final group feeds the output FIFO directly in the same cycle; earlier groups come from their registers.
@@ -24,11 +22,11 @@ Change one typedef in `bsv/SwayTypes.bsv`:
 typedef 4 ParallelismDivisor;
 ```
 
-| Divisor | Affine lanes per engine | Norm / Gate / Scan lanes | Conv multipliers per block |
-| --- | ---: | ---: | ---: |
-| 1 | 4 | 2 | 1 |
-| 2 | 2 | 1 | 1 |
-| 4 (default) | 1 | 1 | 1 |
+| Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
+| --- | ---: | ---: |
+| 1 | 4 | 2 |
+| 2 | 2 | 1 |
+| 4 (default) | 1 | 1 |
 
 Counters, bank selection, state addresses, and reductions follow the selected divisor. The checked-in parameter tables support all three settings without regeneration. Clean and rebuild after changing it.
 
@@ -75,17 +73,7 @@ python3 hw/reference/check_refactor.py --backend iverilog --output hw/results/ba
 
 The runner builds isolated copies, checks every output against the fixed 14-frame / 798-coordinate fixtures, and tests rounding and saturation boundaries. Kernel cycle counts exclude intentional source/sink stalls and do not establish physical timing.
 
-All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. All **329,988** rounding/saturation boundary cases pass. These RTL tests use BSC 2026.01 and Icarus Verilog 12.0. [Regression results](results/baseline/validation.json) record the checked source hashes and test scope.
-
-The [convolution backpressure check](results/baseline/convolution/result.json) validates 71,680 tap products and 17,920 history commits across both blocks. It counts 196,426 full-FIFO wait cycles across the two engines, checking stable sums/counters/history and unchanged final outputs. Its Python integer oracle also verifies 50,668 partial sums outside INT8 range. Reproduce it with `python3 hw/reference/check_convolution.py --bsc /path/to/bsc` from the repository root; observation and FIFO-drain throttling are inserted only into a temporary simulation copy.
-
-Kernel timing uses continuous input and an immediate output sink. First-frame latency is measured from the first input element to the last output coordinate; steady frame interval is measured between output frame starts. Counts exclude UART and do not establish a physical clock frequency.
-
-| Divisor | First-frame latency (cycles) | Output frame interval (cycles) | Scalar output interval within a frame (cycles) |
-| --- | ---: | ---: | ---: |
-| 1 | 10,347 | 5,776 | 1 |
-| 2 | 19,485 | 11,216 | 1 |
-| 4 (default) | 27,596 | 13,472 | 1 |
+All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. All **329,988** rounding/saturation boundary cases pass. Tests use BSC 2026.01 and Icarus Verilog 12.0. [Regression results](results/baseline/validation.json) record the checked source hashes and test scope.
 
 The weight ROMs pass all **974,848 addresses** across 119 banks, including padding and out-of-range zeros. [ROM verification](results/baseline/weight_rom_verification.json) records the exact checkpoint weights. [Standalone regeneration](results/baseline/standalone_generation.json) reproduces the parameter BSV, nonlinear tables, and golden fixtures byte for byte without the software tree or original dataset.
 
@@ -97,6 +85,6 @@ All 455,088 integer outputs match the software graph when only range normalizati
 
 ## Synthesis
 
-Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **57,673 LUT4**, **12,738 CCU2C**, **252 TRELLIS_DPR16X4**, **47,846 FF**, **72 DSP**, and **2 BRAM**. Netlist connectivity confirms one distinct convolution DSP in each block.
+Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **57,345 LUT4**, **12,774 CCU2C**, **252 TRELLIS_DPR16X4**, **47,804 FF**, **78 DSP**, and **2 BRAM**.
 
-Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **84,661 / 83,640 (101.22%)**. This exceeds capacity by **1,021 sites**. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.
+Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **84,405 / 83,640 (100.91%)**. This exceeds capacity by **765 sites**. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.

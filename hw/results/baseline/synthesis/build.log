@@ -1,26 +1,27 @@
-make: Entering directory '/workspace/scratch/839f8f1063a0/work/sway/hw'
-rm -rf /workspace/scratch/839f8f1063a0/conv_synthesis/build
-mkdir -p /workspace/scratch/839f8f1063a0/conv_synthesis/build
-/workspace/scratch/839f8f1063a0/tools/bsc-2026.01-debian-12.13/bin/bsc -show-schedule -show-range-conflict -aggressive-conditions -bdir /workspace/scratch/839f8f1063a0/conv_synthesis/build -vdir /workspace/scratch/839f8f1063a0/conv_synthesis/build -simdir /workspace/scratch/839f8f1063a0/conv_synthesis/build -info-dir /workspace/scratch/839f8f1063a0/conv_synthesis/build -fdir /workspace/scratch/839f8f1063a0/conv_synthesis/build -remove-dollar \
-	-p +:/workspace/scratch/839f8f1063a0/work/blueyosys/lib/bsv:/workspace/scratch/839f8f1063a0/work/blueyosys/fpga/ecp5/bsv:/workspace/scratch/839f8f1063a0/work/blueyosys/boards/ulx3s/bsv:/workspace/scratch/839f8f1063a0/work/sway/hw:/workspace/scratch/839f8f1063a0/work/sway/hw/bsv:/workspace/scratch/839f8f1063a0/work/sway/hw/generated:/workspace/scratch/839f8f1063a0/work/sway/hw/sim -verilog -u -g mkTop /workspace/scratch/839f8f1063a0/work/sway/hw/Top.bsv
+make: Entering directory '/workspace/scratch/e434e059b77a/sway-v2-hw/hw'
+rm -rf /workspace/scratch/e434e059b77a/mars-v2-synthesis/build
+mkdir -p /workspace/scratch/e434e059b77a/mars-v2-synthesis/build
+/workspace/scratch/e434e059b77a/tools/bsc-2026.01-debian-12.13/bin/bsc -show-schedule -show-range-conflict -aggressive-conditions -bdir /workspace/scratch/e434e059b77a/mars-v2-synthesis/build -vdir /workspace/scratch/e434e059b77a/mars-v2-synthesis/build -simdir /workspace/scratch/e434e059b77a/mars-v2-synthesis/build -info-dir /workspace/scratch/e434e059b77a/mars-v2-synthesis/build -fdir /workspace/scratch/e434e059b77a/mars-v2-synthesis/build -remove-dollar \
+	-p +:/workspace/scratch/e434e059b77a/tools/blueyosys/lib/bsv:/workspace/scratch/e434e059b77a/tools/blueyosys/fpga/ecp5/bsv:/workspace/scratch/e434e059b77a/tools/blueyosys/boards/ulx3s/bsv:/workspace/scratch/e434e059b77a/sway-v2-hw/hw:/workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv:/workspace/scratch/e434e059b77a/sway-v2-hw/hw/generated:/workspace/scratch/e434e059b77a/sway-v2-hw/hw/sim -verilog -u -g mkTop /workspace/scratch/e434e059b77a/sway-v2-hw/hw/Top.bsv
 Warning: Command line: (S0073)
   Duplicate directories were found in the path specified with the -p flag.
   Only the first occurrence will be used. The duplicates are:
-    /workspace/scratch/839f8f1063a0/work/sway/hw
+    /workspace/scratch/e434e059b77a/sway-v2-hw/hw
   Note that when the -bdir flag is used, that directory is automatically added
   to the head of the path.
 checking package dependencies
-compiling /workspace/scratch/839f8f1063a0/work/blueyosys/lib/bsv/Uart.bsv
-Foreign import file created: /workspace/scratch/839f8f1063a0/conv_synthesis/build/bdpiUartGet.ba
-Foreign import file created: /workspace/scratch/839f8f1063a0/conv_synthesis/build/bdpiUartPut.ba
-VPI wrapper files created: /workspace/scratch/839f8f1063a0/conv_synthesis/build/vpi_wrapper_bdpiUartGet.{c,h}
-VPI wrapper files created: /workspace/scratch/839f8f1063a0/conv_synthesis/build/vpi_wrapper_bdpiUartPut.{c,h}
-compiling /workspace/scratch/839f8f1063a0/work/blueyosys/boards/ulx3s/bsv/PLL.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayClock.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayTypes.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/generated/SwayParameters.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayLinear.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayNorm.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayScan.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayBlock.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway/hw/bsv/SwayBaseline.bsv
+compiling /workspace/scratch/e434e059b77a/tools/blueyosys/lib/bsv/Uart.bsv
+Foreign import file created: /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/bdpiUartGet.ba
+Foreign import file created: /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/bdpiUartPut.ba
+VPI wrapper files created: /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/vpi_wrapper_bdpiUartGet.{c,h}
+VPI wrapper files created: /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/vpi_wrapper_bdpiUartPut.{c,h}
+compiling /workspace/scratch/e434e059b77a/tools/blueyosys/boards/ulx3s/bsv/PLL.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayClock.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayTypes.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/generated/SwayParameters.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayLinear.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayNorm.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayScan.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayBlock.bsv
+compiling /workspace/scratch/e434e059b77a/sway-v2-hw/hw/bsv/SwayBaseline.bsv
+compiling ./HwMain.bsv

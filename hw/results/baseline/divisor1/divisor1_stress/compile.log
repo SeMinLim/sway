@@ -9,34 +9,35 @@ compiling bsv/SwayBlock.bsv
 compiling bsv/SwayBaseline.bsv
 compiling sim/TbSway.bsv
 code generation for mkTbSway starts
-Warning: "Prelude.bs", line 1335, column 9: (G0024)
+Warning: "Prelude.bs", line 586, column 27: (G0024)
   The function unfolding steps interval has been exceeded when unfolding
-  `Prelude.Ord~Prelude.Integer'. The current number of steps is 100000. Next
-  warning at 200000 steps. Elaboration terminates at 1000000 steps.
-  During elaboration of the body of rule `process6Delta' at
-  "bsv/SwayBlock.bsv", line 233, column 14.
+  `Prelude.PrimIndex~Prelude.Integer~32'. The current number of steps is
+  100000. Next warning at 200000 steps. Elaboration terminates at 1000000
+  steps.
+  During elaboration of the body of rule `process6B' at "bsv/SwayBlock.bsv",
+  line 223, column 14.
   During elaboration of `block0' at "bsv/SwayBaseline.bsv", line 21, column
   18.
   During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
   During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
 Warning: "Prelude.bs", line 2862, column 0: (G0024)
   The function unfolding steps interval has been exceeded when unfolding
-  `isStaticValue'. The current number of steps is 200000. Next warning at
+  `areStaticBits'. The current number of steps is 200000. Next warning at
   300000 steps. Elaboration terminates at 1000000 steps.
-  During elaboration of the body of rule `gateSiLU1' at "bsv/SwayBlock.bsv",
-  line 196, column 14.
+  During elaboration of the body of rule `gateSiLU2' at "bsv/SwayBlock.bsv",
+  line 183, column 14.
   During elaboration of `block1' at "bsv/SwayBaseline.bsv", line 22, column
   18.
   During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
   During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
-Warning: "Prelude.bs", line 1335, column 9: (G0024)
+Warning: "Prelude.bs", line 3102, column 0: (G0024)
   The function unfolding steps interval has been exceeded when unfolding
-  `Prelude.Ord~Prelude.Integer'. The current number of steps is 300000. Next
-  warning at 400000 steps. Elaboration terminates at 1000000 steps.
+  `primFix'. The current number of steps is 300000. Next warning at 400000
+  steps. Elaboration terminates at 1000000 steps.
   During elaboration of the body of rule `process2' at "bsv/SwayBaseline.bsv",
   line 51, column 14.
   During elaboration of `dut' at "sim/TbSway.bsv", line 16, column 17.
   During elaboration of `mkTbSway' at "sim/TbSway.bsv", line 9, column 8.
-Schedule dump file created: /tmp/sway-refactor-w0_9015w/divisor1/build/mkTbSway.sched
-Verilog file created: /tmp/sway-refactor-w0_9015w/divisor1/build/mkTbSway.v
+Schedule dump file created: /tmp/sway-refactor-g3rlvru7/divisor1/build/mkTbSway.sched
+Verilog file created: /tmp/sway-refactor-g3rlvru7/divisor1/build/mkTbSway.v
 All packages are up to date.

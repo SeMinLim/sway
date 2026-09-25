@@ -1,19 +1,19 @@
 {
   "status": "pass",
-  "compiler": "/workspace/scratch/839f8f1063a0/tools/bsc-2026.01-debian-12.13/bin/bsc",
+  "compiler": "/workspace/scratch/e434e059b77a/tools/bsc-2026.01-debian-12.13/bin/bsc",
   "source_sha256": {
     "bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
-    "bsv/SwayBlock.bsv": "ffbcfb32a9e8e46e9129604ab005487a0c56a89d7b73c07160bbd9bd3d3a6948",
+    "bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
     "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
     "bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
     "bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
-    "bsv/SwayTypes.bsv": "f0df274c0ed8cfeb2397901335a46f198c8e1609de8cdf9461b5870ab8b6c40b",
+    "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
     "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
     "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
-    "reference/check_refactor.py": "21c7d3e1462489a6bcbe63a4eaa9ae8f72228d3a86c0dfe604a7a8fa029f921d",
+    "reference/check_refactor.py": "87d117ce40112831c4bf4523784b89b53bdd69f94ae9ccb2d0febc468b6a5716",
     "reference/check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
     "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
     "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
@@ -25,7 +25,7 @@
       "frames_checked": 14,
       "scalar_outputs_checked": 798,
       "input_words": 4480,
-      "finish_cycle": 127949,
+      "finish_cycle": 127588,
       "post_completion_drain_cycles": 2048,
       "source_bubbles": "cycles modulo 17 equal to 0 or 1",
       "sink_stalls": "8192 cycles after each first output, plus cycles modulo 11 equal to 0",
@@ -42,144 +42,144 @@
       "timing_scope": "testbench cycles include deliberate source and sink stalls; not unstalled kernel performance",
       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-      "log_sha256": "df8576d87aa4b952c501e5e91543ce81a1ce38ebe149388b93d69e86251b2157",
-      "sway_records_sha256": "df8576d87aa4b952c501e5e91543ce81a1ce38ebe149388b93d69e86251b2157",
+      "log_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd",
+      "sway_records_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd",
       "frames": [
         {
           "frame": 0,
           "input_first_cycle": 2,
           "input_last_cycle": 363,
-          "output_first_cycle": 10335,
-          "output_last_cycle": 18588,
-          "first_input_to_last_output_cycles": 18586,
+          "output_first_cycle": 9975,
+          "output_last_cycle": 18229,
+          "first_input_to_last_output_cycles": 18227,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 1,
           "input_first_cycle": 364,
           "input_last_cycle": 725,
-          "output_first_cycle": 18589,
-          "output_last_cycle": 26843,
-          "first_input_to_last_output_cycles": 26479,
+          "output_first_cycle": 18230,
+          "output_last_cycle": 26483,
+          "first_input_to_last_output_cycles": 26119,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 2,
           "input_first_cycle": 726,
-          "input_last_cycle": 4636,
-          "output_first_cycle": 26844,
-          "output_last_cycle": 35097,
-          "first_input_to_last_output_cycles": 34371,
+          "input_last_cycle": 4463,
+          "output_first_cycle": 26484,
+          "output_last_cycle": 34737,
+          "first_input_to_last_output_cycles": 34011,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 3,
-          "input_first_cycle": 4637,
-          "input_last_cycle": 10412,
-          "output_first_cycle": 35098,
-          "output_last_cycle": 43352,
-          "first_input_to_last_output_cycles": 38715,
+          "input_first_cycle": 4464,
+          "input_last_cycle": 10239,
+          "output_first_cycle": 34739,
+          "output_last_cycle": 42993,
+          "first_input_to_last_output_cycles": 38529,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 4,
-          "input_first_cycle": 10413,
-          "input_last_cycle": 16188,
-          "output_first_cycle": 43353,
-          "output_last_cycle": 51607,
-          "first_input_to_last_output_cycles": 41194,
+          "input_first_cycle": 10240,
+          "input_last_cycle": 16017,
+          "output_first_cycle": 42994,
+          "output_last_cycle": 51247,
+          "first_input_to_last_output_cycles": 41007,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 5,
-          "input_first_cycle": 16189,
-          "input_last_cycle": 21966,
-          "output_first_cycle": 51608,
-          "output_last_cycle": 59861,
-          "first_input_to_last_output_cycles": 43672,
+          "input_first_cycle": 16018,
+          "input_last_cycle": 21791,
+          "output_first_cycle": 51248,
+          "output_last_cycle": 59502,
+          "first_input_to_last_output_cycles": 43484,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 6,
-          "input_first_cycle": 21967,
-          "input_last_cycle": 27740,
-          "output_first_cycle": 59863,
-          "output_last_cycle": 68117,
-          "first_input_to_last_output_cycles": 46150,
+          "input_first_cycle": 21792,
+          "input_last_cycle": 27567,
+          "output_first_cycle": 59503,
+          "output_last_cycle": 67756,
+          "first_input_to_last_output_cycles": 45964,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 7,
-          "input_first_cycle": 27741,
-          "input_last_cycle": 33516,
-          "output_first_cycle": 68118,
-          "output_last_cycle": 76371,
-          "first_input_to_last_output_cycles": 48630,
+          "input_first_cycle": 27568,
+          "input_last_cycle": 33343,
+          "output_first_cycle": 67757,
+          "output_last_cycle": 76011,
+          "first_input_to_last_output_cycles": 48443,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 8,
-          "input_first_cycle": 33517,
-          "input_last_cycle": 39292,
-          "output_first_cycle": 76372,
-          "output_last_cycle": 84626,
-          "first_input_to_last_output_cycles": 51109,
+          "input_first_cycle": 33344,
+          "input_last_cycle": 39121,
+          "output_first_cycle": 76012,
+          "output_last_cycle": 84266,
+          "first_input_to_last_output_cycles": 50922,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 9,
-          "input_first_cycle": 39293,
-          "input_last_cycle": 45070,
-          "output_first_cycle": 84627,
-          "output_last_cycle": 92880,
-          "first_input_to_last_output_cycles": 53587,
+          "input_first_cycle": 39122,
+          "input_last_cycle": 44895,
+          "output_first_cycle": 84267,
+          "output_last_cycle": 92520,
+          "first_input_to_last_output_cycles": 53398,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 10,
-          "input_first_cycle": 45071,
-          "input_last_cycle": 50844,
-          "output_first_cycle": 92881,
-          "output_last_cycle": 101135,
-          "first_input_to_last_output_cycles": 56064,
+          "input_first_cycle": 44896,
+          "input_last_cycle": 50671,
+          "output_first_cycle": 92522,
+          "output_last_cycle": 100776,
+          "first_input_to_last_output_cycles": 55880,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 11,
-          "input_first_cycle": 50845,
-          "input_last_cycle": 56620,
-          "output_first_cycle": 101136,
-          "output_last_cycle": 109390,
-          "first_input_to_last_output_cycles": 58545,
+          "input_first_cycle": 50672,
+          "input_last_cycle": 56447,
+          "output_first_cycle": 100777,
+          "output_last_cycle": 109030,
+          "first_input_to_last_output_cycles": 58358,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 12,
-          "input_first_cycle": 56621,
-          "input_last_cycle": 62396,
-          "output_first_cycle": 109391,
-          "output_last_cycle": 117644,
-          "first_input_to_last_output_cycles": 61023,
+          "input_first_cycle": 56448,
+          "input_last_cycle": 62224,
+          "output_first_cycle": 109031,
+          "output_last_cycle": 117285,
+          "first_input_to_last_output_cycles": 60837,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 13,
-          "input_first_cycle": 62397,
-          "input_last_cycle": 68174,
-          "output_first_cycle": 117646,
-          "output_last_cycle": 125900,
-          "first_input_to_last_output_cycles": 63503,
+          "input_first_cycle": 62225,
+          "input_last_cycle": 67999,
+          "output_first_cycle": 117286,
+          "output_last_cycle": 125539,
+          "first_input_to_last_output_cycles": 63314,
           "sink_pause_cycles": 8192
         }
       ],
       "parallelism_divisor": 1,
       "mode": "stress",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
         "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
       ],
-      "configured_types_sha256": "edd6d10d6d6182e319ac854823bcbc9823e6ed8782095640a5dbf8a8f92a1aa0"
+      "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
     },
     {
       "status": "pass",
@@ -187,7 +187,7 @@
       "frames_checked": 14,
       "scalar_outputs_checked": 798,
       "input_words": 4480,
-      "finish_cycle": 87484,
+      "finish_cycle": 87124,
       "post_completion_drain_cycles": 2048,
       "source_bubbles": "none inserted",
       "sink_stalls": "none inserted",
@@ -207,10 +207,6 @@
         5776,
         5776
       ],
-      "within_frame_scalar_output_interval_cycles": {
-        "minimum": 1,
-        "maximum": 1
-      },
       "repeated_frame_pairs_checked": [
         [
           0,
@@ -223,132 +219,130 @@
       ],
       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-      "log_sha256": "b2cca3a4d030e004fbc2bc767565dc0a8fba4c8c793ee0a2b71f712c0b958fb8",
+      "log_sha256": "1a41ad3003c10a4ddc6cfae1599679b64bbe727bcdb7fe401496b767e7e9f7af",
       "frames": [
         {
           "frame": 0,
           "input_first_cycle": 0,
           "input_last_cycle": 319,
-          "output_first_cycle": 10291,
-          "output_last_cycle": 10347,
-          "first_input_to_last_output_cycles": 10347
+          "output_first_cycle": 9931,
+          "output_last_cycle": 9987,
+          "first_input_to_last_output_cycles": 9987
         },
         {
           "frame": 1,
           "input_first_cycle": 320,
           "input_last_cycle": 639,
-          "output_first_cycle": 16067,
-          "output_last_cycle": 16123,
-          "first_input_to_last_output_cycles": 15803
+          "output_first_cycle": 15707,
+          "output_last_cycle": 15763,
+          "first_input_to_last_output_cycles": 15443
         },
         {
           "frame": 2,
           "input_first_cycle": 640,
-          "input_last_cycle": 4554,
-          "output_first_cycle": 21843,
-          "output_last_cycle": 21899,
-          "first_input_to_last_output_cycles": 21259
+          "input_last_cycle": 4381,
+          "output_first_cycle": 21483,
+          "output_last_cycle": 21539,
+          "first_input_to_last_output_cycles": 20899
         },
         {
           "frame": 3,
-          "input_first_cycle": 4555,
-          "input_last_cycle": 10330,
-          "output_first_cycle": 27619,
-          "output_last_cycle": 27675,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 4382,
+          "input_last_cycle": 10157,
+          "output_first_cycle": 27259,
+          "output_last_cycle": 27315,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 4,
-          "input_first_cycle": 10331,
-          "input_last_cycle": 16106,
-          "output_first_cycle": 33395,
-          "output_last_cycle": 33451,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 10158,
+          "input_last_cycle": 15933,
+          "output_first_cycle": 33035,
+          "output_last_cycle": 33091,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 5,
-          "input_first_cycle": 16107,
-          "input_last_cycle": 21882,
-          "output_first_cycle": 39171,
-          "output_last_cycle": 39227,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 15934,
+          "input_last_cycle": 21709,
+          "output_first_cycle": 38811,
+          "output_last_cycle": 38867,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 6,
-          "input_first_cycle": 21883,
-          "input_last_cycle": 27658,
-          "output_first_cycle": 44947,
-          "output_last_cycle": 45003,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 21710,
+          "input_last_cycle": 27485,
+          "output_first_cycle": 44587,
+          "output_last_cycle": 44643,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 7,
-          "input_first_cycle": 27659,
-          "input_last_cycle": 33434,
-          "output_first_cycle": 50723,
-          "output_last_cycle": 50779,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 27486,
+          "input_last_cycle": 33261,
+          "output_first_cycle": 50363,
+          "output_last_cycle": 50419,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 8,
-          "input_first_cycle": 33435,
-          "input_last_cycle": 39210,
-          "output_first_cycle": 56499,
-          "output_last_cycle": 56555,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 33262,
+          "input_last_cycle": 39037,
+          "output_first_cycle": 56139,
+          "output_last_cycle": 56195,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 9,
-          "input_first_cycle": 39211,
-          "input_last_cycle": 44986,
-          "output_first_cycle": 62275,
-          "output_last_cycle": 62331,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 39038,
+          "input_last_cycle": 44813,
+          "output_first_cycle": 61915,
+          "output_last_cycle": 61971,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 10,
-          "input_first_cycle": 44987,
-          "input_last_cycle": 50762,
-          "output_first_cycle": 68051,
-          "output_last_cycle": 68107,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 44814,
+          "input_last_cycle": 50589,
+          "output_first_cycle": 67691,
+          "output_last_cycle": 67747,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 11,
-          "input_first_cycle": 50763,
-          "input_last_cycle": 56538,
-          "output_first_cycle": 73827,
-          "output_last_cycle": 73883,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 50590,
+          "input_last_cycle": 56365,
+          "output_first_cycle": 73467,
+          "output_last_cycle": 73523,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 12,
-          "input_first_cycle": 56539,
-          "input_last_cycle": 62314,
-          "output_first_cycle": 79603,
-          "output_last_cycle": 79659,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 56366,
+          "input_last_cycle": 62141,
+          "output_first_cycle": 79243,
+          "output_last_cycle": 79299,
+          "first_input_to_last_output_cycles": 22933
         },
         {
           "frame": 13,
-          "input_first_cycle": 62315,
-          "input_last_cycle": 68090,
-          "output_first_cycle": 85379,
-          "output_last_cycle": 85435,
-          "first_input_to_last_output_cycles": 23120
+          "input_first_cycle": 62142,
+          "input_last_cycle": 67917,
+          "output_first_cycle": 85019,
+          "output_last_cycle": 85075,
+          "first_input_to_last_output_cycles": 22933
         }
       ],
       "parallelism_divisor": 1,
       "mode": "kernel",
-      "compiler_warnings": [],
-      "configured_types_sha256": "edd6d10d6d6182e319ac854823bcbc9823e6ed8782095640a5dbf8a8f92a1aa0"
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+      ],
+      "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
     }
   ],
-  "transcript_recheck": {
-    "reason": "Output-cycle spacing is measured, with output order and strictly increasing cycles checked",
-    "simulation_runner_sha256": "ccb644c4fa4829b41e449f8ca17da6515d62f360d73b0f56643cc1c12169c8a7",
-    "checker_sha256": "21c7d3e1462489a6bcbe63a4eaa9ae8f72228d3a86c0dfe604a7a8fa029f921d",
-    "rtl_and_fixtures_unchanged": true
-  },
-  "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428"
+  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
 }

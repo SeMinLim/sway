@@ -4,7 +4,7 @@
   "frames_checked": 14,
   "scalar_outputs_checked": 798,
   "input_words": 4480,
-  "finish_cycle": 204781,
+  "finish_cycle": 204461,
   "post_completion_drain_cycles": 2048,
   "source_bubbles": "none inserted",
   "sink_stalls": "none inserted",
@@ -24,10 +24,6 @@
     13472,
     13472
   ],
-  "within_frame_scalar_output_interval_cycles": {
-    "minimum": 1,
-    "maximum": 1
-  },
   "repeated_frame_pairs_checked": [
     [
       0,
@@ -40,127 +36,127 @@
   ],
   "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
   "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-  "log_sha256": "a505215c801ca7378dc20f228b656cbeea388a10721e45565ef616e5b75ceb80",
+  "log_sha256": "e33357c9b37313f6e9607a7b1640656d2f293dbdf80eb355ade6af355ab640b2",
   "frames": [
     {
       "frame": 0,
       "input_first_cycle": 0,
       "input_last_cycle": 319,
-      "output_first_cycle": 27540,
-      "output_last_cycle": 27596,
-      "first_input_to_last_output_cycles": 27596
+      "output_first_cycle": 27220,
+      "output_last_cycle": 27276,
+      "first_input_to_last_output_cycles": 27276
     },
     {
       "frame": 1,
       "input_first_cycle": 320,
       "input_last_cycle": 639,
-      "output_first_cycle": 41012,
-      "output_last_cycle": 41068,
-      "first_input_to_last_output_cycles": 40748
+      "output_first_cycle": 40692,
+      "output_last_cycle": 40748,
+      "first_input_to_last_output_cycles": 40428
     },
     {
       "frame": 2,
       "input_first_cycle": 640,
-      "input_last_cycle": 10562,
-      "output_first_cycle": 54484,
-      "output_last_cycle": 54540,
-      "first_input_to_last_output_cycles": 53900
+      "input_last_cycle": 10402,
+      "output_first_cycle": 54164,
+      "output_last_cycle": 54220,
+      "first_input_to_last_output_cycles": 53580
     },
     {
       "frame": 3,
-      "input_first_cycle": 10563,
-      "input_last_cycle": 24034,
-      "output_first_cycle": 67956,
-      "output_last_cycle": 68012,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 10403,
+      "input_last_cycle": 23874,
+      "output_first_cycle": 67636,
+      "output_last_cycle": 67692,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 4,
-      "input_first_cycle": 24035,
-      "input_last_cycle": 37506,
-      "output_first_cycle": 81428,
-      "output_last_cycle": 81484,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 23875,
+      "input_last_cycle": 37346,
+      "output_first_cycle": 81108,
+      "output_last_cycle": 81164,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 5,
-      "input_first_cycle": 37507,
-      "input_last_cycle": 50978,
-      "output_first_cycle": 94900,
-      "output_last_cycle": 94956,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 37347,
+      "input_last_cycle": 50818,
+      "output_first_cycle": 94580,
+      "output_last_cycle": 94636,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 6,
-      "input_first_cycle": 50979,
-      "input_last_cycle": 64450,
-      "output_first_cycle": 108372,
-      "output_last_cycle": 108428,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 50819,
+      "input_last_cycle": 64290,
+      "output_first_cycle": 108052,
+      "output_last_cycle": 108108,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 7,
-      "input_first_cycle": 64451,
-      "input_last_cycle": 77922,
-      "output_first_cycle": 121844,
-      "output_last_cycle": 121900,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 64291,
+      "input_last_cycle": 77762,
+      "output_first_cycle": 121524,
+      "output_last_cycle": 121580,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 8,
-      "input_first_cycle": 77923,
-      "input_last_cycle": 91394,
-      "output_first_cycle": 135316,
-      "output_last_cycle": 135372,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 77763,
+      "input_last_cycle": 91234,
+      "output_first_cycle": 134996,
+      "output_last_cycle": 135052,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 9,
-      "input_first_cycle": 91395,
-      "input_last_cycle": 104866,
-      "output_first_cycle": 148788,
-      "output_last_cycle": 148844,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 91235,
+      "input_last_cycle": 104706,
+      "output_first_cycle": 148468,
+      "output_last_cycle": 148524,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 10,
-      "input_first_cycle": 104867,
-      "input_last_cycle": 118338,
-      "output_first_cycle": 162260,
-      "output_last_cycle": 162316,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 104707,
+      "input_last_cycle": 118178,
+      "output_first_cycle": 161940,
+      "output_last_cycle": 161996,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 11,
-      "input_first_cycle": 118339,
-      "input_last_cycle": 131810,
-      "output_first_cycle": 175732,
-      "output_last_cycle": 175788,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 118179,
+      "input_last_cycle": 131650,
+      "output_first_cycle": 175412,
+      "output_last_cycle": 175468,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 12,
-      "input_first_cycle": 131811,
-      "input_last_cycle": 145282,
-      "output_first_cycle": 189204,
-      "output_last_cycle": 189260,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 131651,
+      "input_last_cycle": 145122,
+      "output_first_cycle": 188884,
+      "output_last_cycle": 188940,
+      "first_input_to_last_output_cycles": 57289
     },
     {
       "frame": 13,
-      "input_first_cycle": 145283,
-      "input_last_cycle": 158754,
-      "output_first_cycle": 202676,
-      "output_last_cycle": 202732,
-      "first_input_to_last_output_cycles": 57449
+      "input_first_cycle": 145123,
+      "input_last_cycle": 158594,
+      "output_first_cycle": 202356,
+      "output_last_cycle": 202412,
+      "first_input_to_last_output_cycles": 57289
     }
   ],
   "parallelism_divisor": 4,
   "mode": "kernel",
   "compiler_warnings": [
-    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-    "Warning: \"bsv/SwayBlock.bsv\", line 290, column 43: (G0024)",
+    "Warning: \"Array.bsv\", line 208, column 23: (G0024)",
+    "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
     "Warning: \"Prelude.bs\", line 505, column 7: (G0024)"
   ],
-  "configured_types_sha256": "f0df274c0ed8cfeb2397901335a46f198c8e1609de8cdf9461b5870ab8b6c40b"
+  "configured_types_sha256": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae"
 }

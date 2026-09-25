@@ -2,6 +2,6 @@ checking package dependencies
 compiling bsv/SwayTypes.bsv
 compiling sim/TbSwayArithmetic.bsv
 code generation for mkTbSwayArithmetic starts
-Schedule dump file created: /tmp/sway-refactor-645q93tk/divisor4/build/mkTbSwayArithmetic.sched
-Verilog file created: /tmp/sway-refactor-645q93tk/divisor4/build/mkTbSwayArithmetic.v
+Schedule dump file created: /tmp/sway-refactor-h02ahm6y/divisor4/build/mkTbSwayArithmetic.sched
+Verilog file created: /tmp/sway-refactor-h02ahm6y/divisor4/build/mkTbSwayArithmetic.v
 All packages are up to date.
