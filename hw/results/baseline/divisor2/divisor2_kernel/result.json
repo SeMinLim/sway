@@ -154,9 +154,9 @@
   "parallelism_divisor": 2,
   "mode": "kernel",
   "compiler_warnings": [
-    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-    "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+    "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
   ],
   "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
 }

@@ -14,6 +14,8 @@ Affine weight ROM pages use fixed 256-bit truth tables for each signed INT8 outp
 
 Each affine engine retains its output vector in per-element INT8 registers with explicit group write enables. The final group feeds the output FIFO directly in the same cycle; earlier groups come from their registers.
 
+The same storage pattern applies to the 320-element frame `inputR`, each block's 40-element `xR`, `gateR`, and `gatedR`, each normalization engine's 20-element `outputR`, and each scan engine's 40-element `outputR`. Only the selected element or lane group is written. The final input/result bypasses its register into the completed vector in the same cycle. FIFO readiness keeps the writes, counters, and transfer atomic under backpressure; the arithmetic and engine parallelism are unchanged.
+
 ## Parallelism
 
 Change one typedef in `bsv/SwayTypes.bsv`:
@@ -73,7 +75,7 @@ python3 hw/reference/check_refactor.py --backend iverilog --output hw/results/ba
 
 The runner builds isolated copies, checks every output against the fixed 14-frame / 798-coordinate fixtures, and tests rounding and saturation boundaries. Kernel cycle counts exclude intentional source/sink stalls and do not establish physical timing.
 
-All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. All **329,988** rounding/saturation boundary cases pass. Tests use BSC 2026.01 and Icarus Verilog 12.0. [Regression results](results/baseline/validation.json) record the checked source hashes and test scope.
+All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. Every input/output, completion, and drain cycle also matches the reference traces. Generated `mkTop` RTL confirms element/group write-enables and final-result bypasses for all **680 INT8 registers across 11 target arrays**. Tests use BSC 2026.01 and Icarus Verilog 12.0. The unchanged arithmetic helpers retain **329,988** passing rounding/saturation boundary checks. [Regression results](results/baseline/validation.json) record the source hashes, RTL checks, and evidence reuse.
 
 The weight ROMs pass all **974,848 addresses** across 119 banks, including padding and out-of-range zeros. [ROM verification](results/baseline/weight_rom_verification.json) records the exact checkpoint weights. [Standalone regeneration](results/baseline/standalone_generation.json) reproduces the parameter BSV, nonlinear tables, and golden fixtures byte for byte without the software tree or original dataset.
 
@@ -85,6 +87,6 @@ All 455,088 integer outputs match the software graph when only range normalizati
 
 ## Synthesis
 
-Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **57,345 LUT4**, **12,774 CCU2C**, **252 TRELLIS_DPR16X4**, **47,804 FF**, **78 DSP**, and **2 BRAM**.
+Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **49,697 LUT4**, **12,774 CCU2C**, **252 TRELLIS_DPR16X4**, **47,716 FF**, **78 DSP**, and **2 BRAM**.
 
-Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **84,405 / 83,640 (100.91%)**. This exceeds capacity by **765 sites**. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.
+Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **76,757 / 83,640 (91.77%)**. This leaves **6,883 sites** below the capacity limit. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.

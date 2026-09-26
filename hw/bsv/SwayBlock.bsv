@@ -74,18 +74,18 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	// Three causal samples per channel, banked across the convolution lanes.
 	Vector#(ConvHistory, Vector#(ConvLanes, Vector#(ConvGroups, Reg#(Int#(8))))) historyR <- replicateM(replicateM(replicateM(mkReg(0))));
 	Reg#(Token#(InnerDim)) mainR <- mkRegU;
-	Reg#(Vector#(InnerDim, Int#(8))) xR <- mkRegU;
+	Vector#(InnerDim, Reg#(Int#(8))) xR <- replicateM(mkRegU);
 	Reg#(Bit#(ConvCountWidth)) convGroupCnt <- mkReg(0);
 	Reg#(Bool) convolutionOn <- mkReg(False);
 
 	Reg#(Token#(InnerDim)) gateInputR <- mkRegU;
-	Reg#(Vector#(InnerDim, Int#(8))) gateR <- mkRegU;
+	Vector#(InnerDim, Reg#(Int#(8))) gateR <- replicateM(mkRegU);
 	Reg#(Bit#(GateCountWidth)) gateActivationCnt <- mkReg(0);
 	Reg#(Bool) gateActivationOn <- mkReg(False);
 
 	Reg#(Token#(InnerDim)) scannedR <- mkRegU;
 	Reg#(Token#(InnerDim)) delayedGateR <- mkRegU;
-	Reg#(Vector#(InnerDim, Int#(8))) gatedR <- mkRegU;
+	Vector#(InnerDim, Reg#(Int#(8))) gatedR <- replicateM(mkRegU);
 	Reg#(Bit#(GateCountWidth)) gateGroupCnt <- mkReg(0);
 	Reg#(Bool) gatingOn <- mkReg(False);
 
@@ -158,15 +158,28 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	rule process4_3 ( convolutionOn );
 		let value = convolvedQ.first;
 		convolvedQ.deq;
-		Vector#(InnerDim, Int#(8)) x = xR;
+		Vector#(ConvLanes, Int#(8)) laneResults = newVector;
 		for ( Integer lane = 0; lane < valueOf(ConvLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = (zeroExtend(value.group) * fromInteger(valueOf(ConvLanes))) + fromInteger(lane);
 			Int#(ConvAccumulatorWidth) accumulator = shiftRoundN(signExtend(value.sum[lane]), convProductExp, convAccumulatorExp);
 			accumulator = accumulator + shiftRoundN(signExtend(convBias(blockId, channel)), convBiasExp, convAccumulatorExp);
 			Int#(8) convolved = requantN(accumulator, convAccumulatorExp, blockScale(blockId, "conv"));
-			x[channel] = convolved;
+			laneResults[lane] = convolved;
 		end
-		xR <= x;
+		Vector#(InnerDim, Int#(8)) x = newVector;
+		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+			Integer group = channel / valueOf(ConvLanes);
+			Integer lane = channel % valueOf(ConvLanes);
+			if ( value.group == fromInteger(group) ) begin
+				xR[channel] <= laneResults[lane];
+			end
+			// Forward the final group before its register writes take effect.
+			if ( group == valueOf(ConvGroups) - 1 ) begin
+				x[channel] = laneResults[lane];
+			end else begin
+				x[channel] = xR[channel];
+			end
+		end
 		if ( value.group == fromInteger(valueOf(ConvGroups) - 1) ) begin
 			xQ.enq(Token {index: mainR.index, data: x});
 			convolutionOn <= False;
@@ -181,13 +194,26 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	endrule
 
 	rule gateSiLU2 ( gateActivationOn );
-		Vector#(InnerDim, Int#(8)) gate = gateR;
+		Vector#(GateLanes, Int#(8)) laneResults = newVector;
 		for ( Integer lane = 0; lane < valueOf(GateLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = zeroExtend(gateActivationCnt) * fromInteger(valueOf(GateLanes)) + fromInteger(lane);
 			Int#(8) inputValue = requant32(signExtend(gateInputR.data[channel]), inExp, gateInputExp);
-			gate[channel] = nonlinearLookup(blockId * 2, inputValue);
+			laneResults[lane] = nonlinearLookup(blockId * 2, inputValue);
 		end
-		gateR <= gate;
+		Vector#(InnerDim, Int#(8)) gate = newVector;
+		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+			Integer group = channel / valueOf(GateLanes);
+			Integer lane = channel % valueOf(GateLanes);
+			if ( gateActivationCnt == fromInteger(group) ) begin
+				gateR[channel] <= laneResults[lane];
+			end
+			// Forward the final group before its register writes take effect.
+			if ( group == valueOf(GateGroups) - 1 ) begin
+				gate[channel] = laneResults[lane];
+			end else begin
+				gate[channel] = gateR[channel];
+			end
+		end
 		if ( gateActivationCnt == fromInteger(valueOf(GateGroups) - 1) ) begin
 			gateDelayQ.enq(Token {index: gateInputR.index, data: gate});
 			gateActivationOn <= False;
@@ -263,13 +289,26 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	endrule
 
 	rule process9 ( gatingOn );
-		Vector#(InnerDim, Int#(8)) result = gatedR;
+		Vector#(GateLanes, Int#(8)) laneResults = newVector;
 		for ( Integer lane = 0; lane < valueOf(GateLanes); lane = lane + 1 ) begin
 			Bit#(6) channel = (zeroExtend(gateGroupCnt) * fromInteger(valueOf(GateLanes))) + fromInteger(lane);
 			Int#(16) product = signExtend(scannedR.data[channel]) * signExtend(delayedGateR.data[channel]);
-			result[channel] = requant32(signExtend(product), blockScale(blockId, "ssmY") + blockScale(blockId, "gate"), blockScale(blockId, "gated"));
+			laneResults[lane] = requant32(signExtend(product), blockScale(blockId, "ssmY") + blockScale(blockId, "gate"), blockScale(blockId, "gated"));
 		end
-		gatedR <= result;
+		Vector#(InnerDim, Int#(8)) result = newVector;
+		for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+			Integer group = channel / valueOf(GateLanes);
+			Integer lane = channel % valueOf(GateLanes);
+			if ( gateGroupCnt == fromInteger(group) ) begin
+				gatedR[channel] <= laneResults[lane];
+			end
+			// Forward the final group before its register writes take effect.
+			if ( group == valueOf(GateGroups) - 1 ) begin
+				result[channel] = laneResults[lane];
+			end else begin
+				result[channel] = gatedR[channel];
+			end
+		end
 		if ( gateGroupCnt == fromInteger(valueOf(GateGroups) - 1) ) begin
 			outputProjection.put(Token {index: scannedR.index, data: result});
 			gatingOn <= False;

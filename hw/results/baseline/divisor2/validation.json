@@ -1,19 +1,19 @@
 {
   "status": "pass",
-  "compiler": "/workspace/scratch/e434e059b77a/tools/bsc-2026.01-debian-12.13/bin/bsc",
+  "compiler": "/workspace/scratch/839f8f1063a0/tools/bsc-2026.01-debian-12.13/bin/bsc",
   "source_sha256": {
-    "bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
-    "bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
+    "bsv/SwayBaseline.bsv": "8b3fea4fa8e6c354f47ec8feb1f7ef1a2ea5704975dd9d460954501f4b2d53b0",
+    "bsv/SwayBlock.bsv": "8d1ab61b7a2501c25e4f6910c844e8a50112acd511028195e9524e25258be724",
     "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
-    "bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
-    "bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
+    "bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
+    "bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
     "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
     "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
     "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
-    "reference/check_refactor.py": "87d117ce40112831c4bf4523784b89b53bdd69f94ae9ccb2d0febc468b6a5716",
+    "reference/check_refactor.py": "ebc11333d4b88dd07e78764e52b525051ace3a276f80bc88dc80699dbcf4e219",
     "reference/check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
     "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
     "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
@@ -175,9 +175,9 @@
       "parallelism_divisor": 2,
       "mode": "stress",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
     },
@@ -337,12 +337,12 @@
       "parallelism_divisor": 2,
       "mode": "kernel",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
     }
   ],
-  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
+  "source_snapshot_base_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549"
 }

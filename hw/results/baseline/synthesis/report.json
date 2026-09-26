@@ -5,7 +5,7 @@
   "device": "LFE5U-85F, CABGA381",
   "top": "mkTop",
   "parallelism_divisor": 4,
-  "software_source_commit": "32f1872373a48221c56be881632dd137e9ecfe59",
+  "base_source_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
   "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
   "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "quantization_sha256": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
@@ -13,12 +13,12 @@
     "hw/HwMain.bsv": "4a2a3ddb9cb8a6ce9e15658d56f768b7e1e7fee279055a9dca389bfb942c02cc",
     "hw/Makefile": "2c1c90b79b0c026dc220423ccbe27699c98ba0b9880c1041006ee8860df66ff8",
     "hw/Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
-    "hw/bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
-    "hw/bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
+    "hw/bsv/SwayBaseline.bsv": "8b3fea4fa8e6c354f47ec8feb1f7ef1a2ea5704975dd9d460954501f4b2d53b0",
+    "hw/bsv/SwayBlock.bsv": "8d1ab61b7a2501c25e4f6910c844e8a50112acd511028195e9524e25258be724",
     "hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "hw/bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
-    "hw/bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
-    "hw/bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
+    "hw/bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
+    "hw/bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
     "hw/bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
     "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "hw/generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
@@ -99,28 +99,29 @@
     "bsc": "Bluespec Compiler, version 2026.01 (build 9bd39e6f)",
     "yosys": "Yosys 0.33 (git sha1 2584903a060)"
   },
+  "register_updates": "Per-element write enables for token and result-vector banks; arithmetic and engine parallelism unchanged",
   "mapped_cells": {
     "CCU2C": 12774,
     "DP16KD": 2,
     "EHXPLLL": 1,
-    "L6MUX21": 2386,
-    "LUT4": 57345,
+    "L6MUX21": 1539,
+    "LUT4": 49697,
     "MULT18X18D": 78,
-    "PFUMX": 6091,
+    "PFUMX": 4437,
     "TRELLIS_DPR16X4": 252,
-    "TRELLIS_FF": 47804
+    "TRELLIS_FF": 47716
   },
-  "total_mapped_cells": 126733,
+  "total_mapped_cells": 116496,
   "resources": {
     "logic_lut_equivalent": {
-      "used": 84405,
+      "used": 76757,
       "capacity": 83640,
-      "used_percent": 100.91463414634147
+      "used_percent": 91.77068388330942
     },
     "TRELLIS_FF": {
-      "used": 47804,
+      "used": 47716,
       "capacity": 83640,
-      "used_percent": 57.15447154471545
+      "used_percent": 57.049258727881394
     },
     "MULT18X18D": {
       "used": 78,
@@ -142,7 +143,7 @@
     "classification": "calculated before packing, not measured packed TRELLIS_COMB utilization",
     "formula": "LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4",
     "terms": {
-      "logic_LUT4": 57345,
+      "logic_LUT4": 49697,
       "carry_LUT4_equivalent": 25548,
       "distributed_RAM_LUT4_equivalent": 1512
     },
@@ -156,7 +157,7 @@
     "prior_used_counts_not_reused": true,
     "capacity_source_url": "https://github.com/SeMinLim/sway/blob/7063f477e7ea7741d93432a37bca07ae0484683c/hw/results/physical/nextpnr.log"
   },
-  "fits_logic_capacity_before_packing": false,
+  "fits_logic_capacity_before_packing": true,
   "placement_routing_executed": false,
   "timing_closure_verified": false,
   "verification": {
@@ -165,22 +166,34 @@
     "generic_processes": 0,
     "source_hashes_unchanged_during_synthesis": true,
     "netlist_check_command": [
-      "/workspace/scratch/e434e059b77a/tools/dep-root/usr/bin/yosys",
+      "/workspace/scratch/839f8f1063a0/tools/dep-root/usr/bin/yosys",
       "-p",
-      "read_json /workspace/scratch/e434e059b77a/mars-v2-synthesis/build/mkTop.json; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop"
+      "read_json /proc/self/fd/3; read_verilog -lib -overwrite +/ecp5/cells_sim.v +/ecp5/cells_bb.v; hierarchy -check -top mkTop; check -assert; stat -top mkTop"
     ],
     "netlist_check_exit_code": 0,
-    "netlist_check_problems": 0
+    "netlist_check_problems": 0,
+    "netlist_check_input": {
+      "transport": "seekable Linux memfd inherited by Yosys",
+      "sha256": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
+      "bytes": 133370551
+    },
+    "netlist_recovery": "Initial mapped JSON file was incomplete; same generated Verilog was synthesized again, with JSON captured through a pipe, counts matched, checked, and compressed before persistence.",
+    "recovered_netlist_counts_match_original_completed_synthesis": true
   },
   "artifact_sha256": {
-    "mkTop.v": "15305a75c1f5898b2d87b7db629a97816a87b2ca898e2185f2e1af0e211926b0",
-    "mkTop.json": "e80b9e9b0bd5807adb00062f76901a6e4bf7ac891bd5f6a5449f737ce8e8f04f",
-    "mkTop.yosys.rpt": "e93de0547f4983e1740e1aada57f40e98aee58b46719192ce76c7c922fad9d1a",
-    "mkTop.yosys.json": "7e46d0930a7d9b4055d35e335b9a8e4fd7c9ed71423f93e368cc487bdfff1a4e"
+    "mkTop.v": "678f892d6d7562ea04e0da3779a027cf9d72240171b92cac49643e7c3b318c12",
+    "mkTop.yosys.rpt": "bab0fe8c7cf544c3b76717262a59578ded429d246479ca68334d3ca74dccc702",
+    "mkTop.yosys.json": "6fc95a05c89851838e2a9d93a7e2030f10971ad5c7fc253ad8e62bbcb569cc17",
+    "mkTop.json": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
+    "mkTop.json.gz": "db5863def2183f23d792a5a4cba0059004105fdbcf15032792c1d7eee0a09023"
   },
-  "build_log_sha256": "58e3fe802f50f80fc9b67e3a0b0d1b8dac7972241e05954cd2fb22352a040a11",
-  "netlist_check_log_sha256": "c1f90e09f7d3e6e722d3cbe99ec13c848b2822940c9bce8825f850f5e31009e2",
-  "elapsed_seconds": 604.1169357299805,
-  "build_log_complete": false,
-  "build_log_limitation": "Captured make output ends during BSC package compilation despite successful make exit. Final Yosys text/JSON statistics, mapped netlist counts, and a separate completed hierarchy/connectivity check verify the resulting netlist."
+  "netlist_check_log_sha256": "c186103ea757a4f1eda66bb5aca626f4f12ac05dac929d9b9395fea79ff061c8",
+  "elapsed_seconds": 452.6902873516083,
+  "build_log_sha256": "ce73b03b69e5de4850abbc4dcc6b6e1383741afa33e4e00a69083af191aa1e29",
+  "build_log_path": "hw/results/baseline/synthesis/build.log.gz",
+  "build_log_compression": "gzip",
+  "build_log_archive_sha256": "0859e8d0c1afc7a9c63348cebe5cae2972345091b4712c8f59b84794c9b56b9c",
+  "build_log_archive_bytes": 435803,
+  "build_log_uncompressed_bytes": 9957872,
+  "build_log_complete": true
 }

@@ -93,7 +93,7 @@ module mkSwayScan#(Integer blockId)(ScanIfc);
 	// Token zero bypasses old RAM contents; all rows are written before the next token.
 	Vector#(ScanLanes, RegFile#(Bit#(ScanAddressWidth), Int#(17))) stateR <- replicateM(mkRegFile(0, fromInteger(valueOf(ScanGroups) - 1)));
 	Reg#(ScanToken) inputR <- mkRegU;
-	Reg#(Vector#(InnerDim, Int#(8))) outputR <- mkRegU;
+	Vector#(InnerDim, Reg#(Int#(8))) outputR <- replicateM(mkRegU);
 	Reg#(Int#(ScanSumWidth)) partialR <- mkReg(0);
 	Reg#(Bit#(ScanCounterWidth)) groupCnt <- mkReg(0);
 	Reg#(Bool) processOn <- mkReg(False);
@@ -203,9 +203,19 @@ module mkSwayScan#(Integer blockId)(ScanIfc);
 		if ( value.part == fromInteger(valueOf(ScanParts) - 1) ) begin
 			Int#(ScanSumWidth) direct = signExtend(value.direct);
 			Int#(ScanSumWidth) accumulator = (sum << stateShift) + (direct << directShift);
-			Vector#(InnerDim, Int#(8)) result = outputR;
-			result[value.channel] = requantN(accumulator, accumulatorExp, blockScale(blockId, "ssmY"));
-			outputR <= result;
+			Int#(8) channelResult = requantN(accumulator, accumulatorExp, blockScale(blockId, "ssmY"));
+			Vector#(InnerDim, Int#(8)) result = newVector;
+			for ( Integer channel = 0; channel < valueOf(InnerDim); channel = channel + 1 ) begin
+				if ( value.channel == fromInteger(channel) ) begin
+					outputR[channel] <= channelResult;
+				end
+				// Forward the last channel before its register write takes effect.
+				if ( channel == valueOf(InnerDim) - 1 ) begin
+					result[channel] = channelResult;
+				end else begin
+					result[channel] = outputR[channel];
+				end
+			end
 			if ( value.channel == fromInteger(valueOf(InnerDim) - 1) ) begin
 				outputQ.enq(Token {index: inputR.index, data: result});
 				processOn <= False;

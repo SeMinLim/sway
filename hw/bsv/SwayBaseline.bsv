@@ -14,7 +14,7 @@ module mkSwayBaseline(SwayIfc);
 	FIFO#(Int#(8)) inputQ <- mkSizedFIFO(valueOf(SerialFifoDepth));
 	FIFO#(Int#(8)) outputQ <- mkSizedFIFO(valueOf(SerialFifoDepth));
 	FIFO#(Vector#(FrameElements, Int#(8))) frameQ <- mkFIFO1;
-	Reg#(Vector#(FrameElements, Int#(8))) inputR <- mkRegU;
+	Vector#(FrameElements, Reg#(Int#(8))) inputR <- replicateM(mkRegU);
 	Reg#(Bit#(9)) inputCnt <- mkReg(0);
 
 	LinearIfc#(PatchElements, ModelDim) embedding <- mkSwayLinear(0);
@@ -36,10 +36,20 @@ module mkSwayBaseline(SwayIfc);
 	// Collect one HWC frame and form row-major 2x2x5 patches.
 	//------------------------------------------------------------------------------------
 	rule process1;
-		Vector#(FrameElements, Int#(8)) nextInput = inputR;
-		nextInput[inputCnt] = inputQ.first;
+		Int#(8) value = inputQ.first;
 		inputQ.deq;
-		inputR <= nextInput;
+		Vector#(FrameElements, Int#(8)) nextInput = newVector;
+		for ( Integer element = 0; element < valueOf(FrameElements); element = element + 1 ) begin
+			if ( inputCnt == fromInteger(element) ) begin
+				inputR[element] <= value;
+			end
+			// Forward the last input before its register write takes effect.
+			if ( element == valueOf(FrameElements) - 1 ) begin
+				nextInput[element] = value;
+			end else begin
+				nextInput[element] = inputR[element];
+			end
+		end
 		if ( inputCnt == fromInteger(valueOf(FrameElements) - 1) ) begin
 			frameQ.enq(nextInput);
 			inputCnt <= 0;

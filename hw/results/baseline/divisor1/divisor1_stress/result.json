@@ -154,9 +154,9 @@
   "parallelism_divisor": 1,
   "mode": "stress",
   "compiler_warnings": [
-    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
     "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-    "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+    "Warning: \"Array.bsv\", line 268, column 15: (G0024)",
+    "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
   ],
   "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
 }

@@ -31,7 +31,7 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 	FIFO#(Token#(ModelDim)) inputQ <- mkFIFO1;
 	FIFO#(Token#(ModelDim)) outputQ <- mkFIFO1;
 	Reg#(Vector#(ModelDim, Int#(8))) inputR <- mkReg(replicate(0));
-	Reg#(Vector#(ModelDim, Int#(8))) outputR <- mkReg(replicate(0));
+	Vector#(ModelDim, Reg#(Int#(8))) outputR <- replicateM(mkReg(0));
 	Reg#(Bit#(4)) indexR <- mkReg(0);
 	Reg#(Int#(13)) sumR <- mkReg(0);
 	Reg#(Int#(8)) minimumR <- mkReg(127);
@@ -143,7 +143,7 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 	// Round the full rational result once, ties to even, then clamp to signed INT8.
 	//------------------------------------------------------------------------------------
 	rule process5 ( activeOn && roundOn && !divideOn );
-		Vector#(ModelDim, Int#(8)) result = outputR;
+		Vector#(NormLanes, Int#(8)) laneResults = newVector;
 		for ( Integer lane = 0; lane < valueOf(NormLanes); lane = lane + 1 ) begin
 			UInt#(33) twiceRemainder = zeroExtend(remainderR[lane]) << 1;
 			UInt#(33) quotient = zeroExtend(quotientR[lane]);
@@ -162,10 +162,22 @@ module mkSwayNorm#(Integer blockId)(NormIfc);
 				end
 				clipped = truncate(signedResult);
 			end
-			Bit#(6) channel = zeroExtend(groupCnt) * fromInteger(valueOf(NormLanes)) + fromInteger(lane);
-			result[channel] = clipped;
+			laneResults[lane] = clipped;
 		end
-		outputR <= result;
+		Vector#(ModelDim, Int#(8)) result = newVector;
+		for ( Integer channel = 0; channel < valueOf(ModelDim); channel = channel + 1 ) begin
+			Integer group = channel / valueOf(NormLanes);
+			Integer lane = channel % valueOf(NormLanes);
+			if ( groupCnt == fromInteger(group) ) begin
+				outputR[channel] <= laneResults[lane];
+			end
+			// Forward the final group before its register writes take effect.
+			if ( group == groupNum - 1 ) begin
+				result[channel] = laneResults[lane];
+			end else begin
+				result[channel] = outputR[channel];
+			end
+		end
 		roundOn <= False;
 		if ( groupCnt == fromInteger(groupNum - 1) ) begin
 			outputQ.enq(Token { index: indexR, data: result });

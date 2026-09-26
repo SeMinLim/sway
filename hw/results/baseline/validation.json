@@ -2,22 +2,22 @@
   "status": "pass",
   "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "tools": {
-    "bsc": "2026.01",
+    "bsc": "2026.01 (9bd39e6f)",
     "iverilog": "12.0"
   },
   "source_sha256": {
-    "bsv/SwayBaseline.bsv": "7cb41b557d2606635d2b73e7024e24722d9cf336ea89bd128ee8b1e333189168",
-    "bsv/SwayBlock.bsv": "cd2608684fdca4dca68143967cb5cf9220ad4f47db13e5a2b0be0dce6d898b0d",
+    "bsv/SwayBaseline.bsv": "8b3fea4fa8e6c354f47ec8feb1f7ef1a2ea5704975dd9d460954501f4b2d53b0",
+    "bsv/SwayBlock.bsv": "8d1ab61b7a2501c25e4f6910c844e8a50112acd511028195e9524e25258be724",
     "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
-    "bsv/SwayNorm.bsv": "6eebb65b9a8747d0243a859fec52496148c2ec1dd99626b8f3f94cb752d867be",
-    "bsv/SwayScan.bsv": "e897057b2d06afb6367bb80893bb1cddd55cc7488926d999210defdfaa423ab7",
+    "bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
+    "bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
     "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
     "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
     "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
-    "reference/check_refactor.py": "87d117ce40112831c4bf4523784b89b53bdd69f94ae9ccb2d0febc468b6a5716",
+    "reference/check_refactor.py": "ebc11333d4b88dd07e78764e52b525051ace3a276f80bc88dc80699dbcf4e219",
     "reference/check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
     "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
     "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
@@ -179,9 +179,9 @@
       "parallelism_divisor": 1,
       "mode": "stress",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
         "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+        "Warning: \"Array.bsv\", line 268, column 15: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
       ],
       "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
     },
@@ -341,9 +341,9 @@
       "parallelism_divisor": 1,
       "mode": "kernel",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
         "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)"
+        "Warning: \"Array.bsv\", line 268, column 15: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
       ],
       "configured_types_sha256": "230ffe4039ff5d2dcaadb55cebe6cee8b349e6d7cecb83a4d80990b170d2edc2"
     },
@@ -503,9 +503,9 @@
       "parallelism_divisor": 2,
       "mode": "stress",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
     },
@@ -665,9 +665,9 @@
       "parallelism_divisor": 2,
       "mode": "kernel",
       "compiler_warnings": [
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
-        "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
-        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
     },
@@ -827,9 +827,9 @@
       "parallelism_divisor": 4,
       "mode": "stress",
       "compiler_warnings": [
-        "Warning: \"Array.bsv\", line 208, column 23: (G0024)",
         "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
-        "Warning: \"Prelude.bs\", line 505, column 7: (G0024)"
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae"
     },
@@ -989,9 +989,9 @@
       "parallelism_divisor": 4,
       "mode": "kernel",
       "compiler_warnings": [
-        "Warning: \"Array.bsv\", line 208, column 23: (G0024)",
         "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
-        "Warning: \"Prelude.bs\", line 505, column 7: (G0024)"
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
       ],
       "configured_types_sha256": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae"
     }
@@ -1021,7 +1021,14 @@
     "edge_domain": "signed extrema, saturation thresholds, rounding ties, shift n-1 and n",
     "vector_sha256": "a1d9b7aafa39a39ee9961550af91673f7dc69c9136d27e9e34eb4fb0fd0b71e1",
     "compiler_warnings": [],
-    "status": "pass"
+    "status": "pass",
+    "execution": "Existing evidence retained; not rerun for this storage-only change",
+    "reuse_basis": "Numerical helpers match the recorded source hash; regenerated arithmetic vectors match the recorded vector hash",
+    "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+    "unchanged_source_sha256": {
+      "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae"
+    },
+    "arithmetic_vectors_regenerated_and_hash_checked": true
   },
   "scalar_outputs_checked": 4788,
   "fixture_frames_per_configuration": 14,
@@ -1031,5 +1038,214 @@
     "divisor4/validation.json"
   ],
   "scope": "Generated-Verilog simulation of the frozen 14-frame fixtures; source bubbles/output stalls plus continuous-source immediate-sink modes; not physical timing or full-dataset RTL evaluation",
-  "source_snapshot_commit": "7063f477e7ea7741d93432a37bca07ae0484683c"
+  "source_snapshot_base_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+  "storage_write_enable": {
+    "status": "pass",
+    "evidence": "BSC 2026.01 generated mkTop Verilog, ParallelismDivisor=4",
+    "rtl_sha256": "678f892d6d7562ea04e0da3779a027cf9d72240171b92cac49643e7c3b318c12",
+    "storage_groups": [
+      {
+        "register_prefix": "main_core_inputR",
+        "scalar_registers_checked": 320,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_frameQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_process1 && main_core_inputCnt == 9'd0",
+          "WILL_FIRE_RL_main_core_process1 && main_core_inputCnt == 9'd319"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block0_xR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block0_xQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block0_process4_3 && main_core_block0_convolvedQ_D_OUT[23:18] == 6'd0",
+          "WILL_FIRE_RL_main_core_block0_process4_3 && main_core_block0_convolvedQ_D_OUT[23:18] == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block0_gateR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block0_gateDelayQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block0_gateSiLU2 && main_core_block0_gateActivationCnt == 6'd0",
+          "WILL_FIRE_RL_main_core_block0_gateSiLU2 && main_core_block0_gateActivationCnt == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block0_gatedR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block0_outputProjection_engine_inputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block0_process9 && main_core_block0_gateGroupCnt == 6'd0",
+          "WILL_FIRE_RL_main_core_block0_process9 && main_core_block0_gateGroupCnt == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block0_normalization_outputR",
+        "scalar_registers_checked": 20,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block0_normalization_outputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block0_normalization_process5 && main_core_block0_normalization_groupCnt == 5'd0",
+          "WILL_FIRE_RL_main_core_block0_normalization_process5 && main_core_block0_normalization_groupCnt == 5'd19"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block0_scan_outputR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block0_scan_outputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block0_scan_process5 && main_core_block0_scan_partialQ_D_OUT[50:48] == 3'd7 && main_core_block0_scan_partialQ_D_OUT[56:51] == 6'd0",
+          "WILL_FIRE_RL_main_core_block0_scan_process5 && main_core_block0_scan_partialQ_D_OUT[50:48] == 3'd7 && main_core_block0_scan_partialQ_D_OUT[56:51] == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block1_xR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block1_xQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block1_process4_3 && main_core_block1_convolvedQ_D_OUT[23:18] == 6'd0",
+          "WILL_FIRE_RL_main_core_block1_process4_3 && main_core_block1_convolvedQ_D_OUT[23:18] == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block1_gateR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block1_gateDelayQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block1_gateSiLU2 && main_core_block1_gateActivationCnt == 6'd0",
+          "WILL_FIRE_RL_main_core_block1_gateSiLU2 && main_core_block1_gateActivationCnt == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block1_gatedR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block1_outputProjection_engine_inputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block1_process9 && main_core_block1_gateGroupCnt == 6'd0",
+          "WILL_FIRE_RL_main_core_block1_process9 && main_core_block1_gateGroupCnt == 6'd39"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block1_normalization_outputR",
+        "scalar_registers_checked": 20,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block1_normalization_outputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block1_normalization_process5 && main_core_block1_normalization_groupCnt == 5'd0",
+          "WILL_FIRE_RL_main_core_block1_normalization_process5 && main_core_block1_normalization_groupCnt == 5'd19"
+        ]
+      },
+      {
+        "register_prefix": "main_core_block1_scan_outputR",
+        "scalar_registers_checked": 40,
+        "write_enable_check": "every INT8 register gated by rule fire AND its own channel/group equality",
+        "final_element": "direct output bypass; output concatenation reads only preceding stored elements",
+        "output_fifo": "main_core_block1_scan_outputQ_D_IN",
+        "write_enable_examples": [
+          "WILL_FIRE_RL_main_core_block1_scan_process5 && main_core_block1_scan_partialQ_D_OUT[50:48] == 3'd7 && main_core_block1_scan_partialQ_D_OUT[56:51] == 6'd0",
+          "WILL_FIRE_RL_main_core_block1_scan_process5 && main_core_block1_scan_partialQ_D_OUT[50:48] == 3'd7 && main_core_block1_scan_partialQ_D_OUT[56:51] == 6'd39"
+        ]
+      }
+    ],
+    "scalar_registers_checked": 680
+  },
+  "before_after_trace_comparison": [
+    {
+      "parallelism_divisor": 1,
+      "mode": "stress",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 841,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd",
+      "current_log_sha256": "a954c39c404664abf393474212b64e9b9c9573d9ff34a1c5e907772bf7e2afcd"
+    },
+    {
+      "parallelism_divisor": 1,
+      "mode": "kernel",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 827,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "1a41ad3003c10a4ddc6cfae1599679b64bbe727bcdb7fe401496b767e7e9f7af",
+      "current_log_sha256": "1a41ad3003c10a4ddc6cfae1599679b64bbe727bcdb7fe401496b767e7e9f7af",
+      "first_frame_first_input_to_last_output_cycles": 9987,
+      "output_frame_start_intervals_cycles": [
+        5776
+      ]
+    },
+    {
+      "parallelism_divisor": 2,
+      "mode": "stress",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 841,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "b17ea1edb7ac811c542b4c2333b04bada5f057b3c421292e24cde182515e9e09",
+      "current_log_sha256": "b17ea1edb7ac811c542b4c2333b04bada5f057b3c421292e24cde182515e9e09"
+    },
+    {
+      "parallelism_divisor": 2,
+      "mode": "kernel",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 827,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "366b3db40504d7661d5956531e81199d19fb4dc139267f0779d094ec6ce01986",
+      "current_log_sha256": "366b3db40504d7661d5956531e81199d19fb4dc139267f0779d094ec6ce01986",
+      "first_frame_first_input_to_last_output_cycles": 19165,
+      "output_frame_start_intervals_cycles": [
+        11216
+      ]
+    },
+    {
+      "parallelism_divisor": 4,
+      "mode": "stress",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 841,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "6caee3b4a8fa36fc59e7a69fdbb0ff2e48bc5c5dddc0afd0dd0e37c8fbeeb54a",
+      "current_log_sha256": "6caee3b4a8fa36fc59e7a69fdbb0ff2e48bc5c5dddc0afd0dd0e37c8fbeeb54a"
+    },
+    {
+      "parallelism_divisor": 4,
+      "mode": "kernel",
+      "status": "pass",
+      "reference_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+      "comparison": "Every SWAY record is identical, including input/output values, order, cycles, completion and drain",
+      "records_checked": 827,
+      "scalar_outputs_checked": 798,
+      "reference_log_sha256": "e33357c9b37313f6e9607a7b1640656d2f293dbdf80eb355ade6af355ab640b2",
+      "current_log_sha256": "e33357c9b37313f6e9607a7b1640656d2f293dbdf80eb355ade6af355ab640b2",
+      "first_frame_first_input_to_last_output_cycles": 27276,
+      "output_frame_start_intervals_cycles": [
+        13472
+      ]
+    }
+  ]
 }
