@@ -8,10 +8,6 @@ Patch embedding feeds two independent Mamba blocks and the regression head throu
 
 Main projection feeds convolution; its quantized output enters the SSM path without SiLU. Gate projection feeds an independent SiLU stage, then waits in an ordered FIFO for the scan result. Delta-input, B, and C projections run in independent engines and rejoin before scan. Delta follows `Linear -> ReLU -> Linear`: ReLU applies before delta-input branch requantization, and delta expansion remains signed. Each projection uses its corresponding matrix rows and affine-then-branch requantization sequence.
 
-`ResidualSlots = 2` sets both `residualQ` and `gateDelayQ` to two entries in each block. Including each token's 4-bit index, these four queues hold `2 blocks * 2 slots * [(20 * 8 + 4) + (40 * 8 + 4)] = 1,952` logical bits. FIFO readiness limits in-flight tokens and preserves residual/gate alignment. Convolution history and scan state restart at token index zero for every frame.
-
-BSC implements these queues as register-based `FIFO2` instances. The logical bit count excludes control state and does not represent physical FF or LUT usage; measured resource counts are listed below.
-
 The four nonlinear INT8 tables contain gate SiLU and exponential values for each block. Current recurrent state is INT24 and retained state is INT17. Affine accumulation uses INT24, convolution alignment INT18, recurrence alignment INT26, scan output accumulation INT35, and residual alignment INT10. All 61 static bounds pass for the frozen scales. The `Abar` scale is `2^-7`, saturating at `127/128`, including when signed delta produces a larger exponential.
 
 Affine weight ROM pages use fixed 256-bit truth tables for each signed INT8 output bit, followed by upper-address page selection. Each lane reads its weight bank combinationally.
@@ -79,15 +75,7 @@ python3 hw/reference/check_refactor.py --backend iverilog --output hw/results/ba
 
 The runner builds isolated copies, checks every output against the fixed 14-frame / 798-coordinate fixtures, and tests rounding and saturation boundaries. Kernel cycle counts exclude intentional source/sink stalls and do not establish physical timing.
 
-All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. Output order, frame state reset, and completion are verified with repeated frames, 8,192-cycle sink stalls, and a 2,048-cycle trailing drain. Generated `mkTop` RTL confirms element/group write-enables and final-result bypasses for all **680 INT8 registers across 11 target arrays**. Tests use BSC 2026.01 and Icarus Verilog 12.0. The unchanged arithmetic helpers retain **329,988** passing rounding/saturation boundary checks. [Regression results](results/baseline/validation.json) record the source hashes, measured cycles, RTL checks, and evidence reuse.
-
-With two-slot residual/gate queues, the continuous-input kernel measurements are:
-
-| Divisor | First-frame input-to-last-output latency (cycles) | Frame output start interval (cycles) |
-| --- | ---: | ---: |
-| 1 | 12,479 | 8,624 |
-| 2 | 24,156 | 16,920 |
-| 4 (default) | 37,251 | 24,872 |
+All three configurations pass both 14-frame tests: **4,788 INT8 outputs** match across six runs. Every input/output, completion, and drain cycle also matches the reference traces. Generated `mkTop` RTL confirms element/group write-enables and final-result bypasses for all **680 INT8 registers across 11 target arrays**. Tests use BSC 2026.01 and Icarus Verilog 12.0. The unchanged arithmetic helpers retain **329,988** passing rounding/saturation boundary checks. [Regression results](results/baseline/validation.json) record the source hashes, RTL checks, and evidence reuse.
 
 The weight ROMs pass all **974,848 addresses** across 119 banks, including padding and out-of-range zeros. [ROM verification](results/baseline/weight_rom_verification.json) records the exact checkpoint weights. [Standalone regeneration](results/baseline/standalone_generation.json) reproduces the parameter BSV, nonlinear tables, and golden fixtures byte for byte without the software tree or original dataset.
 
@@ -99,6 +87,6 @@ All 455,088 integer outputs match the software graph when only range normalizati
 
 ## Synthesis
 
-Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **52,045 LUT4**, **12,774 CCU2C**, **12 TRELLIS_DPR16X4**, **48,648 FF**, **78 DSP**, and **2 BRAM**.
+Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33. The mapped design uses **49,697 LUT4**, **12,774 CCU2C**, **252 TRELLIS_DPR16X4**, **47,716 FF**, **78 DSP**, and **2 BRAM**.
 
-Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **77,665 / 83,640 (92.86%)**. This leaves **5,975 sites** below the capacity limit. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.
+Logic use before packing, calculated as `LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4`, is **76,757 / 83,640 (91.77%)**. This leaves **6,883 sites** below the capacity limit. [Synthesis results](results/baseline/synthesis/report.json) record the source hashes and measured counts. Packing, placement/routing, timing closure, and physical-board operation remain unverified.

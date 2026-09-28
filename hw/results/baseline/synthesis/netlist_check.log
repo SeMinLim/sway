@@ -307,24 +307,24 @@ Found and reported 0 problems.
 
 === mkTop ===
 
-   Number of wires:              55049
-   Number of wire bits:         461846
-   Number of public wires:       55049
-   Number of public wire bits:  461846
+   Number of wires:              52182
+   Number of wire bits:         457363
+   Number of public wires:       52182
+   Number of public wire bits:  457363
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:             121134
+   Number of cells:             116496
      CCU2C                       12774
      DP16KD                          2
      EHXPLLL                         1
-     L6MUX21                      2124
-     LUT4                        52045
+     L6MUX21                      1539
+     LUT4                        49697
      MULT18X18D                     78
-     PFUMX                        5450
-     TRELLIS_DPR16X4                12
-     TRELLIS_FF                  48648
+     PFUMX                        4437
+     TRELLIS_DPR16X4               252
+     TRELLIS_FF                  47716
 
-End of script. Logfile hash: 401408d71a, CPU: user 7.70s system 1.34s, MEM: 1872.48 MB peak
+End of script. Logfile hash: 3b2fc24b45, CPU: user 6.52s system 1.57s, MEM: 1818.33 MB peak
 Yosys 0.33 (git sha1 2584903a060)
-Time spent: 83% 2x read_json (7 sec), 8% 1x hierarchy (0 sec), ...
+Time spent: 84% 2x read_json (6 sec), 7% 1x hierarchy (0 sec), ...

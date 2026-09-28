@@ -59,7 +59,7 @@ module mkSwayBlock#(Integer blockId)(BlockIfc);
 	ScanIfc scan <- mkSwayScan(blockId);
 
 	FIFO#(Token#(ModelDim)) inputQ <- mkFIFO1;
-	// Two residual slots bound in-flight tokens across independent downstream engines.
+	// Four residual slots allow tokens to occupy independent downstream engines.
 	FIFO#(Token#(ModelDim)) residualQ <- mkSizedFIFO(valueOf(ResidualSlots));
 	FIFO#(Token#(ModelDim)) outputQ <- mkFIFO1;
 	FIFO#(Token#(InnerDim)) mainQ <- mkFIFO1;

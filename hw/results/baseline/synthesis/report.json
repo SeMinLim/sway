@@ -5,8 +5,7 @@
   "device": "LFE5U-85F, CABGA381",
   "top": "mkTop",
   "parallelism_divisor": 4,
-  "residual_slots": 2,
-  "base_source_commit": "7062a60b5f8abe7d3810a48c3ad343acda08c9d9",
+  "base_source_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
   "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
   "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "quantization_sha256": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
@@ -15,12 +14,12 @@
     "hw/Makefile": "2c1c90b79b0c026dc220423ccbe27699c98ba0b9880c1041006ee8860df66ff8",
     "hw/Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
     "hw/bsv/SwayBaseline.bsv": "8b3fea4fa8e6c354f47ec8feb1f7ef1a2ea5704975dd9d460954501f4b2d53b0",
-    "hw/bsv/SwayBlock.bsv": "82a28521fd7f4ca838879191e06fc0177f593678cce2eeae119cbdc6dd1970b6",
+    "hw/bsv/SwayBlock.bsv": "8d1ab61b7a2501c25e4f6910c844e8a50112acd511028195e9524e25258be724",
     "hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "hw/bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
     "hw/bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
     "hw/bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
-    "hw/bsv/SwayTypes.bsv": "c73189b10ddc9d3432ab562046bb09b9dbcc1f3a7f89d3dac440f49f4631ecd9",
+    "hw/bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
     "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "hw/generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "hw/generated/nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
@@ -100,37 +99,29 @@
     "bsc": "Bluespec Compiler, version 2026.01 (build 9bd39e6f)",
     "yosys": "Yosys 0.33 (git sha1 2584903a060)"
   },
-  "buffer_configuration": {
-    "blocks": 2,
-    "residualQ_slots_per_block": 2,
-    "gateDelayQ_slots_per_block": 2,
-    "residual_token_bits": 164,
-    "gate_token_bits": 324,
-    "logical_queue_payload_bits": 1952,
-    "scope": "Each independent block retains its own residual and gate delay queues; arithmetic and engine parallelism unchanged"
-  },
+  "register_updates": "Per-element write enables for token and result-vector banks; arithmetic and engine parallelism unchanged",
   "mapped_cells": {
     "CCU2C": 12774,
     "DP16KD": 2,
     "EHXPLLL": 1,
-    "L6MUX21": 2124,
-    "LUT4": 52045,
+    "L6MUX21": 1539,
+    "LUT4": 49697,
     "MULT18X18D": 78,
-    "PFUMX": 5450,
-    "TRELLIS_DPR16X4": 12,
-    "TRELLIS_FF": 48648
+    "PFUMX": 4437,
+    "TRELLIS_DPR16X4": 252,
+    "TRELLIS_FF": 47716
   },
-  "total_mapped_cells": 121134,
+  "total_mapped_cells": 116496,
   "resources": {
     "logic_lut_equivalent": {
-      "used": 77665,
+      "used": 76757,
       "capacity": 83640,
-      "used_percent": 92.85628885700622
+      "used_percent": 91.77068388330942
     },
     "TRELLIS_FF": {
-      "used": 48648,
+      "used": 47716,
       "capacity": 83640,
-      "used_percent": 58.1635581061693
+      "used_percent": 57.049258727881394
     },
     "MULT18X18D": {
       "used": 78,
@@ -152,9 +143,9 @@
     "classification": "calculated before packing, not measured packed TRELLIS_COMB utilization",
     "formula": "LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4",
     "terms": {
-      "logic_LUT4": 52045,
+      "logic_LUT4": 49697,
       "carry_LUT4_equivalent": 25548,
-      "distributed_RAM_LUT4_equivalent": 72
+      "distributed_RAM_LUT4_equivalent": 1512
     },
     "source": "https://github.com/YosysHQ/nextpnr/blob/main/ecp5/pack.cc",
     "source_blob_sha": "b86b4d395a1ce28202cec689c6c01188899bcafc"
@@ -183,147 +174,26 @@
     "netlist_check_problems": 0,
     "netlist_check_input": {
       "transport": "seekable Linux memfd inherited by Yosys",
-      "sha256": "5235976be6bf75b266a1b36098cd47f76f20a1531d6d2fff775f1d59fac6fbed",
-      "bytes": 138041477
+      "sha256": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
+      "bytes": 133370551
     },
-    "netlist_capture": {
-      "transport": "stdout PIPE, parsed before atomic gzip persistence",
-      "sha256": "5235976be6bf75b266a1b36098cd47f76f20a1531d6d2fff775f1d59fac6fbed",
-      "bytes": 138041477,
-      "gzip_sha256": "acdc9d5408f460b78e56edd442245e5f8eadab0aaf6600cfa0285c91a2fe146c",
-      "gzip_bytes": 3936462,
-      "mapped_counts_match_stat": true,
-      "gzip_roundtrip_valid": true
-    },
-    "statistics_json_whitespace_normalized": true
+    "netlist_recovery": "Initial mapped JSON file was incomplete; same generated Verilog was synthesized again, with JSON captured through a pipe, counts matched, checked, and compressed before persistence.",
+    "recovered_netlist_counts_match_original_completed_synthesis": true
   },
   "artifact_sha256": {
-    "mkTop.v": "f6bf0b059ddbccff3f6bb0b8f958a7ea7e795b181d71e301a3dc9888edf01597",
-    "mkTop.yosys.rpt": "2e0a67356f78f561f877ecffcdd57d9d1967fc1d1d1fdbf86c550344ae53b730",
-    "mkTop.yosys.json": "1f5fc848a474f6e3e639f37263e6f75a5e86138b2dbeb4ed4ec27ffd77d4c0c6",
-    "mkTop.json": "5235976be6bf75b266a1b36098cd47f76f20a1531d6d2fff775f1d59fac6fbed",
-    "mkTop.json.gz": "acdc9d5408f460b78e56edd442245e5f8eadab0aaf6600cfa0285c91a2fe146c"
+    "mkTop.v": "678f892d6d7562ea04e0da3779a027cf9d72240171b92cac49643e7c3b318c12",
+    "mkTop.yosys.rpt": "bab0fe8c7cf544c3b76717262a59578ded429d246479ca68334d3ca74dccc702",
+    "mkTop.yosys.json": "6fc95a05c89851838e2a9d93a7e2030f10971ad5c7fc253ad8e62bbcb569cc17",
+    "mkTop.json": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
+    "mkTop.json.gz": "db5863def2183f23d792a5a4cba0059004105fdbcf15032792c1d7eee0a09023"
   },
-  "netlist_check_log_sha256": "ef9be779d4cebd6c624efb1b648e3be60bca3dacde98a34394aee7bec0662122",
-  "elapsed_seconds": 639.5732500553131,
-  "build_log_sha256": "46d0cfca02b9b44b2979ddd509784b3a16625e3b60a4992a8e4ff1e16d3a882b",
+  "netlist_check_log_sha256": "c186103ea757a4f1eda66bb5aca626f4f12ac05dac929d9b9395fea79ff061c8",
+  "elapsed_seconds": 452.6902873516083,
+  "build_log_sha256": "ce73b03b69e5de4850abbc4dcc6b6e1383741afa33e4e00a69083af191aa1e29",
   "build_log_path": "hw/results/baseline/synthesis/build.log.gz",
   "build_log_compression": "gzip",
-  "build_log_archive_sha256": "dc2b6cf2df19f8c7c9b8f71637501fbe388f072c33d59ed58938127e6d91fca2",
-  "build_log_archive_bytes": 443177,
-  "build_log_uncompressed_bytes": 10494056,
-  "build_log_complete": true,
-  "comparison_to_base": {
-    "reference_commit": "7062a60b5f8abe7d3810a48c3ad343acda08c9d9",
-    "reference_report_path": "hw/results/baseline/synthesis/report.json",
-    "residual_slots": {
-      "before": 4,
-      "after": 2
-    },
-    "logical_queue_payload_bits": {
-      "before": 3904,
-      "after": 1952,
-      "delta": -1952,
-      "formula": "2 blocks * slots * ((20 * 8 + 4) + (40 * 8 + 4)); FIFO control bits excluded"
-    },
-    "mapped_cells": {
-      "CCU2C": {
-        "before": 12774,
-        "after": 12774,
-        "delta": 0
-      },
-      "DP16KD": {
-        "before": 2,
-        "after": 2,
-        "delta": 0
-      },
-      "EHXPLLL": {
-        "before": 1,
-        "after": 1,
-        "delta": 0
-      },
-      "L6MUX21": {
-        "before": 1539,
-        "after": 2124,
-        "delta": 585
-      },
-      "LUT4": {
-        "before": 49697,
-        "after": 52045,
-        "delta": 2348
-      },
-      "MULT18X18D": {
-        "before": 78,
-        "after": 78,
-        "delta": 0
-      },
-      "PFUMX": {
-        "before": 4437,
-        "after": 5450,
-        "delta": 1013
-      },
-      "TRELLIS_DPR16X4": {
-        "before": 252,
-        "after": 12,
-        "delta": -240
-      },
-      "TRELLIS_FF": {
-        "before": 47716,
-        "after": 48648,
-        "delta": 932
-      }
-    },
-    "logic_lut_equivalent": {
-      "before": 76757,
-      "after": 77665,
-      "delta": 908
-    },
-    "mapping_evidence": {
-      "netlist_sha256": {
-        "before": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
-        "after": "5235976be6bf75b266a1b36098cd47f76f20a1531d6d2fff775f1d59fac6fbed"
-      },
-      "cell_name_match": "Cell name contains block0/1_residualQ or block0/1_gateDelayQ",
-      "queue_named_cell_counts": {
-        "before": {
-          "block0_residualQ": {
-            "TRELLIS_DPR16X4": 40,
-            "TRELLIS_FF": 169
-          },
-          "block1_residualQ": {
-            "TRELLIS_DPR16X4": 40,
-            "TRELLIS_FF": 169
-          },
-          "block0_gateDelayQ": {
-            "TRELLIS_DPR16X4": 80,
-            "TRELLIS_FF": 329
-          },
-          "block1_gateDelayQ": {
-            "TRELLIS_DPR16X4": 80,
-            "TRELLIS_FF": 329
-          }
-        },
-        "after": {
-          "block0_residualQ": {
-            "TRELLIS_DPR16X4": 0,
-            "TRELLIS_FF": 322
-          },
-          "block1_residualQ": {
-            "TRELLIS_DPR16X4": 0,
-            "TRELLIS_FF": 322
-          },
-          "block0_gateDelayQ": {
-            "TRELLIS_DPR16X4": 0,
-            "TRELLIS_FF": 642
-          },
-          "block1_gateDelayQ": {
-            "TRELLIS_DPR16X4": 0,
-            "TRELLIS_FF": 642
-          }
-        }
-      },
-      "observation": "All 240 removed distributed-RAM cells belong to these four queues; their named flip-flop count rises by 932, matching the full-design flip-flop delta. BSC changes the four depth-4 SizedFIFO instances to depth-2 FIFO2 instances.",
-      "interpretation": "Logical queue capacity is reduced, but the resulting FPGA mapping uses more LUT4 and flip-flop cells, and its calculated logic estimate increases."
-    }
-  }
+  "build_log_archive_sha256": "0859e8d0c1afc7a9c63348cebe5cae2972345091b4712c8f59b84794c9b56b9c",
+  "build_log_archive_bytes": 435803,
+  "build_log_uncompressed_bytes": 9957872,
+  "build_log_complete": true
 }

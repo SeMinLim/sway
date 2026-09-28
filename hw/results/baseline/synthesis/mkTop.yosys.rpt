@@ -3,21 +3,21 @@
 
 === mkTop ===
 
-   Number of wires:              55049
-   Number of wire bits:         461846
-   Number of public wires:       55049
-   Number of public wire bits:  461846
+   Number of wires:              52182
+   Number of wire bits:         457363
+   Number of public wires:       52182
+   Number of public wire bits:  457363
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:             121134
+   Number of cells:             116496
      CCU2C                       12774
      DP16KD                          2
      EHXPLLL                         1
-     L6MUX21                      2124
-     LUT4                        52045
+     L6MUX21                      1539
+     LUT4                        49697
      MULT18X18D                     78
-     PFUMX                        5450
-     TRELLIS_DPR16X4                12
-     TRELLIS_FF                  48648
+     PFUMX                        4437
+     TRELLIS_DPR16X4               252
+     TRELLIS_FF                  47716
 
