@@ -1,11 +1,12 @@
 {
   "status": "pass",
-  "scope": "MARS baseline full mkTop synthesis, including UART and PLL",
+  "scope": "Current baseline with bit-test requantN; full mkTop synthesis including UART and PLL",
   "board": "ulx3s-85f",
   "device": "LFE5U-85F, CABGA381",
   "top": "mkTop",
   "parallelism_divisor": 4,
-  "base_source_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549",
+  "residual_slots": 4,
+  "base_source_commit": "d6b612db144972c72d3077aefe942e97c011b81a",
   "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
   "checkpoint_sha256": "4fad39cc272077901ef86e24fd9fd3a51c2572417f0c4593c5edacf5c4e27428",
   "quantization_sha256": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
@@ -19,7 +20,7 @@
     "hw/bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
     "hw/bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
     "hw/bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
-    "hw/bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
+    "hw/bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
     "hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "hw/generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "hw/generated/nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
@@ -99,29 +100,28 @@
     "bsc": "Bluespec Compiler, version 2026.01 (build 9bd39e6f)",
     "yosys": "Yosys 0.33 (git sha1 2584903a060)"
   },
-  "register_updates": "Per-element write enables for token and result-vector banks; arithmetic and engine parallelism unchanged",
   "mapped_cells": {
-    "CCU2C": 12774,
+    "CCU2C": 1584,
     "DP16KD": 2,
     "EHXPLLL": 1,
-    "L6MUX21": 1539,
-    "LUT4": 49697,
+    "L6MUX21": 1488,
+    "LUT4": 45893,
     "MULT18X18D": 78,
-    "PFUMX": 4437,
+    "PFUMX": 4486,
     "TRELLIS_DPR16X4": 252,
-    "TRELLIS_FF": 47716
+    "TRELLIS_FF": 47715
   },
-  "total_mapped_cells": 116496,
+  "total_mapped_cells": 101499,
   "resources": {
     "logic_lut_equivalent": {
-      "used": 76757,
+      "used": 50573,
       "capacity": 83640,
-      "used_percent": 91.77068388330942
+      "used_percent": 60.46508847441416
     },
     "TRELLIS_FF": {
-      "used": 47716,
+      "used": 47715,
       "capacity": 83640,
-      "used_percent": 57.049258727881394
+      "used_percent": 57.0480631276901
     },
     "MULT18X18D": {
       "used": 78,
@@ -143,8 +143,8 @@
     "classification": "calculated before packing, not measured packed TRELLIS_COMB utilization",
     "formula": "LUT4 + 2 * CCU2C + 6 * TRELLIS_DPR16X4",
     "terms": {
-      "logic_LUT4": 49697,
-      "carry_LUT4_equivalent": 25548,
+      "logic_LUT4": 45893,
+      "carry_LUT4_equivalent": 3168,
       "distributed_RAM_LUT4_equivalent": 1512
     },
     "source": "https://github.com/YosysHQ/nextpnr/blob/main/ecp5/pack.cc",
@@ -174,26 +174,90 @@
     "netlist_check_problems": 0,
     "netlist_check_input": {
       "transport": "seekable Linux memfd inherited by Yosys",
-      "sha256": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
-      "bytes": 133370551
+      "sha256": "5c2740a7e5cbb14e0de3eadac2d18a42ba7b6633ac18e2c290a3c364261550b6",
+      "bytes": 111646568
     },
-    "netlist_recovery": "Initial mapped JSON file was incomplete; same generated Verilog was synthesized again, with JSON captured through a pipe, counts matched, checked, and compressed before persistence.",
-    "recovered_netlist_counts_match_original_completed_synthesis": true
+    "netlist_capture": {
+      "transport": "stdout PIPE, parsed before atomic gzip persistence",
+      "sha256": "5c2740a7e5cbb14e0de3eadac2d18a42ba7b6633ac18e2c290a3c364261550b6",
+      "bytes": 111646568,
+      "gzip_sha256": "953f661893c736889100cf380ceb22524915e8a5cd30c697a4124c5dffd054c2",
+      "gzip_bytes": 3096072,
+      "mapped_counts_match_stat": true,
+      "gzip_roundtrip_valid": true
+    }
   },
   "artifact_sha256": {
-    "mkTop.v": "678f892d6d7562ea04e0da3779a027cf9d72240171b92cac49643e7c3b318c12",
-    "mkTop.yosys.rpt": "bab0fe8c7cf544c3b76717262a59578ded429d246479ca68334d3ca74dccc702",
-    "mkTop.yosys.json": "6fc95a05c89851838e2a9d93a7e2030f10971ad5c7fc253ad8e62bbcb569cc17",
-    "mkTop.json": "86193b6e014422dfbee702e7239f2e195bfcaf00e1b337b641d58ea289988089",
-    "mkTop.json.gz": "db5863def2183f23d792a5a4cba0059004105fdbcf15032792c1d7eee0a09023"
+    "mkTop.v": "53afbd499fa8c16802abae76e3a34166e57ee9e2a29718808499f93335e7cdf8",
+    "mkTop.yosys.rpt": "4b411471f7a373995870e680848e407e9c79cca34508bffb07667c369628b511",
+    "mkTop.yosys.json": "3bc9026ab18af75a06f68adf5f49e3ab4556733143790b2d509835c64c46cfda",
+    "mkTop.json": "5c2740a7e5cbb14e0de3eadac2d18a42ba7b6633ac18e2c290a3c364261550b6",
+    "mkTop.json.gz": "953f661893c736889100cf380ceb22524915e8a5cd30c697a4124c5dffd054c2"
   },
-  "netlist_check_log_sha256": "c186103ea757a4f1eda66bb5aca626f4f12ac05dac929d9b9395fea79ff061c8",
-  "elapsed_seconds": 452.6902873516083,
-  "build_log_sha256": "ce73b03b69e5de4850abbc4dcc6b6e1383741afa33e4e00a69083af191aa1e29",
+  "netlist_check_log_sha256": "dc0b5aa5cbafb383fe742c3914e7aaccd9661ca996f77d45ae039e99151c9027",
+  "elapsed_seconds": 502.8819007873535,
+  "comparison": {
+    "reference_commit": "d6b612db144972c72d3077aefe942e97c011b81a",
+    "reference_resources": {
+      "logic_lut_equivalent": {
+        "used": 76757,
+        "capacity": 83640,
+        "used_percent": 91.77068388330942
+      },
+      "TRELLIS_FF": {
+        "used": 47716,
+        "capacity": 83640,
+        "used_percent": 57.049258727881394
+      },
+      "MULT18X18D": {
+        "used": 78,
+        "capacity": 156,
+        "used_percent": 50.0
+      },
+      "DP16KD": {
+        "used": 2,
+        "capacity": 208,
+        "used_percent": 0.9615384615384616
+      },
+      "EHXPLLL": {
+        "used": 1,
+        "capacity": 4,
+        "used_percent": 25.0
+      }
+    },
+    "reference_mapped_cells": {
+      "CCU2C": 12774,
+      "DP16KD": 2,
+      "EHXPLLL": 1,
+      "L6MUX21": 1539,
+      "LUT4": 49697,
+      "MULT18X18D": 78,
+      "PFUMX": 4437,
+      "TRELLIS_DPR16X4": 252,
+      "TRELLIS_FF": 47716
+    },
+    "mapped_cell_delta": {
+      "CCU2C": -11190,
+      "DP16KD": 0,
+      "EHXPLLL": 0,
+      "L6MUX21": -51,
+      "LUT4": -3804,
+      "MULT18X18D": 0,
+      "PFUMX": 49,
+      "TRELLIS_DPR16X4": 0,
+      "TRELLIS_FF": -1
+    },
+    "logic_lut_equivalent_delta": -26184
+  },
+  "build_log_sha256": "fa0eccd34bdfa587b03af2f551892db4bc3045a10a0c6e8c8e98078a9ce3d706",
   "build_log_path": "hw/results/baseline/synthesis/build.log.gz",
   "build_log_compression": "gzip",
-  "build_log_archive_sha256": "0859e8d0c1afc7a9c63348cebe5cae2972345091b4712c8f59b84794c9b56b9c",
-  "build_log_archive_bytes": 435803,
-  "build_log_uncompressed_bytes": 9957872,
-  "build_log_complete": true
+  "build_log_archive_sha256": "83c9af87b078af12cb39a79c842a511781c3261db27fee546fe2a11a73a1c026",
+  "build_log_archive_bytes": 443461,
+  "build_log_uncompressed_bytes": 11053355,
+  "build_log_complete": true,
+  "implementation": {
+    "change": "Only requantN saturation and ties-to-even rounding rewritten using sign-extension, guard, sticky and retained-LSB bit tests",
+    "unchanged": "Engine boundaries, buffers, parallelism, checkpoint, arithmetic semantics, and cycle scheduling"
+  }
 }

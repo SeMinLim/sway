@@ -51,6 +51,7 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * Convolution feeds the SSM path without SiLU. Delta follows `Linear -> ReLU -> Linear`, retaining the signed second projection.
 * The kernel has 17 affine engines, with no sharing across projections or blocks.
 * Frame input, block `xR`/`gateR`/`gatedR`, normalization output, and scan output use per-element INT8 registers with explicit write-enables. The last input or result group feeds the next stage directly in the same cycle.
+* `requantN` uses sign-extension bit checks for saturation and guard/sticky/retained-LSB checks for ties-to-even rounding, preserving the exact INT8 result without adding cycles.
 * Change `ParallelismDivisor` in [SwayTypes.bsv](hw/bsv/SwayTypes.bsv) to select parallelism:
 
 | Divisor | Affine lanes per engine | Norm / Conv / Gate / Scan lanes |
@@ -79,16 +80,17 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
   * [Training protocol](sw/results/mars/protocol.json) & [architecture checks](sw/results/mars/architecture_verification.json).
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 * Hardware Verification
-  * All three parallelism settings pass both the stall regression and continuous-input kernel test: **4,788 matching INT8 outputs** across six runs. Output order and all recorded cycle counts are unchanged.
-  * Generated RTL checks confirm per-element write-enables and final-result bypasses for all 11 modified storage arrays.
-  * All **329,988** rounding/saturation cases and **974,848** affine ROM address checks pass.
+  * The default divisor 4 passes both the stall regression and continuous-input kernel test: **1,596 matching INT8 outputs** across two 14-frame runs. Output values, order, and all recorded input/output, completion, and drain cycles match the reference traces.
+  * `requantN` passes **329,988** fresh rounding/saturation cases and a [formal equivalence proof](hw/results/baseline/equivalence/report.json) covering every input in **402 width/shift combinations**, including negative ties, saturation after rounding, and large shifts.
+  * First-frame kernel latency is **27,276 cycles**; consecutive frame output starts are **13,472 cycles** apart. These interface-cycle measurements exclude UART and physical timing.
+  * All **974,848** affine ROM address checks pass for the unchanged weights and ROM implementation.
   * [Simulation results](hw/results/baseline/validation.json), [ROM verification](hw/results/baseline/weight_rom_verification.json), and [standalone regeneration](hw/results/baseline/standalone_generation.json).
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Synthesis
   * Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33.
-  * LUT4: **49,697**; FF: **47,716**; DSP: **78**; BRAM: **2**.
-  * Logic use before packing is **76,757 / 83,640 (91.77%)**, leaving **6,883 sites** below the capacity limit. Placement/routing and timing closure remain unverified.
+  * LUT4: **45,893**; CCU2C: **1,584**; TRELLIS_DPR16X4: **252**; FF: **47,715**; DSP: **78**; BRAM: **2**.
+  * Logic use before packing is **50,573 / 83,640 (60.47%)**, leaving an estimated **33,067 sites** below the capacity limit. The mapped netlist check reports no problems. Placement/routing and timing closure remain unverified.
   * [Synthesis results](hw/results/baseline/synthesis/report.json).
 
 ## Notes

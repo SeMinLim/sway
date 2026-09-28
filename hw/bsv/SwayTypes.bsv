@@ -100,19 +100,20 @@ endfunction
 
 function Int#(8) requantN(Int#(n) value, Integer fromExp, Integer toExp)
 	provisos(Add#(9, padding9, n), Add#(8, padding8, n));
+	Bit#(n) sourceBits = pack(value);
+	Bit#(1) sourceSign = sourceBits[valueOf(n) - 1];
+	Bit#(n) signBits = sourceSign == 1 ? '1 : 0;
+	Bit#(n) signMismatch = sourceBits ^ signBits;
 	Int#(8) result = 0;
 	if ( fromExp >= toExp ) begin
-		// Compare in the source domain before shifting so saturation cannot wrap.
 		Integer shift = fromExp - toExp;
 		if ( shift >= 8 ) begin
-			result = value > 0 ? 127 : (value < 0 ? -128 : 0);
+			result = sourceSign == 1 ? -128 : (sourceBits != 0 ? 127 : 0);
 		end else begin
-			Int#(n) upper = fromInteger(127 / (2 ** shift));
-			Int#(n) lower = fromInteger(-128 / (2 ** shift));
-			if ( value > upper ) begin
-				result = 127;
-			end else if ( value < lower ) begin
-				result = -128;
+			// The retained sign and all higher bits must match before shifting.
+			Bool overflow = (signMismatch >> (7 - shift)) != 0;
+			if ( overflow ) begin
+				result = sourceSign == 1 ? -128 : 127;
 			end else begin
 				result = truncate(value << shift);
 			end
@@ -121,21 +122,24 @@ function Int#(8) requantN(Int#(n) value, Integer fromExp, Integer toExp)
 		result = 0;
 	end else begin
 		Integer shift = toExp - fromExp;
-		Int#(n) floorValue = value >> shift;
-		Bit#(n) remainder = pack(value) & fromInteger((2 ** shift) - 1);
-		Bit#(n) half = fromInteger(2 ** (shift - 1));
-		Bit#(n) quotientBits = pack(floorValue);
-		Bool increment = remainder > half || (remainder == half && quotientBits[0] == 1);
-		if ( floorValue >= 127 ) begin
+		Bit#(8) quotient = truncate(pack(value >> shift));
+		Bool overflow = (signMismatch >> (shift + 7)) != 0;
+		// Guard, sticky, and retained LSB implement ties-to-even for either sign.
+		Bit#(n) stickyMask = fromInteger((2 ** (shift - 1)) - 1);
+		Bool sticky = (sourceBits & stickyMask) != 0;
+		Bool increment = sourceBits[shift - 1] == 1
+			&& (sticky || sourceBits[shift] == 1);
+		if ( overflow ) begin
+			result = sourceSign == 1 ? -128 : 127;
+		end else if ( quotient == 8'h7f ) begin
+			// Keep +127 saturated when rounding would produce +128.
 			result = 127;
-		end else if ( floorValue <= -129 ) begin
-			result = -128;
 		end else begin
-			Int#(9) rounded = truncate(floorValue);
+			Bit#(8) rounded = quotient;
 			if ( increment ) begin
 				rounded = rounded + 1;
 			end
-			result = truncate(rounded);
+			result = unpack(rounded);
 		end
 	end
 	return result;
