@@ -35,7 +35,7 @@ typedef TMax#(1, TDiv#(2, ParallelismDivisor)) ScanLanes;
 typedef 4 ConvTaps;
 typedef TSub#(ConvTaps, 1) ConvHistory;
 typedef 32 SerialFifoDepth;
-typedef 4 ResidualSlots;
+typedef 2 ResidualSlots;
 
 typedef struct {
 	Bit#(4) index;

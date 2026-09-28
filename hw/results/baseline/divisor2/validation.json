@@ -3,12 +3,12 @@
   "compiler": "/workspace/scratch/839f8f1063a0/tools/bsc-2026.01-debian-12.13/bin/bsc",
   "source_sha256": {
     "bsv/SwayBaseline.bsv": "8b3fea4fa8e6c354f47ec8feb1f7ef1a2ea5704975dd9d460954501f4b2d53b0",
-    "bsv/SwayBlock.bsv": "8d1ab61b7a2501c25e4f6910c844e8a50112acd511028195e9524e25258be724",
+    "bsv/SwayBlock.bsv": "82a28521fd7f4ca838879191e06fc0177f593678cce2eeae119cbdc6dd1970b6",
     "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
     "bsv/SwayLinear.bsv": "57e54ea9cb5a7ac75daa463ac6d0563682632d4cf44f7388eff042879b3ce00f",
     "bsv/SwayNorm.bsv": "81aff1086bbbcdaa63f7f3300c24be636b847317ef0f56ad807e1a2ac97fd6d4",
     "bsv/SwayScan.bsv": "96b27877f83779cab87248d963953a2122d0737ebfdecc50405eeac3fc3b96d2",
-    "bsv/SwayTypes.bsv": "f5ec43e5ec1570784550f45eba8f624dc1d7aa02fd49210c5af406cd54e6e2ae",
+    "bsv/SwayTypes.bsv": "c73189b10ddc9d3432ab562046bb09b9dbcc1f3a7f89d3dac440f49f4631ecd9",
     "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
     "generated/SwayParameters.bsv": "5b83691aa93fa5664af805407c4d66b92468b11bc4d7e58e4d8e2fcccdbefc1e",
     "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
@@ -25,7 +25,7 @@
       "frames_checked": 14,
       "scalar_outputs_checked": 798,
       "input_words": 4480,
-      "finish_cycle": 175263,
+      "finish_cycle": 254406,
       "post_completion_drain_cycles": 2048,
       "source_bubbles": "cycles modulo 17 equal to 0 or 1",
       "sink_stalls": "8192 cycles after each first output, plus cycles modulo 11 equal to 0",
@@ -42,133 +42,133 @@
       "timing_scope": "testbench cycles include deliberate source and sink stalls; not unstalled kernel performance",
       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-      "log_sha256": "b17ea1edb7ac811c542b4c2333b04bada5f057b3c421292e24cde182515e9e09",
-      "sway_records_sha256": "b17ea1edb7ac811c542b4c2333b04bada5f057b3c421292e24cde182515e9e09",
+      "log_sha256": "3071f78364849d355f59c3a2aab2ddd4b368b9156e67762d8ecd352972a4f981",
+      "sway_records_sha256": "3071f78364849d355f59c3a2aab2ddd4b368b9156e67762d8ecd352972a4f981",
       "frames": [
         {
           "frame": 0,
           "input_first_cycle": 2,
           "input_last_cycle": 363,
-          "output_first_cycle": 19153,
-          "output_last_cycle": 27407,
-          "first_input_to_last_output_cycles": 27405,
+          "output_first_cycle": 24144,
+          "output_last_cycle": 32398,
+          "first_input_to_last_output_cycles": 32396,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 1,
           "input_first_cycle": 364,
           "input_last_cycle": 725,
-          "output_first_cycle": 30369,
-          "output_last_cycle": 38623,
-          "first_input_to_last_output_cycles": 38259,
+          "output_first_cycle": 41064,
+          "output_last_cycle": 49318,
+          "first_input_to_last_output_cycles": 48954,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 2,
           "input_first_cycle": 726,
-          "input_last_cycle": 8083,
-          "output_first_cycle": 41585,
-          "output_last_cycle": 49838,
-          "first_input_to_last_output_cycles": 49112,
+          "input_last_cycle": 12337,
+          "output_first_cycle": 57984,
+          "output_last_cycle": 66237,
+          "first_input_to_last_output_cycles": 65511,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 3,
-          "input_first_cycle": 8084,
-          "input_last_cycle": 19299,
-          "output_first_cycle": 52801,
-          "output_last_cycle": 61055,
-          "first_input_to_last_output_cycles": 52971,
+          "input_first_cycle": 12338,
+          "input_last_cycle": 29259,
+          "output_first_cycle": 74904,
+          "output_last_cycle": 83157,
+          "first_input_to_last_output_cycles": 70819,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 4,
-          "input_first_cycle": 19300,
-          "input_last_cycle": 30517,
-          "output_first_cycle": 64017,
-          "output_last_cycle": 72271,
-          "first_input_to_last_output_cycles": 52971,
+          "input_first_cycle": 29260,
+          "input_last_cycle": 46177,
+          "output_first_cycle": 91824,
+          "output_last_cycle": 100077,
+          "first_input_to_last_output_cycles": 70817,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 5,
-          "input_first_cycle": 30518,
-          "input_last_cycle": 41731,
-          "output_first_cycle": 75233,
-          "output_last_cycle": 83486,
-          "first_input_to_last_output_cycles": 52968,
+          "input_first_cycle": 46178,
+          "input_last_cycle": 63097,
+          "output_first_cycle": 108744,
+          "output_last_cycle": 116998,
+          "first_input_to_last_output_cycles": 70820,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 6,
-          "input_first_cycle": 41732,
-          "input_last_cycle": 52947,
-          "output_first_cycle": 86450,
-          "output_last_cycle": 94704,
-          "first_input_to_last_output_cycles": 52972,
+          "input_first_cycle": 63098,
+          "input_last_cycle": 80017,
+          "output_first_cycle": 125665,
+          "output_last_cycle": 133919,
+          "first_input_to_last_output_cycles": 70821,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 7,
-          "input_first_cycle": 52948,
-          "input_last_cycle": 64163,
-          "output_first_cycle": 97665,
-          "output_last_cycle": 105918,
-          "first_input_to_last_output_cycles": 52970,
+          "input_first_cycle": 80018,
+          "input_last_cycle": 96938,
+          "output_first_cycle": 142584,
+          "output_last_cycle": 150838,
+          "first_input_to_last_output_cycles": 70820,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 8,
-          "input_first_cycle": 64164,
-          "input_last_cycle": 75381,
-          "output_first_cycle": 108881,
-          "output_last_cycle": 117134,
-          "first_input_to_last_output_cycles": 52970,
+          "input_first_cycle": 96939,
+          "input_last_cycle": 113857,
+          "output_first_cycle": 159504,
+          "output_last_cycle": 167757,
+          "first_input_to_last_output_cycles": 70818,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 9,
-          "input_first_cycle": 75382,
-          "input_last_cycle": 86595,
-          "output_first_cycle": 120097,
-          "output_last_cycle": 128351,
-          "first_input_to_last_output_cycles": 52969,
+          "input_first_cycle": 113858,
+          "input_last_cycle": 130777,
+          "output_first_cycle": 176424,
+          "output_last_cycle": 184677,
+          "first_input_to_last_output_cycles": 70819,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 10,
-          "input_first_cycle": 86596,
-          "input_last_cycle": 97811,
-          "output_first_cycle": 131313,
-          "output_last_cycle": 139566,
-          "first_input_to_last_output_cycles": 52970,
+          "input_first_cycle": 130778,
+          "input_last_cycle": 147699,
+          "output_first_cycle": 193344,
+          "output_last_cycle": 201598,
+          "first_input_to_last_output_cycles": 70820,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 11,
-          "input_first_cycle": 97812,
-          "input_last_cycle": 109027,
-          "output_first_cycle": 142529,
-          "output_last_cycle": 150783,
-          "first_input_to_last_output_cycles": 52971,
+          "input_first_cycle": 147700,
+          "input_last_cycle": 164617,
+          "output_first_cycle": 210264,
+          "output_last_cycle": 218518,
+          "first_input_to_last_output_cycles": 70818,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 12,
-          "input_first_cycle": 109028,
-          "input_last_cycle": 120245,
-          "output_first_cycle": 153745,
-          "output_last_cycle": 161999,
-          "first_input_to_last_output_cycles": 52971,
+          "input_first_cycle": 164618,
+          "input_last_cycle": 181537,
+          "output_first_cycle": 227184,
+          "output_last_cycle": 235438,
+          "first_input_to_last_output_cycles": 70820,
           "sink_pause_cycles": 8192
         },
         {
           "frame": 13,
-          "input_first_cycle": 120246,
-          "input_last_cycle": 131459,
-          "output_first_cycle": 164961,
-          "output_last_cycle": 173214,
-          "first_input_to_last_output_cycles": 52968,
+          "input_first_cycle": 181538,
+          "input_last_cycle": 198457,
+          "output_first_cycle": 244104,
+          "output_last_cycle": 252357,
+          "first_input_to_last_output_cycles": 70819,
           "sink_pause_cycles": 8192
         }
       ],
@@ -176,10 +176,10 @@
       "mode": "stress",
       "compiler_warnings": [
         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
-        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
       ],
-      "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
+      "configured_types_sha256": "c04f9a7775de78f9fccb508dd04972e8fd2770c7cb64a251c547b7b463550add"
     },
     {
       "status": "pass",
@@ -187,25 +187,25 @@
       "frames_checked": 14,
       "scalar_outputs_checked": 798,
       "input_words": 4480,
-      "finish_cycle": 167022,
+      "finish_cycle": 246165,
       "post_completion_drain_cycles": 2048,
       "source_bubbles": "none inserted",
       "sink_stalls": "none inserted",
       "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
       "output_frame_start_intervals_cycles": [
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216,
-        11216
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920,
+        16920
       ],
       "repeated_frame_pairs_checked": [
         [
@@ -219,130 +219,131 @@
       ],
       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
-      "log_sha256": "366b3db40504d7661d5956531e81199d19fb4dc139267f0779d094ec6ce01986",
+      "log_sha256": "def3af6a45f9e74e0beefb9e3ea252baee17b79dc87c6c0e9126020285119ba2",
       "frames": [
         {
           "frame": 0,
           "input_first_cycle": 0,
           "input_last_cycle": 319,
-          "output_first_cycle": 19109,
-          "output_last_cycle": 19165,
-          "first_input_to_last_output_cycles": 19165
+          "output_first_cycle": 24100,
+          "output_last_cycle": 24156,
+          "first_input_to_last_output_cycles": 24156
         },
         {
           "frame": 1,
           "input_first_cycle": 320,
           "input_last_cycle": 639,
-          "output_first_cycle": 30325,
-          "output_last_cycle": 30381,
-          "first_input_to_last_output_cycles": 30061
+          "output_first_cycle": 41020,
+          "output_last_cycle": 41076,
+          "first_input_to_last_output_cycles": 40756
         },
         {
           "frame": 2,
           "input_first_cycle": 640,
-          "input_last_cycle": 8001,
-          "output_first_cycle": 41541,
-          "output_last_cycle": 41597,
-          "first_input_to_last_output_cycles": 40957
+          "input_last_cycle": 12255,
+          "output_first_cycle": 57940,
+          "output_last_cycle": 57996,
+          "first_input_to_last_output_cycles": 57356
         },
         {
           "frame": 3,
-          "input_first_cycle": 8002,
-          "input_last_cycle": 19217,
-          "output_first_cycle": 52757,
-          "output_last_cycle": 52813,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 12256,
+          "input_last_cycle": 29175,
+          "output_first_cycle": 74860,
+          "output_last_cycle": 74916,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 4,
-          "input_first_cycle": 19218,
-          "input_last_cycle": 30433,
-          "output_first_cycle": 63973,
-          "output_last_cycle": 64029,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 29176,
+          "input_last_cycle": 46095,
+          "output_first_cycle": 91780,
+          "output_last_cycle": 91836,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 5,
-          "input_first_cycle": 30434,
-          "input_last_cycle": 41649,
-          "output_first_cycle": 75189,
-          "output_last_cycle": 75245,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 46096,
+          "input_last_cycle": 63015,
+          "output_first_cycle": 108700,
+          "output_last_cycle": 108756,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 6,
-          "input_first_cycle": 41650,
-          "input_last_cycle": 52865,
-          "output_first_cycle": 86405,
-          "output_last_cycle": 86461,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 63016,
+          "input_last_cycle": 79935,
+          "output_first_cycle": 125620,
+          "output_last_cycle": 125676,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 7,
-          "input_first_cycle": 52866,
-          "input_last_cycle": 64081,
-          "output_first_cycle": 97621,
-          "output_last_cycle": 97677,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 79936,
+          "input_last_cycle": 96855,
+          "output_first_cycle": 142540,
+          "output_last_cycle": 142596,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 8,
-          "input_first_cycle": 64082,
-          "input_last_cycle": 75297,
-          "output_first_cycle": 108837,
-          "output_last_cycle": 108893,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 96856,
+          "input_last_cycle": 113775,
+          "output_first_cycle": 159460,
+          "output_last_cycle": 159516,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 9,
-          "input_first_cycle": 75298,
-          "input_last_cycle": 86513,
-          "output_first_cycle": 120053,
-          "output_last_cycle": 120109,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 113776,
+          "input_last_cycle": 130695,
+          "output_first_cycle": 176380,
+          "output_last_cycle": 176436,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 10,
-          "input_first_cycle": 86514,
-          "input_last_cycle": 97729,
-          "output_first_cycle": 131269,
-          "output_last_cycle": 131325,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 130696,
+          "input_last_cycle": 147615,
+          "output_first_cycle": 193300,
+          "output_last_cycle": 193356,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 11,
-          "input_first_cycle": 97730,
-          "input_last_cycle": 108945,
-          "output_first_cycle": 142485,
-          "output_last_cycle": 142541,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 147616,
+          "input_last_cycle": 164535,
+          "output_first_cycle": 210220,
+          "output_last_cycle": 210276,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 12,
-          "input_first_cycle": 108946,
-          "input_last_cycle": 120161,
-          "output_first_cycle": 153701,
-          "output_last_cycle": 153757,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 164536,
+          "input_last_cycle": 181455,
+          "output_first_cycle": 227140,
+          "output_last_cycle": 227196,
+          "first_input_to_last_output_cycles": 62660
         },
         {
           "frame": 13,
-          "input_first_cycle": 120162,
-          "input_last_cycle": 131377,
-          "output_first_cycle": 164917,
-          "output_last_cycle": 164973,
-          "first_input_to_last_output_cycles": 44811
+          "input_first_cycle": 181456,
+          "input_last_cycle": 198375,
+          "output_first_cycle": 244060,
+          "output_last_cycle": 244116,
+          "first_input_to_last_output_cycles": 62660
         }
       ],
       "parallelism_divisor": 2,
       "mode": "kernel",
       "compiler_warnings": [
         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
-        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
-        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)"
       ],
-      "configured_types_sha256": "16143a5b4648e9ef9871fafc64f6bbf578e98e956a07ab789761e9010c3cacad"
+      "configured_types_sha256": "c04f9a7775de78f9fccb508dd04972e8fd2770c7cb64a251c547b7b463550add"
     }
   ],
-  "source_snapshot_base_commit": "111bfc3534debbb512b5bc85475ad30e44f8d549"
+  "source_snapshot_base_commit": "7062a60b5f8abe7d3810a48c3ad343acda08c9d9",
+  "residual_slots": 2
 }

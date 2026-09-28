@@ -50,6 +50,7 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 * Each block uses separate main/gate input projections and separate delta-input/B/C projections. Gate SiLU runs in its own stage after the gate projection.
 * Convolution feeds the SSM path without SiLU. Delta follows `Linear -> ReLU -> Linear`, retaining the signed second projection.
 * The kernel has 17 affine engines, with no sharing across projections or blocks.
+* Each block has two slots in both `residualQ` and `gateDelayQ` (`ResidualSlots = 2`). FIFO backpressure limits in-flight tokens while preserving their order.
 * Frame input, block `xR`/`gateR`/`gatedR`, normalization output, and scan output use per-element INT8 registers with explicit write-enables. The last input or result group feeds the next stage directly in the same cycle.
 * Change `ParallelismDivisor` in [SwayTypes.bsv](hw/bsv/SwayTypes.bsv) to select parallelism:
 
@@ -79,16 +80,16 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
   * [Training protocol](sw/results/mars/protocol.json) & [architecture checks](sw/results/mars/architecture_verification.json).
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 * Hardware Verification
-  * All three parallelism settings pass both the stall regression and continuous-input kernel test: **4,788 matching INT8 outputs** across six runs. Output order and all recorded cycle counts are unchanged.
-  * Generated RTL checks confirm per-element write-enables and final-result bypasses for all 11 modified storage arrays.
+  * All three parallelism settings pass both the stall regression and continuous-input kernel test: **4,788 matching INT8 outputs** across six runs. Output order and frame state reset are verified, including repeated frames and output stalls.
+  * Generated RTL checks confirm two-slot residual/gate FIFOs in both blocks, plus per-element write-enables and final-result bypasses for all 11 storage arrays.
   * All **329,988** rounding/saturation cases and **974,848** affine ROM address checks pass.
   * [Simulation results](hw/results/baseline/validation.json), [ROM verification](hw/results/baseline/weight_rom_verification.json), and [standalone regeneration](hw/results/baseline/standalone_generation.json).
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Synthesis
   * Full `mkTop` synthesis for ULX3S-85F at divisor 4 completes with blueYosys `3663e87`, BSC 2026.01, and Yosys 0.33.
-  * LUT4: **49,697**; FF: **47,716**; DSP: **78**; BRAM: **2**.
-  * Logic use before packing is **76,757 / 83,640 (91.77%)**, leaving **6,883 sites** below the capacity limit. Placement/routing and timing closure remain unverified.
+  * LUT4: **52,045**; FF: **48,648**; DSP: **78**; BRAM: **2**.
+  * Logic use before packing is **77,665 / 83,640 (92.86%)**, leaving **5,975 sites** below the capacity limit. Placement/routing and timing closure remain unverified.
   * [Synthesis results](hw/results/baseline/synthesis/report.json).
 
 ## Notes

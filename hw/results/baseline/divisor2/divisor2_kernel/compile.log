@@ -13,10 +13,10 @@ Warning: "Prelude.bs", line 586, column 27: (G0024)
   During elaboration of `dut' at "sim/TbSwayKernel.bsv", line 15, column 17.
   During elaboration of `mkTbSwayKernel' at "sim/TbSwayKernel.bsv", line 9,
   column 8.
-Warning: "Prelude.bs", line 1335, column 9: (G0024)
+Warning: "Prelude.bs", line 2862, column 0: (G0024)
   The function unfolding steps interval has been exceeded when unfolding
-  `Prelude.Ord~Prelude.Integer'. The current number of steps is 200000. Next
-  warning at 300000 steps. Elaboration terminates at 1000000 steps.
+  `isStaticValue'. The current number of steps is 200000. Next warning at
+  300000 steps. Elaboration terminates at 1000000 steps.
   During elaboration of the body of rule `process5' at "bsv/SwayBlock.bsv",
   line 230, column 14.
   During elaboration of `block1' at "bsv/SwayBaseline.bsv", line 22, column
@@ -24,15 +24,15 @@ Warning: "Prelude.bs", line 1335, column 9: (G0024)
   During elaboration of `dut' at "sim/TbSwayKernel.bsv", line 15, column 17.
   During elaboration of `mkTbSwayKernel' at "sim/TbSwayKernel.bsv", line 9,
   column 8.
-Warning: "Prelude.bs", line 2862, column 0: (G0024)
+Warning: "Prelude.bs", line 1335, column 9: (G0024)
   The function unfolding steps interval has been exceeded when unfolding
-  `areStaticBits'. The current number of steps is 300000. Next warning at
-  400000 steps. Elaboration terminates at 1000000 steps.
+  `Prelude.Ord~Prelude.Integer'. The current number of steps is 300000. Next
+  warning at 400000 steps. Elaboration terminates at 1000000 steps.
   During elaboration of the body of rule `process2' at "bsv/SwayBaseline.bsv",
   line 61, column 14.
   During elaboration of `dut' at "sim/TbSwayKernel.bsv", line 15, column 17.
   During elaboration of `mkTbSwayKernel' at "sim/TbSwayKernel.bsv", line 9,
   column 8.
-Schedule dump file created: /tmp/sway-refactor-f4ys8e2w/divisor2/build/mkTbSwayKernel.sched
-Verilog file created: /tmp/sway-refactor-f4ys8e2w/divisor2/build/mkTbSwayKernel.v
+Schedule dump file created: /tmp/sway-refactor-mlzuropb/divisor2/build/mkTbSwayKernel.sched
+Verilog file created: /tmp/sway-refactor-mlzuropb/divisor2/build/mkTbSwayKernel.v
 All packages are up to date.
