@@ -84,13 +84,11 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 * Hardware Verification
   * The regression checks all three lane settings against the same 14-frame / 798-coordinate fixtures, using both source/sink stalls and continuous kernel input. A separate test resets the active kernel and checks a complete restart.
-  * Run `python3 hw/reference/check_refactor.py --backend iverilog --skip-arithmetic --output /tmp/sway-rtl` for the lane/stall matrix and `python3 hw/reference/check_warm_reset.py --output /tmp/sway-reset` for reset recovery.
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Placement and Routing
   * ECP5 shares one reset signal across eight PFU registers. The physical build folds proven reset inversions into FF reset-polarity settings and merges identical reset-only LUTs, preserving effective reset behavior, data, clocks, and enables.
   * A pre-placement hook places the existing core-reset output FF near the fabric center to shorten reset distribution. Reset logic and release latency are unchanged; both the physical checker and independent audit verify the actual placed BEL.
-  * `python3 hw/reference/check_physical.py --rootdir /path/to/blueyosys --output /tmp/sway-physical` runs full `mkTop` synthesis and strict placement/routing with router1, a 100 MHz core, and a 25 MHz UART clock. It restores both clock constraints when routing the placed checkpoint and records source hashes, tools, resource use, timing, and raw logs. All 17 affine coefficient cones must contain only combinational LUT logic; the two existing scan-state block RAMs remain separate.
 
 ## Notes
 
