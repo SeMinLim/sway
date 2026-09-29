@@ -85,6 +85,10 @@ physical-netlist: netlist
 	# Preserve the 56-address-copy netlist so both transformation stages are audited.
 	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_page_decoders.py" "$(JSON_NETLIST)" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --rtl "$(BUILD_DIR)/mkTop.v" --report "$(BUILD_DIR)/page_decoders.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_page_decoder_copies.py" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --after "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --address-auditor "$(PROJECT_DIR)/reference/check_address_replicas.py" --report "$(BUILD_DIR)/page_decoder_audit.json"
+	# Preserve the page-audited boundary; private ROM replacement audits before writing.
+	cp "$(JSON_NETLIST)" "$(BUILD_DIR)/mkTop.before_private_rom.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_private_rom.py" --before "$(BUILD_DIR)/mkTop.before_private_rom.json" --weights "$(PROJECT_DIR)/model/export/headHidden_weight.bin" --output "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/private_rom.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_private_rom.py" --before "$(BUILD_DIR)/mkTop.before_private_rom.json" --after "$(JSON_NETLIST)" --weights "$(PROJECT_DIR)/model/export/headHidden_weight.bin" --rtl "$(BUILD_DIR)/mkTop.v" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/private_rom_audit.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_lut_mapping.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --output "$(BUILD_DIR)/lut_mapping.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_mapped_weights.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --export "$(PROJECT_DIR)/model/export" --cells-sim "$(YOSYS_CELLS_SIM)" --output "$(BUILD_DIR)/mapped_weights.json"
 

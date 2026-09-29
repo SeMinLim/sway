@@ -20,6 +20,7 @@ import time
 import check_address_replicas
 from check_address_replicas import audit_transition
 from check_page_decoder_copies import FROZEN_ADDRESS_AUDITOR, audit as audit_page_decoders
+from check_private_rom import audit as audit_private_rom
 from place_core_reset import CORE_RESET_CELLS, REPORT_PREFIX
 from check_lut_mapping import STATE_BLOCK_RAM, inspect_mapping, inspect_state_block_ram
 
@@ -59,6 +60,9 @@ def source_hashes(hw, rootdir):
                "sway/hw/reference/check_address_replicas.py": hw / "reference/check_address_replicas.py",
                "sway/hw/reference/replicate_page_decoders.py": hw / "reference/replicate_page_decoders.py",
                "sway/hw/reference/check_page_decoder_copies.py": hw / "reference/check_page_decoder_copies.py",
+               "sway/hw/reference/replicate_private_rom.py": hw / "reference/replicate_private_rom.py",
+               "sway/hw/reference/check_private_rom.py": hw / "reference/check_private_rom.py",
+               "sway/hw/reference/test_private_rom.py": hw / "reference/test_private_rom.py",
                "sway/hw/reference/merge_reset_controls.py": hw / "reference/merge_reset_controls.py",
                "sway/hw/reference/place_core_reset.py": hw / "reference/place_core_reset.py"}
     for directory in (hw, hw / "bsv", hw / "generated", hw / "rtl"):
@@ -91,6 +95,26 @@ def tool_info(command, flag):
     return {"path": executable, "version": result.stdout.strip(), "sha256": sha256(Path(executable))}
 
 
+def selected_cells_sim(yosys, explicit):
+    """Use the same selected-installation resolution as the Makefile."""
+    if explicit is not None:
+        path = explicit.resolve()
+    else:
+        executable = Path(yosys)
+        config = executable.parent / "yosys-config"
+        if config.is_file() and os.access(config, os.X_OK):
+            result = subprocess.run([str(config), "--datdir"], text=True,
+                                    capture_output=True, check=True)
+            path = Path(result.stdout.strip()) / "ecp5/cells_sim.v"
+        elif executable.resolve() == Path("/usr/bin/yosys"):
+            path = Path("/usr/share/yosys/ecp5/cells_sim.v")
+        else:
+            raise RuntimeError("Cannot resolve selected Yosys models; pass --cells-sim")
+    if not path.is_file():
+        raise RuntimeError("Selected Yosys primitive library not found: " + str(path))
+    return path.resolve()
+
+
 def run_command(command, log, cwd):
     print("Running " + " ".join(command), flush=True)
     started = time.monotonic()
@@ -119,15 +143,19 @@ def verify_state_block_ram_usage(mapping, stage, actual, evidence, instances=Non
         raise RuntimeError(f"Expected only the two scan-state DP16KD cells at {stage}; found {actual!r}")
 
 
-def verify_transform_evidence(build, sources, final_sha256):
-    """Check every stored boundary before independently replaying both audits."""
+def verify_transform_evidence(build, sources, final_sha256, weights, cells_sim):
+    """Check every stored boundary before independently replaying all audits."""
     reset = json.loads((build / "reset_merge.json").read_text())
     address = json.loads((build / "address_replicas.json").read_text())
     page = json.loads((build / "page_decoders.json").read_text())
     page_audit = json.loads((build / "page_decoder_audit.json").read_text())
+    private_rom = json.loads((build / "private_rom.json").read_text())
+    private_audit = json.loads((build / "private_rom_audit.json").read_text())
     raw_sha = sha256(build / "mkTop.before_address_replicas.json")
     mid_sha = sha256(build / "mkTop.before_page_decoders.json")
+    pre_rom_sha = sha256(build / "mkTop.before_private_rom.json")
     rtl_sha = sha256(build / "mkTop.v")
+    weights_sha, cells_sim_sha = sha256(weights), sha256(cells_sim)
     if sources["sway/hw/reference/check_address_replicas.py"] != FROZEN_ADDRESS_AUDITOR:
         raise RuntimeError("Original address FF startup/transition auditor is not the frozen reviewed version")
     if (reset.get("status") != "pass" or address.get("status") != "pass"
@@ -140,21 +168,38 @@ def verify_transform_evidence(build, sources, final_sha256):
             or address["auditor_sha256"] != sources["sway/hw/reference/check_address_replicas.py"]):
         raise RuntimeError("Address FF evidence differs from the reset-sharing to56-replica chain")
     if (page.get("status") != "transformed_independent_audit_required"
-            or page["input_sha256"] != mid_sha or page["output_sha256"] != final_sha256
-            or sha256(build / "mkTop.json") != final_sha256
+            or page["input_sha256"] != mid_sha or page["output_sha256"] != pre_rom_sha
             or page["preserved_input"] != "mkTop.before_page_decoders.json"
             or page["rtl_sha256"] != rtl_sha
             or page["transform_sha256"] != sources["sway/hw/reference/replicate_page_decoders.py"]
             or page["auditor_sha256"] != sources["sway/hw/reference/check_page_decoder_copies.py"]
             or page["address_auditor_sha256"] != sources["sway/hw/reference/check_address_replicas.py"]):
         raise RuntimeError("Page-decoder transform evidence differs from the56-to91-replica chain")
-    expected_inputs = {"before": mid_sha, "after": final_sha256, "rtl": rtl_sha,
+    expected_inputs = {"before": mid_sha, "after": pre_rom_sha, "rtl": rtl_sha,
                        "address-auditor": sources["sway/hw/reference/check_address_replicas.py"]}
     if (page_audit.get("status") != "pass" or page_audit.get("inputs_unchanged") is not True
             or page_audit["input_sha256"] != expected_inputs
             or page_audit["checker_sha256"] != sources["sway/hw/reference/check_page_decoder_copies.py"]):
         raise RuntimeError("Stored independent page-decoder proof does not match the current exact inputs")
-    return reset, address, page, page_audit
+    if (private_rom.get("status") != "pass"
+            or private_rom["input_sha256"] != pre_rom_sha
+            or private_rom["output_sha256"] != final_sha256
+            or sha256(build / "mkTop.json") != final_sha256
+            or private_rom["preserved_input"] != "mkTop.before_private_rom.json"
+            or private_rom["rtl_sha256"] != rtl_sha
+            or private_rom["weights_sha256"] != weights_sha
+            or private_rom["cells_sim_sha256"] != cells_sim_sha
+            or private_rom["transform_sha256"] != sources["sway/hw/reference/replicate_private_rom.py"]
+            or private_rom["auditor_sha256"] != sources["sway/hw/reference/check_private_rom.py"]
+            or private_rom["address_auditor_sha256"] != sources["sway/hw/reference/check_address_replicas.py"]):
+        raise RuntimeError("Private-ROM transform evidence differs from the preserved page-decoder output to final netlist chain")
+    expected_inputs = {"before": pre_rom_sha, "after": final_sha256, "weights": weights_sha,
+                       "rtl": rtl_sha, "cells_sim": cells_sim_sha}
+    if (private_audit.get("status") != "pass" or private_audit.get("inputs_unchanged") is not True
+            or private_audit["input_sha256"] != expected_inputs
+            or private_audit["checker_sha256"] != sources["sway/hw/reference/check_private_rom.py"]):
+        raise RuntimeError("Stored independent private-ROM proof does not match the current exact inputs")
+    return reset, address, page, page_audit, private_rom, private_audit
 
 
 def reuse_synthesis(previous, output, result):
@@ -224,17 +269,22 @@ def reuse_synthesis(previous, output, result):
     old_log = previous / "synthesis.log"
     if sha256(old_netlist) != prior["netlist_sha256"] or sha256(old_log) != original["log_sha256"]:
         raise RuntimeError("Previous synthesized netlist or synthesis log changed")
-    reset, replicas, pages, page_proof = verify_transform_evidence(previous / "build", old, prior["netlist_sha256"])
+    reset, replicas, pages, page_proof, private_rom, private_proof = verify_transform_evidence(
+        previous / "build", old, prior["netlist_sha256"],
+        Path(result["private_rom_inputs"]["weights"]), Path(result["private_rom_inputs"]["cells_sim"]))
     if (reset != prior["reset_merge"]
             or sha256(previous / "build/address_replicas.json") != prior["address_replicas"]["report_sha256"]
             or sha256(previous / "build/page_decoders.json") != prior["page_decoders"]["transform_report_sha256"]
-            or sha256(previous / "build/page_decoder_audit.json") != prior["page_decoders"]["independent_report_sha256"]):
-        raise RuntimeError("Previous netlist does not match both independently audited replication stages")
+            or sha256(previous / "build/page_decoder_audit.json") != prior["page_decoders"]["independent_report_sha256"]
+            or sha256(previous / "build/private_rom.json") != prior["private_rom"]["transform_report_sha256"]
+            or sha256(previous / "build/private_rom_audit.json") != prior["private_rom"]["independent_report_sha256"]):
+        raise RuntimeError("Previous netlist does not match all independently audited transform stages")
     shutil.copytree(previous / "build", output / "build")
     shutil.copyfile(old_log, output / "synthesis.log")
     for name in ("mkTop.json", "mkTop.v", "reset_merge.json", "mkTop.before_address_replicas.json",
                  "address_replicas.json", "mkTop.before_page_decoders.json", "page_decoders.json",
-                 "page_decoder_audit.json", "ulx3s.lpf"):
+                 "page_decoder_audit.json", "mkTop.before_private_rom.json", "private_rom.json",
+                 "private_rom_audit.json", "ulx3s.lpf"):
         if sha256(previous / "build" / name) != sha256(output / "build" / name):
             raise RuntimeError("Reused synthesis copy differs: " + name)
     if sha256(output / "build/mkTop.json") != prior["netlist_sha256"] or sha256(report_path) != previous_sha:
@@ -422,6 +472,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True, help="new or empty evidence directory")
     parser.add_argument("--bsc", default=os.environ.get("BSC", "bsc"))
     parser.add_argument("--yosys", default=os.environ.get("YOSYS", "yosys"))
+    parser.add_argument("--cells-sim", type=Path,
+                        help="reviewed primitive models from the selected Yosys installation")
     parser.add_argument("--nextpnr", default="nextpnr-ecp5")
     parser.add_argument("--reuse-synthesis", type=Path, help="reuse verified synthesis from a previous evidence directory")
     parser.add_argument("--reuse-placement", type=Path,
@@ -452,9 +504,13 @@ def main():
         result["source_sha256"] = source_hashes(hw, rootdir)
         result["tools"] = {"bsc": tool_info(args.bsc, "-v"), "yosys": tool_info(args.yosys, "-V"),
                            "nextpnr": tool_info(args.nextpnr, "--version")}
+        cells_sim = selected_cells_sim(result["tools"]["yosys"]["path"], args.cells_sim)
+        weights = hw / "model/export/headHidden_weight.bin"
+        result["private_rom_inputs"] = {"weights": str(weights), "cells_sim": str(cells_sim),
+                                        "weights_sha256": sha256(weights), "cells_sim_sha256": sha256(cells_sim)}
         command = ["make", "-C", str(hw), "physical-netlist", f"ROOTDIR={rootdir}", "BOARD=ulx3s-85f",
                    f"BUILD_DIR={build}", "BSC=" + result["tools"]["bsc"]["path"],
-                   "YOSYS=" + result["tools"]["yosys"]["path"]]
+                   "YOSYS=" + result["tools"]["yosys"]["path"], "YOSYS_CELLS_SIM=" + str(cells_sim)]
         synthesis = (reuse_synthesis(args.reuse_synthesis, output, result) if args.reuse_synthesis
                      else run_command(command, output / "synthesis.log", hw))
         result["commands"].append(synthesis)
@@ -462,13 +518,16 @@ def main():
             raise RuntimeError("Compilation or synthesis failed; inspect synthesis.log")
         netlist_path = build / "mkTop.json"
         result["netlist_sha256"] = sha256(netlist_path)
-        reset_report, replica_report, page_report, stored_page_audit = verify_transform_evidence(
-            build, result["source_sha256"], result["netlist_sha256"])
+        (reset_report, replica_report, page_report, stored_page_audit,
+         private_report, stored_private_audit) = verify_transform_evidence(
+            build, result["source_sha256"], result["netlist_sha256"], weights, cells_sim)
         result["reset_merge"] = reset_report
         replica_before = build / "mkTop.before_address_replicas.json"
         page_before = build / "mkTop.before_page_decoders.json"
-        rtl_text = (build / "mkTop.v").read_text()
-        # Audit raw->mid56 first, releasing raw before loading the final design.
+        private_before = build / "mkTop.before_private_rom.json"
+        rtl_path = build / "mkTop.v"
+        rtl_text = rtl_path.read_text()
+        # Load only the adjacent boundaries needed by each independent audit.
         raw = json.loads(replica_before.read_text())
         middle = json.loads(page_before.read_text())
         result["address_replicas"] = audit_transition(raw, middle, rtl_text)
@@ -476,11 +535,11 @@ def main():
         result["address_replicas"]["report_sha256"] = sha256(build / "address_replicas.json")
         result["address_replicas"].update({"scope": "Reset-shared raw netlist to56 low-address FF replicas",
             "input_sha256": replica_report["input_sha256"], "output_sha256": replica_report["output_sha256"]})
-        with netlist_path.open() as source:
-            netlist = json.load(source)
+        with private_before.open() as source:
+            pre_rom = json.load(source)
         # JSON object keys (including owner-group integers) normalize to strings
         # in saved proofs, so compare the same serialized representation.
-        page_proof = json.loads(json.dumps(audit_page_decoders(middle, netlist, rtl_text, check_address_replicas)))
+        page_proof = json.loads(json.dumps(audit_page_decoders(middle, pre_rom, rtl_text, check_address_replicas)))
         del middle
         if any(stored_page_audit.get(key) != value for key, value in page_proof.items()):
             raise RuntimeError("Replayed page-decoder proof differs from the stored independent audit")
@@ -493,13 +552,30 @@ def main():
             "independent_report_sha256": sha256(build / "page_decoder_audit.json"),
             "transform_sha256": result["source_sha256"]["sway/hw/reference/replicate_page_decoders.py"],
             "checker_sha256": result["source_sha256"]["sway/hw/reference/check_page_decoder_copies.py"]})
-        # Recheck the complete file/hash boundary after both independent audits.
-        if verify_transform_evidence(build, result["source_sha256"], result["netlist_sha256"]) != (
-                reset_report, replica_report, page_report, stored_page_audit):
+        with netlist_path.open() as source:
+            netlist = json.load(source)
+        private_proof = json.loads(json.dumps(audit_private_rom(
+            pre_rom, netlist, weights.read_bytes(), rtl=rtl_path, cells_sim=cells_sim)))
+        del pre_rom
+        if any(stored_private_audit.get(key) != value for key, value in private_proof.items()):
+            raise RuntimeError("Replayed private-ROM proof differs from the stored independent audit")
+        if private_report.get("prewrite_audit") != private_proof:
+            raise RuntimeError("Private-ROM transform prewrite proof differs from the independently replayed audit")
+        result["private_rom"] = private_proof
+        result["private_rom"].update({"input_sha256": private_report["input_sha256"],
+            "output_sha256": private_report["output_sha256"],
+            "transform_report_sha256": sha256(build / "private_rom.json"),
+            "independent_report_sha256": sha256(build / "private_rom_audit.json"),
+            "transform_sha256": result["source_sha256"]["sway/hw/reference/replicate_private_rom.py"],
+            "checker_sha256": result["source_sha256"]["sway/hw/reference/check_private_rom.py"]})
+        # Recheck the complete file/hash boundary after all independent audits.
+        if verify_transform_evidence(build, result["source_sha256"], result["netlist_sha256"], weights, cells_sim) != (
+                reset_report, replica_report, page_report, stored_page_audit, private_report, stored_private_audit):
             raise RuntimeError("Transform evidence changed during independent verification")
         result["transform_chain"] = {"status": "pass", "raw_sha256": replica_report["input_sha256"],
-            "mid56_sha256": replica_report["output_sha256"], "final91_sha256": result["netlist_sha256"],
-            "stages_independently_replayed": ["address_ff_copies", "pure_high_page_decoder_copies"]}
+            "mid56_sha256": replica_report["output_sha256"], "pre_rom91_sha256": page_report["output_sha256"],
+            "final91_sha256": result["netlist_sha256"],
+            "stages_independently_replayed": ["address_ff_copies", "pure_high_page_decoder_copies", "private_rom_lut_trees"]}
         result["synthesis_cells"] = dict(sorted(Counter(cell["type"] for cell in netlist["modules"]["mkTop"]["cells"].values()).items()))
         mapping = result["affine_weight_mapping"]
         rtl_path = build / "mkTop.v"

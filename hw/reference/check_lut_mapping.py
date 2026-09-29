@@ -65,13 +65,18 @@ def inspect_mapping(netlist, rtl, report):
 
     replica_aliases, report["address_replicas"] = inspect_replicas(modules["mkTop"], rtl)
     page_copies = [name for name in cells if name.startswith("main_core_headHidden_engine_pageDecodeReplica_")]
-    if page_copies:
+    private_rom = [name for name in cells if name.startswith("main_core_headHidden_engine_privateRom_")]
+    if page_copies or private_rom:
         # The frozen address auditor predates decoder copying; its constant zero
         # metric describes only its original FF transform, not this netlist.
         report["address_replicas"].pop("coefficient_cells_duplicated", None)
         report["address_replicas"]["scope"] = "Same-cycle address FF identity, startup and coefficient observation boundary"
         report["page_decoder_copies"] = {"actual_cells": len(page_copies),
                                           "independent_transition_proof_required": "page_decoder_audit.json"}
+        if private_rom:
+            report["page_decoder_copies"]["audit_boundary"] = "mkTop.before_private_rom.json"
+            report["private_rom"] = {"actual_cells": len(private_rom),
+                                      "independent_transition_proof_required": "private_rom_audit.json"}
     report["engines"] = []
     all_cone_cells = set()
     for engine in ENGINES:

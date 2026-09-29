@@ -230,13 +230,18 @@ def check(args, report):
                         drivers.setdefault(bit, []).append((name, port))
     replica_aliases, report["address_replicas"] = inspect_replicas(module, args.rtl.read_text())
     page_copies = [name for name in cells if name.startswith("main_core_headHidden_engine_pageDecodeReplica_")]
-    if page_copies:
+    private_rom = [name for name in cells if name.startswith("main_core_headHidden_engine_privateRom_")]
+    if page_copies or private_rom:
         # The frozen address auditor's constant zero duplication metric applies
         # only to its original FF transform, not to this additional stage.
         report["address_replicas"].pop("coefficient_cells_duplicated", None)
         report["address_replicas"]["scope"] = "Same-cycle address FF identity, startup and coefficient observation boundary"
         report["page_decoder_copies"] = {"actual_cells": len(page_copies),
                                           "independent_transition_proof_required": "page_decoder_audit.json"}
+        if private_rom:
+            report["page_decoder_copies"]["audit_boundary"] = "mkTop.before_private_rom.json"
+            report["private_rom"] = {"actual_cells": len(private_rom),
+                                      "independent_transition_proof_required": "private_rom_audit.json"}
     patterns = address_patterns()
     binary_hashes = {}
     report["engines"] = []
