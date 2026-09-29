@@ -23,7 +23,8 @@
 * Environment Setup
   * Operating System: Linux with GNU Make, GCC/G++, and Python 3.
   * Compiler: Bluespec Compiler (BSC) with Bluesim.
-  * FPGA Tools: Yosys, nextpnr-ecp5, and ecppack.
+  * FPGA Tools: OSS CAD Suite **2026-07-11**, including Yosys **0.67+24 (`0e82bbefe`)**, nextpnr-ecp5 **0.10-82-g2b560ad0**, and ecppack **1.4-79-g56bb170**. The compatibility checks also retain the reviewed Yosys 0.33 primitive model.
+  * The reproduced RTL uses BSC **2025.07 (282e82e9)**.
 * Software Evaluation
   * Python 3.10 or newer, NumPy, and PyTorch.
   * Install the Python dependencies with `python -m pip install -r sw/requirements.txt`.
@@ -87,6 +88,13 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Placement and Routing
+  * The physical flow selects `synth_ecp5 -noabc9`; Yosys 0.67 otherwise defaults to ABC9. This changes combinational technology mapping without changing BSV, RTL, weights, precision, engine parallelism, pipeline stages, or clocks.
+  * The reported `physical-netlist` failure came from a checker that allowed only LUT/mux primitives between address FFs and coefficient outputs. Yosys also shares combinational `CCU2C` logic between the address incrementer and ROM decode. The revised auditor accepts the combinational primitive, keeps its complete input cone on the canonical address, and proves those cells remain identical after replication. Replica fan-out into control logic remains forbidden.
+  * Page-decoder copy counts are derived independently from the actual mapped decoder closure. Whole-netlist reversal, same-cycle FF identity/startup checks, and exhaustive coefficient comparisons remain mandatory. No coefficient RAM or additional register stage is introduced.
+  * `physical-netlist` checks all **139,264 addresses** (17 engines × 8,192 addresses), including zero padding, against frozen INT8 coefficients. It verifies the selected Yosys primitive model and its included files by SHA256. Set `YOSYS_CELLS_SIM=/absolute/path/to/ecp5/cells_sim.v` if the selected installation has no adjacent `yosys-config`.
+  * nextpnr `2b560ad0` computes the HeAP placement retry limit by squaring a signed cell count; this overflows for this design. `--placer-heap-cell-placement-timeout 0` disables that retry guard. Placement legality and the strict **100 MHz core / 25 MHz UART** timing constraints remain enabled.
+  * The supplied failing netlist passes the revised address/page audits and all **139,264 coefficient comparisons with zero mismatches**. The CCU2C evaluator also matches the official 0.67 model for **80,384 parameter/input cases**, with zero mismatches. These are functional/structural results.
+  * Routed timing for this toolchain is still under verification. Passing `physical-netlist` alone does not establish timing closure or successful bitstream generation.
   * ECP5 shares one reset signal across eight PFU registers. The physical build folds proven reset inversions into FF reset-polarity settings and merges identical reset-only LUTs, preserving effective reset behavior, data, clocks, and enables.
   * A pre-placement hook places the existing core-reset output FF near the fabric center to shorten reset distribution. Reset logic and release latency are unchanged; both the physical checker and independent audit verify the actual placed BEL.
 

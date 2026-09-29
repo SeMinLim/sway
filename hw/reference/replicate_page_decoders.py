@@ -21,7 +21,7 @@ from merge_reset_controls import atomic_json
 ENGINE = 'main_core_headHidden_engine'
 ADDRESS_PREFIX = ENGINE + '_addressReplica_'
 DECODER_PREFIX = ENGINE + '_pageDecodeReplica_'
-TYPES = {'LUT4', 'PFUMX', 'L6MUX21'}
+TYPES = {'LUT4', 'PFUMX', 'L6MUX21', 'CCU2C'}
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -88,6 +88,30 @@ def plan(module):
         raise RuntimeError('Expected unchanged single-lane operand tuple')
     for group, wire in enumerate(operand[1:9]):
         own(wire, group)
+    # Mappers may share carry terms with the canonical address incrementer.
+    # Preserve the carry cells and their entire combinational fan-in; only
+    # coefficient-private high-address decoder branches can be copied.
+    protected = set()
+    def protect(name):
+        if name in protected:
+            return
+        protected.add(name)
+        for port, direction in cells[name]['port_directions'].items():
+            if direction == 'input':
+                for source in cells[name]['connections'][port]:
+                    if source in roots or source in {'0', '1'}:
+                        continue
+                    if type(source) is not int or len(drivers[source]) != 1:
+                        raise RuntimeError('Undefined protected carry input')
+                    upstream = drivers[source][0][0]
+                    if upstream not in owners:
+                        raise RuntimeError('Protected carry fan-in escapes coefficient cone')
+                    protect(upstream)
+    for name in owners:
+        if cells[name]['type'] == 'CCU2C':
+            protect(name)
+    for name in protected:
+        owners[name] = 0
     @lru_cache(None)
     def support(wire):
         if wire in {'0','1'}:
@@ -107,8 +131,10 @@ def plan(module):
             for wire in cells[name]['connections'][port]))
         if dependencies and dependencies.issubset(range(8,13)):
             pure.add(name)
-    if len(pure) != 50 or any(owners[name] != 0 for name in pure):
-        raise RuntimeError('Pure high-address decoder boundary differs from reviewed input')
+    if not pure or pure & protected:
+        raise RuntimeError('Missing pure high-address decoder or overlap with protected carry fan-in')
+    if any(cells[name]['type'] not in {'LUT4', 'PFUMX'} for name in pure):
+        raise RuntimeError('Unreviewed high-address decoder primitive')
     constants = {drivers[source][0][0] for name in pure
                  for port, direction in cells[name]['port_directions'].items() if direction == 'input'
                  for source in cells[name]['connections'][port]
@@ -119,8 +145,6 @@ def plan(module):
                 or set(cell['connections']) != set('ABCDZ')
                 or any(cell['connections'][pin] != ['0'] for pin in 'ABCD')):
             raise RuntimeError('Unreviewed constant decoder branch')
-    if len(constants) != 25:
-        raise RuntimeError('Expected twenty-five zero-LUT decoder leaves')
     required = {}
     for group in range(1,8):
         needed = set()
@@ -219,12 +243,15 @@ def transform(before):
                     cell['connections'][port][index] = new
                     rewires.append({'cell':name,'port':port,'index':index,'group':group,'before':source,'after':new})
     counts = Counter(cells[item['name']]['type'] for item in additions)
-    if counts != {'TRELLIS_FF':35,'LUT4':342,'PFUMX':171}:
-        raise RuntimeError('Draft additions differ from reviewed bound: ' + repr(counts))
+    expected_counts = Counter(cells[name]['type'] for needed in required.values() for name in needed)
+    expected_counts['TRELLIS_FF'] = 35
+    if counts != expected_counts:
+        raise RuntimeError('Draft additions differ from the derived decoder closures: ' + repr(counts))
     return result, {'status':'transformed_independent_audit_required','added_cell_types':dict(sorted(counts.items())),
         'added_cells':len(additions),'added_nets':next_wire - min(value for item in additions for value in item['new_output_wires'].values()),
         'rewired_input_pins':len(rewires),'decoder_groups':{str(g):len(ns - constants) for g,ns in sorted(required.items())},
         'constant_leaf_groups':{str(g):len(ns & constants) for g,ns in sorted(required.items())},
+        'source_high_address_decoder_cells':len(pure),'source_constant_zero_luts':len(constants),
         'additions':additions,'rewires':rewires,'extra_coefficient_pipeline_cycles':0,
         'boundary':'Only pure high-address decode cells, their proven-zero LUT leaves and exact same-cycle high-address FF copies; existing truth-plane cells untouched'}
 

@@ -9,6 +9,7 @@ PREFIX = ENGINE + "_addressReplica_"
 GROUPS = 8
 WIDTH = 13
 LUT_TYPES = {"LUT4", "PFUMX", "L6MUX21"}
+COEFFICIENT_TYPES = LUT_TYPES | {"CCU2C"}
 FF_PARAMETERS = {"CEMUX": "CE", "CLKMUX": "CLK", "GSR": "DISABLED", "LSRMUX": "LSR",
                  "REGSET": "RESET", "SRMODE": "LSR_OVER_CE"}
 
@@ -26,7 +27,7 @@ def connectivity(module):
 
 
 def coefficient_owners(module, aliases):
-    """Each shared LUT remains single; its lowest dependent output bit owns it."""
+    """Lowest output owns shared logic; carry and its fan-in stay canonical."""
     cells, nets = module["cells"], module["netnames"]
     drivers, _ = connectivity(module)
     leaves = set(nets[ENGINE + "_addressR"]["bits"]) | set(aliases)
@@ -42,7 +43,7 @@ def coefficient_owners(module, aliases):
         if name in owners:
             return
         cell = cells[name]
-        if cell["type"] not in LUT_TYPES:
+        if cell["type"] not in COEFFICIENT_TYPES:
             raise RuntimeError("Foreign register or primitive in coefficient cone: " + name)
         owners[name] = group
         pending.add(name)
@@ -58,7 +59,46 @@ def coefficient_owners(module, aliases):
         visit(output, group)
     if not owners:
         raise RuntimeError("Missing coefficient output groups")
+    for name in protected_carry_cells(module, owners, aliases):
+        owners[name] = 0
     return owners
+
+
+def protected_carry_cells(module, owners, aliases):
+    """Preserve every coefficient carry and its complete combinational fan-in.
+
+    A mapped carry can feed both coefficient decoding and canonical address
+    next-state logic. Accepting it in backward discovery does not authorize
+    substituting replica Q into that shared state-update cone.
+    """
+    cells, nets = module["cells"], module["netnames"]
+    drivers, _ = connectivity(module)
+    leaves = set(nets[ENGINE + "_addressR"]["bits"]) | set(aliases)
+    protected, pending = set(), set()
+
+    def protect(name):
+        if name in pending:
+            raise RuntimeError("Shared-carry combinational fan-in cycle")
+        if name in protected:
+            return
+        if name not in owners or cells[name]["type"] not in COEFFICIENT_TYPES:
+            raise RuntimeError("Shared-carry fan-in escapes the coefficient cone")
+        pending.add(name)
+        for port, direction in cells[name]["port_directions"].items():
+            if direction == "input":
+                for wire in cells[name]["connections"][port]:
+                    if wire in leaves or wire in {"0", "1"}:
+                        continue
+                    if type(wire) is not int or len(drivers[wire]) != 1:
+                        raise RuntimeError("Undefined or multiply driven shared-carry fan-in")
+                    protect(drivers[wire][0][0])
+        pending.remove(name)
+        protected.add(name)
+
+    for name in owners:
+        if cells[name]["type"] == "CCU2C":
+            protect(name)
+    return protected
 
 
 def initialization_proof(module, rtl, canonical):
@@ -208,6 +248,7 @@ def inspect_replicas(module, rtl):
             raise RuntimeError("Unexpected replica net metadata")
         aliases[q[0]], copies[group, bit] = address[bit], q[0]
     owners = coefficient_owners(module, aliases)
+    protected = protected_carry_cells(module, owners, aliases)
     all_address = {wire: index for index, wire in enumerate(address)}
     all_address.update({copy: all_address[original] for copy, original in aliases.items()})
     for wire in aliases:
@@ -232,7 +273,10 @@ def inspect_replicas(module, rtl):
     fanout = {str(group): [len(users[copies[group, bit]]) if (group, bit) in copies else None
                            for bit in range(WIDTH)] for group in range(GROUPS)}
     return aliases, {"status": "pass", "replica_registers": len(aliases), "address_groups": GROUPS,
-                     "owned_lut_cells": dict(sorted(Counter(owners.values()).items())),
+                     "owned_lut_cells": dict(sorted(Counter(group for name, group in owners.items()
+                                                           if cells[name]["type"] in LUT_TYPES).items())),
+                     "owned_coefficient_cells": dict(sorted(Counter(owners.values()).items())),
+                     "protected_carry_cells": sorted(protected),
                      "coefficient_cells_duplicated": 0, "address_q_fanout_by_group": fanout,
                      "unused_replica_q_count": sum(not users[wire] for wire in aliases),
                      "observation_boundary": boundary, "initialization_and_induction": proof}
@@ -240,9 +284,17 @@ def inspect_replicas(module, rtl):
 
 def audit_transition(before, after, rtl):
     """Reverse only approved changes, then compare the entire JSON structure."""
+    original = before["modules"]["mkTop"]
+    original_owners = coefficient_owners(original, {})
+    protected = protected_carry_cells(original, original_owners, {})
+    for name in protected:
+        if after["modules"]["mkTop"]["cells"].get(name) != original["cells"][name]:
+            raise RuntimeError("Protected carry cell or fan-in changed: " + name)
     aliases, proof = inspect_replicas(after["modules"]["mkTop"], rtl)
     if not aliases:
         raise RuntimeError("Missing required address replicas")
+    if set(proof["protected_carry_cells"]) != protected:
+        raise RuntimeError("Protected carry cell set changed")
     restored = deepcopy(after)
     module = restored["modules"]["mkTop"]
     rewired = 0
@@ -263,6 +315,7 @@ def audit_transition(before, after, rtl):
     _, before_users = connectivity(before["modules"]["mkTop"])
     original_address = before["modules"]["mkTop"]["netnames"][ENGINE + "_addressR"]["bits"]
     proof.update({"original_address_q_fanout": [len(before_users[wire]) for wire in original_address],
+                  "protected_carry_cells_identical": "pass",
                   "whole_netlist_reverse_comparison": "pass", "rewired_coefficient_input_pins": rewired,
                   "other_cells_parameters_ports_nets_attributes": "byte-value identical"})
     return proof

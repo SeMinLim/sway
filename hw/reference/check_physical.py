@@ -20,7 +20,7 @@ import time
 import check_address_replicas
 from check_address_replicas import audit_transition
 from check_page_decoder_copies import FROZEN_ADDRESS_AUDITOR, audit as audit_page_decoders
-from place_core_reset import CORE_RESET_CELL, REPORT_PREFIX
+from place_core_reset import CORE_RESET_CELLS, REPORT_PREFIX
 from check_lut_mapping import STATE_BLOCK_RAM, inspect_mapping, inspect_state_block_ram
 
 
@@ -54,6 +54,7 @@ def source_hashes(hw, rootdir):
     sources = {"sway/hw/Makefile": hw / "Makefile",
                "sway/hw/reference/check_physical.py": Path(__file__).resolve(),
                "sway/hw/reference/check_lut_mapping.py": hw / "reference/check_lut_mapping.py",
+               "sway/hw/reference/check_mapped_weights.py": hw / "reference/check_mapped_weights.py",
                "sway/hw/reference/replicate_rom_address.py": hw / "reference/replicate_rom_address.py",
                "sway/hw/reference/check_address_replicas.py": hw / "reference/check_address_replicas.py",
                "sway/hw/reference/replicate_page_decoders.py": hw / "reference/replicate_page_decoders.py",
@@ -265,7 +266,11 @@ def verify_router_settings(placed_path, require_ripup):
     if set(design["modules"]) != {"top"}:
         raise RuntimeError("Expected one complete placed top module")
     settings = design["modules"]["top"]["settings"]
-    for key, value in (("router", "router1"), ("arch.name", "ecp5"), ("arch.type", "lfe5u_85f"),
+    # nextpnr 2b560ad0 serializes the unexpanded ARCHNAME macro. Device,
+    # package and speed below remain mandatory even for that release.
+    if settings.get("arch.name") not in {"ecp5", "ARCHNAME"}:
+        raise RuntimeError("Unexpected architecture name")
+    for key, value in (("router", "router1"), ("arch.type", "lfe5u_85f"),
                        ("arch.package", "CABGA381"), ("arch.speed", "6"), ("placer", "heap")):
         if settings.get(key) != value:
             raise RuntimeError("Unexpected resumed physical setting: " + key)
@@ -273,6 +278,8 @@ def verify_router_settings(placed_path, require_ripup):
         raise RuntimeError("Fixed-frequency timing-driven implementation required")
     if float(settings.get("target_freq", "nan")) != 100000000.0:
         raise RuntimeError("Resumed core frequency must remain 100 MHz")
+    if property_bool(settings.get("placerHeap/cellPlacementTimeout")) is not False:
+        raise RuntimeError("The overflowing per-cell placement retry guard must be disabled")
     strict_overrides = {}
     for key in ("timing/allowFail", "timing/ignoreLoops", "timing/ignoreRelClk"):
         value = settings.get(key)
@@ -284,6 +291,7 @@ def verify_router_settings(placed_path, require_ripup):
         raise RuntimeError("Checkpoint would disable timing-driven ripup")
     return {"router": settings["router"], "timing_driven": True, "target_freq_hz": 100000000,
             "router_tmg_ripup": None if ripup is None else True,
+            "cell_placement_retry_guard_disabled": True, "arch_name": settings["arch.name"],
             "ripup_key_absent_or_true": True, "actual_settings_verified": True,
             "strict_timing_overrides_disabled": strict_overrides,
             "arch_type": settings["arch.type"], "speed_grade": settings["arch.speed"],
@@ -320,6 +328,7 @@ def reuse_placement(previous, output, result):
                 "--detailed-timing-report"]
     if "--tmg-ripup" in original["command"]:
         expected.append("--tmg-ripup")
+    expected += ["--placer-heap-cell-placement-timeout", "0"]
     expected += ["--json", str(previous / "build/mkTop.json"), "--no-route", "--write", str(previous / "placed.json"),
                  "--pre-place", str(previous / "place_core_reset.py"), "--report", str(previous / "placement.json"),
                  "--log", str(previous / "placement.log")]
@@ -361,13 +370,17 @@ def reuse_placement(previous, output, result):
 def verify_reset_placement(console_log, placed_path):
     reports = [json.loads(line[len(REPORT_PREFIX):]) for line in console_log.splitlines()
                if line.startswith(REPORT_PREFIX)]
-    if len(reports) != 1 or reports[0].get("cell") != CORE_RESET_CELL:
+    if len(reports) != 1 or reports[0].get("cell") not in CORE_RESET_CELLS:
         raise RuntimeError("Missing or unexpected core-reset placement report")
     report = reports[0]
     placed = json.loads(placed_path.read_text())
-    matches = [(name, module["cells"][CORE_RESET_CELL])
+    matches = [(name, module["cells"][cell_name])
                for name, module in placed["modules"].items()
-               if CORE_RESET_CELL in module.get("cells", {})]
+               for cell_name in CORE_RESET_CELLS if cell_name in module.get("cells", {})]
+    if any(other in module.get("cells", {})
+           for module in placed["modules"].values()
+           for other in CORE_RESET_CELLS if other != report["cell"]):
+        raise RuntimeError("Placed reset cell differs from hook report")
     if len(matches) != 1:
         raise RuntimeError("Expected exactly one placed core-reset FF")
     module_name, cell = matches[0]
@@ -508,7 +521,8 @@ def main():
         placement_report = output / "placement.json"
         common = [result["tools"]["nextpnr"]["path"], "--85k", "--package", "CABGA381", "--speed", "6",
                   "--seed", "1", "--freq", "100", "--router", "router1", "--lpf", str(lpf),
-                  "--detailed-timing-report", "--tmg-ripup"]
+                  "--detailed-timing-report", "--tmg-ripup",
+                  "--placer-heap-cell-placement-timeout", "0"]
         command = [*common, "--json", str(netlist_path), "--no-route", "--write", str(placed_path),
                    "--pre-place", str(reset_hook), "--report", str(placement_report), "--log", str(placement_log)]
         placement = (reuse_placement(args.reuse_placement, output, result) if args.reuse_placement

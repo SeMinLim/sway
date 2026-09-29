@@ -4,12 +4,17 @@
 import json
 
 
-CORE_RESET_CELL = "clocks_coreReset.OUT_RST_TRELLIS_FF_Q"
+CORE_RESET_CELLS = ("clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+                    "clocks_coreReset.reset_hold_TRELLIS_FF_DI")
 REPORT_PREFIX = "SWAY_RESET_PLACEMENT "
 
 
 def constrain_core_reset(context):
-    cell = context.cells[CORE_RESET_CELL]
+    names = [name for name in CORE_RESET_CELLS if name in context.cells]
+    if len(names) != 1:
+        raise RuntimeError("Expected exactly one supported core-reset FF")
+    name = names[0]
+    cell = context.cells[name]
     if cell.type != "TRELLIS_FF":
         raise RuntimeError("Core-reset driver is not a TRELLIS_FF")
 
@@ -38,7 +43,7 @@ def constrain_core_reset(context):
     # The placer applies BEL at USER strength and checks complete tile legality.
     # No cell, connection, reset polarity, or clock constraint is changed here.
     cell.setAttr("BEL", bel)
-    return {"cell": CORE_RESET_CELL, "cell_type": cell.type, "bel": bel,
+    return {"cell": name, "cell_type": cell.type, "bel": bel,
             "location": [x, y, z], "ff_grid_bounds": [min_x, min_y, max_x, max_y],
             "center": [center_x2 / 2, center_y2 / 2], "ff_sites": len(sites),
             "available_ff_sites": len(available), "selection": "nearest-available-FF-to-grid-center"}

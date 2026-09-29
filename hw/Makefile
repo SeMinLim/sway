@@ -22,15 +22,32 @@ BSIM_CPPFILES :=
 BSIM_CXXFLAGS := -Xc++ -O1
 POST_RUN = $(PYTHON) "$(PROJECT_DIR)/reference/check_sim.py" system.log --output "$(RESULTS_DIR)/$(SIM_BACKEND).json" --backend "$(SIM_BACKEND)" --stderr output.log && cp system.log "$(RESULTS_DIR)/$(SIM_BACKEND).log"
 BSC_RUNTIME_DIR ?= $(shell $(BSC) -help 2>/dev/null | sed -n 's/^Bluespec directory: //p')/Verilog
+# Use the primitive models belonging to the selected Yosys installation.
+YOSYS_CELLS_SIM ?= $(shell \
+ executable=$$(command -v "$(firstword $(YOSYS))"); \
+ config="$$(dirname "$$executable")/yosys-config"; \
+ if test -n "$$executable" && test -x "$$config"; then \
+  printf '%s/ecp5/cells_sim.v' "$$("$$config" --datdir)"; \
+ elif test "$$(readlink -f "$$executable" 2>/dev/null)" = /usr/bin/yosys; then \
+  printf '%s' /usr/share/yosys/ecp5/cells_sim.v; \
+ fi)
 
 ifeq ($(wildcard $(ROOTDIR)/build.mk),)
 $(error blueYosys not found at $(ROOTDIR). Set ROOTDIR=/absolute/path/to/blueyosys)
 endif
 include $(ROOTDIR)/build.mk
 
+# Yosys 0.67 defaults to ABC9; 0.33 already uses legacy ABC and has no flag.
+# synth_ecp5 delegates its help to synth_lattice in current Yosys releases.
+YOSYS_NOABC9 := $(if $(findstring -noabc9,$(shell $(YOSYS) -Q -T -p 'help synth_ecp5; help synth_lattice' 2>/dev/null)),-noabc9)
+override BOARD_YOSYS_FLAGS += $(YOSYS_NOABC9)
+
 # Keep the normal build and the physical verification runner on the same flow.
 BOARD_PNR_FLAGS += --router router1 --speed 6 --seed 1 --freq 100
 BOARD_PNR_FLAGS += --tmg-ripup
+# nextpnr 2b560ad0 squares the cell count in a signed int in this retry guard.
+# Zero disables that guard, while placement legality and strict timing remain.
+BOARD_PNR_FLAGS += --placer-heap-cell-placement-timeout 0
 BOARD_PNR_FLAGS += --pre-place "$(PROJECT_DIR)/reference/place_core_reset.py"
 
 # The BSC Icarus link script reads this environment variable for local primitives.
@@ -61,11 +78,14 @@ netlist: runtime-rtl
 # arbitrary LUT merging would invalidate dedicated PFUMX/L6MUX21 structures.
 .PHONY: physical-netlist
 physical-netlist: netlist
+	test -n "$(YOSYS_CELLS_SIM)" -a -f "$(YOSYS_CELLS_SIM)"
 	$(PYTHON) "$(PROJECT_DIR)/reference/merge_reset_controls.py" "$(JSON_NETLIST)" --report "$(BUILD_DIR)/reset_merge.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_rom_address.py" "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --before "$(BUILD_DIR)/mkTop.before_address_replicas.json" --report "$(BUILD_DIR)/address_replicas.json"
 	# Each coefficient output group gets its own purely combinational page decode.
 	# Preserve the 56-address-copy netlist so both transformation stages are audited.
 	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_page_decoders.py" "$(JSON_NETLIST)" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --rtl "$(BUILD_DIR)/mkTop.v" --report "$(BUILD_DIR)/page_decoders.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_page_decoder_copies.py" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --after "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --address-auditor "$(PROJECT_DIR)/reference/check_address_replicas.py" --report "$(BUILD_DIR)/page_decoder_audit.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_lut_mapping.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --output "$(BUILD_DIR)/lut_mapping.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_mapped_weights.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --export "$(PROJECT_DIR)/model/export" --cells-sim "$(YOSYS_CELLS_SIM)" --output "$(BUILD_DIR)/mapped_weights.json"
 
 pnr: physical-netlist

@@ -18,8 +18,9 @@ from pathlib import Path
 ENGINE = 'main_core_headHidden_engine'
 ADDRESS_PREFIX = ENGINE + '_addressReplica_'
 DECODER_PREFIX = ENGINE + '_pageDecodeReplica_'
-FROZEN_ADDRESS_AUDITOR = 'a321b96002a291ca939494004e2ca06fd9d4d8d465caae67614e531b21c279d2'
+FROZEN_ADDRESS_AUDITOR = '8e4e9c140c524553287b5cf43b10de1fc70d11cb69baeed94d53112605c29832'
 LUT_TYPES = {'LUT4', 'PFUMX', 'L6MUX21'}
+COEFFICIENT_TYPES = LUT_TYPES | {'CCU2C'}
 HIGH_BITS = frozenset(range(8, 13))
 def require(condition, message):
     if not condition:
@@ -67,7 +68,7 @@ def derive_plan(module, aliases):
         require(name not in pending, 'Combinational coefficient cycle')
         if name in owners:
             return
-        require(cells[name]['type'] in LUT_TYPES, 'Foreign primitive in coefficient cone: ' + name)
+        require(cells[name]['type'] in COEFFICIENT_TYPES, 'Foreign primitive in coefficient cone: ' + name)
         owners[name] = group
         pending.add(name)
         for port, direction in cells[name]['port_directions'].items():
@@ -78,6 +79,30 @@ def derive_plan(module, aliases):
 
     for group, wire in enumerate(operand[1:9]):
         visit(wire, group)
+    # Carry outputs can also feed the canonical address incrementer. Preserve
+    # those cells and their entire combinational fan-in as canonical group 0.
+    protected = set()
+
+    def protect(name):
+        if name in protected:
+            return
+        protected.add(name)
+        for port, direction in cells[name]['port_directions'].items():
+            if direction == 'input':
+                for wire in cells[name]['connections'][port]:
+                    if wire in roots or wire in ('0', '1'):
+                        continue
+                    require(type(wire) is int and len(drivers[wire]) == 1,
+                            'Undefined shared-carry fan-in')
+                    source = drivers[wire][0][0]
+                    require(source in owners, 'Shared-carry fan-in escapes coefficient cone')
+                    protect(source)
+
+    for name in owners:
+        if cells[name]['type'] == 'CCU2C':
+            protect(name)
+    for name in protected:
+        owners[name] = 0
     dependencies, active = {}, set()
 
     def deps(wire):
@@ -102,6 +127,10 @@ def derive_plan(module, aliases):
     for wire in operand[1:9]:
         deps(wire)
     pure = {name for name, dependency in dependencies.items() if dependency and dependency <= HIGH_BITS}
+    require(pure, 'Missing pure high-address decoder cells')
+    require(not pure & protected, 'Shared-carry fan-in cannot be copied as a page decoder')
+    require(all(cells[name]['type'] in {'LUT4', 'PFUMX'} for name in pure),
+            'Unexpected original high-page decoder primitive classes')
     constant_cells = {drivers[wire][0][0] for name in pure
                       for port, direction in cells[name]['port_directions'].items() if direction == 'input'
                       for wire in cells[name]['connections'][port]
@@ -120,10 +149,6 @@ def derive_plan(module, aliases):
         require(type(wire) is int and drivers[wire] == [(name, 'Z', 0)],
                 'Constant decoder leaf must have one uniquely driven scalar output')
         constant_outputs[wire] = name
-    require(len(constant_cells) == 25, 'The reviewed decoder has exactly twenty-five zero LUT4 leaves')
-    require(len(pure) == 50, 'The reviewed mapped design has exactly fifty pure-high decoder cells')
-    require(Counter(cells[name]['type'] for name in pure) == Counter({'LUT4': 25, 'PFUMX': 25}),
-            'Unexpected original high-page decoder primitive classes')
     require(all(drivers[wire][0][0] not in pure for wire in operand[1:9]),
             'A coefficient output itself is a high-only truth function')
     pure_outputs = {}
@@ -163,14 +188,18 @@ def derive_plan(module, aliases):
                     if wire in pure_outputs:
                         include(group, pure_outputs[wire])
                         borders.append((name, port, index, wire, group))
-    require({group: len(names) for group, names in groups.items()} == {**{i: 75 for i in range(1, 7)}, 7: 63},
-            'Unexpected independently derived per-consumer decoder closure')
-    require({group: len(names & constant_cells) for group, names in groups.items()}
-            == {**{i: 25 for i in range(1, 7)}, 7: 21},
-            'Unexpected independently derived constant-leaf closure')
+    for group, selected in groups.items():
+        require(selected, 'Missing independently derived decoder closure for group ' + str(group))
+        high_inputs = {roots[wire] for name in selected
+                       for port, direction in cells[name]['port_directions'].items() if direction == 'input'
+                       for wire in cells[name]['connections'][port] if wire in roots}
+        require(high_inputs == HIGH_BITS, 'Expected all five high-address inputs per decoder group')
+    require(all(name not in protected for name, _, _, _, _ in borders),
+            'Page decoder rewiring reaches shared carry or its fan-in')
     return {'address': address, 'owners': owners, 'pure': pure, 'pure_outputs': pure_outputs,
             'groups': groups, 'borders': borders, 'drivers': drivers, 'dependencies': dependencies,
-            'constant_outputs': constant_outputs, 'constant_cells': constant_cells}
+            'constant_outputs': constant_outputs, 'constant_cells': constant_cells,
+            'protected': protected}
 
 
 def evaluate_high_only(module, roots, output, page, cache, pending):
@@ -228,8 +257,11 @@ def audit(before, after, rtl, address_auditor):
     high_names = {(group, bit): ADDRESS_PREFIX + str(group) + '_' + str(bit)
                   for group in range(1, 8) for bit in HIGH_BITS}
     require(additions == set(names.values()) | set(high_names.values()), 'Unexpected/missing decoder or high-address FF additions')
-    require(Counter(new['cells'][name]['type'] for name in names.values()) == Counter({'LUT4': 342, 'PFUMX': 171}),
-            'Expected513 decoder copies including171 private constant-zero leaves')
+    expected_types = Counter(cells[source]['type'] for _, source in names)
+    require(Counter(new['cells'][name]['type'] for name in names.values()) == expected_types,
+            'Decoder copy primitive counts differ from independently derived source closure')
+    for name in plan['protected']:
+        require(new['cells'][name] == cells[name], 'Protected carry cell or fan-in changed: ' + name)
     high_q, mapped_outputs, output_mapping = {}, {}, {}
     allocated = set()
     old_bits = {wire for cell in cells.values() for bits in cell['connections'].values() for wire in bits if type(wire) is int}
@@ -327,7 +359,7 @@ def audit(before, after, rtl, address_auditor):
     return {'status': 'pass', 'engine': ENGINE,
             'source_decoder_cells': len(plan['pure']) + len(plan['constant_cells']),
             'source_high_address_decoder_cells': len(plan['pure']),
-            'copied_decoder_cells': len(names), 'copied_primitives': {'LUT4': 342, 'PFUMX': 171},
+            'copied_decoder_cells': len(names), 'copied_primitives': dict(sorted(expected_types.items())),
             'copied_high_address_decoder_cells': sum(name in plan['pure'] for _, name in names),
             'copied_constant_zero_luts': sum(name in plan['constant_cells'] for _, name in names),
             'added_high_address_ffs': len(high_names), 'existing_low_address_ffs': len(old_aliases),
@@ -335,6 +367,7 @@ def audit(before, after, rtl, address_auditor):
             'decoder_cells_per_consumer_group': {str(g): len(v) for g, v in plan['groups'].items()},
             'rewired_original_coefficient_inputs': len(plan['borders']),
             'retained_constant_zero_luts': len(plan['constant_cells']),
+            'protected_carry_cells': sorted(plan['protected']), 'protected_carry_cells_identical': True,
             'allowed_decoder_address_bits': sorted(HIGH_BITS), 'low_address_dependent_cells_copied': 0,
             'whole_netlist_reverse_comparison': 'pass', 'extra_weight_pipeline_cycles': 0,
             'scalar_decoder_truth': {'status': 'pass', 'page_addresses': 32, 'output_comparisons': comparisons,
