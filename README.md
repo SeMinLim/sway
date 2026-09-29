@@ -10,9 +10,6 @@
   * `bsv/`: compute modules and parallelism settings.
   * `model/` & `generated/`: frozen checkpoint, parameter tables, and reference outputs.
   * `sim/` & `reference/`: testbenches, integer reference, and verification scripts.
-  * `results/baseline/`: historical validation and synthesis results.
-  * `results/physical-native/final/`: historical SRAM-weight physical results.
-  * `results/lut-rom/`: current LUT-ROM implementation and validation evidence.
 * sw/
   * Model implementation, training, quantization, and evaluation scripts.
   * `config/`: model settings and reconstruction choices.
@@ -27,7 +24,6 @@
   * Operating System: Linux with GNU Make, GCC/G++, and Python 3.
   * Compiler: Bluespec Compiler (BSC) with Bluesim.
   * FPGA Tools: Yosys, nextpnr-ecp5, and ecppack.
-  * Validation uses BSC 2026.01, Yosys 0.33, nextpnr `1aea87ab`, and blueYosys `3663e87b88146c248919923ea952e025944ca3e0`.
 * Software Evaluation
   * Python 3.10 or newer, NumPy, and PyTorch.
   * Install the Python dependencies with `python -m pip install -r sw/requirements.txt`.
@@ -68,7 +64,7 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 | 4 (Default) | 1 | 1 |
 
 * Run `make -C hw clean` and rebuild after changing the divisor. Parameter tables do not need regeneration.
-* Physical validation targets divisor 4. Divisors 1, 2, and 4 are covered by functional simulation.
+* Physical validation targets divisor 4. The functional regression checks divisors 1, 2, and 4.
 
 ## Software model
 
@@ -88,13 +84,10 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
   * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 * Hardware Verification
   * The regression checks all three lane settings against the same 14-frame / 798-coordinate fixtures, using both source/sink stalls and continuous kernel input. A separate test resets the active kernel and checks a complete restart.
-  * The unchanged `requantN` has recorded coverage of **329,988** rounding/saturation cases and a [formal equivalence proof](hw/results/baseline/equivalence/report.json) covering every input in **402 width/shift combinations**.
-  * Run `python3 hw/reference/check_refactor.py --backend iverilog --skip-arithmetic --output /tmp/sway-rtl` for the lane/stall matrix and `python3 hw/reference/check_warm_reset.py --output /tmp/sway-reset` for reset recovery. Current source identities and cycle counts are in the [functional report](hw/results/lut-rom/functional-summary.json).
+  * Run `python3 hw/reference/check_refactor.py --backend iverilog --skip-arithmetic --output /tmp/sway-rtl` for the lane/stall matrix and `python3 hw/reference/check_warm_reset.py --output /tmp/sway-reset` for reset recovery.
   * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
   * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
 * Hardware Placement and Routing
-  * The current LUT-ROM implementation passes strict routed timing at core **100.331093 MHz / 100 MHz required** and UART **114.639465 MHz / 25 MHz required** on ULX3S-85F (speed 6, divisor 4). It uses **57,540 FF**, **46,736 TRELLIS_COMB**, and **45 DSP**; affine weights use **zero block RAM**, while the two scan-state blocks remain. See the [verification report](hw/results/lut-rom/verification.md) and [physical summary](hw/results/lut-rom/physical-summary.json).
-  * The previous SRAM-weight implementation passed at core **101.502228 MHz / 100 MHz required** and UART **118.595825 MHz / 25 MHz required**. Its [historical evidence](hw/results/physical-native/final/README.md) does not validate the current LUT-ROM implementation.
   * ECP5 shares one reset signal across eight PFU registers. The physical build folds proven reset inversions into FF reset-polarity settings and merges identical reset-only LUTs, preserving effective reset behavior, data, clocks, and enables.
   * A pre-placement hook places the existing core-reset output FF near the fabric center to shorten reset distribution. Reset logic and release latency are unchanged; both the physical checker and independent audit verify the actual placed BEL.
   * `python3 hw/reference/check_physical.py --rootdir /path/to/blueyosys --output /tmp/sway-physical` runs full `mkTop` synthesis and strict placement/routing with router1, a 100 MHz core, and a 25 MHz UART clock. It restores both clock constraints when routing the placed checkpoint and records source hashes, tools, resource use, timing, and raw logs. All 17 affine coefficient cones must contain only combinational LUT logic; the two existing scan-state block RAMs remain separate.
