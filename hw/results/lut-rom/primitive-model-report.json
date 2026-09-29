@@ -1,0 +1,617 @@
+{
+  "status": "pass",
+  "method": "Python cell_values bit-parallel evaluator vs Icarus execution of unmodified official Yosys ECP5 cells_sim.v",
+  "checker_sha256": "b7d8d461475c1eec6d74b9645f83708b8a270001f8ff72a3ad891a7b0b56c416",
+  "cell_library_sha256": "23c1d1d35b5bd9ba5a07e17cf7d5c07fe7b6840e1deb6c2f746c3f430b4cec54",
+  "actual_parameter_sources": [
+    {
+      "path": "lut-physical-replicas/build/mkTop.json",
+      "sha256": "2fd8f7443e9d7264aaf5408fe68ecb7055e4e6b8b6fedaceb0f39aacb968bd98",
+      "ccu2c_instances": 1677,
+      "ccu2c_parameter_sets": [
+        {
+          "INIT0": "1001011010101010",
+          "INIT1": "1001011010101010",
+          "INJECT1_0": "NO",
+          "INJECT1_1": "NO"
+        }
+      ]
+    }
+  ],
+  "actual_ccu2c_parameter_sets": [
+    {
+      "INIT0": "1001011010101010",
+      "INIT1": "1001011010101010",
+      "INJECT1_0": "NO",
+      "INJECT1_1": "NO"
+    }
+  ],
+  "cases": 61,
+  "input_combinations_checked": 19312,
+  "mismatches": 0,
+  "results": [
+    {
+      "cell": "LUT4",
+      "parameters": {},
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "1111111111111111"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "1010010110100101"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "1001011010101010"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0110100110010110"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000000001"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000000010"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000000100"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000001000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000010000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000000100000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000001000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000010000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000000100000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000001000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000010000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0000100000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0001000000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0010000000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "0100000000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "LUT4",
+      "parameters": {
+        "INIT": "1000000000000000"
+      },
+      "input_combinations": 16,
+      "status": "pass"
+    },
+    {
+      "cell": "PFUMX",
+      "parameters": {},
+      "input_combinations": 8,
+      "status": "pass"
+    },
+    {
+      "cell": "L6MUX21",
+      "parameters": {},
+      "input_combinations": 8,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1001011010101010",
+        "INIT1": "1001011010101010",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {},
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT1": "1"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INJECT1_0": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0000000000000000",
+        "INIT1": "0000000000000000",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0000000000000000",
+        "INIT1": "0000000000000000",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0000000000000000",
+        "INIT1": "0000000000000000",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0000000000000000",
+        "INIT1": "0000000000000000",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1111111111111111",
+        "INIT1": "1111111111111111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1111111111111111",
+        "INIT1": "1111111111111111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1111111111111111",
+        "INIT1": "1111111111111111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1111111111111111",
+        "INIT1": "1111111111111111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1001011010101010",
+        "INIT1": "1001011010101010",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1001011010101010",
+        "INIT1": "1001011010101010",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1001011010101010",
+        "INIT1": "1001011010101010",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0110100110010110",
+        "INIT1": "1010010111110000",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0110100110010110",
+        "INIT1": "1010010111110000",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0110100110010110",
+        "INIT1": "1010010111110000",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0110100110010110",
+        "INIT1": "1010010111110000",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000000110110",
+        "INIT1": "1011000011001110",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000000110110",
+        "INIT1": "1011000011001110",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000000110110",
+        "INIT1": "1011000011001110",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000000110110",
+        "INIT1": "1011000011001110",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011000100010001",
+        "INIT1": "1100001100100111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011000100010001",
+        "INIT1": "1100001100100111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011000100010001",
+        "INIT1": "1100001100100111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011000100010001",
+        "INIT1": "1100001100100111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000001011101",
+        "INIT1": "0101110111000111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000001011101",
+        "INIT1": "0101110111000111",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000001011101",
+        "INIT1": "0101110111000111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "1010000001011101",
+        "INIT1": "0101110111000111",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011101101010111",
+        "INIT1": "0000000100101101",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011101101010111",
+        "INIT1": "0000000100101101",
+        "INJECT1_0": "YES",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011101101010111",
+        "INIT1": "0000000100101101",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "YES"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    },
+    {
+      "cell": "CCU2C",
+      "parameters": {
+        "INIT0": "0011101101010111",
+        "INIT1": "0000000100101101",
+        "INJECT1_0": "NO",
+        "INJECT1_1": "NO"
+      },
+      "input_combinations": 512,
+      "status": "pass"
+    }
+  ],
+  "test_script_sha256": "3187895bd2889ae2e47c04acb22acb0ea9a21a57bf0bf3dd08ca4d9bd0c83da9",
+  "testbench_sha256": "156a9693786c5abb8bfc5a81f0bf6b12ff28d659c7aa546713d9d16239f985e5",
+  "simulation_log_sha256": "d2d466da7140dfee9166d0c3fa890630cff3f04f9f3433fadb8e48dac44166bc",
+  "iverilog_version": "Icarus Verilog version 12.0 (stable) ()",
+  "iverilog_sha256": "a6071e4b4a68feafca0c8ee0e6aa275eee9a43a108c62801cfd1eca6eab6d8a3",
+  "vvp_version": "Icarus Verilog runtime version 12.0 (stable) ()",
+  "vvp_sha256": "a10bd7d4a0850308ac8c2c98115b6a3084f9be978307610f2a521190c28f4023"
+}

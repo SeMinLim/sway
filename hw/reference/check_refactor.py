@@ -209,7 +209,6 @@ def main():
                       *ROOT.joinpath("generated").glob("*.bsv"),
                       *ROOT.joinpath("sim").glob("*.bsv"),
                       *ROOT.joinpath("rtl").glob("*.v"),
-                      *ROOT.joinpath("generated/linear_rom").glob("*.hex"),
                       ROOT / "generated/test_input.hex", ROOT / "generated/test_expected.hex",
                       ROOT / "reference/check_sim.py", Path(__file__).resolve()])
     result = {"status": "running", "compiler": bsc,

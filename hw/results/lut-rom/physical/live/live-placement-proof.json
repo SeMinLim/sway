@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "phase": "pre-route",
+  "scope": "Live graph and placement identity only; final routing completion and clock timing are separate checks.",
+  "input_paths": {
+    "packed_graph": "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/packed.json",
+    "observed_bels": "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/observed_bels.json",
+    "hook": "/workspace/scratch/62d002c09fd9/verify_live_placement.py"
+  },
+  "input_sha256": {
+    "packed_graph": "107b0bfe19a059ded35bfe62be6303ef03ebb0576a0e5bcc2222b0bde2de9f5f",
+    "observed_bels": "55029bec8e457695188d7c7c2965f50fce40cd86999dbfa8c2dbc71e71f7dc99",
+    "hook": "1a2a52672c92c671c9e3323db8d8ee61136cd2060c4adf7be36dd5fb508c2faa"
+  },
+  "topology": {
+    "status": "pass",
+    "cells": 104869,
+    "bijective_wires": 123513,
+    "top_scalar_io_pads": 11,
+    "connected_port_entries": 485302,
+    "disconnected_port_entries": 205925,
+    "comparison": "Exact named cell/type/parameters/primitive port shape/direction/connectivity, plus all eleven top IO cell directions/pad nets/BELs, with bijective reference-wire to live-net-name mapping",
+    "top_interface_evidence": "Pinned live API omits ctx.ports. Reference top-port metadata is bound to its exact TRELLIS_IO DIR/B connection; all eleven live pad net names and physical IO locations match."
+  },
+  "placement": {
+    "status": "pass",
+    "exact_bel_count": 104869,
+    "unique_bels": 104869,
+    "no_cell_moved": true,
+    "actual_bels_sha256": "1804a6c4c35bdc33a0ee5701d25d7764227d71c06131a159352aa7c70dc17af4"
+  },
+  "physical_settings_evidence": "Pinned live API omits ctx.settings. Runner must bind the explicit same-process CLI and strict final 100/25 MHz timing; this hook does not claim a settings snapshot.",
+  "clock_targets_mhz": {
+    "$glbnet$clocks_pll_clk_100mhz": 100.0,
+    "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": 25.0
+  },
+  "clock_action": "Restore exact global clocks before routing",
+  "inputs_unchanged": true
+}

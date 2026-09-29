@@ -1,0 +1,2 @@
+SWAY_REFACTOR_PASS divisor=4 mode=stress outputs=798
+SWAY_REFACTOR_PASS divisor=4 mode=kernel outputs=798

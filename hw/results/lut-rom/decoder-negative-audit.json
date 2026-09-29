@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "input_paths": {
+    "before": "/workspace/scratch/58b69de06207/lut-physical-decoder/build/mkTop.before_page_decoders.json",
+    "after": "/workspace/scratch/62d002c09fd9/decoder-constants-gate/mkTop.json",
+    "rtl": "/workspace/scratch/58b69de06207/lut-physical-decoder/build/mkTop.v",
+    "checker": "/workspace/scratch/62d002c09fd9/sway-lut-decoder-constants/hw/reference/check_page_decoder_copies.py",
+    "address_auditor": "/workspace/scratch/62d002c09fd9/sway-lut-decoder-constants/hw/reference/check_address_replicas.py"
+  },
+  "input_sha256": {
+    "before": "2fd8f7443e9d7264aaf5408fe68ecb7055e4e6b8b6fedaceb0f39aacb968bd98",
+    "after": "aed54f7a3dc56a22d8cf657129135a56c4a81e34e6c937b04da48784df2e5b74",
+    "rtl": "3ead12c7da26c3c7533464b46ca447b946f463486a8d79691d6345b7c665f8ff",
+    "checker": "f9acd5e8555789d8aaf285e446e931edec8d9575f872154022d9d25192790921",
+    "address_auditor": "a321b96002a291ca939494004e2ca06fd9d4d8d465caae67614e531b21c279d2"
+  },
+  "baseline_audit_report": "/workspace/scratch/62d002c09fd9/decoder-constants-gate/audit.json",
+  "baseline_audit_report_sha256": "4a6f9284b663f41973e375da4fd071d937682bec3ff9d2cb24e48f488cface8f",
+  "cases": [
+    {
+      "case": "copied_constant_init",
+      "status": "pass",
+      "rejected": true,
+      "rejection": "Decoder INIT/inputs/attributes differ: main_core_headHidden_engine_pageDecodeReplica_1_zero_0",
+      "mutation": {
+        "cell": "main_core_headHidden_engine_pageDecodeReplica_1_zero_0",
+        "field": "parameters.INIT",
+        "before": "0000000000000000",
+        "after": "0000000000000001"
+      }
+    },
+    {
+      "case": "shared_constant_leaf",
+      "status": "pass",
+      "rejected": true,
+      "rejection": "Decoder INIT/inputs/attributes differ: main_core_headHidden_engine_pageDecodeReplica_1_0",
+      "mutation": {
+        "cell": "main_core_headHidden_engine_pageDecodeReplica_1_0",
+        "port": "BLUT",
+        "before": 122234,
+        "after": 25399,
+        "private_constant_cell": "main_core_headHidden_engine_pageDecodeReplica_1_zero_0",
+        "shared_original_constant_cell": "IF_main_core_headHidden_engine_addressR_2860_B_ETC___d13258_L6MUX21_Z_1_SD_PFUMX_Z_1_C0_PFUMX_Z_BLUT_LUT4_Z"
+      }
+    },
+    {
+      "case": "unexpected_extra_cell",
+      "status": "pass",
+      "rejected": true,
+      "rejection": "Unexpected/missing decoder or high-address FF additions",
+      "mutation": {
+        "added_cell": "negative_audit_extra_cell"
+      }
+    },
+    {
+      "case": "unrelated_original_modification",
+      "status": "pass",
+      "rejected": true,
+      "rejection": "Unapproved change outside exact decoder/FF additions and derived coefficient input pins",
+      "mutation": {
+        "cell": "CASE_channel6103_0_main_core_block0_normalizat_ETC__q1741_LUT4_Z",
+        "field": "attributes.negative_audit_mutation",
+        "after": "1"
+      }
+    }
+  ],
+  "inputs_unchanged": true,
+  "source_edits": false
+}

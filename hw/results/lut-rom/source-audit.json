@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "base_commit": "ca7f3d370063af269caf8447d3a797783e79802d",
+  "scope": "Source identity and parameter equivalence; physical mapping/timing is checked separately.",
+  "parameter_equivalence": {
+    "method": "Discard two header comment lines and remove exactly one linearWeightFile function from the base; all remaining parameter source bytes equal.",
+    "normalized_sha256": "532760ca96b651a42d3b103be854977d32b9ea36b67b089cdb66692f381afbfd",
+    "truth_planes_biases_scales_nonlinear_tables_unchanged": true
+  },
+  "dedicated_affine_engines": 17,
+  "affine_instantiations_unchanged": true,
+  "synchronous_affine_memory_api_removed": true,
+  "input_weight_metadata_atomic_enqueue": true,
+  "preserved_arithmetic_sources": {
+    "hw/bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+    "hw/bsv/SwayMultiply.bsv": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+    "hw/bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+    "hw/bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+    "hw/bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+    "hw/rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30",
+    "hw/reference/integer_model.py": "523bb8c5b25e8d3bcefe4f07d6dbf1e51caf63a169b367f36cf6a98f396bc863"
+  },
+  "generated_and_generator_hashes_verified": true,
+  "physical_source_sha256": {
+    "sway/hw/HwMain.bsv": "4a2a3ddb9cb8a6ce9e15658d56f768b7e1e7fee279055a9dca389bfb942c02cc",
+    "sway/hw/Makefile": "7600a460d4a416f203bd21318786a243852fd35716c5f1bb6c609123356b4b27",
+    "sway/hw/Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
+    "sway/hw/bsv/SwayBaseline.bsv": "e1e575e7b69fbefff3b370a607ba8a665537ba2cf5f622c2eee3e4638b644e32",
+    "sway/hw/bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+    "sway/hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "sway/hw/bsv/SwayLinear.bsv": "4ef45c4d9e25f1846fdbdb630f829b308ca3c82d70379da8d94e5d741380ec7a",
+    "sway/hw/bsv/SwayMultiply.bsv": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+    "sway/hw/bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+    "sway/hw/bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+    "sway/hw/bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+    "sway/hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "sway/hw/generated/SwayParameters.bsv": "504e08b81b59da7356fd86123e91cb6078472a2d551b9f3528e0baff26f57b06",
+    "sway/hw/generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "sway/hw/generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "sway/hw/reference/check_address_replicas.py": "a321b96002a291ca939494004e2ca06fd9d4d8d465caae67614e531b21c279d2",
+    "sway/hw/reference/check_lut_mapping.py": "447e22bd3875d90d00fbf907c9c1a3acddedb872e0a76648e9d283c3b4b8687d",
+    "sway/hw/reference/check_page_decoder_copies.py": "f9acd5e8555789d8aaf285e446e931edec8d9575f872154022d9d25192790921",
+    "sway/hw/reference/check_physical.py": "9e047104e1ceddaf1d97d219a9550fe209efd9552d625e0f94f496fdb5cf3a78",
+    "sway/hw/reference/merge_reset_controls.py": "f85d7bdf51295743a4687ac0504da0de647160a723924365cd2c8d34bf78e5df",
+    "sway/hw/reference/place_core_reset.py": "dddc65411e5ac0e97d45c88305da62efccba400d68745009506b5add62d892d1",
+    "sway/hw/reference/replicate_page_decoders.py": "538304101afa02e6a9fe29503af95f337a2474848cdd401f0164ef898d24664c",
+    "sway/hw/reference/replicate_rom_address.py": "bd7c716c804b91b6f0bf0b81aaf55cd678da2756bd706625b5550e9b3a8e1eb3",
+    "sway/hw/rtl/BRAM1Load.v": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
+    "sway/hw/rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30"
+  }
+}

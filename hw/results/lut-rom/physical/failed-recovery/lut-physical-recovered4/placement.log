@@ -1,0 +1,125 @@
+Info: constraining clock net 'CLK_clk_25mhz' to 25.00 MHz
+Warning: net 'pll_clk_100mhz' does not exist in design, ignoring clock constraint
+Warning: net 'pll_clk_125mhz' does not exist in design, ignoring clock constraint
+
+Info: Logic utilisation before packing:
+Info:     Total LUT4s:     45650/83640    54%
+Info:         logic LUTs:  39104/83640    46%
+Info:         carry LUTs:   3354/83640     4%
+Info:           RAM LUTs:   2128/10455    20%
+Info:          RAMW LUTs:   1064/20910     5%
+
+Info:      Total DFFs:     57540/83640    68%
+
+Info: Packing IOs..
+Info: pin 'led[7]$tr_io' constrained to Bel 'X0/Y41/PIOD'.
+Info: pin 'led[6]$tr_io' constrained to Bel 'X0/Y38/PIOD'.
+Info: pin 'led[5]$tr_io' constrained to Bel 'X0/Y44/PIOD'.
+Info: pin 'led[4]$tr_io' constrained to Bel 'X0/Y38/PIOB'.
+Info: pin 'led[3]$tr_io' constrained to Bel 'X0/Y38/PIOC'.
+Info: pin 'led[2]$tr_io' constrained to Bel 'X0/Y38/PIOA'.
+Info: pin 'led[1]$tr_io' constrained to Bel 'X0/Y35/PIOD'.
+Info: pin 'led[0]$tr_io' constrained to Bel 'X0/Y35/PIOC'.
+Info: pin 'ftdi_txd$tr_io' constrained to Bel 'X0/Y89/PIOB'.
+Info: pin 'ftdi_rxd$tr_io' constrained to Bel 'X0/Y56/PIOC'.
+Info: pin 'CLK_clk_25mhz$tr_io' constrained to Bel 'X0/Y47/PIOA'.
+Info: placed PLL 'clocks_pll.pll_i' at bel 'X1/Y4/EHXPLL_UL'
+Info: Packing constants..
+Info: Packing carries...
+Info: Packing LUTs...
+Info: Packing LUT5-7s...
+Info: Packing FFs...
+Info:     12835 FFs paired with LUTs.
+Info: Generating derived timing constraints...
+Info:     Input frequency of PLL 'clocks_pll.pll_i' is constrained to 25.0 MHz
+Info:     Derived frequency constraint of 125.0 MHz for net clocks_pll.clk_125mhz
+Info:     Derived frequency constraint of 100.0 MHz for net clocks_pll_clk_100mhz
+Info:     Derived frequency constraint of 25.0 MHz for net clocks_pll.clk_25mhz
+Info: Promoting globals...
+Info:     promoting clock net clocks_pll_clk_100mhz to global network
+Info:     promoting clock net CLK_clk_25mhz$TRELLIS_IO_IN to global network
+Info: Checksum: 0x5a345941
+
+Info: Device utilisation:
+Info: 	          TRELLIS_IO:      11/    365     3%
+Info: 	                DCCA:       2/     56     3%
+Info: 	              DP16KD:       2/    208     0%
+Info: 	          MULT18X18D:      45/    156    28%
+Info: 	              ALU54B:       0/     78     0%
+Info: 	             EHXPLLL:       1/      4    25%
+Info: 	             EXTREFB:       0/      2     0%
+Info: 	                DCUA:       0/      2     0%
+Info: 	           PCSCLKDIV:       0/      2     0%
+Info: 	             IOLOGIC:       0/    224     0%
+Info: 	            SIOLOGIC:       0/    141     0%
+Info: 	                 GSR:       0/      1     0%
+Info: 	               JTAGG:       0/      1     0%
+Info: 	                OSCG:       0/      1     0%
+Info: 	               SEDGA:       0/      1     0%
+Info: 	                 DTR:       0/      1     0%
+Info: 	             USRMCLK:       0/      1     0%
+Info: 	             CLKDIVF:       0/      4     0%
+Info: 	           ECLKSYNCB:       0/     10     0%
+Info: 	             DLLDELD:       0/      8     0%
+Info: 	              DDRDLL:       0/      4     0%
+Info: 	             DQSBUFM:       0/     14     0%
+Info: 	     TRELLIS_ECLKBUF:       0/      8     0%
+Info: 	        ECLKBRIDGECS:       0/      2     0%
+Info: 	                DCSC:       0/      2     0%
+Info: 	          TRELLIS_FF:   57540/  83640    68%
+Info: 	        TRELLIS_COMB:   46736/  83640    55%
+Info: 	        TRELLIS_RAMW:     532/  10455     5%
+
+Info: Placed 104867 cells based on constraints.
+Info: Creating initial analytic placement for 0 cells, random placement wirelen = 353474.
+Info:     at initial placer iter 0, wirelen = 353474
+Info:     at initial placer iter 1, wirelen = 353474
+Info:     at initial placer iter 2, wirelen = 353474
+Info:     at initial placer iter 3, wirelen = 353474
+Info: Running main analytical placer, max placement attempts per cell = 10000.
+Info: HeAP Placer Time: 15.32s
+Info:   of which solving equations: 4.87s
+Info:   of which spreading cells: 0.00s
+Info:   of which strict legalisation: 0.00s
+
+Info: Running simulated annealing placer for refinement.
+Info:   at iteration #1: temp = 0.000000, timing cost = 3262, wirelen = 353474
+Info:   at iteration #2: temp = 0.000000, timing cost = 3262, wirelen = 353474 
+Info: SA placement time 8.11s
+
+Info: Max frequency for clock '$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN': 112.88 MHz (PASS at 25.00 MHz)
+Info: Max frequency for clock       '$glbnet$clocks_pll_clk_100mhz': 65.92 MHz (FAIL at 100.00 MHz)
+
+Info: Max delay <async>                                     -> posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN: 3.68 ns
+Info: Max delay posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN -> <async>                                    : 10.05 ns
+Info: Max delay posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN -> posedge $glbnet$clocks_pll_clk_100mhz      : 4.55 ns
+Info: Max delay posedge $glbnet$clocks_pll_clk_100mhz       -> posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN: 8.23 ns
+
+Info: Slack histogram:
+Info:  legend: * represents 476 endpoint(s)
+Info:          + represents [1,476) endpoint(s)
+Info: [ -5171,  -2950) |+
+Info: [ -2950,   -729) |****+
+Info: [  -729,   1492) |***********************************+
+Info: [  1492,   3713) |************************************************************ 
+Info: [  3713,   5934) |**********************************************************+
+Info: [  5934,   8155) |*****************************************************+
+Info: [  8155,  10376) |****************************************************+
+Info: [ 10376,  12597) | 
+Info: [ 12597,  14818) | 
+Info: [ 14818,  17039) | 
+Info: [ 17039,  19260) | 
+Info: [ 19260,  21481) | 
+Info: [ 21481,  23702) | 
+Info: [ 23702,  25923) | 
+Info: [ 25923,  28144) | 
+Info: [ 28144,  30365) | 
+Info: [ 30365,  32586) |+
+Info: [ 32586,  34807) |+
+Info: [ 34807,  37028) |+
+Info: [ 37028,  39249) |+
+Info: Checksum: 0x8a3dc705
+
+2 warnings, 0 errors
+
+Info: Program finished normally.

@@ -30,6 +30,7 @@ include $(ROOTDIR)/build.mk
 
 # Keep the normal build and the physical verification runner on the same flow.
 BOARD_PNR_FLAGS += --router router1 --speed 6 --seed 1 --freq 100
+BOARD_PNR_FLAGS += --tmg-ripup
 BOARD_PNR_FLAGS += --pre-place "$(PROJECT_DIR)/reference/place_core_reset.py"
 
 # The BSC Icarus link script reads this environment variable for local primitives.
@@ -54,8 +55,6 @@ runtime-rtl: verilog
 	test -f "$(BSC_RUNTIME_DIR)/ResetInverter.v"
 	cp "$(BSC_RUNTIME_DIR)/RegFile.v" "$(BSC_RUNTIME_DIR)/ResetInverter.v" "$(BSC_RUNTIME_DIR)/FIFOL1.v" "$(BUILD_DIR)/"
 	cp "$(PROJECT_DIR)/rtl/"*.v "$(BUILD_DIR)/"
-	mkdir -p "$(BUILD_DIR)/generated"
-	cp -R "$(PROJECT_DIR)/generated/linear_rom" "$(BUILD_DIR)/generated/"
 netlist: runtime-rtl
 
 # ECP5's eight PFU FFs share LSR. Merge identical reset-only LUTs after mapping;
@@ -63,5 +62,10 @@ netlist: runtime-rtl
 .PHONY: physical-netlist
 physical-netlist: netlist
 	$(PYTHON) "$(PROJECT_DIR)/reference/merge_reset_controls.py" "$(JSON_NETLIST)" --report "$(BUILD_DIR)/reset_merge.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_rom_address.py" "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --before "$(BUILD_DIR)/mkTop.before_address_replicas.json" --report "$(BUILD_DIR)/address_replicas.json"
+	# Each coefficient output group gets its own purely combinational page decode.
+	# Preserve the 56-address-copy netlist so both transformation stages are audited.
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_page_decoders.py" "$(JSON_NETLIST)" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --rtl "$(BUILD_DIR)/mkTop.v" --report "$(BUILD_DIR)/page_decoders.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_page_decoder_copies.py" --before "$(BUILD_DIR)/mkTop.before_page_decoders.json" --after "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --address-auditor "$(PROJECT_DIR)/reference/check_address_replicas.py" --report "$(BUILD_DIR)/page_decoder_audit.json"
 
 pnr: physical-netlist

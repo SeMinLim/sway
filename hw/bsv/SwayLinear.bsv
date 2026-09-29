@@ -1,7 +1,6 @@
 package SwayLinear;
 
 import Assert::*;
-import BRAMCore::*;
 import FIFO::*;
 import Vector::*;
 
@@ -29,7 +28,7 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		"Affine slice is outside the frozen parameter matrix");
 	staticAssert(layerSliceSupported(layerId, rowOffset, outputNum), "Affine slice has no generated weight bank");
 	staticAssert(groupNum * inputNum <= 8192,
-		"Affine ROM address exceeds thirteen bits");
+		"Affine LUT-ROM address exceeds thirteen bits");
 	staticAssert(inputNum > 0 && inputNum <= valueOf(HeadInputDim) && outputNum > 0 && outputNum <= valueOf(ExpandedDim),
 		"Affine dimensions exceed this fixed-model implementation");
 
@@ -37,8 +36,9 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	FIFO#(Token#(m)) outputQ <- mkFIFO1;
 	FIFO#(Tuple3#(Vector#(TDiv#(TAdd#(n, 15), 16), Int#(8)), Bit#(5), Bool)) selectQ <- mkLFIFO;
 	FIFO#(Tuple2#(Int#(8), Bool)) bankQ <- mkFIFO;
-	FIFO#(Tuple2#(Int#(8), Bool)) readQ <- mkSizedFIFO(4);
-	FIFO#(Tuple3#(Int#(8), Vector#(LinearLanes, Int#(8)), Bool)) operandQ <- mkSizedFIFO(4);
+	// Registered entries cut the sized FIFO's output-bypass mux from the
+	// combinational LUT lookup; both operands and metadata remain aligned.
+	FIFO#(Tuple3#(Int#(8), Vector#(LinearLanes, Int#(8)), Bool)) operandQ <- mkFIFO;
 	FIFO#(Bool) productMetaQ <- mkSizedFIFO(8);
 	// Two registered entries sustain one product per cycle while cutting the
 	// accumulator's dequeue readiness from DSP-result and metadata controls.
@@ -46,15 +46,9 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	// Row sums are separated by a complete MAC row. Registered readiness
 	// prevents affine backpressure from reaching the row-completion controls.
 	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) sumQ <- mkFIFO1;
-	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) affineQ <- mkFIFO;
+	FIFO#(Tuple3#(Vector#(LinearLanes, Int#(24)), Bit#(7), Bool)) affineQ <- mkFIFO;
 	FIFO#(Bool) rowStartQ <- mkFIFO1;
 	Vector#(LinearLanes, MultiplyIfc) multipliers <- replicateM(mkMultiply);
-
-	Vector#(LinearLanes, BRAM_PORT#(Bit#(13), Int#(8))) weightR = newVector;
-	for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
-		weightR[lane] <- mkBRAMCore1Load(groupNum * inputNum, True,
-			linearWeightFile(valueOf(LinearLanes), layerId, rowOffset, outputNum, lane), False);
-	end
 
 	Reg#(Vector#(n, Int#(8))) inputR <- mkRegU;
 	Vector#(m, Reg#(Int#(8))) outputR <- replicateM(mkRegU);
@@ -63,12 +57,10 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	Reg#(Bit#(13)) addressR <- mkRegU;
 	Reg#(Bit#(9)) inputCnt <- mkReg(0);
 	Reg#(Bit#(7)) groupCnt <- mkReg(0);
+	// Predecode the terminal row outside the product FIFO retirement controls.
+	Reg#(Bool) lastGroupR <- mkReg(groupNum == 1);
 	Reg#(Bool) activeOn <- mkReg(False);
 	Reg#(Bool) issueOn <- mkReg(False);
-	Wire#(Bit#(1)) readValidWire <- mkDWire(0);
-	Reg#(Bit#(2)) readValidR <- mkReg(0);
-	Reg#(Bit#(3)) readAcceptedCnt <- mkReg(0);
-	Reg#(Bit#(3)) readConsumedCnt <- mkReg(0);
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
@@ -110,47 +102,29 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		end
 	endrule
 
-	// Both ROM stages advance independently of downstream readiness. Each read
-	// reserves one operandQ slot until the multiplier accepts that operand.
-	rule advanceRead;
-		readValidR <= (readValidR << 1) | zeroExtend(readValidWire);
-	endrule
-
-	// Register the bank selection before writing the ROM metadata FIFO.
-	// This keeps the largest 20-way selection out of its distributed-RAM input.
+	// Register the bank selection before the operand FIFO.
 	rule process2_bank ( activeOn );
 		let value = selectQ.first;
 		selectQ.deq;
 		bankQ.enq(tuple2(tpl_1(value)[tpl_2(value)], tpl_3(value)));
 	endrule
 
-	rule process2_1 ( activeOn && readAcceptedCnt - readConsumedCnt < 4 );
+	// Each lane reads its fixed LUT truth table combinationally. Input, weight
+	// and final-column metadata enter the same FIFO only when it can accept them.
+	rule process2_1 ( activeOn );
 		let value = bankQ.first;
 		bankQ.deq;
-		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
-			weightR[lane].put(False, addressR, 0);
-		end
-		readQ.enq(value);
-		readValidWire <= 1;
-		readAcceptedCnt <= readAcceptedCnt + 1;
-		addressR <= addressR + 1;
-	endrule
-
-	// Metadata and ROM outputs have the same two-cycle request latency.
-	rule process2_2 ( activeOn && readValidR[1] == 1 );
-		let value = readQ.first;
-		readQ.deq;
 		Vector#(LinearLanes, Int#(8)) weights = newVector;
 		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
-			weights[lane] = weightR[lane].read;
+			weights[lane] = linearWeight(valueOf(LinearLanes), layerId, rowOffset, outputNum, lane, addressR);
 		end
 		operandQ.enq(tuple3(tpl_1(value), weights, tpl_2(value)));
+		addressR <= addressR + 1;
 	endrule
 
 	rule process2_3 ( activeOn );
 		let value = operandQ.first;
 		operandQ.deq;
-		readConsumedCnt <= readConsumedCnt + 1;
 		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
 			multipliers[lane].put(signExtend(tpl_1(value)), signExtend(tpl_2(value)[lane]));
 		end
@@ -195,12 +169,14 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		end
 		sumQ.enq(tuple2(sums, groupCnt));
 		sumR <= replicate(0);
-		if ( groupCnt != fromInteger(groupNum - 1) ) begin
+		if ( !lastGroupR ) begin
 			groupCnt <= groupCnt + 1;
+			lastGroupR <= groupCnt == fromInteger(groupNum > 1 ? groupNum - 2 : 0);
 			rowStartQ.enq(True);
 		end else begin
 			// sumQ retains the final row index; the next token starts from zero.
 			groupCnt <= 0;
+			lastGroupR <= (groupNum == 1);
 		end
 	endrule
 
@@ -230,7 +206,9 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 			end
 			aligned[lane] = affine;
 		end
-		affineQ.enq(tuple2(aligned, tpl_2(value)));
+		// Keep completion metadata with its affine row across downstream stalls.
+		Bool lastGroup = tpl_2(value) == fromInteger(groupNum - 1);
+		affineQ.enq(tuple3(aligned, tpl_2(value), lastGroup));
 	endrule
 
 	// One ties-to-even INT8 requantization follows the registered affine sum.
@@ -258,7 +236,7 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 				result[row] = outputR[row];
 			end
 		end
-		if ( tpl_2(value) == fromInteger(groupNum - 1) ) begin
+		if ( tpl_3(value) ) begin
 			outputQ.enq(Token { index: indexR, data: result });
 			activeOn <= False;
 		end

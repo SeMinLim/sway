@@ -18,6 +18,8 @@ module mkSwayBaseline(SwayIfc);
 	FIFO#(Tuple2#(Bit#(4), Vector#(PatchRows, Vector#(PatchElements, Int#(8))))) patchSelectQ <- mkFIFO1;
 	Vector#(FrameElements, Reg#(Int#(8))) inputR <- replicateM(mkRegU);
 	Reg#(Bit#(9)) inputCnt <- mkReg(0);
+	// Decode the terminal sample before it reaches frame FIFO readiness.
+	Reg#(Bool) lastInputR <- mkReg(valueOf(FrameElements) == 1);
 
 	LinearIfc#(PatchElements, ModelDim) embedding <- mkSwayLinear(0);
 	BlockIfc block0 <- mkSwayBlock(0);
@@ -53,11 +55,13 @@ module mkSwayBaseline(SwayIfc);
 				nextInput[element] = inputR[element];
 			end
 		end
-		if ( inputCnt == fromInteger(valueOf(FrameElements) - 1) ) begin
+		if ( lastInputR ) begin
 			frameQ.enq(nextInput);
 			inputCnt <= 0;
+			lastInputR <= (valueOf(FrameElements) == 1);
 		end else begin
 			inputCnt <= inputCnt + 1;
+			lastInputR <= inputCnt == fromInteger(valueOf(FrameElements) > 1 ? valueOf(FrameElements) - 2 : 0);
 		end
 	endrule
 

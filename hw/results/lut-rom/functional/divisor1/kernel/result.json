@@ -1,0 +1,163 @@
+{
+  "status": "pass",
+  "evidence": "generated-Verilog simulation (Icarus)",
+  "frames_checked": 14,
+  "scalar_outputs_checked": 798,
+  "input_words": 4480,
+  "finish_cycle": 115349,
+  "post_completion_drain_cycles": 2048,
+  "source_bubbles": "none inserted",
+  "sink_stalls": "none inserted",
+  "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+  "output_frame_start_intervals_cycles": [
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712,
+    7712
+  ],
+  "repeated_frame_pairs_checked": [
+    [
+      0,
+      12
+    ],
+    [
+      0,
+      13
+    ]
+  ],
+  "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+  "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+  "log_sha256": "b971d3fbcfe8f2e74b5a3326ab16b31f340138de79d22c1cc6444a671c69e8bb",
+  "frames": [
+    {
+      "frame": 0,
+      "input_first_cycle": 0,
+      "input_last_cycle": 319,
+      "output_first_cycle": 12988,
+      "output_last_cycle": 13044,
+      "first_input_to_last_output_cycles": 13044
+    },
+    {
+      "frame": 1,
+      "input_first_cycle": 320,
+      "input_last_cycle": 639,
+      "output_first_cycle": 20700,
+      "output_last_cycle": 20756,
+      "first_input_to_last_output_cycles": 20436
+    },
+    {
+      "frame": 2,
+      "input_first_cycle": 640,
+      "input_last_cycle": 5290,
+      "output_first_cycle": 28412,
+      "output_last_cycle": 28468,
+      "first_input_to_last_output_cycles": 27828
+    },
+    {
+      "frame": 3,
+      "input_first_cycle": 5291,
+      "input_last_cycle": 13002,
+      "output_first_cycle": 36124,
+      "output_last_cycle": 36180,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 4,
+      "input_first_cycle": 13003,
+      "input_last_cycle": 20714,
+      "output_first_cycle": 43836,
+      "output_last_cycle": 43892,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 5,
+      "input_first_cycle": 20715,
+      "input_last_cycle": 28426,
+      "output_first_cycle": 51548,
+      "output_last_cycle": 51604,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 6,
+      "input_first_cycle": 28427,
+      "input_last_cycle": 36138,
+      "output_first_cycle": 59260,
+      "output_last_cycle": 59316,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 7,
+      "input_first_cycle": 36139,
+      "input_last_cycle": 43850,
+      "output_first_cycle": 66972,
+      "output_last_cycle": 67028,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 8,
+      "input_first_cycle": 43851,
+      "input_last_cycle": 51562,
+      "output_first_cycle": 74684,
+      "output_last_cycle": 74740,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 9,
+      "input_first_cycle": 51563,
+      "input_last_cycle": 59274,
+      "output_first_cycle": 82396,
+      "output_last_cycle": 82452,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 10,
+      "input_first_cycle": 59275,
+      "input_last_cycle": 66986,
+      "output_first_cycle": 90108,
+      "output_last_cycle": 90164,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 11,
+      "input_first_cycle": 66987,
+      "input_last_cycle": 74698,
+      "output_first_cycle": 97820,
+      "output_last_cycle": 97876,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 12,
+      "input_first_cycle": 74699,
+      "input_last_cycle": 82410,
+      "output_first_cycle": 105532,
+      "output_last_cycle": 105588,
+      "first_input_to_last_output_cycles": 30889
+    },
+    {
+      "frame": 13,
+      "input_first_cycle": 82411,
+      "input_last_cycle": 90122,
+      "output_first_cycle": 113244,
+      "output_last_cycle": 113300,
+      "first_input_to_last_output_cycles": 30889
+    }
+  ],
+  "parallelism_divisor": 1,
+  "mode": "kernel",
+  "compiler_warnings": [
+    "Warning: \"Prelude.bs\", line 423, column 6: (G0024)",
+    "Warning: \"bsv/SwayLinear.bsv\", line 143, column 30: (G0024)",
+    "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+    "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+  ],
+  "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d"
+}

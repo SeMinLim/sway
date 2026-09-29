@@ -1,0 +1,1339 @@
+{
+  "status": "pass",
+  "started_utc": "2026-09-29T10:18:17.811077+00:00",
+  "commands": [
+    {
+      "command": [
+        "/workspace/scratch/62d002c09fd9/tools/oss-cad-suite/bin/nextpnr-ecp5",
+        "--85k",
+        "--package",
+        "CABGA381",
+        "--speed",
+        "6",
+        "--seed",
+        "1",
+        "--freq",
+        "100",
+        "--router",
+        "router1",
+        "--tmg-ripup",
+        "--lpf",
+        "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build/ulx3s.lpf",
+        "--detailed-timing-report",
+        "--json",
+        "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build/mkTop.json",
+        "--pre-place",
+        "/workspace/scratch/62d002c09fd9/lut-physical-live/replay_observed_bels.py",
+        "--pre-route",
+        "/workspace/scratch/62d002c09fd9/lut-physical-live/verify_live_before_route.py",
+        "--report",
+        "/workspace/scratch/62d002c09fd9/lut-physical-live/nextpnr.json",
+        "--log",
+        "/workspace/scratch/62d002c09fd9/lut-physical-live/nextpnr.log",
+        "--textcfg",
+        "/workspace/scratch/62d002c09fd9/lut-physical-live/mkTop.config"
+      ],
+      "cwd": "/workspace/scratch/62d002c09fd9/sway-lut-decoder-constants/hw",
+      "exit_code": 0,
+      "elapsed_seconds": 630.455,
+      "log": "nextpnr.console.log",
+      "log_sha256": "a9632dea11cc377ca05455fbde3e84a4cd141b631572411ddf3e1922f2b234f5"
+    }
+  ],
+  "flow": "One nextpnr process: fresh pack, exact observed BEL placement, live graph/BEL proof, strict routing",
+  "original_report": "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/report.json",
+  "original_report_sha256": "c315629963b0e2f95fa716b270f2023e774fdac7fe289fce3c12c092038d05b9",
+  "recovery_pack_report": "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/report.json",
+  "recovery_pack_report_sha256": "34061b6ebeed5c133189603394ffc69db0facb8f59896e4e95dc876de7418459",
+  "source_sha256": {
+    "blueyosys/boards/profiles.mk": "8b5c8dbb31ec272a10a156361818cb377a1eda3cf09e700ea222a71de4acf140",
+    "blueyosys/boards/ulx3s/85f/board.mk": "742d4e323fd9cd0545051539b06d552d617aec6bd0930d4bb0b9316b100fc0ad",
+    "blueyosys/boards/ulx3s/bsv/PLL.bsv": "bc3be5935d4e65262bb9962f7e62dedf263ab283f13a2c7dfcf3e92feab3fbe1",
+    "blueyosys/boards/ulx3s/bsv/Sdram.bsv": "4917cce50ff3f7e3fe88df9b907482831ac32c10166bf8c0dcf4e66155483116",
+    "blueyosys/boards/ulx3s/bsv/Top.bsv": "dc5b98d279611793a5859707fc6a91430274631b33083e95f9128b0a66b9c46b",
+    "blueyosys/boards/ulx3s/constraints/ulx3s.lpf": "93db29a950de4064ed124a09b8175ea9034bab8c6ef50f849167a42bd04c8bea",
+    "blueyosys/boards/ulx3s/rtl/inout16.v": "5c49a121a64f3bde851e1c41185a68221a54e0e573e3617b38d10e04ddf9dda9",
+    "blueyosys/boards/ulx3s/rtl/pll_fastclk.v": "70e772c23e0ad4148e3de60893862ca5b882441e0153a0651e3e05df5e75e10f",
+    "blueyosys/boards/ulx3s/rtl/sdram.v": "180595941b3569f4ad42417c0063b7be2a7422703069a1528d222e18128867f6",
+    "blueyosys/build.mk": "7899a5aa8e35ad6896b12d564318cf613e8cc48e89b85ba6b75f3042de83d320",
+    "blueyosys/fpga/ecp5/bsv/Mult18x18D.bsv": "f95d7607ff1efac6d77382e7cfbe0bb9c50f620262700c5180709fc94e1c4d22",
+    "blueyosys/fpga/ecp5/bsv/QuantizedMult18x18D.bsv": "fab878d0eee7f5cdd2439afe8cddcf16035b564fc2f774fa73217d5386caee11",
+    "blueyosys/fpga/ecp5/bsv/SimpleFloat.bsv": "163cb202d64a6e65d2fc330eb41ec77581d54d7b5035e1a73fb0709f9d98cc1f",
+    "blueyosys/fpga/ecp5/rtl/mult18x18d.v": "1da78440b318046d064e57012b94d3b7e532f12e90e3cfea9ad9daa1ed4f83bc",
+    "blueyosys/fpga/ecp5/rtl/quantized_mult18x18d.v": "f2012dd89083be4eb0df86a6aae339d62c4604f55826683bd133f89cf6cae325",
+    "blueyosys/lib/bsv/BRAMSubWord.bsv": "d149a57f7526491435711d863c8de06f6aa043c91190d7d2ca2b460652bff12f",
+    "blueyosys/lib/bsv/QuantizedMath.bsv": "e5a8f44fd9d10dd1370698c02ff69de13e26665df94b87941cc04ef67324b761",
+    "blueyosys/lib/bsv/Uart.bsv": "ea6c1280d636958c8b5044dcf88651cacb617f37e56b5d5857e4925aa2aaacdd",
+    "blueyosys/lib/rtl/bsc/BRAM2.v": "1644a962bd70d8155b50274a4f99ae73bd6e10cc366d9a4c50d1a548ad4bddda",
+    "blueyosys/lib/rtl/bsc/ClockDiv.v": "36966d220e82453e5ebb0c7ae68fc9888dc7aab59d8c77aaf06e22ea518dfd4e",
+    "blueyosys/lib/rtl/bsc/FIFO1.v": "2d51b68e9a7f6a7f4dc3a47cdd383d85a8519ca6a34ec93f2cf5ccc8b4418955",
+    "blueyosys/lib/rtl/bsc/FIFO2.v": "1f9fd7c208e38252743ca3db7139e9aad7c92be3ac27782015d1d6f5be6b5afd",
+    "blueyosys/lib/rtl/bsc/MakeResetA.v": "ed45d83a2aa5d1988e237a499928a1103ac15e4437e96729467ca5ec0c4f69fa",
+    "blueyosys/lib/rtl/bsc/RevertReg.v": "a919dec21d4d6f1a0eac547e4f536dc3757abc8f9b71e843c40fba90b764c6dc",
+    "blueyosys/lib/rtl/bsc/SizedFIFO.v": "01c029aa4ca78625e316de58781489d1d85122861e405f15a8a6bf51023f18fb",
+    "blueyosys/lib/rtl/bsc/SyncFIFO.v": "4cf24a17d12abe55b99e2b024565e02fa35179c40dad9f46b44f0f0454c4d460",
+    "blueyosys/lib/rtl/bsc/SyncResetA.v": "ca89307c89636d0339d1b4d9fc51fe30087ead8d56381acc1c5219dded07150f",
+    "sway/hw/HwMain.bsv": "4a2a3ddb9cb8a6ce9e15658d56f768b7e1e7fee279055a9dca389bfb942c02cc",
+    "sway/hw/Makefile": "7600a460d4a416f203bd21318786a243852fd35716c5f1bb6c609123356b4b27",
+    "sway/hw/Top.bsv": "1cb798e89d1f070b567c57aef9ed6dc3ed02687cad76928fa975b991235f7797",
+    "sway/hw/bsv/SwayBaseline.bsv": "e1e575e7b69fbefff3b370a607ba8a665537ba2cf5f622c2eee3e4638b644e32",
+    "sway/hw/bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+    "sway/hw/bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "sway/hw/bsv/SwayLinear.bsv": "4ef45c4d9e25f1846fdbdb630f829b308ca3c82d70379da8d94e5d741380ec7a",
+    "sway/hw/bsv/SwayMultiply.bsv": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+    "sway/hw/bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+    "sway/hw/bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+    "sway/hw/bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+    "sway/hw/generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "sway/hw/generated/SwayParameters.bsv": "504e08b81b59da7356fd86123e91cb6078472a2d551b9f3528e0baff26f57b06",
+    "sway/hw/generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "sway/hw/generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "sway/hw/reference/check_address_replicas.py": "a321b96002a291ca939494004e2ca06fd9d4d8d465caae67614e531b21c279d2",
+    "sway/hw/reference/check_lut_mapping.py": "447e22bd3875d90d00fbf907c9c1a3acddedb872e0a76648e9d283c3b4b8687d",
+    "sway/hw/reference/check_page_decoder_copies.py": "f9acd5e8555789d8aaf285e446e931edec8d9575f872154022d9d25192790921",
+    "sway/hw/reference/check_physical.py": "9e047104e1ceddaf1d97d219a9550fe209efd9552d625e0f94f496fdb5cf3a78",
+    "sway/hw/reference/merge_reset_controls.py": "f85d7bdf51295743a4687ac0504da0de647160a723924365cd2c8d34bf78e5df",
+    "sway/hw/reference/place_core_reset.py": "dddc65411e5ac0e97d45c88305da62efccba400d68745009506b5add62d892d1",
+    "sway/hw/reference/replicate_page_decoders.py": "538304101afa02e6a9fe29503af95f337a2474848cdd401f0164ef898d24664c",
+    "sway/hw/reference/replicate_rom_address.py": "bd7c716c804b91b6f0bf0b81aaf55cd678da2756bd706625b5550e9b3a8e1eb3",
+    "sway/hw/rtl/BRAM1Load.v": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
+    "sway/hw/rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30"
+  },
+  "nextpnr": {
+    "path": "/workspace/scratch/62d002c09fd9/tools/oss-cad-suite/bin/nextpnr-ecp5",
+    "version": "\"nextpnr-ecp5\" -- Next Generation Place and Route (Version nextpnr-0.11.1-33-g1aea87ab)",
+    "sha256": "ca7e27ea434997fd00996f80354e2e16f166070692c292678fe305761915d836"
+  },
+  "blueyosys_commit": "3663e87b88146c248919923ea952e025944ca3e0",
+  "clock_targets_mhz": {
+    "core": 100,
+    "uart": 25
+  },
+  "netlist_sha256": "008c8784c2860cf608a138112f2b0a2ec6c2a1230df2a41988ec1beb72966db9",
+  "synthesis_provenance": {
+    "reexecuted": false,
+    "command": {
+      "command": [
+        "make",
+        "-C",
+        "/workspace/scratch/62d002c09fd9/sway-lut-decoder-constants/hw",
+        "physical-netlist",
+        "ROOTDIR=/workspace/scratch/58b69de06207/blueyosys",
+        "BOARD=ulx3s-85f",
+        "BUILD_DIR=/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build",
+        "BSC=/workspace/scratch/58b69de06207/tools-lut/bsc/bin/bsc",
+        "YOSYS=/usr/bin/yosys"
+      ],
+      "cwd": "/workspace/scratch/62d002c09fd9/sway-lut-decoder-constants/hw",
+      "exit_code": 0,
+      "elapsed_seconds": 698.039,
+      "log": "synthesis.log",
+      "log_sha256": "e05df7ed2ab92d7fdcb4d7598b82e77fb928a9428ff8d0223ff390b1da624cd0"
+    },
+    "netlist_sha256": "008c8784c2860cf608a138112f2b0a2ec6c2a1230df2a41988ec1beb72966db9",
+    "source_identity_verified": true
+  },
+  "observed_placement": {
+    "partial_sha256": "e11d6bd43241443af04e09a89a58e9eab064c1b5d11b4cafaab750e86e0a2ed9",
+    "cells": 104869,
+    "unique_bels": 104869,
+    "partial_file_is_not_a_complete_checkpoint": true
+  },
+  "packed_to_observed_topology": {
+    "status": "pass",
+    "cells": 104869,
+    "bijective_wires": 123513,
+    "comparison": "Every named cell, type, parameter, labelled port, connection and top port; wire IDs may only be bijectively renamed"
+  },
+  "live_checker_sha256": "1a2a52672c92c671c9e3323db8d8ee61136cd2060c4adf7be36dd5fb508c2faa",
+  "placement_hook_sha256": "89a5e5849479d5c74ada66917767524e398eb9aa8b3a9c60f76cf18bc7eba3a5",
+  "affine_weight_mapping": {
+    "status": "pass",
+    "expected": "Combinational fixed-coefficient LUT cones; zero affine block RAM",
+    "scope": "All 17 affine coefficient cones; only the two named dynamic scan-state DP16KD cells are allowed",
+    "distributed_ram": "Permitted for dynamic FIFOs and scan state",
+    "checks": {
+      "mapped_netlist": {
+        "expected_dp16kd": 2,
+        "actual_dp16kd": 2,
+        "evidence": "build/mkTop.json: all module cell instances",
+        "pass": true,
+        "instances": [
+          "main_core_block0_scan_stateR_0.arr.0.0",
+          "main_core_block1_scan_stateR_0.arr.0.0"
+        ]
+      },
+      "packed_placement": {
+        "expected_dp16kd": 2,
+        "actual_dp16kd": 2,
+        "evidence": "placement.log: packed device utilization",
+        "pass": true
+      },
+      "routed_design": {
+        "expected_dp16kd": 2,
+        "actual_dp16kd": 2,
+        "evidence": "nextpnr.json utilization",
+        "pass": true
+      }
+    },
+    "netlist_sha256": "008c8784c2860cf608a138112f2b0a2ec6c2a1230df2a41988ec1beb72966db9",
+    "rtl_sha256": "3f3b065ad225e951a753c9a7f6a67d334eb264d1f0b7ee2ffd8e3ed6d19537d5",
+    "checker_sha256": "447e22bd3875d90d00fbf907c9c1a3acddedb872e0a76648e9d283c3b4b8687d",
+    "dp16kd": {
+      "expected_total": 2,
+      "actual_total": 2,
+      "expected_affine": 0,
+      "actual_unapproved": 0,
+      "allowed_state_instances": [
+        "main_core_block0_scan_stateR_0.arr.0.0",
+        "main_core_block1_scan_stateR_0.arr.0.0"
+      ],
+      "instances": [
+        "main_core_block0_scan_stateR_0.arr.0.0",
+        "main_core_block1_scan_stateR_0.arr.0.0"
+      ],
+      "pass": true
+    },
+    "address_replicas": {
+      "status": "pass",
+      "replica_registers": 91,
+      "address_groups": 8,
+      "owned_lut_cells": {
+        "0": 896,
+        "1": 881,
+        "2": 917,
+        "3": 880,
+        "4": 867,
+        "5": 879,
+        "6": 881,
+        "7": 612
+      },
+      "address_q_fanout_by_group": {
+        "0": [
+          234,
+          205,
+          221,
+          280,
+          337,
+          287,
+          316,
+          101,
+          26,
+          26,
+          26,
+          26,
+          26
+        ],
+        "1": [
+          202,
+          228,
+          232,
+          303,
+          292,
+          336,
+          262,
+          112,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "2": [
+          230,
+          231,
+          256,
+          291,
+          281,
+          317,
+          252,
+          112,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "3": [
+          257,
+          166,
+          247,
+          298,
+          304,
+          298,
+          247,
+          146,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "4": [
+          194,
+          199,
+          279,
+          289,
+          288,
+          300,
+          277,
+          136,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "5": [
+          197,
+          198,
+          253,
+          304,
+          319,
+          341,
+          244,
+          102,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "6": [
+          262,
+          178,
+          244,
+          268,
+          331,
+          266,
+          338,
+          48,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "7": [
+          175,
+          121,
+          169,
+          183,
+          227,
+          198,
+          206,
+          35,
+          21,
+          21,
+          21,
+          21,
+          21
+        ]
+      },
+      "unused_replica_q_count": 0,
+      "observation_boundary": {
+        "status": "pass",
+        "first_sequential_sinks": [
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_10",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_11",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_12",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_13",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_14",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_8",
+          "main_core_headHidden_engine_operandQ.data0_reg_TRELLIS_FF_Q_9",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_10",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_11",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_12",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_13",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_14",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_8",
+          "main_core_headHidden_engine_operandQ.data1_reg_TRELLIS_FF_Q_9"
+        ],
+        "sink_port": "DI",
+        "operand_fifo_entries": 2,
+        "coefficient_bits_per_entry": 8,
+        "allowed_coefficient_ff_count": 16,
+        "reached_coefficient_ff_count": 14,
+        "foreign_state_or_control_pin_sinks": 0,
+        "fused_fifo_capture_luts_checked": true
+      },
+      "initialization_and_induction": {
+        "status": "pass",
+        "arbitrary_initial_address_state_allowed": true,
+        "base_case": "activeOn resets False; process1 atomically clears original and replicas before setting activeOn; process2_1 requires pre-edge activeOn and cannot observe this initialization edge",
+        "induction": "Exact equal D, CE, CLK, LSR and FF parameters preserve equality through every update and hold after process1",
+        "observation": "Only coefficient combinational LUT pins use replica Q; operandQ enqueue is exactly process2_1, which requires activeOn",
+        "reset": "Warm reset clears activeOn, so process1 must initialize all copies before observation resumes",
+        "relies_on_mkRegU_powerup_value": false,
+        "extra_weight_pipeline_cycles": 0
+      },
+      "scope": "Same-cycle address FF identity, startup and coefficient observation boundary"
+    },
+    "page_decoder_copies": {
+      "actual_cells": 513,
+      "expected_cells": 513,
+      "independent_transition_proof_required": "page_decoder_audit.json"
+    },
+    "engines": [
+      {
+        "engine": "main_core_block0_bProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 45,
+          "LUT4": 177,
+          "PFUMX": 78
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_cProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 50,
+          "LUT4": 180,
+          "PFUMX": 82
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_deltaInputProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 6,
+          "LUT4": 50,
+          "PFUMX": 19
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_deltaProjection_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 8,
+          "LUT4": 59,
+          "PFUMX": 24
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_gateProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 140,
+          "LUT4": 454,
+          "PFUMX": 205
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_mainProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 135,
+          "LUT4": 430,
+          "PFUMX": 195
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block0_outputProjection_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 90,
+          "LUT4": 317,
+          "PFUMX": 137
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_bProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 39,
+          "LUT4": 151,
+          "PFUMX": 65
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_cProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 42,
+          "LUT4": 159,
+          "PFUMX": 71
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_deltaInputProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 5,
+          "LUT4": 38,
+          "PFUMX": 15
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_deltaProjection_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 6,
+          "LUT4": 54,
+          "PFUMX": 19
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_gateProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 102,
+          "LUT4": 344,
+          "PFUMX": 158
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_mainProjection",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 102,
+          "LUT4": 338,
+          "PFUMX": 152
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_block1_outputProjection_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 137,
+          "LUT4": 443,
+          "PFUMX": 200
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_embedding_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 63,
+          "LUT4": 204,
+          "PFUMX": 93
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_headHidden_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 1148,
+          "LUT4": 3841,
+          "PFUMX": 1824
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      },
+      {
+        "engine": "main_core_headOutput_engine",
+        "status": "pass",
+        "operand_width": 17,
+        "weight_bit_range": [
+          1,
+          8
+        ],
+        "address_width": 13,
+        "lut_cells": {
+          "L6MUX21": 195,
+          "LUT4": 630,
+          "PFUMX": 285
+        },
+        "address_bits_used": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "constant_leaves": [
+          "0"
+        ],
+        "intermediate_registers": 0,
+        "intermediate_memories": 0,
+        "other_engine_inputs": 0
+      }
+    ],
+    "engine_count": 17,
+    "unique_weight_cone_cells": {
+      "L6MUX21": 2313,
+      "LUT4": 7869,
+      "PFUMX": 3622
+    }
+  },
+  "routing_settings": {
+    "fresh_process_no_checkpoint_settings_imported": true,
+    "router": "router1",
+    "timing_ripup_requested": true,
+    "frequency_mhz": 100,
+    "speed_grade": 6,
+    "seed": 1,
+    "timing_allow_fail": false,
+    "ignore_loops": false,
+    "large_optional_json_export": false,
+    "timing_ripup_rounds": [
+      {
+        "arcs_ripped_up": 0,
+        "wns_ns": 0.0,
+        "tns_ns": 0.0
+      }
+    ]
+  },
+  "live_placement_proof": {
+    "status": "pass",
+    "phase": "pre-route",
+    "scope": "Live graph and placement identity only; final routing completion and clock timing are separate checks.",
+    "input_paths": {
+      "packed_graph": "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/packed.json",
+      "observed_bels": "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/observed_bels.json",
+      "hook": "/workspace/scratch/62d002c09fd9/verify_live_placement.py"
+    },
+    "input_sha256": {
+      "packed_graph": "107b0bfe19a059ded35bfe62be6303ef03ebb0576a0e5bcc2222b0bde2de9f5f",
+      "observed_bels": "55029bec8e457695188d7c7c2965f50fce40cd86999dbfa8c2dbc71e71f7dc99",
+      "hook": "1a2a52672c92c671c9e3323db8d8ee61136cd2060c4adf7be36dd5fb508c2faa"
+    },
+    "topology": {
+      "status": "pass",
+      "cells": 104869,
+      "bijective_wires": 123513,
+      "top_scalar_io_pads": 11,
+      "connected_port_entries": 485302,
+      "disconnected_port_entries": 205925,
+      "comparison": "Exact named cell/type/parameters/primitive port shape/direction/connectivity, plus all eleven top IO cell directions/pad nets/BELs, with bijective reference-wire to live-net-name mapping",
+      "top_interface_evidence": "Pinned live API omits ctx.ports. Reference top-port metadata is bound to its exact TRELLIS_IO DIR/B connection; all eleven live pad net names and physical IO locations match."
+    },
+    "placement": {
+      "status": "pass",
+      "exact_bel_count": 104869,
+      "unique_bels": 104869,
+      "no_cell_moved": true,
+      "actual_bels_sha256": "1804a6c4c35bdc33a0ee5701d25d7764227d71c06131a159352aa7c70dc17af4"
+    },
+    "physical_settings_evidence": "Pinned live API omits ctx.settings. Runner must bind the explicit same-process CLI and strict final 100/25 MHz timing; this hook does not claim a settings snapshot.",
+    "clock_targets_mhz": {
+      "$glbnet$clocks_pll_clk_100mhz": 100.0,
+      "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": 25.0
+    },
+    "clock_action": "Restore exact global clocks before routing",
+    "inputs_unchanged": true
+  },
+  "live_placement_proof_sha256": "5be418d254dc42e67cdd82d59c65c2078bcebe748b368289c502bdbf09704b34",
+  "reported_clocks": {
+    "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": {
+      "achieved": 114.63946533203125,
+      "constraint": 25
+    },
+    "$glbnet$clocks_pll_clk_100mhz": {
+      "achieved": 100.33109283447266,
+      "constraint": 100
+    }
+  },
+  "packed_utilization": {
+    "TRELLIS_IO": {
+      "used": 11,
+      "available": 365
+    },
+    "DCCA": {
+      "used": 2,
+      "available": 56
+    },
+    "DP16KD": {
+      "used": 2,
+      "available": 208
+    },
+    "MULT18X18D": {
+      "used": 45,
+      "available": 156
+    },
+    "ALU54B": {
+      "used": 0,
+      "available": 78
+    },
+    "EHXPLLL": {
+      "used": 1,
+      "available": 4
+    },
+    "EXTREFB": {
+      "used": 0,
+      "available": 2
+    },
+    "DCUA": {
+      "used": 0,
+      "available": 2
+    },
+    "PCSCLKDIV": {
+      "used": 0,
+      "available": 2
+    },
+    "IOLOGIC": {
+      "used": 0,
+      "available": 224
+    },
+    "SIOLOGIC": {
+      "used": 0,
+      "available": 141
+    },
+    "GSR": {
+      "used": 0,
+      "available": 1
+    },
+    "JTAGG": {
+      "used": 0,
+      "available": 1
+    },
+    "OSCG": {
+      "used": 0,
+      "available": 1
+    },
+    "SEDGA": {
+      "used": 0,
+      "available": 1
+    },
+    "DTR": {
+      "used": 0,
+      "available": 1
+    },
+    "USRMCLK": {
+      "used": 0,
+      "available": 1
+    },
+    "CLKDIVF": {
+      "used": 0,
+      "available": 4
+    },
+    "ECLKSYNCB": {
+      "used": 0,
+      "available": 10
+    },
+    "DLLDELD": {
+      "used": 0,
+      "available": 8
+    },
+    "DDRDLL": {
+      "used": 0,
+      "available": 4
+    },
+    "DQSBUFM": {
+      "used": 0,
+      "available": 14
+    },
+    "TRELLIS_ECLKBUF": {
+      "used": 0,
+      "available": 8
+    },
+    "ECLKBRIDGECS": {
+      "used": 0,
+      "available": 2
+    },
+    "DCSC": {
+      "used": 0,
+      "available": 2
+    },
+    "TRELLIS_FF": {
+      "used": 57540,
+      "available": 83640
+    },
+    "TRELLIS_COMB": {
+      "used": 46736,
+      "available": 83640
+    },
+    "TRELLIS_RAMW": {
+      "used": 532,
+      "available": 10455
+    }
+  },
+  "clocks": {
+    "core": {
+      "net": "$glbnet$clocks_pll_clk_100mhz",
+      "achieved_mhz": 100.33109283447266,
+      "constraint_mhz": 100.0,
+      "required_mhz": 100.0,
+      "pass": true
+    },
+    "uart": {
+      "net": "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "achieved_mhz": 114.63946533203125,
+      "constraint_mhz": 25.0,
+      "required_mhz": 25.0,
+      "pass": true
+    }
+  },
+  "routed_utilization": {
+    "ALU54B": {
+      "available": 78,
+      "used": 0
+    },
+    "CLKDIVF": {
+      "available": 4,
+      "used": 0
+    },
+    "DCCA": {
+      "available": 56,
+      "used": 2
+    },
+    "DCSC": {
+      "available": 2,
+      "used": 0
+    },
+    "DCUA": {
+      "available": 2,
+      "used": 0
+    },
+    "DDRDLL": {
+      "available": 4,
+      "used": 0
+    },
+    "DLLDELD": {
+      "available": 8,
+      "used": 0
+    },
+    "DP16KD": {
+      "available": 208,
+      "used": 2
+    },
+    "DQSBUFM": {
+      "available": 14,
+      "used": 0
+    },
+    "DTR": {
+      "available": 1,
+      "used": 0
+    },
+    "ECLKBRIDGECS": {
+      "available": 2,
+      "used": 0
+    },
+    "ECLKSYNCB": {
+      "available": 10,
+      "used": 0
+    },
+    "EHXPLLL": {
+      "available": 4,
+      "used": 1
+    },
+    "EXTREFB": {
+      "available": 2,
+      "used": 0
+    },
+    "GSR": {
+      "available": 1,
+      "used": 0
+    },
+    "IOLOGIC": {
+      "available": 224,
+      "used": 0
+    },
+    "JTAGG": {
+      "available": 1,
+      "used": 0
+    },
+    "MULT18X18D": {
+      "available": 156,
+      "used": 45
+    },
+    "OSCG": {
+      "available": 1,
+      "used": 0
+    },
+    "PCSCLKDIV": {
+      "available": 2,
+      "used": 0
+    },
+    "SEDGA": {
+      "available": 1,
+      "used": 0
+    },
+    "SIOLOGIC": {
+      "available": 141,
+      "used": 0
+    },
+    "TRELLIS_COMB": {
+      "available": 83640,
+      "used": 46736
+    },
+    "TRELLIS_ECLKBUF": {
+      "available": 8,
+      "used": 0
+    },
+    "TRELLIS_FF": {
+      "available": 83640,
+      "used": 57540
+    },
+    "TRELLIS_IO": {
+      "available": 365,
+      "used": 11
+    },
+    "TRELLIS_RAMW": {
+      "available": 10455,
+      "used": 532
+    },
+    "USRMCLK": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "config_sha256": "82e2f487a63b19ef9a85ab7ef5a1ff02067a5272824a8b1d586a760dc90bc35c",
+  "routing_complete": true,
+  "watched_input_sha256": {
+    "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/report.json": "c315629963b0e2f95fa716b270f2023e774fdac7fe289fce3c12c092038d05b9",
+    "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/report.json": "34061b6ebeed5c133189603394ffc69db0facb8f59896e4e95dc876de7418459",
+    "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/placed.json": "e11d6bd43241443af04e09a89a58e9eab064c1b5d11b4cafaab750e86e0a2ed9",
+    "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/packed.json": "107b0bfe19a059ded35bfe62be6303ef03ebb0576a0e5bcc2222b0bde2de9f5f",
+    "/workspace/scratch/62d002c09fd9/lut-physical-recovered4/observed_bels.json": "55029bec8e457695188d7c7c2965f50fce40cd86999dbfa8c2dbc71e71f7dc99",
+    "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build/mkTop.json": "008c8784c2860cf608a138112f2b0a2ec6c2a1230df2a41988ec1beb72966db9",
+    "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build/mkTop.v": "3f3b065ad225e951a753c9a7f6a67d334eb264d1f0b7ee2ffd8e3ed6d19537d5",
+    "/workspace/scratch/62d002c09fd9/lut-physical-decoder-constants/build/ulx3s.lpf": "93db29a950de4064ed124a09b8175ea9034bab8c6ef50f849167a42bd04c8bea",
+    "/workspace/scratch/62d002c09fd9/lut-physical-live/replay_observed_bels.py": "89a5e5849479d5c74ada66917767524e398eb9aa8b3a9c60f76cf18bc7eba3a5",
+    "/workspace/scratch/62d002c09fd9/verify_live_placement.py": "1a2a52672c92c671c9e3323db8d8ee61136cd2060c4adf7be36dd5fb508c2faa",
+    "/workspace/scratch/62d002c09fd9/lut-physical-live/verify_live_before_route.py": "4c4e4fabe71f1e53620556b9d753e2502f099c626fbcd9b676803a0319b1db74",
+    "/workspace/scratch/62d002c09fd9/run_live_recovery.py": "8becc60c46bcf6df27dc50e949993c05a1d8c96814016a95398f08ae82834809",
+    "/workspace/scratch/62d002c09fd9/recover_placement.py": "a4e0b8a7c3b7c623605501abb4e37e934f5313da33b6aa1039b2964ea87fdcd6"
+  },
+  "inputs_unchanged": true,
+  "source_hashes_unchanged": true,
+  "finished_utc": "2026-09-29T10:28:49.596500+00:00",
+  "evidence_sha256": {
+    "nextpnr.json": "a27552f918e82ac2bdde83a907dde178e618dd74f77755fcb749d0256c6f4753",
+    "live-placement-proof.json": "5be418d254dc42e67cdd82d59c65c2078bcebe748b368289c502bdbf09704b34",
+    "nextpnr.console.log": "a9632dea11cc377ca05455fbde3e84a4cd141b631572411ddf3e1922f2b234f5",
+    "mkTop.config": "82e2f487a63b19ef9a85ab7ef5a1ff02067a5272824a8b1d586a760dc90bc35c",
+    "verify_live_before_route.py": "4c4e4fabe71f1e53620556b9d753e2502f099c626fbcd9b676803a0319b1db74",
+    "replay_observed_bels.py": "89a5e5849479d5c74ada66917767524e398eb9aa8b3a9c60f76cf18bc7eba3a5",
+    "nextpnr.log": "e9c15ff7b2f8e3e7cf71e198c5598e95c19d8082154208cc299a531839382a60"
+  }
+}

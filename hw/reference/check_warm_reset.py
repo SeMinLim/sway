@@ -55,7 +55,6 @@ def sources(root):
         *root.joinpath("generated").rglob("*.bsv"),
         *root.joinpath("sim").rglob("*.bsv"),
         *root.joinpath("rtl").rglob("*.v"),
-        *root.joinpath("generated/linear_rom").rglob("*.hex"),
         root / "generated/test_input.hex", root / "generated/test_expected.hex",
         root / "reference/check_refactor.py", root / "reference/check_sim.py",
         root / "reference/check_warm_reset.py",
