@@ -1,6 +1,0 @@
-checking package dependencies
-compiling /workspace/scratch/839f8f1063a0/work/sway_requant_trial/hw/bsv/SwayTypes.bsv
-compiling /workspace/scratch/839f8f1063a0/work/sway_requant_trial/hw/results/requant_trial/equivalence/RequantEquivalence.bsv
-code generation for mkRequantEquivalence starts
-Verilog file created: /workspace/scratch/839f8f1063a0/requant_equivalence/mkRequantEquivalence.v
-All packages are up to date.

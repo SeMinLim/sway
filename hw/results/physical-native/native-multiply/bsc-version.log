@@ -1,7 +1,0 @@
-Bluespec Compiler, version 2026.01 (build 9bd39e6f)
-This is free software; for source code and copying conditions, see
-https://github.com/B-Lang-org/bsc
-
-Invoking command line:
-bsc -v
-

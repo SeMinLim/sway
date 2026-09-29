@@ -1,1 +1,0 @@
-module rom_top(input CLK, EN, input [12:0] ADDR, output [7:0] DO); BRAM1Load #(.FILENAME("rom0.hex"), .PIPELINED(1), .ADDR_WIDTH(13), .DATA_WIDTH(8), .MEMSIZE(6400)) memory(CLK, EN, 1'b0, ADDR, 8'b0, DO); endmodule

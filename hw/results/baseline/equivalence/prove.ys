@@ -1,4 +1,0 @@
-read_verilog /workspace/scratch/839f8f1063a0/requant_equivalence/mkRequantEquivalence.v
-prep -top mkRequantEquivalence
-check -assert
-sat -verify -prove mismatches 0 -show mismatches_source -show mismatches

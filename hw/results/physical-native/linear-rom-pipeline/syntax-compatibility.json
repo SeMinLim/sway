@@ -1,8 +1,0 @@
-{
-  "status": "PASS source-delta check",
-  "tested_sha256": "363f07b9ed56c4ade86ef5c29a6e6851900925e3dfab92d46b30d9200aea3483",
-  "verilog2005_sha256": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
-  "change": "Move the same genvar bank declaration from the generate for initializer to module scope; no expression, assignment, register, memory, port or parameter changes.",
-  "reason": "The targeted synthesis used read_verilog -sv; the production flow uses Verilog-2005 and rejected the inline genvar declaration.",
-  "validation": "Exact two-replacement source comparison passed. The corrected file requires the subsequent production CI run; local tools had expired before this syntax-only edit."
-}
