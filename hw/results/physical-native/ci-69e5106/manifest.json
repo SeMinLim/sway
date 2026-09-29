@@ -1,0 +1,80 @@
+{
+  "candidate_commit": "69e5106c7c8256ba7d54bc9deceb06db4ded6a6f",
+  "run_id": 36463589773,
+  "status": "pass",
+  "scope": "Functional and warm reset only; no physical pass asserted.",
+  "tree_elements": [
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor1/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0825a86ab224099177d8d48823efef362d29efda"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor1/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "59497f889bcf68dbdeffd519ad08b1db204d7c87"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor2/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b1f5f237540eb6aa93e0c04b520f6ea361c82854"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor2/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ebc582ad4bf45231dc4a826a55033c19c4a8210"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/source-hash-check.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e43a2195cde358fef29c0411e852ebd54b9f36a"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor4/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9ec04c9f86926478c3acd6ed8e9978e2a3aebeb"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor4/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5ab2f62c9877c01deb0be8c40d3484b77d296893"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/divisor4/warm-reset.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b09c980cc8678a925af7575e511a79793b2d481"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/warm-reset-source-hash-check.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3e937f9c8376776874a50349f68bc0614dcd23a"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/summary.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38d96a05786281cf62c2e4e0f80598cdfb737476"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/ci-jobs.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b8227c0b273a575275395abb12eefe138af84ca"
+    },
+    {
+      "path": "hw/results/physical-native/ci-69e5106/artifact-api-metadata.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63c5dd263accaee06df7684d5d3b4ed0c06f3cdc"
+    }
+  ]
+}

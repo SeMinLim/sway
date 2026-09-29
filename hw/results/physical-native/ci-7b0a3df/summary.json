@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "scope": "Functional validation only; physical timing is tracked separately and was still running when this report was collected.",
+  "candidate_commit": "7b0a3df41e864138489a43a97fb92233844b4c19",
+  "candidate_tree": "88334bee5456f66689c5cbbd512bd2c2ba045420",
+  "ci_run_id": 36469410630,
+  "ci_run_url": "https://github.com/SeMinLim/sway/actions/runs/36469410630",
+  "collection_method": "GitHub completed job log API; original full job logs and SWAY_REPORT JSON preserved as Git blobs. Source hashes checked against immutable candidate blobs, configured Types hashes checked per divisor.",
+  "source_files_checked_per_functional_report": 137,
+  "source_hash_check": "source-hash-check.json",
+  "configurations": [
+    {
+      "job_id": 109087575212,
+      "divisor": 1,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 130723,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "cc0fbc678bd43eef13488ffcdb35e1de33ef1ca2955d44fbdff70f52284968ac",
+      "sway_records_sha256": "cc0fbc678bd43eef13488ffcdb35e1de33ef1ca2955d44fbdff70f52284968ac",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"PreludeBSV.bsv\", line 125, column 7: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109087575212,
+      "divisor": 1,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 115426,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "0e7df3ccfb54abcc19b7742c18adf202b39048b6384b7ca7c3556d2a6074a514",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"PreludeBSV.bsv\", line 125, column 7: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109087575232,
+      "divisor": 2,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 231448,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "098ddf728435e8b093f01897ec642cb08c4e5201dd6b4a98aad9b2f3c85174d2",
+      "sway_records_sha256": "098ddf728435e8b093f01897ec642cb08c4e5201dd6b4a98aad9b2f3c85174d2",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: Unknown position: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109087575232,
+      "divisor": 2,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 223206,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "b4eebe3ca3f5bc21281d3b4d488bec2cc36478926fbb3a38b44ee12a96e648c8",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: Unknown position: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109087575297,
+      "divisor": 4,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 296647,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "5985cf85d75435df2591c69c11a94f49a8d24e7018fa79bfd04fb3ec2db80c40",
+      "sway_records_sha256": "5985cf85d75435df2591c69c11a94f49a8d24e7018fa79bfd04fb3ec2db80c40",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109087575297,
+      "divisor": 4,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 288406,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "8c05878b41140f18b7f3da8ee549c069db536b57459e765650397ecde45fce41",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    }
+  ],
+  "warm_reset": {
+    "status": "pass",
+    "job_id": 109087575297,
+    "divisor": 4,
+    "reset_after_cycles": 40000,
+    "reset_hold_cycles": 5,
+    "before_reset": {
+      "input_words_accepted": 1312,
+      "outputs_received": 57,
+      "cycle": 40000,
+      "in_flight_work_confirmed": true
+    },
+    "post_reset": {
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 288406,
+      "post_completion_drain_cycles": 2048,
+      "log_sha256": "8c05878b41140f18b7f3da8ee549c069db536b57459e765650397ecde45fce41"
+    },
+    "source_files_checked": 138,
+    "source_unchanged": true,
+    "command_returncodes": [
+      0,
+      0,
+      0
+    ],
+    "source_hash_check": "warm-reset-source-hash-check.json"
+  },
+  "artifacts": [
+    {
+      "id": 10992235348,
+      "name": "baseline-functional-divisor-4-7b0a3df41e864138489a43a97fb92233844b4c19",
+      "size_in_bytes": 2952122,
+      "api_digest": "sha256:cff10c5d152b088efafce36f64d2da5a0d4e4e70a7ba01a23f7f60466eabc968",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10992235348/zip",
+      "downloaded_by_this_collector": false,
+      "archive_digest_independently_verified_by_this_collector": false
+    },
+    {
+      "id": 10990804737,
+      "name": "baseline-functional-divisor-1-7b0a3df41e864138489a43a97fb92233844b4c19",
+      "size_in_bytes": 47092,
+      "api_digest": "sha256:3aac1fe38161b60c6353ba2413162aeca9ce97d48be5dec57fb37133fd66a45c",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10990804737/zip",
+      "downloaded_by_this_collector": false,
+      "archive_digest_independently_verified_by_this_collector": false
+    },
+    {
+      "id": 10990624240,
+      "name": "baseline-functional-divisor-2-7b0a3df41e864138489a43a97fb92233844b4c19",
+      "size_in_bytes": 43171,
+      "api_digest": "sha256:2fe7895a078b8b38186f23dcb34ca8d1d85b67535d56857b8c961a254f5d05eb",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10990624240/zip",
+      "downloaded_by_this_collector": false,
+      "archive_digest_independently_verified_by_this_collector": false
+    }
+  ],
+  "limitations": [
+    "Artifact ZIP digests in this collection are API-provided only; no ZIP was downloaded or independently hashed by this collector.",
+    "Raw simulation logs were checked by the CI checker, and its reports were collected here. Independent artifact download and re-parsing is a separate final acceptance step.",
+    "No hardware board test is claimed."
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "scope": "Six functional configurations, in-flight warm reset and fixed-configuration native multiplier wrapper simulation. Physical validation is reported separately.",
+  "candidate_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+  "candidate_tree": "a41cd2f9d4025f72f62e0b9f3e0717192c58563c",
+  "ci_run_id": 36506484774,
+  "ci_run_url": "https://github.com/SeMinLim/sway/actions/runs/36506484774",
+  "ci_run_conclusion": "failure",
+  "physical_job_conclusion": "failure",
+  "collection_method": "Completed GitHub job logs with exact SWAY_REPORT markers and timestamp removal. Report source SHA256 values independently checked against immutable local Git objects for the frozen candidate. Artifact ZIP digests in this collection are API-provided only.",
+  "configurations": [
+    {
+      "mode": "stress",
+      "status": "pass",
+      "finish_cycle": 130800,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "589d88dd67ee3bf2ca4ba0a34b2f15e83950d782d5d37b27839663e087598aed",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"FIFOF_.bsv\", line 135, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ],
+      "job_id": 109208949897,
+      "divisor": 1,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    },
+    {
+      "mode": "kernel",
+      "status": "pass",
+      "finish_cycle": 115503,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "2c3cf2acdaac13c90ad3df9c78b3000d7ced4ec393564bcf3ba59b6a7c21a2ee",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"FIFOF_.bsv\", line 135, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ],
+      "job_id": 109208949897,
+      "divisor": 1,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    },
+    {
+      "mode": "stress",
+      "status": "pass",
+      "finish_cycle": 231599,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "d4f6dc81e3a467596118f3c9121373a34b7b3fd0801280e3063fc14f7bcab31f",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"bsv/SwayScan.bsv\", line 232, column 32: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ],
+      "job_id": 109208949892,
+      "divisor": 2,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    },
+    {
+      "mode": "kernel",
+      "status": "pass",
+      "finish_cycle": 223357,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "be51a92205410b058497110a40280a368e1d4696bb42c1ea6a2a84ec17f5cfe8",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"bsv/SwayScan.bsv\", line 232, column 32: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ],
+      "job_id": 109208949892,
+      "divisor": 2,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    },
+    {
+      "mode": "stress",
+      "status": "pass",
+      "finish_cycle": 305868,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "818881699d00e2723305de55112db5eec7617fb8f94b6283036b7cfc9109bcd8",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ],
+      "job_id": 109208949888,
+      "divisor": 4,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    },
+    {
+      "mode": "kernel",
+      "status": "pass",
+      "finish_cycle": 297627,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ],
+      "job_id": 109208949888,
+      "divisor": 4,
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480
+    }
+  ],
+  "cycle_note": "finish_cycle includes 2048 trailing-output-check cycles. No physical timing or board-operation claim follows from simulation cycles.",
+  "warm_reset": {
+    "status": "pass",
+    "before_reset": {
+      "input_words_accepted": 1312,
+      "outputs_received": 57,
+      "cycle": 40000,
+      "in_flight_work_confirmed": true
+    },
+    "post_reset": {
+      "status": "pass",
+      "evidence": "generated-Verilog simulation (Icarus)",
+      "frames_checked": 14,
+      "scalar_outputs_checked": 798,
+      "input_words": 4480,
+      "finish_cycle": 297627,
+      "post_completion_drain_cycles": 2048,
+      "source_bubbles": "none inserted",
+      "sink_stalls": "none inserted",
+      "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+      "output_frame_start_intervals_cycles": [
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872,
+        19872
+      ],
+      "repeated_frame_pairs_checked": [
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ]
+      ],
+      "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+      "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+      "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4",
+      "frames": [
+        {
+          "frame": 0,
+          "input_first_cycle": 0,
+          "input_last_cycle": 319,
+          "output_first_cycle": 37186,
+          "output_last_cycle": 37242,
+          "first_input_to_last_output_cycles": 37242
+        },
+        {
+          "frame": 1,
+          "input_first_cycle": 320,
+          "input_last_cycle": 639,
+          "output_first_cycle": 57058,
+          "output_last_cycle": 57114,
+          "first_input_to_last_output_cycles": 56794
+        },
+        {
+          "frame": 2,
+          "input_first_cycle": 640,
+          "input_last_cycle": 13800,
+          "output_first_cycle": 76930,
+          "output_last_cycle": 76986,
+          "first_input_to_last_output_cycles": 76346
+        },
+        {
+          "frame": 3,
+          "input_first_cycle": 13801,
+          "input_last_cycle": 33672,
+          "output_first_cycle": 96802,
+          "output_last_cycle": 96858,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 4,
+          "input_first_cycle": 33673,
+          "input_last_cycle": 53544,
+          "output_first_cycle": 116674,
+          "output_last_cycle": 116730,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 5,
+          "input_first_cycle": 53545,
+          "input_last_cycle": 73416,
+          "output_first_cycle": 136546,
+          "output_last_cycle": 136602,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 6,
+          "input_first_cycle": 73417,
+          "input_last_cycle": 93288,
+          "output_first_cycle": 156418,
+          "output_last_cycle": 156474,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 7,
+          "input_first_cycle": 93289,
+          "input_last_cycle": 113160,
+          "output_first_cycle": 176290,
+          "output_last_cycle": 176346,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 8,
+          "input_first_cycle": 113161,
+          "input_last_cycle": 133032,
+          "output_first_cycle": 196162,
+          "output_last_cycle": 196218,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 9,
+          "input_first_cycle": 133033,
+          "input_last_cycle": 152904,
+          "output_first_cycle": 216034,
+          "output_last_cycle": 216090,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 10,
+          "input_first_cycle": 152905,
+          "input_last_cycle": 172776,
+          "output_first_cycle": 235906,
+          "output_last_cycle": 235962,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 11,
+          "input_first_cycle": 172777,
+          "input_last_cycle": 192648,
+          "output_first_cycle": 255778,
+          "output_last_cycle": 255834,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 12,
+          "input_first_cycle": 192649,
+          "input_last_cycle": 212520,
+          "output_first_cycle": 275650,
+          "output_last_cycle": 275706,
+          "first_input_to_last_output_cycles": 83057
+        },
+        {
+          "frame": 13,
+          "input_first_cycle": 212521,
+          "input_last_cycle": 232392,
+          "output_first_cycle": 295522,
+          "output_last_cycle": 295578,
+          "first_input_to_last_output_cycles": 83057
+        }
+      ]
+    },
+    "source_unchanged": true,
+    "reset_after_cycles": 40000,
+    "reset_hold_cycles": 5,
+    "job_id": 109208949888,
+    "source_files_checked": 138,
+    "report": "warm-reset-result.json",
+    "source_hash_check": "warm-reset-source-hash-check.json"
+  },
+  "native_multiplier": {
+    "status": "pass",
+    "job_id": 109208949610,
+    "backends": [
+      "bluesim",
+      "iverilog",
+      "iverilog_bsim"
+    ],
+    "products_per_backend": 256,
+    "first_product_latency_cycles": 4,
+    "final_cycle": 403,
+    "backend_reports_cycle_identical": true,
+    "report": "native-report.json",
+    "operand_isolation_report": "native-operand-control-isolation.json",
+    "source_hash_check": "native-source-check.json",
+    "source_files_checked": 4,
+    "generated_rtl_sha256": "c88fd37832e29e0b445bb13f235013c93c74000bbe58fddd917d4d0ff944ecaa",
+    "operand_assignments": [
+      "assign test_multiplier_dsp$dataax = test_vectorsR$D_OUT_1[71:54] ;",
+      "assign test_multiplier_dsp$dataay = test_vectorsR$D_OUT_1[53:36] ;"
+    ],
+    "operand_write_presence_dependencies": [],
+    "scope": "Bluesim and Icarus model only the fixed signed18x18, CE-always-one, three-register configuration. Native FPGA primitive remains unexecuted here."
+  },
+  "source_hash_check": "source-hash-check.json",
+  "artifacts": [
+    {
+      "id": 11007882953,
+      "name": "baseline-functional-divisor-4-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 2972726,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007882953",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007882953/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:29:19Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:29:19Z",
+      "digest": "sha256:e8afaa99335c0c3334aaf19ca24ebee68e1386ffec38b5216161e5259eb26586",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      },
+      "independently_downloaded_and_digest_verified": false
+    },
+    {
+      "id": 11007703004,
+      "name": "baseline-physical-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 8572335,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007703004",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007703004/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:23:53Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:23:53Z",
+      "digest": "sha256:da294c44d427df02ca932dda0c163cbb66c6a51fcda924d0721278abf9bd06db",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      },
+      "independently_downloaded_and_digest_verified": false
+    },
+    {
+      "id": 11007028442,
+      "name": "baseline-native-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 292487,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007028442",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007028442/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:09:03Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:09:03Z",
+      "digest": "sha256:319f3b4fc7cd3704ab12e64f96c3f545a261d3d479b13ba0ee7c977ef62a1ee1",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      },
+      "independently_downloaded_and_digest_verified": false
+    },
+    {
+      "id": 11006674458,
+      "name": "baseline-functional-divisor-1-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 47506,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006674458",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006674458/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:15:57Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:15:57Z",
+      "digest": "sha256:7ebb45ff06f1c2004c492f4c42969099b588293ee7689d9d0acaa1040bf4dbca",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      },
+      "independently_downloaded_and_digest_verified": false
+    },
+    {
+      "id": 11006604978,
+      "name": "baseline-functional-divisor-2-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 43735,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006604978",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006604978/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:19:46Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:19:46Z",
+      "digest": "sha256:90498954f6f70b4a81be16ace230e4d651001e91a4293146338a20c79c0394e5",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      },
+      "independently_downloaded_and_digest_verified": false
+    }
+  ],
+  "limitations": [
+    "The workflow concluded failure because its physical job failed. The pass status here is restricted to the functional, warm-reset and native simulation checks.",
+    "Artifact ZIP bytes were not downloaded by this collection; API digests alone are not independent archive verification.",
+    "No native board execution is claimed."
+  ]
+}

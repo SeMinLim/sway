@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "fixture_count": 426,
+  "truth_checks": 12480,
+  "helper_sha256": "f85d7bdf51295743a4687ac0504da0de647160a723924365cd2c8d34bf78e5df",
+  "test_sha256": "7bbdf85dff77e34d1ca73d245710659f8789614df21ade1fefbc5ce5d527fd92",
+  "coverage": [
+    "one-variable truth tables with constants/repeated inputs",
+    "LSR/INV/default polarity",
+    "synchronous/asynchronous mode preservation",
+    "all FF non-reset wiring/parameters exact",
+    "DSP/top-output/non-LSR fanout retained",
+    "unsupported mux and constrained attributes skipped",
+    "src/hdlname/force_downto/unused_bits accepted on source and output aliases",
+    "known metadata never bypasses keep/BEL/LOC/unknown attribute protection",
+    "noninverse/unknown/constants/multiple variables skipped",
+    "LUT cycles/duplicate drivers rejected",
+    "canonical reset-only merge retained",
+    "CLI source/output hashes"
+  ],
+  "commands": [
+    [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/58b69de06207/sway/hw/reference/test_merge_reset_controls.py",
+      "--helper",
+      "/workspace/scratch/58b69de06207/sway/hw/reference/merge_reset_controls.py",
+      "--report",
+      "/workspace/scratch/58b69de06207/verification/reset-metadata-fix/final-report.json"
+    ]
+  ],
+  "limitations": "Focused Python truth/structural fixtures; no new BSC/Yosys/nextpnr run."
+}

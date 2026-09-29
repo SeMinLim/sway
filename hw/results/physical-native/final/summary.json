@@ -1,0 +1,358 @@
+{
+  "status": "pass",
+  "physical_commit": "7689b27d6816de9d8927de12ddee13672b23491b",
+  "functional_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+  "physical_run_id": 36508244812,
+  "functional_run_id": 36506484774,
+  "independent_audit_run_id": 36508646970,
+  "physical_scope": {
+    "board": "ulx3s-85f",
+    "top": "mkTop",
+    "parallelism_divisor": 4,
+    "speed_grade": 6,
+    "seed": 1,
+    "router": "router1"
+  },
+  "clocks": {
+    "core": {
+      "achieved_mhz": 101.50222778320312,
+      "constraint_mhz": 100,
+      "net": "$glbnet$clocks_pll_clk_100mhz",
+      "pass": true,
+      "required_mhz": 100
+    },
+    "uart": {
+      "achieved_mhz": 118.5958251953125,
+      "constraint_mhz": 25,
+      "net": "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "pass": true,
+      "required_mhz": 25
+    }
+  },
+  "packed_utilization": {
+    "ALU54B": {
+      "available": 78,
+      "used": 0
+    },
+    "CLKDIVF": {
+      "available": 4,
+      "used": 0
+    },
+    "DCCA": {
+      "available": 56,
+      "used": 2
+    },
+    "DCSC": {
+      "available": 2,
+      "used": 0
+    },
+    "DCUA": {
+      "available": 2,
+      "used": 0
+    },
+    "DDRDLL": {
+      "available": 4,
+      "used": 0
+    },
+    "DLLDELD": {
+      "available": 8,
+      "used": 0
+    },
+    "DP16KD": {
+      "available": 208,
+      "used": 22
+    },
+    "DQSBUFM": {
+      "available": 14,
+      "used": 0
+    },
+    "DTR": {
+      "available": 1,
+      "used": 0
+    },
+    "ECLKBRIDGECS": {
+      "available": 2,
+      "used": 0
+    },
+    "ECLKSYNCB": {
+      "available": 10,
+      "used": 0
+    },
+    "EHXPLLL": {
+      "available": 4,
+      "used": 1
+    },
+    "EXTREFB": {
+      "available": 2,
+      "used": 0
+    },
+    "GSR": {
+      "available": 1,
+      "used": 0
+    },
+    "IOLOGIC": {
+      "available": 224,
+      "used": 0
+    },
+    "JTAGG": {
+      "available": 1,
+      "used": 0
+    },
+    "MULT18X18D": {
+      "available": 156,
+      "used": 45
+    },
+    "OSCG": {
+      "available": 1,
+      "used": 0
+    },
+    "PCSCLKDIV": {
+      "available": 2,
+      "used": 0
+    },
+    "SEDGA": {
+      "available": 1,
+      "used": 0
+    },
+    "SIOLOGIC": {
+      "available": 141,
+      "used": 0
+    },
+    "TRELLIS_COMB": {
+      "available": 83640,
+      "used": 39794
+    },
+    "TRELLIS_ECLKBUF": {
+      "available": 8,
+      "used": 0
+    },
+    "TRELLIS_FF": {
+      "available": 83640,
+      "used": 57790
+    },
+    "TRELLIS_IO": {
+      "available": 365,
+      "used": 11
+    },
+    "TRELLIS_RAMW": {
+      "available": 10455,
+      "used": 668
+    },
+    "USRMCLK": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "placement_complete": true,
+  "routing_complete": true,
+  "command_exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "reset_placement": {
+    "available_ff_sites": 83640,
+    "bel": "X63/Y47/SLICEA.FF0",
+    "cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+    "cell_type": "TRELLIS_FF",
+    "center": [
+      63,
+      47.5
+    ],
+    "console_report_verified": true,
+    "ff_grid_bounds": [
+      2,
+      2,
+      124,
+      93
+    ],
+    "ff_sites": 83640,
+    "hook": "place_core_reset.py",
+    "hook_matches_frozen_source": true,
+    "hook_sha256": "dddc65411e5ac0e97d45c88305da62efccba400d68745009506b5add62d892d1",
+    "location": [
+      63,
+      47,
+      1
+    ],
+    "placed_bel": "X63/Y47/SLICEA.FF0",
+    "placed_bel_verified": true,
+    "placed_bel_verified_independently": true,
+    "placed_module": "top",
+    "selection": "nearest-available-FF-to-grid-center"
+  },
+  "bitstream": {
+    "bytes": 1978721,
+    "ecppack_step_conclusion": "success",
+    "sha256": "6478081d9205a2f6b7f75b42e4e9a48c150d0ef5e55d8542cf75165412f0bc53"
+  },
+  "functional_artifacts": [
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11006674458,
+      "bytes": 47506,
+      "configurations": [
+        {
+          "finish_cycle": 130800,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "589d88dd67ee3bf2ca4ba0a34b2f15e83950d782d5d37b27839663e087598aed",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 115503,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "2c3cf2acdaac13c90ad3df9c78b3000d7ced4ec393564bcf3ba59b6a7c21a2ee",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 1,
+      "report_sha256": "122392c41114e5875b7421602c06c10f060cdf725fac0772524ee7c9e7bbc43e",
+      "sha256": "7ebb45ff06f1c2004c492f4c42969099b588293ee7689d9d0acaa1040bf4dbca",
+      "source_files_verified": 137
+    },
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11006604978,
+      "bytes": 43735,
+      "configurations": [
+        {
+          "finish_cycle": 231599,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "d4f6dc81e3a467596118f3c9121373a34b7b3fd0801280e3063fc14f7bcab31f",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 223357,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "be51a92205410b058497110a40280a368e1d4696bb42c1ea6a2a84ec17f5cfe8",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 2,
+      "report_sha256": "1e970ae4972c39c0cf8a905c33ff63ef72e398c103b2f80af8016508579e8dea",
+      "sha256": "90498954f6f70b4a81be16ace230e4d651001e91a4293146338a20c79c0394e5",
+      "source_files_verified": 137
+    },
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11007882953,
+      "bytes": 2972726,
+      "configurations": [
+        {
+          "finish_cycle": 305868,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "818881699d00e2723305de55112db5eec7617fb8f94b6283036b7cfc9109bcd8",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 297627,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 4,
+      "report_sha256": "83532de577e65e7d462a50d49478eaf56a31450508cd953e2abda55ea77cce72",
+      "sha256": "e8afaa99335c0c3334aaf19ca24ebee68e1386ffec38b5216161e5259eb26586",
+      "source_files_verified": 137,
+      "warm_reset": {
+        "before_reset": {
+          "cycle": 40000,
+          "in_flight_work_confirmed": true,
+          "input_words_accepted": 1312,
+          "outputs_received": 57
+        },
+        "finish_cycle": 297627,
+        "post_reset_frames": 14,
+        "post_reset_log_reparsed_against_frozen_fixtures": true,
+        "post_reset_outputs": 798,
+        "report_sha256": "f1026aa4a46547d8e6e1f51ba5ff5a30ea9fb2d60cce2519a6fc249325304d32",
+        "source_files_verified": 138,
+        "status": "pass"
+      }
+    }
+  ],
+  "native_multiplier": {
+    "status": "pass",
+    "backends": {
+      "bluesim": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      },
+      "iverilog": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      },
+      "iverilog_bsim": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      }
+    },
+    "source_files_verified": 4,
+    "api_digest_verified": true
+  },
+  "source_files_verified": 166,
+  "generated_rtl_files_verified": 20,
+  "full_top_native_dsp_instances": 45,
+  "physical_report_sha256": "a3036a19395c56cc943dc302a46b5b7c8b2fef59ed99ae2f972168e6a7951cb3",
+  "original_detailed_timing_sha256": "e07851d04f9321a1dee4969928943ac6d29c304ae450a553fe85b09c007a91ce",
+  "original_timing_summary_sha256": "dcb02cf7053bbdb862cbfd09640fa92d1ab13dbc21f2524164ddcf9f309a29f8",
+  "physical_artifact": {
+    "api_digest_verified": true,
+    "bytes": 14277711,
+    "id": 11007898824,
+    "sha256": "0951cafaf0f96c1235c190a387afaa509740a56658c22c0278a81f5091127d07"
+  },
+  "continuation_provenance": {
+    "hardware_tree_delta": [
+      "hw/reference/check_physical.py",
+      "hw/results/physical-native/reset-placement/resume-routing.py"
+    ],
+    "original_archive_digest_independently_verified": true,
+    "original_artifact_id": 11007703004,
+    "original_artifact_sha256": "da294c44d427df02ca932dda0c163cbb66c6a51fcda924d0721278abf9bd06db",
+    "original_checker_error": "'mkTop'",
+    "original_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+    "original_job_conclusion": "failure",
+    "original_job_id": 109208949816,
+    "original_physical_files_verified": 170,
+    "original_placement_evidence_unchanged": true,
+    "original_report_sha256": "aaac23da23f5fe917d6d68e5f153b29b953d1b2ed06ed39e34d2877fea2c10d9",
+    "original_run_id": 36506484774,
+    "original_synthesis_and_placement_commands_verified": true,
+    "production_tree_delta": [
+      "hw/reference/check_physical.py"
+    ],
+    "resume_script_sha256": "92eb2fe1b82314c353b7f7127a09705e2a01fdee7951bee260bd65244ceef9b2",
+    "source_changes": {
+      "sway/hw/reference/check_physical.py": {
+        "after": "a25abbc21a7a40de8e25a03d48bdd63683525c52bd4cee8fb4377070d3dab543",
+        "before": "95447f2639024d5c2b1a2951bfa0254c778e49a8451610df52693f090f41ee62"
+      }
+    }
+  },
+  "historical_failed_runs_retained": true,
+  "physical_board_programming_or_operation": false,
+  "integration": "Final integration retains all production and test sources from the physical commit; only evidence, two README files and the validation workflow differ. The workflow restores the full functional/native/physical job matrix from80fbfe4 with a manual trigger."
+}

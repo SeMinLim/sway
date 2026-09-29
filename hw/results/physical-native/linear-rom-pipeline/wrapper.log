@@ -1,0 +1,2 @@
+WRAPPER_PASS pairs=17 cycles=5000 comparisons=84915
+wrapper_tb.v:42: $finish called at 50000 (1s)

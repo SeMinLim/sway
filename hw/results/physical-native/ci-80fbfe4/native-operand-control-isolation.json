@@ -1,0 +1,52 @@
+{
+  "generated_rtl_sha256": "c88fd37832e29e0b445bb13f235013c93c74000bbe58fddd917d4d0ff944ecaa",
+  "operand_assignments": [
+    "assign test_multiplier_dsp$dataax = test_vectorsR$D_OUT_1[71:54] ;",
+    "assign test_multiplier_dsp$dataay = test_vectorsR$D_OUT_1[53:36] ;"
+  ],
+  "operand_dependency_cones": {
+    "test_multiplier_dsp$dataax": {
+      "assignments": {
+        "test_multiplier_dsp$dataax": "test_vectorsR$D_OUT_1[71:54] "
+      },
+      "leaf_identifiers": [
+        "test_vectorsR$D_OUT_1"
+      ],
+      "signals": [
+        "test_multiplier_dsp$dataax",
+        "test_vectorsR$D_OUT_1"
+      ],
+      "write_presence_dependencies": []
+    },
+    "test_multiplier_dsp$dataay": {
+      "assignments": {
+        "test_multiplier_dsp$dataay": "test_vectorsR$D_OUT_1[53:36] "
+      },
+      "leaf_identifiers": [
+        "test_vectorsR$D_OUT_1"
+      ],
+      "signals": [
+        "test_multiplier_dsp$dataay",
+        "test_vectorsR$D_OUT_1"
+      ],
+      "write_presence_dependencies": []
+    }
+  },
+  "operand_ports": [
+    "test_multiplier_dsp$dataax",
+    "test_multiplier_dsp$dataay"
+  ],
+  "retained_write_presence_signals": [
+    "test_multiplier_aWire$whas"
+  ],
+  "retained_write_presence_uses": [
+    "wire test_drainOn$whas, test_multiplier_aWire$whas;",
+    "assign test_multiplier_aWire$whas =",
+    "assign test_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+    "assign test_multiplier_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+    "{ test_multiplier_validR[1:0], test_multiplier_aWire$whas } ;",
+    "assign test_expectedQ$ENQ = test_multiplier_aWire$whas ;"
+  ],
+  "scope": "Continuous-assignment operand cones; dollar and underscore identifiers supported. Presence signals outside operand cones are permitted and reported.",
+  "status": "pass"
+}

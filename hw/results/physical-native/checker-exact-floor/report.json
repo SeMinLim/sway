@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "checker_sha256": "710f7ce9d457611f11b562776390d555889206ad4ba3769ac2ec5f98dd7d7d2b",
+  "cases": [
+    {
+      "case": "exact_targets",
+      "accepted": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "case": "above_targets",
+      "accepted": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "case": "core_below_target",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "uart_below_target",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "rounded_core_constraint_below_target",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "rounded_uart_constraint_below_target",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "rounded_constraint_but_exact_floor",
+      "accepted": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "case": "lowered_core_constraint",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "nonfinite_core",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "infinite_core",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "extra_clock_fails",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "missing_uart",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "case": "duplicate_core",
+      "accepted": false,
+      "expected": false,
+      "pass": true
+    }
+  ],
+  "hardware_changes": false
+}

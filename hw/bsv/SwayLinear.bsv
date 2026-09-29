@@ -1,11 +1,13 @@
 package SwayLinear;
 
 import Assert::*;
+import BRAMCore::*;
 import FIFO::*;
 import Vector::*;
 
 import SwayTypes::*;
 import SwayParameters::*;
+import SwayMultiply::*;
 
 module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 	staticAssert(valueOf(ParallelismDivisor) == 1 || valueOf(ParallelismDivisor) == 2 || valueOf(ParallelismDivisor) == 4,
@@ -33,17 +35,40 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 
 	FIFO#(Token#(n)) inputQ <- mkFIFO1;
 	FIFO#(Token#(m)) outputQ <- mkFIFO1;
+	FIFO#(Tuple3#(Vector#(TDiv#(TAdd#(n, 15), 16), Int#(8)), Bit#(5), Bool)) selectQ <- mkLFIFO;
+	FIFO#(Tuple2#(Int#(8), Bool)) bankQ <- mkFIFO;
+	FIFO#(Tuple2#(Int#(8), Bool)) readQ <- mkSizedFIFO(4);
+	FIFO#(Tuple3#(Int#(8), Vector#(LinearLanes, Int#(8)), Bool)) operandQ <- mkSizedFIFO(4);
+	FIFO#(Bool) productMetaQ <- mkSizedFIFO(8);
+	// Two registered entries sustain one product per cycle while cutting the
+	// accumulator's dequeue readiness from DSP-result and metadata controls.
 	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(16)), Bool)) productQ <- mkFIFO;
-	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) sumQ <- mkFIFO;
+	// Row sums are separated by a complete MAC row. Registered readiness
+	// prevents affine backpressure from reaching the row-completion controls.
+	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) sumQ <- mkFIFO1;
+	FIFO#(Tuple2#(Vector#(LinearLanes, Int#(24)), Bit#(7))) affineQ <- mkFIFO;
+	FIFO#(Bool) rowStartQ <- mkFIFO1;
+	Vector#(LinearLanes, MultiplyIfc) multipliers <- replicateM(mkMultiply);
 
-	Reg#(Vector#(n, Int#(8))) inputR <- mkReg(replicate(0));
-	Vector#(m, Reg#(Int#(8))) outputR <- replicateM(mkReg(0));
-	Reg#(Vector#(LinearLanes, Int#(24))) sumR <- mkReg(replicate(0));
-	Reg#(Bit#(4)) indexR <- mkReg(0);
+	Vector#(LinearLanes, BRAM_PORT#(Bit#(13), Int#(8))) weightR = newVector;
+	for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+		weightR[lane] <- mkBRAMCore1Load(groupNum * inputNum, True,
+			linearWeightFile(valueOf(LinearLanes), layerId, rowOffset, outputNum, lane), False);
+	end
+
+	Reg#(Vector#(n, Int#(8))) inputR <- mkRegU;
+	Vector#(m, Reg#(Int#(8))) outputR <- replicateM(mkRegU);
+	Reg#(Vector#(LinearLanes, Int#(24))) sumR <- mkRegU;
+	Reg#(Bit#(4)) indexR <- mkRegU;
+	Reg#(Bit#(13)) addressR <- mkRegU;
 	Reg#(Bit#(9)) inputCnt <- mkReg(0);
 	Reg#(Bit#(7)) groupCnt <- mkReg(0);
 	Reg#(Bool) activeOn <- mkReg(False);
 	Reg#(Bool) issueOn <- mkReg(False);
+	Wire#(Bit#(1)) readValidWire <- mkDWire(0);
+	Reg#(Bit#(2)) readValidR <- mkReg(0);
+	Reg#(Bit#(3)) readAcceptedCnt <- mkReg(0);
+	Reg#(Bit#(3)) readConsumedCnt <- mkReg(0);
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 1]
@@ -55,28 +80,93 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		inputR <= value.data;
 		indexR <= value.index;
 		inputCnt <= 0;
-		groupCnt <= 0;
+		addressR <= 0;
 		sumR <= replicate(0);
 		activeOn <= True;
 		issueOn <= True;
 	endrule
 
-	// Each lane owns one fixed weight ROM. The product FIFO is the multiplier register.
+	// Select within sixteen-column banks before selecting the requested bank.
+	// The largest affine input has twenty banks instead of one 320-way mux.
 	rule process2 ( activeOn && issueOn );
-		Bit#(13) address = zeroExtend(groupCnt) * fromInteger(inputNum) + zeroExtend(inputCnt);
-		Int#(8) inputValue = inputR[inputCnt];
-		Vector#(LinearLanes, Int#(16)) products = newVector;
-		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
-			Int#(8) weight = linearWeight(valueOf(LinearLanes), layerId, rowOffset, outputNum, lane, address);
-			products[lane] = signExtend(inputValue) * signExtend(weight);
+		Bit#(4) column = truncate(inputCnt);
+		Bit#(5) bank = truncate(inputCnt >> 4);
+		Vector#(TDiv#(TAdd#(n, 15), 16), Int#(8)) selected = newVector;
+		for ( Integer i = 0; i < (inputNum + 15) / 16; i = i + 1 ) begin
+			Vector#(16, Int#(8)) values = replicate(0);
+			for ( Integer j = 0; j < 16; j = j + 1 ) begin
+				if ( i * 16 + j < inputNum ) begin
+					values[j] = inputR[i * 16 + j];
+				end
+			end
+			selected[i] = values[column];
 		end
 		Bool lastInput = inputCnt == fromInteger(inputNum - 1);
-		productQ.enq(tuple2(products, lastInput));
+		selectQ.enq(tuple3(selected, bank, lastInput));
 		if ( lastInput ) begin
 			issueOn <= False;
 		end else begin
 			inputCnt <= inputCnt + 1;
 		end
+	endrule
+
+	// Both ROM stages advance independently of downstream readiness. Each read
+	// reserves one operandQ slot until the multiplier accepts that operand.
+	rule advanceRead;
+		readValidR <= (readValidR << 1) | zeroExtend(readValidWire);
+	endrule
+
+	// Register the bank selection before writing the ROM metadata FIFO.
+	// This keeps the largest 20-way selection out of its distributed-RAM input.
+	rule process2_bank ( activeOn );
+		let value = selectQ.first;
+		selectQ.deq;
+		bankQ.enq(tuple2(tpl_1(value)[tpl_2(value)], tpl_3(value)));
+	endrule
+
+	rule process2_1 ( activeOn && readAcceptedCnt - readConsumedCnt < 4 );
+		let value = bankQ.first;
+		bankQ.deq;
+		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+			weightR[lane].put(False, addressR, 0);
+		end
+		readQ.enq(value);
+		readValidWire <= 1;
+		readAcceptedCnt <= readAcceptedCnt + 1;
+		addressR <= addressR + 1;
+	endrule
+
+	// Metadata and ROM outputs have the same two-cycle request latency.
+	rule process2_2 ( activeOn && readValidR[1] == 1 );
+		let value = readQ.first;
+		readQ.deq;
+		Vector#(LinearLanes, Int#(8)) weights = newVector;
+		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+			weights[lane] = weightR[lane].read;
+		end
+		operandQ.enq(tuple3(tpl_1(value), weights, tpl_2(value)));
+	endrule
+
+	rule process2_3 ( activeOn );
+		let value = operandQ.first;
+		operandQ.deq;
+		readConsumedCnt <= readConsumedCnt + 1;
+		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+			multipliers[lane].put(signExtend(tpl_1(value)), signExtend(tpl_2(value)[lane]));
+		end
+		productMetaQ.enq(tpl_3(value));
+	endrule
+
+	// Each lane's registered DSP retains its result until the ordered collection.
+	rule process2_4 ( activeOn );
+		let lastInput = productMetaQ.first;
+		productMetaQ.deq;
+		Vector#(LinearLanes, Int#(16)) products = newVector;
+		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+			let product <- multipliers[lane].get;
+			products[lane] = truncate(product);
+		end
+		productQ.enq(tuple2(products, lastInput));
 	endrule
 
 	//------------------------------------------------------------------------------------
@@ -94,8 +184,8 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		sumR <= sums;
 	endrule
 
-	// Only the final-product rule restarts the issuer. Its !issueOn guard makes
-	// this control update disjoint from process2; ordinary MACs overlap issue.
+	// Register each non-final row restart so MAC readiness cannot reach the
+	// input counter or issue-enable registers in the same cycle.
 	rule process3Last ( activeOn && !issueOn && tpl_2(productQ.first) );
 		let value = productQ.first;
 		productQ.deq;
@@ -105,21 +195,31 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 		end
 		sumQ.enq(tuple2(sums, groupCnt));
 		sumR <= replicate(0);
-		if ( groupCnt + 1 < fromInteger(groupNum) ) begin
+		if ( groupCnt != fromInteger(groupNum - 1) ) begin
 			groupCnt <= groupCnt + 1;
-			inputCnt <= 0;
-			issueOn <= True;
+			rowStartQ.enq(True);
+		end else begin
+			// sumQ retains the final row index; the next token starts from zero.
+			groupCnt <= 0;
 		end
+	endrule
+
+	// Only this rule restarts issuance. The guards are disjoint from process1
+	// and process2; mkFIFO1 has no bypass from the final-product rule.
+	rule processRestart ( activeOn && !issueOn );
+		rowStartQ.deq;
+		inputCnt <= 0;
+		issueOn <= True;
 	endrule
 
 	//------------------------------------------------------------------------------------
 	// [STAGE 3]
-	// Align product and bias exactly, then perform one ties-to-even INT8 requantization.
+	// Align product and bias exactly before the requantization stage.
 	//------------------------------------------------------------------------------------
 	rule process4 ( activeOn );
 		let value = sumQ.first;
 		sumQ.deq;
-		Vector#(LinearLanes, Int#(8)) laneResults = replicate(0);
+		Vector#(LinearLanes, Int#(24)) aligned = newVector;
 		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
 			Bit#(9) row = zeroExtend(tpl_2(value)) * fromInteger(valueOf(LinearLanes)) + fromInteger(lane);
 			Int#(24) affine = tpl_1(value)[lane];
@@ -128,8 +228,20 @@ module mkSwayLinearSlice#(Integer layerId, Integer rowOffset)(LinearIfc#(n, m));
 				Int#(24) bias = signExtend(linearBias(layerId, row + fromInteger(rowOffset)));
 				affine = affine + (bias << (biasExp - commonExp));
 			end
+			aligned[lane] = affine;
+		end
+		affineQ.enq(tuple2(aligned, tpl_2(value)));
+	endrule
+
+	// One ties-to-even INT8 requantization follows the registered affine sum.
+	rule process4_2 ( activeOn );
+		let value = affineQ.first;
+		affineQ.deq;
+		Vector#(LinearLanes, Int#(8)) laneResults = replicate(0);
+		for ( Integer lane = 0; lane < valueOf(LinearLanes); lane = lane + 1 ) begin
+			Bit#(9) row = zeroExtend(tpl_2(value)) * fromInteger(valueOf(LinearLanes)) + fromInteger(lane);
 			if ( row < fromInteger(outputNum) ) begin
-				laneResults[lane] = requantN(affine, commonExp, outputExp);
+				laneResults[lane] = requantN(tpl_1(value)[lane], commonExp, outputExp);
 			end
 		end
 		Vector#(m, Int#(8)) result = newVector;

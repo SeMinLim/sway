@@ -1,0 +1,6 @@
+checking package dependencies
+compiling /workspace/scratch/58b69de06207/sway/hw/bsv/SwayTypes.bsv
+compiling /workspace/scratch/58b69de06207/sway/hw/generated/SwayParameters.bsv
+compiling /workspace/scratch/58b69de06207/sway/hw/bsv/SwayMultiply.bsv
+compiling /workspace/scratch/58b69de06207/sway/hw/bsv/SwayScan.bsv
+All packages are up to date.

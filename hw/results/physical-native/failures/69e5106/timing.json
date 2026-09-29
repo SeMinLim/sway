@@ -1,0 +1,2147 @@
+{
+  "fmax": {
+    "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": {
+      "achieved": 119.67448425292969,
+      "constraint": 25
+    },
+    "$glbnet$clocks_pll_clk_100mhz": {
+      "achieved": 92.9540786743164,
+      "constraint": 100
+    }
+  },
+  "critical": [
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "path": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_13",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_13",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 0.746999979019165,
+          "from": {
+            "cell": "uart_clkcnt_TRELLIS_FF_Q_13",
+            "loc": [
+              59,
+              91
+            ],
+            "port": "Q"
+          },
+          "net": "uart_clkcnt[2]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.44699999690055847,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_3$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_3$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[3]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB0",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_2$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_2$CCU2_COMB1",
+            "loc": [
+              59,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[5]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_1$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_1$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[7]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[9]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_6$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_6$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[11]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB0",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_5$CCU2_FCI_INT",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.07100000232458115,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_5$CCU2_COMB1",
+            "loc": [
+              60,
+              90
+            ],
+            "port": "FCO"
+          },
+          "net": "x__h557_CCU2C_S0_4_COUT[13]",
+          "sources": [],
+          "to": {
+            "cell": "x__h557_CCU2C_S0_4$CCU2_COMB0",
+            "loc": [
+              61,
+              90
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.4429999887943268,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_4$CCU2_COMB0",
+            "loc": [
+              61,
+              90
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "x__h557_CCU2C_S0_4$CCU2_COMB0",
+            "loc": [
+              61,
+              90
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.7680000066757202,
+          "from": {
+            "cell": "x__h557_CCU2C_S0_4$CCU2_COMB0",
+            "loc": [
+              61,
+              90
+            ],
+            "port": "F"
+          },
+          "net": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_A_LUT4_Z_D[2]",
+          "sources": [],
+          "to": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_D_CCU2C_COUT_4$CCU2_COMB1",
+            "loc": [
+              60,
+              89
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.44699999690055847,
+          "from": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_D_CCU2C_COUT_4$CCU2_COMB1",
+            "loc": [
+              60,
+              89
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_D_CCU2C_COUT_4$CCU2_COMB1",
+            "loc": [
+              60,
+              89
+            ],
+            "port": "FCO"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_D_CCU2C_COUT_4$CCU2_COMB1",
+            "loc": [
+              60,
+              89
+            ],
+            "port": "FCO"
+          },
+          "net": "$nextpnr_CCU2C_141$CIN",
+          "sources": [],
+          "to": {
+            "cell": "$nextpnr_CCU2C_141$CCU2_COMB0",
+            "loc": [
+              61,
+              89
+            ],
+            "port": "FCI"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.4429999887943268,
+          "from": {
+            "cell": "$nextpnr_CCU2C_141$CCU2_COMB0",
+            "loc": [
+              61,
+              89
+            ],
+            "port": "FCI"
+          },
+          "to": {
+            "cell": "$nextpnr_CCU2C_141$CCU2_COMB0",
+            "loc": [
+              61,
+              89
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.6830000281333923,
+          "from": {
+            "cell": "$nextpnr_CCU2C_141$CCU2_COMB0",
+            "loc": [
+              61,
+              89
+            ],
+            "port": "F"
+          },
+          "net": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z_A[3]",
+          "sources": [],
+          "to": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "D"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.9240000247955322,
+          "from": {
+            "cell": "uart_curoutoff_PFUMX_C0_Z_LUT4_Z",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "F"
+          },
+          "net": "uart_curoutoff_PFUMX_C0_Z[0]",
+          "sources": [],
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_D",
+            "loc": [
+              65,
+              91
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_D",
+            "loc": [
+              65,
+              91
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "uart_inQ.empty_reg_LUT4_D",
+            "loc": [
+              65,
+              91
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.8090000152587891,
+          "from": {
+            "cell": "uart_inQ.empty_reg_LUT4_D",
+            "loc": [
+              65,
+              91
+            ],
+            "port": "F"
+          },
+          "net": "uart_inQ.full_reg_TRELLIS_FF_Q_CE_LUT4_Z_D[5]",
+          "sources": [],
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D1_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "M"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.25600001215934753,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D1_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D1_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "OFX"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D1_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "OFX"
+          },
+          "net": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1",
+          "sources": [],
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D0_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "FXB"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.24199999868869781,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D0_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "FXB"
+          },
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D0_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "OFX"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.36899998784065247,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI_L6MUX21_Z_D1_L6MUX21_Z_D0_PFUMX_Z_ALUT_LUT4_Z",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "OFX"
+          },
+          "net": "uart_inQ.data0_reg_TRELLIS_FF_Q_DI",
+          "sources": [],
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "M"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "uart_inQ.data0_reg_TRELLIS_FF_Q",
+            "loc": [
+              67,
+              90
+            ],
+            "port": "M"
+          },
+          "type": "setup"
+        }
+      ],
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN"
+    },
+    {
+      "from": "posedge $glbnet$clocks_pll_clk_100mhz",
+      "path": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "main_core_embedding_engine_groupCnt_TRELLIS_FF_Q_3",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "main_core_embedding_engine_groupCnt_TRELLIS_FF_Q_3",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 0.9919999837875366,
+          "from": {
+            "cell": "main_core_embedding_engine_groupCnt_TRELLIS_FF_Q_3",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "Q"
+          },
+          "net": "main_core_embedding_engine_groupCnt[3]",
+          "sources": [],
+          "to": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2_B_LUT4_Z",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "C"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2_B_LUT4_Z",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "C"
+          },
+          "to": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2_B_LUT4_Z",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.6140000224113464,
+          "from": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2_B_LUT4_Z",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "F"
+          },
+          "net": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2_B[1]",
+          "sources": [],
+          "to": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 2.562000036239624,
+          "from": {
+            "cell": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z_LUT4_Z_2",
+            "loc": [
+              34,
+              83
+            ],
+            "port": "F"
+          },
+          "net": "main_core_embedding_engine_sumQ.empty_reg_LUT4_B_Z[0]",
+          "sources": [],
+          "to": {
+            "cell": "WILL_FIRE_RL_main_core_embedding_engine_process3Last_LUT4_Z",
+            "loc": [
+              24,
+              60
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "WILL_FIRE_RL_main_core_embedding_engine_process3Last_LUT4_Z",
+            "loc": [
+              24,
+              60
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "WILL_FIRE_RL_main_core_embedding_engine_process3Last_LUT4_Z",
+            "loc": [
+              24,
+              60
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 2.5380001068115234,
+          "from": {
+            "cell": "WILL_FIRE_RL_main_core_embedding_engine_process3Last_LUT4_Z",
+            "loc": [
+              24,
+              60
+            ],
+            "port": "F"
+          },
+          "net": "WILL_FIRE_RL_main_core_embedding_engine_process3Last",
+          "sources": [],
+          "to": {
+            "cell": "main_core_embedding_engine_groupCnt_LUT4_B_4",
+            "loc": [
+              34,
+              80
+            ],
+            "port": "D"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "main_core_embedding_engine_groupCnt_LUT4_B_4",
+            "loc": [
+              34,
+              80
+            ],
+            "port": "D"
+          },
+          "to": {
+            "cell": "main_core_embedding_engine_groupCnt_LUT4_B_4",
+            "loc": [
+              34,
+              80
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0.9520000219345093,
+          "from": {
+            "cell": "main_core_embedding_engine_groupCnt_LUT4_B_4",
+            "loc": [
+              34,
+              80
+            ],
+            "port": "F"
+          },
+          "net": "main_core_embedding_engine_groupCnt_LUT4_B_Z[0]",
+          "sources": [],
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_ALUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "B"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.23600000143051147,
+          "from": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_ALUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "B"
+          },
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_ALUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "F"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_ALUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "F"
+          },
+          "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_ALUT",
+          "sources": [],
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_BLUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "F1"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.16500000655651093,
+          "from": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_BLUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "F1"
+          },
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_BLUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "OFX"
+          },
+          "type": "logic"
+        },
+        {
+          "delay": 1.2300000190734863,
+          "from": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_BLUT_LUT4_Z",
+            "loc": [
+              33,
+              81
+            ],
+            "port": "OFX"
+          },
+          "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[6]",
+          "sources": [],
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_1_D_TRELLIS_FF_Q",
+            "loc": [
+              37,
+              78
+            ],
+            "port": "M"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_1_D_TRELLIS_FF_Q",
+            "loc": [
+              37,
+              78
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_1_D_TRELLIS_FF_Q",
+            "loc": [
+              37,
+              78
+            ],
+            "port": "M"
+          },
+          "type": "setup"
+        }
+      ],
+      "to": "posedge $glbnet$clocks_pll_clk_100mhz"
+    },
+    {
+      "from": "<async>",
+      "path": [
+        {
+          "delay": 0,
+          "from": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "to": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "type": "source"
+        },
+        {
+          "delay": 2.865999937057495,
+          "from": {
+            "cell": "ftdi_txd$tr_io",
+            "loc": [
+              0,
+              89
+            ],
+            "port": "O"
+          },
+          "net": "ftdi_txd$TRELLIS_IO_IN",
+          "sources": [],
+          "to": {
+            "cell": "uart_rxin_TRELLIS_FF_Q",
+            "loc": [
+              35,
+              91
+            ],
+            "port": "M"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0,
+          "from": {
+            "cell": "uart_rxin_TRELLIS_FF_Q",
+            "loc": [
+              35,
+              91
+            ],
+            "port": "M"
+          },
+          "to": {
+            "cell": "uart_rxin_TRELLIS_FF_Q",
+            "loc": [
+              35,
+              91
+            ],
+            "port": "M"
+          },
+          "type": "setup"
+        }
+      ],
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN"
+    },
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "path": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 5.616000175476074,
+          "from": {
+            "cell": "uart_txdr_TRELLIS_FF_Q",
+            "loc": [
+              61,
+              91
+            ],
+            "port": "Q"
+          },
+          "net": "ftdi_rxd$TRELLIS_IO_OUT",
+          "sources": [],
+          "to": {
+            "cell": "ftdi_rxd$tr_io",
+            "loc": [
+              0,
+              56
+            ],
+            "port": "I"
+          },
+          "type": "routing"
+        }
+      ],
+      "to": "<async>"
+    },
+    {
+      "from": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "path": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "clocks_uartReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              93
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "clocks_uartReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              93
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 0.6600000262260437,
+          "from": {
+            "cell": "clocks_uartReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              41,
+              93
+            ],
+            "port": "Q"
+          },
+          "net": "clocks_uartReset_OUT_RST",
+          "sources": [],
+          "to": {
+            "cell": "rxQ.dSyncReg1_TRELLIS_FF_Q_4",
+            "loc": [
+              41,
+              92
+            ],
+            "port": "LSR"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.42399999499320984,
+          "from": {
+            "cell": "rxQ.dSyncReg1_TRELLIS_FF_Q_4",
+            "loc": [
+              41,
+              92
+            ],
+            "port": "LSR"
+          },
+          "to": {
+            "cell": "rxQ.dSyncReg1_TRELLIS_FF_Q_4",
+            "loc": [
+              41,
+              92
+            ],
+            "port": "LSR"
+          },
+          "type": "setup"
+        }
+      ],
+      "to": "posedge $glbnet$clocks_pll_clk_100mhz"
+    },
+    {
+      "from": "posedge $glbnet$clocks_pll_clk_100mhz",
+      "path": [
+        {
+          "delay": 0.5249999761581421,
+          "from": {
+            "cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              14,
+              7
+            ],
+            "port": "Q"
+          },
+          "to": {
+            "cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              14,
+              7
+            ],
+            "port": "Q"
+          },
+          "type": "clk-to-q"
+        },
+        {
+          "delay": 8.82800006866455,
+          "from": {
+            "cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+            "loc": [
+              14,
+              7
+            ],
+            "port": "Q"
+          },
+          "net": "clocks_coreReset_OUT_RST",
+          "sources": [],
+          "to": {
+            "cell": "txQ.dGDeqPtr1_TRELLIS_FF_Q_4",
+            "loc": [
+              87,
+              90
+            ],
+            "port": "LSR"
+          },
+          "type": "routing"
+        },
+        {
+          "delay": 0.42399999499320984,
+          "from": {
+            "cell": "txQ.dGDeqPtr1_TRELLIS_FF_Q_4",
+            "loc": [
+              87,
+              90
+            ],
+            "port": "LSR"
+          },
+          "to": {
+            "cell": "txQ.dGDeqPtr1_TRELLIS_FF_Q_4",
+            "loc": [
+              87,
+              90
+            ],
+            "port": "LSR"
+          },
+          "type": "setup"
+        }
+      ],
+      "to": "posedge $glbnet$CLK_clk_25mhz$TRELLIS_IO_IN"
+    }
+  ],
+  "slow": [
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_1_D_TRELLIS_FF_Q",
+      "delay": 10.758000373840332,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_1_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[6]",
+      "port": "M"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q",
+      "delay": 10.46500015258789,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[7]",
+      "port": "M"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_4_D_TRELLIS_FF_Q",
+      "delay": 10.447999954223633,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_4_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[3]",
+      "port": "M"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_2_D_TRELLIS_FF_Q",
+      "delay": 10.357999801635742,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_2_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[5]",
+      "port": "M"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_3_D_TRELLIS_FF_Q",
+      "delay": 10.215999603271484,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_3_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[4]",
+      "port": "M"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_7_D_TRELLIS_FF_Q",
+      "delay": 10.166999816894531,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_7_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[0]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q_5",
+      "delay": 10.142999649047852,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_productMetaQ.arr[1]_TRELLIS_FF_Q",
+      "delay": 9.956999778747559,
+      "driver": "main_core_block0_gateProjection_productMetaQ.arr[1]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_gateProjection_productMetaQ.arr[1]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q_4",
+      "delay": 9.949999809265137,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q",
+      "delay": 9.949999809265137,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_5_D_TRELLIS_FF_Q",
+      "delay": 9.918000221252441,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_5_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[2]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q_3",
+      "delay": 9.913000106811523,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q_2",
+      "delay": 9.913000106811523,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_productMetaQ.arr[6]_TRELLIS_FF_Q",
+      "delay": 9.902999877929688,
+      "driver": "main_core_block0_gateProjection_productMetaQ.arr[6]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_gateProjection_productMetaQ.arr[6]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_outputCnt_TRELLIS_FF_Q_1",
+      "delay": 9.894000053405762,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_3",
+      "delay": 9.894000053405762,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_productMetaQ.hasodata_TRELLIS_FF_Q",
+      "delay": 9.878000259399414,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_97",
+      "delay": 9.795000076293945,
+      "driver": "main_core_block0_gateDelayQ.arr.0.55_DO_1_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_97_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_8",
+      "delay": 9.784000396728516,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputQ.D_OUT_TRELLIS_FF_Q_7",
+      "delay": 9.76200008392334,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_7",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[312]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputR_38_TRELLIS_FF_Q_2",
+      "delay": 9.755000114440918,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_2",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[317]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputR_37_TRELLIS_FF_Q_2",
+      "delay": 9.75,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_2",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[317]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_286",
+      "delay": 9.746000289916992,
+      "driver": "main_core_block0_gateDelayQ.arr.0.8_DO_2_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_286_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_embedding_engine_productMetaQ.arr[3]_TRELLIS_FF_Q",
+      "delay": 9.720999717712402,
+      "driver": "main_core_embedding_engine_productMetaQ.arr[3]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_productMetaQ.arr[3]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_productMetaQ.arr[6]_TRELLIS_FF_Q",
+      "delay": 9.708999633789062,
+      "driver": "main_core_embedding_engine_productMetaQ.arr[6]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_productMetaQ.arr[6]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_productMetaQ.arr[1]_TRELLIS_FF_Q",
+      "delay": 9.706999778747559,
+      "driver": "main_core_embedding_engine_productMetaQ.arr[1]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_productMetaQ.arr[1]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_productMetaQ.D_OUT_TRELLIS_FF_Q",
+      "delay": 9.692999839782715,
+      "driver": "main_core_embedding_engine_productMetaQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_productMetaQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_inputR_55_TRELLIS_FF_Q_7",
+      "delay": 9.684000015258789,
+      "driver": "main_core_inputR_55_EN_LUT4_Z",
+      "net": "main_core_inputR_55_EN",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_inputR_55_TRELLIS_FF_Q_3",
+      "delay": 9.684000015258789,
+      "driver": "main_core_inputR_55_EN_LUT4_Z",
+      "net": "main_core_inputR_55_EN",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_inputR_55_TRELLIS_FF_Q_2",
+      "delay": 9.684000015258789,
+      "driver": "main_core_inputR_55_EN_LUT4_Z",
+      "net": "main_core_inputR_55_EN",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_productMetaQ.arr[2]_TRELLIS_FF_Q",
+      "delay": 9.677000045776367,
+      "driver": "main_core_embedding_engine_productMetaQ.arr[2]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_productMetaQ.arr[2]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "txQ.sSyncReg1_TRELLIS_FF_Q_4",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sGEnqPtr_TRELLIS_FF_Q_5",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sGEnqPtr_TRELLIS_FF_Q_1",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sDeqPtr_TRELLIS_FF_Q_4",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sDeqPtr_TRELLIS_FF_Q_2",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sDeqPtr_TRELLIS_FF_Q_1",
+      "delay": 9.677000045776367,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.arr.0.0_RAD_TRELLIS_FF_Q_2",
+      "delay": 9.670000076293945,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_cProjection_productMetaQ.ring_empty_TRELLIS_FF_Q",
+      "delay": 9.666999816894531,
+      "driver": "main_core_block0_cProjection_productMetaQ.ring_empty_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_cProjection_productMetaQ.ring_empty_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_outputSelectQ.empty_reg_TRELLIS_FF_Q",
+      "delay": 9.666000366210938,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.tail_TRELLIS_FF_Q_2",
+      "delay": 9.663000106811523,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.tail_TRELLIS_FF_Q",
+      "delay": 9.663000106811523,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.tail_TRELLIS_FF_Q_1",
+      "delay": 9.656000137329102,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_readQ.hasodata_TRELLIS_FF_Q",
+      "delay": 9.656000137329102,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_cProjection_productMetaQ.arr[3]_TRELLIS_FF_Q",
+      "delay": 9.654999732971191,
+      "driver": "main_core_block0_cProjection_productMetaQ.arr[3]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_cProjection_productMetaQ.arr[3]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_7",
+      "delay": 9.64799976348877,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_3",
+      "delay": 9.64799976348877,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_12",
+      "delay": 9.64799976348877,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q",
+      "delay": 9.64799976348877,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_headOutput_engine_readConsumedCnt_TRELLIS_FF_Q_2",
+      "delay": 9.642000198364258,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.head_TRELLIS_FF_Q_1",
+      "delay": 9.642000198364258,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.tail_TRELLIS_FF_Q_3",
+      "delay": 9.638999938964844,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.tail_TRELLIS_FF_Q_2",
+      "delay": 9.638999938964844,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.hasodata_TRELLIS_FF_Q",
+      "delay": 9.638999938964844,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_productMetaQ.not_ring_full_TRELLIS_FF_Q",
+      "delay": 9.635000228881836,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.tail_TRELLIS_FF_Q_4",
+      "delay": 9.628000259399414,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.tail_TRELLIS_FF_Q",
+      "delay": 9.628000259399414,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_operandQ.not_ring_full_TRELLIS_FF_Q",
+      "delay": 9.625,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sSyncReg1_TRELLIS_FF_Q_2",
+      "delay": 9.621000289916992,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "txQ.sNotFullReg_TRELLIS_FF_Q",
+      "delay": 9.621000289916992,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.not_ring_full_TRELLIS_FF_Q",
+      "delay": 9.618000030517578,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.head_TRELLIS_FF_Q_4",
+      "delay": 9.61400032043457,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.head_TRELLIS_FF_Q_3",
+      "delay": 9.61400032043457,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputQ.head_TRELLIS_FF_Q_1",
+      "delay": 9.61400032043457,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gatingOn_TRELLIS_FF_Q",
+      "delay": 9.611000061035156,
+      "driver": "main_core_block0_gatingOn_EN_LUT4_Z",
+      "net": "main_core_block0_gatingOn_EN",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.tail_TRELLIS_FF_Q_1",
+      "delay": 9.609999656677246,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_readAcceptedCnt_TRELLIS_FF_Q_1",
+      "delay": 9.607999801635742,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_outputQ.empty_reg_TRELLIS_FF_Q",
+      "delay": 9.607999801635742,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_7",
+      "delay": 9.605999946594238,
+      "driver": "main_core_block0_gateDelayQ.arr.0.78_DO_3_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_7_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_productMetaQ.arr[3]_TRELLIS_FF_Q",
+      "delay": 9.602999687194824,
+      "driver": "main_core_block0_gateProjection_productMetaQ.arr[3]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_gateProjection_productMetaQ.arr[3]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_headOutput_engine_productMetaQ.ring_empty_TRELLIS_FF_Q",
+      "delay": 9.595999717712402,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.ring_empty_TRELLIS_FF_Q",
+      "delay": 9.595999717712402,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.not_ring_full_TRELLIS_FF_Q",
+      "delay": 9.595999717712402,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_4",
+      "delay": 9.59000015258789,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q",
+      "delay": 9.59000015258789,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_6",
+      "delay": 9.585000038146973,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_5",
+      "delay": 9.585000038146973,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_2",
+      "delay": 9.585000038146973,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_groupCnt_TRELLIS_FF_Q_1",
+      "delay": 9.585000038146973,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_headOutput_engine_inputCnt_TRELLIS_FF_Q_3",
+      "delay": 9.579000473022461,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_outputOn_TRELLIS_FF_Q",
+      "delay": 9.574000358581543,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_6",
+      "delay": 9.571999549865723,
+      "driver": "main_core_block0_gateDelayQ.arr.0.78_DO_2_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_6_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_headOutput_engine_multipliers_0_resultQ.arr.0.0_RAD_TRELLIS_FF_Q_2",
+      "delay": 9.564000129699707,
+      "driver": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+      "net": "clocks_coreReset_OUT_RST",
+      "port": "LSR"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputR_32_TRELLIS_FF_Q_7",
+      "delay": 9.555999755859375,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_7",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[312]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_productMetaQ.arr[2]_TRELLIS_FF_Q",
+      "delay": 9.555000305175781,
+      "driver": "main_core_block0_gateProjection_productMetaQ.arr[2]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_gateProjection_productMetaQ.arr[2]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_productMetaQ.arr[4]_TRELLIS_FF_Q",
+      "delay": 9.550999641418457,
+      "driver": "main_core_block0_gateProjection_productMetaQ.arr[4]_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_gateProjection_productMetaQ.arr[4]_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_headHidden_engine_readQ.D_OUT_TRELLIS_FF_Q_1",
+      "delay": 9.545999526977539,
+      "driver": "main_core_headHidden_engine_readQ.D_OUT_TRELLIS_FF_Q_1_DI_L6MUX21_Z_D1_PFUMX_Z_ALUT_LUT4_Z",
+      "net": "main_core_headHidden_engine_readQ.D_OUT_TRELLIS_FF_Q_1_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_cProjection_productMetaQ.D_OUT_TRELLIS_FF_Q",
+      "delay": 9.543000221252441,
+      "driver": "main_core_block0_cProjection_productMetaQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_block0_cProjection_productMetaQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_11",
+      "delay": 9.53499984741211,
+      "driver": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE_LUT4_Z",
+      "net": "main_core_embedding_engine_multipliers_0_resultQ.D_OUT_TRELLIS_FF_Q_CE",
+      "port": "CE"
+    },
+    {
+      "cell": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_6_D_TRELLIS_FF_Q",
+      "delay": 9.529000282287598,
+      "driver": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI_PFUMX_Z_6_BLUT_LUT4_Z",
+      "net": "CASE_main_core_embedding_engine_sumQD_OUT_BIT_ETC__q1346_LUT4_Z_D_TRELLIS_FF_Q_DI[1]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_13",
+      "delay": 9.529000282287598,
+      "driver": "main_core_block0_gateDelayQ.arr.0.76_DO_1_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_13_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_164",
+      "delay": 9.526000022888184,
+      "driver": "main_core_block0_gateDelayQ.arr.0.38_DO_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_164_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateProjection_activeOn_TRELLIS_FF_Q",
+      "delay": 9.517999649047852,
+      "driver": "main_core_block0_gateProjection_activeOn_EN_LUT4_Z",
+      "net": "main_core_block0_gateProjection_activeOn_EN",
+      "port": "CE"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputR_37_TRELLIS_FF_Q_7",
+      "delay": 9.513999938964844,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_7",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[312]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_105",
+      "delay": 9.508000373840332,
+      "driver": "main_core_block0_gateDelayQ.arr.0.53_DO_1_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_105_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_headHidden_engine_readQ.arr.0.1$DPRAM_COMB3",
+      "delay": 9.505999565124512,
+      "driver": "main_core_headHidden_engine_readQ.arr.0.1$RAMW_SLICE",
+      "net": "main_core_headHidden_engine_readQ.arr.0.1$RAMW_SLICE$conn$WDO3",
+      "port": "WD"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputR_36_TRELLIS_FF_Q_2",
+      "delay": 9.503999710083008,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_2",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[317]",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_60",
+      "delay": 9.503000259399414,
+      "driver": "main_core_block0_gateDelayQ.arr.0.64_DO_LUT4_C",
+      "net": "main_core_block0_gateDelayQ.D_OUT_TRELLIS_FF_Q_60_DI",
+      "port": "M"
+    },
+    {
+      "cell": "main_core_block0_deltaProjection_engine_outputQ.D_OUT_TRELLIS_FF_Q_2",
+      "delay": 9.501999855041504,
+      "driver": "main_core_block0_deltaProjection_engine_outputR_0_D_IN_LUT4_Z_2",
+      "net": "main_core_block0_deltaProjection_engine_outputQ_D_IN[317]",
+      "port": "M"
+    }
+  ]
+}

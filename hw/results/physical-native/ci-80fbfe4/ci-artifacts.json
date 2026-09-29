@@ -1,0 +1,99 @@
+{
+  "artifacts": [
+    {
+      "id": 11007882953,
+      "name": "baseline-functional-divisor-4-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 2972726,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007882953",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007882953/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:29:19Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:29:19Z",
+      "digest": "sha256:e8afaa99335c0c3334aaf19ca24ebee68e1386ffec38b5216161e5259eb26586",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      }
+    },
+    {
+      "id": 11007703004,
+      "name": "baseline-physical-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 8572335,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007703004",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007703004/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:23:53Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:23:53Z",
+      "digest": "sha256:da294c44d427df02ca932dda0c163cbb66c6a51fcda924d0721278abf9bd06db",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      }
+    },
+    {
+      "id": 11007028442,
+      "name": "baseline-native-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 292487,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007028442",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11007028442/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:09:03Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:09:03Z",
+      "digest": "sha256:319f3b4fc7cd3704ab12e64f96c3f545a261d3d479b13ba0ee7c977ef62a1ee1",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      }
+    },
+    {
+      "id": 11006674458,
+      "name": "baseline-functional-divisor-1-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 47506,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006674458",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006674458/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:15:57Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:15:57Z",
+      "digest": "sha256:7ebb45ff06f1c2004c492f4c42969099b588293ee7689d9d0acaa1040bf4dbca",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      }
+    },
+    {
+      "id": 11006604978,
+      "name": "baseline-functional-divisor-2-80fbfe4cdb635606c394f435b28c1102c9de5829",
+      "size_in_bytes": 43735,
+      "url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006604978",
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/11006604978/zip",
+      "expired": false,
+      "created_at": "2026-09-29T01:19:46Z",
+      "expires_at": "2026-12-28T01:08:38Z",
+      "updated_at": "2026-09-29T01:19:46Z",
+      "digest": "sha256:90498954f6f70b4a81be16ace230e4d651001e91a4293146338a20c79c0394e5",
+      "workflow_run": {
+        "id": 36506484774,
+        "repository_id": 1358126059,
+        "head_repository_id": 1358126059,
+        "head_branch": "codex/baseline-pnr-validation",
+        "head_sha": "80fbfe4cdb635606c394f435b28c1102c9de5829"
+      }
+    }
+  ]
+}

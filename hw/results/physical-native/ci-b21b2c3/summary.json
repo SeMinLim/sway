@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "scope": "Candidate-matched generated-Verilog functional regression and in-flight warm-reset verification. Physical timing is assessed separately and this candidate failed its physical target.",
+  "candidate_commit": "b21b2c32e26223f3bdbafe68194baf84a8da854f",
+  "workflow_run_id": 36467097728,
+  "workflow_url": "https://github.com/SeMinLim/sway/actions/runs/36467097728",
+  "backend": "Icarus Verilog 12.0",
+  "bsc": "2026.01 build 9bd39e6f",
+  "jobs": [
+    {
+      "id": 109079806402,
+      "name": "Functional divisor 4",
+      "conclusion": "success"
+    },
+    {
+      "id": 109079806603,
+      "name": "Functional divisor 2",
+      "conclusion": "success"
+    },
+    {
+      "id": 109079806659,
+      "name": "Functional divisor 1",
+      "conclusion": "success"
+    }
+  ],
+  "configurations": [
+    {
+      "parallelism_divisor": 1,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 130723,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    },
+    {
+      "parallelism_divisor": 1,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 115426,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    },
+    {
+      "parallelism_divisor": 2,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 231448,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    },
+    {
+      "parallelism_divisor": 2,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 223206,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    },
+    {
+      "parallelism_divisor": 4,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 296647,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    },
+    {
+      "parallelism_divisor": 4,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "finish_cycle": 288406,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "compiler_warning_codes": [
+        "G0024"
+      ],
+      "compiler_warning_count": 4
+    }
+  ],
+  "source_verification": {
+    "functional_files": 137,
+    "functional_all_three_manifests_identical": true,
+    "mismatches": 0,
+    "configured_types_divisors_verified": [
+      1,
+      2,
+      4
+    ],
+    "warm_reset_files": 138,
+    "warm_reset_source_unchanged": true,
+    "method": "Exact committed Git blob identities plus SHA256 contents.135functional files reuse prior independent69e hashes because their blobs are unchanged; both changed source contents were freshly hashed. Unchanged warm-reset checker hash was also matched."
+  },
+  "warm_reset": {
+    "status": "pass",
+    "parallelism_divisor": 4,
+    "reset_after_cycles": 40000,
+    "reset_hold_cycles": 5,
+    "before_reset": {
+      "input_words_accepted": 1312,
+      "outputs_received": 57,
+      "cycle": 40000,
+      "in_flight_work_confirmed": true
+    },
+    "post_reset_frames": 14,
+    "post_reset_outputs": 798,
+    "post_reset_finish_cycle": 288406,
+    "post_completion_drain_cycles": 2048,
+    "all_command_returncodes_zero": true
+  },
+  "evidence_collection": {
+    "method": "GitHub job APIs and exact SWAY_REPORT JSON extracted from decoded full CI job logs",
+    "raw_ci_job_logs_preserved": true,
+    "raw_checker_reports_preserved": true,
+    "artifact_archives_downloaded": false,
+    "artifact_zip_sha256_independently_verified": false,
+    "artifact_digest_scope": "GitHub API-provided metadata only; archive digest has not been recomputed.",
+    "artifact_internal_compile_simulation_logs_independently_checked": false
+  },
+  "artifacts": [
+    {
+      "id": 10991341709,
+      "name": "baseline-functional-divisor-4-b21b2c32e26223f3bdbafe68194baf84a8da854f",
+      "size_in_bytes": 2942239,
+      "api_provided_digest": "sha256:930acf0e069b9b6ffc09744c130a3a6b062e33a6a1c05b7d3687d2b72197b319",
+      "expired": false,
+      "independently_verified": false
+    },
+    {
+      "id": 10990591518,
+      "name": "baseline-functional-divisor-1-b21b2c32e26223f3bdbafe68194baf84a8da854f",
+      "size_in_bytes": 47082,
+      "api_provided_digest": "sha256:b978fabf5e4cc2f641d08f20c1580a43f83a6be987bea3fd334131730fce4614",
+      "expired": false,
+      "independently_verified": false
+    },
+    {
+      "id": 10990092170,
+      "name": "baseline-functional-divisor-2-b21b2c32e26223f3bdbafe68194baf84a8da854f",
+      "size_in_bytes": 43253,
+      "api_provided_digest": "sha256:159c24df94585e5f1041d48c2eff139c715f13c242ae9df3f0d01445595dcf3b",
+      "expired": false,
+      "independently_verified": false
+    }
+  ],
+  "arithmetic_proof_scope": "Workflow used --skip-arithmetic; existing arithmetic/formal/model reports are historical proofs, not rerun by this CI."
+}

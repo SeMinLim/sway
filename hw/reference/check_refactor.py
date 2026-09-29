@@ -51,7 +51,7 @@ def build(bsc, snapshot, top, result, env, backend, iverilog, vvp, ivl_dir):
         if ivl_dir:
             command += ["-B", ivl_dir]
         command += ["-g2012", "-s", "main", "-D", "TOP=" + top,
-                    "-y", str(runtime), "-I", str(runtime),
+                    "-y", str(snapshot / "rtl"), "-y", str(runtime), "-I", str(runtime),
                     "-o", str(build_dir / top), str(runtime / "main.v"), str(build_dir / (top + ".v"))]
         run(command, snapshot, result / "link.log", env)
         run([vvp, str(build_dir / top)], snapshot, result / "simulation.log", env)
@@ -208,6 +208,8 @@ def main():
     sources = sorted([*ROOT.joinpath("bsv").glob("*.bsv"),
                       *ROOT.joinpath("generated").glob("*.bsv"),
                       *ROOT.joinpath("sim").glob("*.bsv"),
+                      *ROOT.joinpath("rtl").glob("*.v"),
+                      *ROOT.joinpath("generated/linear_rom").glob("*.hex"),
                       ROOT / "generated/test_input.hex", ROOT / "generated/test_expected.hex",
                       ROOT / "reference/check_sim.py", Path(__file__).resolve()])
     result = {"status": "running", "compiler": bsc,
@@ -221,7 +223,7 @@ def main():
         for divisor in args.divisors:
             snapshot = Path(temporary) / ("divisor" + str(divisor))
             snapshot.mkdir()
-            for folder in ("bsv", "generated", "sim"):
+            for folder in ("bsv", "generated", "sim", "rtl"):
                 shutil.copytree(ROOT / folder, snapshot / folder)
             types = snapshot / "bsv/SwayTypes.bsv"
             source, count = re.subn(r"typedef \d+ ParallelismDivisor;",

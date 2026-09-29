@@ -1,0 +1,16 @@
+{
+  "candidate_commit": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+  "status": "pass",
+  "source_count": 138,
+  "source_unchanged": true,
+  "method": "137 hashes match the verified functional source table. The additional unchanged check_warm_reset.py blob reuses the preceding verified SHA256.",
+  "functional_source_check_path": "source-hash-check.json",
+  "additional_file": {
+    "path": "reference/check_warm_reset.py",
+    "git_blob_sha": "5ae4ea8cac56847b4918ab10d4d65230452a204b",
+    "content_sha256": "acf756f361a5bbe6b9ee74f6f05fc275a135a20b2086c19f1af0e8a52073471c",
+    "prior_verification_blob": "77154cb194fb96e4d7c81b1f27b8a3ee3e300785",
+    "match": true
+  },
+  "mismatches": []
+}

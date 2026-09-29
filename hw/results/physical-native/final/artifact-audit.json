@@ -1,0 +1,2416 @@
+{
+  "artifact": {
+    "api_digest_verified": true,
+    "bytes": 14277711,
+    "id": 11007898824,
+    "sha256": "0951cafaf0f96c1235c190a387afaa509740a56658c22c0278a81f5091127d07"
+  },
+  "audited_utc": "2026-09-29T01:36:32.533803+00:00",
+  "bitstream": {
+    "bytes": 1978721,
+    "ecppack_step_conclusion": "success",
+    "sha256": "6478081d9205a2f6b7f75b42e4e9a48c150d0ef5e55d8542cf75165412f0bc53"
+  },
+  "ci_run_id": 36508244812,
+  "clocks": {
+    "core": {
+      "achieved_mhz": 101.50222778320312,
+      "constraint_mhz": 100,
+      "net": "$glbnet$clocks_pll_clk_100mhz",
+      "pass": true,
+      "required_mhz": 100
+    },
+    "uart": {
+      "achieved_mhz": 118.5958251953125,
+      "constraint_mhz": 25,
+      "net": "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN",
+      "pass": true,
+      "required_mhz": 25
+    }
+  },
+  "config_sha256": "bf79f483771ef2fcdd4c6e94cc8339585b38f694118d0f685c0acab193026d91",
+  "continuation_provenance": {
+    "hardware_tree_delta": [
+      "hw/reference/check_physical.py",
+      "hw/results/physical-native/reset-placement/resume-routing.py"
+    ],
+    "original_archive_digest_independently_verified": true,
+    "original_artifact_id": 11007703004,
+    "original_artifact_sha256": "da294c44d427df02ca932dda0c163cbb66c6a51fcda924d0721278abf9bd06db",
+    "original_checker_error": "'mkTop'",
+    "original_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+    "original_job_conclusion": "failure",
+    "original_job_id": 109208949816,
+    "original_physical_files_verified": 170,
+    "original_placement_evidence_unchanged": true,
+    "original_report_sha256": "aaac23da23f5fe917d6d68e5f153b29b953d1b2ed06ed39e34d2877fea2c10d9",
+    "original_run_id": 36506484774,
+    "original_synthesis_and_placement_commands_verified": true,
+    "production_tree_delta": [
+      "hw/reference/check_physical.py"
+    ],
+    "resume_script_sha256": "92eb2fe1b82314c353b7f7127a09705e2a01fdee7951bee260bd65244ceef9b2",
+    "source_changes": {
+      "sway/hw/reference/check_physical.py": {
+        "after": "a25abbc21a7a40de8e25a03d48bdd63683525c52bd4cee8fb4377070d3dab543",
+        "before": "95447f2639024d5c2b1a2951bfa0254c778e49a8451610df52693f090f41ee62"
+      }
+    }
+  },
+  "detailed_timing_sha256": "e07851d04f9321a1dee4969928943ac6d29c304ae450a553fe85b09c007a91ce",
+  "evidence_files_verified": 183,
+  "full_top_operand_control": {
+    "generated_rtl_sha256": "cb8018dd5d667a63f810783152d71ce4f718b0adec72985946d086cfa27923a2",
+    "native_dsp_instances": 45,
+    "operand_assignments": [
+      "assign main_core_block0_bProjection_multipliers_0_dsp_dataax = main_core_block0_bProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_bProjection_multipliers_0_dsp_dataay = main_core_block0_bProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_cProjection_multipliers_0_dsp_dataax = main_core_block0_cProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_cProjection_multipliers_0_dsp_dataay = main_core_block0_cProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_0_dsp_dataax = main_core_block0_convMultipliers_0_0_aWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_0_dsp_dataay = main_core_block0_convMultipliers_0_0_bWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_1_dsp_dataax = main_core_block0_convMultipliers_0_1_aWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_1_dsp_dataay = main_core_block0_convMultipliers_0_1_bWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_2_dsp_dataax = main_core_block0_convMultipliers_0_2_aWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_2_dsp_dataay = main_core_block0_convMultipliers_0_2_bWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_3_dsp_dataax = main_core_block0_convMultipliers_0_3_aWire_wget ;",
+      "assign main_core_block0_convMultipliers_0_3_dsp_dataay = main_core_block0_convMultipliers_0_3_bWire_wget ;",
+      "assign main_core_block0_deltaInputProjection_multipliers_0_dsp_dataax = main_core_block0_deltaInputProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_deltaInputProjection_multipliers_0_dsp_dataay = main_core_block0_deltaInputProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataax = main_core_block0_deltaProjection_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataay = main_core_block0_deltaProjection_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_gateMultipliers_0_dsp_dataax = main_core_block0_gateMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_gateMultipliers_0_dsp_dataay = main_core_block0_gateMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_gateProjection_multipliers_0_dsp_dataax = main_core_block0_gateProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_gateProjection_multipliers_0_dsp_dataay = main_core_block0_gateProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_mainProjection_multipliers_0_dsp_dataax = main_core_block0_mainProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_mainProjection_multipliers_0_dsp_dataay = main_core_block0_mainProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_normalization_biasedMultiplier_0_dsp_dataax = main_core_block0_normalization_biasedMultiplier_0_aWire_wget ;",
+      "assign main_core_block0_normalization_biasedMultiplier_0_dsp_dataay = main_core_block0_normalization_biasedMultiplier_0_bWire_wget ;",
+      "assign main_core_block0_normalization_weightedMultiplier_0_dsp_dataax = main_core_block0_normalization_weightedMultiplier_0_aWire_wget ;",
+      "assign main_core_block0_normalization_weightedMultiplier_0_dsp_dataay = main_core_block0_normalization_weightedMultiplier_0_bWire_wget ;",
+      "assign main_core_block0_outputProjection_engine_multipliers_0_dsp_dataax = main_core_block0_outputProjection_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_block0_outputProjection_engine_multipliers_0_dsp_dataay = main_core_block0_outputProjection_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_deltaAMultipliers_0_dsp_dataax = main_core_block0_scan_deltaAMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_deltaAMultipliers_0_dsp_dataay = main_core_block0_scan_deltaAMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_deltaBMultipliers_0_dsp_dataax = main_core_block0_scan_deltaAMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_deltaBMultipliers_0_dsp_dataay = main_core_block0_scan_deltaBMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_directMultiplier_dsp_dataax = main_core_block0_scan_directMultiplier_aWire_wget ;",
+      "assign main_core_block0_scan_directMultiplier_dsp_dataay = main_core_block0_scan_directMultiplier_bWire_wget ;",
+      "assign main_core_block0_scan_highMultipliers_0_dsp_dataax = main_core_block0_scan_highMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_highMultipliers_0_dsp_dataay = main_core_block0_scan_lowMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_inputMultipliers_0_dsp_dataax = main_core_block0_scan_inputMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_inputMultipliers_0_dsp_dataay = main_core_block0_scan_inputMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_lowMultipliers_0_dsp_dataax = main_core_block0_scan_lowMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_lowMultipliers_0_dsp_dataay = main_core_block0_scan_lowMultipliers_0_bWire_wget ;",
+      "assign main_core_block0_scan_stateMultipliers_0_dsp_dataax = main_core_block0_scan_stateMultipliers_0_aWire_wget ;",
+      "assign main_core_block0_scan_stateMultipliers_0_dsp_dataay = main_core_block0_scan_stateMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_bProjection_multipliers_0_dsp_dataax = main_core_block1_bProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_bProjection_multipliers_0_dsp_dataay = main_core_block1_bProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_cProjection_multipliers_0_dsp_dataax = main_core_block1_cProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_cProjection_multipliers_0_dsp_dataay = main_core_block1_cProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_0_dsp_dataax = main_core_block1_convMultipliers_0_0_aWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_0_dsp_dataay = main_core_block1_convMultipliers_0_0_bWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_1_dsp_dataax = main_core_block1_convMultipliers_0_1_aWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_1_dsp_dataay = main_core_block1_convMultipliers_0_1_bWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_2_dsp_dataax = main_core_block1_convMultipliers_0_2_aWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_2_dsp_dataay = main_core_block1_convMultipliers_0_2_bWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_3_dsp_dataax = main_core_block1_convMultipliers_0_3_aWire_wget ;",
+      "assign main_core_block1_convMultipliers_0_3_dsp_dataay = main_core_block1_convMultipliers_0_3_bWire_wget ;",
+      "assign main_core_block1_deltaInputProjection_multipliers_0_dsp_dataax = main_core_block1_deltaInputProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_deltaInputProjection_multipliers_0_dsp_dataay = main_core_block1_deltaInputProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataax = main_core_block1_deltaProjection_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataay = main_core_block1_deltaProjection_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_gateMultipliers_0_dsp_dataax = main_core_block1_gateMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_gateMultipliers_0_dsp_dataay = main_core_block1_gateMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_gateProjection_multipliers_0_dsp_dataax = main_core_block1_gateProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_gateProjection_multipliers_0_dsp_dataay = main_core_block1_gateProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_mainProjection_multipliers_0_dsp_dataax = main_core_block1_mainProjection_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_mainProjection_multipliers_0_dsp_dataay = main_core_block1_mainProjection_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_normalization_biasedMultiplier_0_dsp_dataax = main_core_block1_normalization_biasedMultiplier_0_aWire_wget ;",
+      "assign main_core_block1_normalization_biasedMultiplier_0_dsp_dataay = main_core_block1_normalization_biasedMultiplier_0_bWire_wget ;",
+      "assign main_core_block1_normalization_weightedMultiplier_0_dsp_dataax = main_core_block1_normalization_weightedMultiplier_0_aWire_wget ;",
+      "assign main_core_block1_normalization_weightedMultiplier_0_dsp_dataay = main_core_block1_normalization_weightedMultiplier_0_bWire_wget ;",
+      "assign main_core_block1_outputProjection_engine_multipliers_0_dsp_dataax = main_core_block1_outputProjection_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_block1_outputProjection_engine_multipliers_0_dsp_dataay = main_core_block1_outputProjection_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_deltaAMultipliers_0_dsp_dataax = main_core_block1_scan_deltaAMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_deltaAMultipliers_0_dsp_dataay = main_core_block1_scan_deltaAMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_deltaBMultipliers_0_dsp_dataax = main_core_block1_scan_deltaAMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_deltaBMultipliers_0_dsp_dataay = main_core_block1_scan_deltaBMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_directMultiplier_dsp_dataax = main_core_block1_scan_directMultiplier_aWire_wget ;",
+      "assign main_core_block1_scan_directMultiplier_dsp_dataay = main_core_block1_scan_directMultiplier_bWire_wget ;",
+      "assign main_core_block1_scan_highMultipliers_0_dsp_dataax = main_core_block1_scan_highMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_highMultipliers_0_dsp_dataay = main_core_block1_scan_lowMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_inputMultipliers_0_dsp_dataax = main_core_block1_scan_inputMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_inputMultipliers_0_dsp_dataay = main_core_block1_scan_inputMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_lowMultipliers_0_dsp_dataax = main_core_block1_scan_lowMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_lowMultipliers_0_dsp_dataay = main_core_block1_scan_lowMultipliers_0_bWire_wget ;",
+      "assign main_core_block1_scan_stateMultipliers_0_dsp_dataax = main_core_block1_scan_stateMultipliers_0_aWire_wget ;",
+      "assign main_core_block1_scan_stateMultipliers_0_dsp_dataay = main_core_block1_scan_stateMultipliers_0_bWire_wget ;",
+      "assign main_core_embedding_engine_multipliers_0_dsp_dataax = main_core_embedding_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_embedding_engine_multipliers_0_dsp_dataay = main_core_embedding_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_headHidden_engine_multipliers_0_dsp_dataax = main_core_headHidden_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_headHidden_engine_multipliers_0_dsp_dataay = main_core_headHidden_engine_multipliers_0_bWire_wget ;",
+      "assign main_core_headOutput_engine_multipliers_0_dsp_dataax = main_core_headOutput_engine_multipliers_0_aWire_wget ;",
+      "assign main_core_headOutput_engine_multipliers_0_dsp_dataay = main_core_headOutput_engine_multipliers_0_bWire_wget ;"
+    ],
+    "operand_dependency_cones": {
+      "main_core_block0_bProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_bProjection_multipliers_0_aWire_wget": "{ {10{main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1152[7]}},\n\t       main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1152 } ",
+          "main_core_block0_bProjection_multipliers_0_dsp_dataax": "main_core_block0_bProjection_multipliers_0_aWire_wget ",
+          "main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1152": "main_core_block0_bProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_bProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_bProjection_multipliers_0_aWire_wget",
+          "main_core_block0_bProjection_multipliers_0_dsp_dataax",
+          "main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1152",
+          "main_core_block0_bProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_bProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_bProjection_multipliers_0_bWire_wget": "{ {10{main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1153[7]}},\n\t       main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1153 } ",
+          "main_core_block0_bProjection_multipliers_0_dsp_dataay": "main_core_block0_bProjection_multipliers_0_bWire_wget ",
+          "main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1153": "main_core_block0_bProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_bProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_bProjection_multipliers_0_bWire_wget",
+          "main_core_block0_bProjection_multipliers_0_dsp_dataay",
+          "main_core_block0_bProjection_operandQD_OUT_BI_ETC__q1153",
+          "main_core_block0_bProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_cProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_cProjection_multipliers_0_aWire_wget": "{ {10{main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1154[7]}},\n\t       main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1154 } ",
+          "main_core_block0_cProjection_multipliers_0_dsp_dataax": "main_core_block0_cProjection_multipliers_0_aWire_wget ",
+          "main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1154": "main_core_block0_cProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_cProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_cProjection_multipliers_0_aWire_wget",
+          "main_core_block0_cProjection_multipliers_0_dsp_dataax",
+          "main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1154",
+          "main_core_block0_cProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_cProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_cProjection_multipliers_0_bWire_wget": "{ {10{main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1155[7]}},\n\t       main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1155 } ",
+          "main_core_block0_cProjection_multipliers_0_dsp_dataay": "main_core_block0_cProjection_multipliers_0_bWire_wget ",
+          "main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1155": "main_core_block0_cProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_cProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_cProjection_multipliers_0_bWire_wget",
+          "main_core_block0_cProjection_multipliers_0_dsp_dataay",
+          "main_core_block0_cProjection_operandQD_OUT_BI_ETC__q1155",
+          "main_core_block0_cProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_0_aWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_47_T_ETC__q1167[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_47_T_ETC__q1167 } ",
+          "main_core_block0_convMultipliers_0_0_dsp_dataax": "main_core_block0_convMultipliers_0_0_aWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_47_T_ETC__q1167": "main_core_block0_convOperandsQ_D_OUT[47:40] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_0_aWire_wget",
+          "main_core_block0_convMultipliers_0_0_dsp_dataax",
+          "main_core_block0_convOperandsQD_OUT_BITS_47_T_ETC__q1167",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_0_bWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_15_TO_8__q1168[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_15_TO_8__q1168 } ",
+          "main_core_block0_convMultipliers_0_0_dsp_dataay": "main_core_block0_convMultipliers_0_0_bWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_15_TO_8__q1168": "main_core_block0_convOperandsQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_0_bWire_wget",
+          "main_core_block0_convMultipliers_0_0_dsp_dataay",
+          "main_core_block0_convOperandsQD_OUT_BITS_15_TO_8__q1168",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_1_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_1_aWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_55_T_ETC__q1169[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_55_T_ETC__q1169 } ",
+          "main_core_block0_convMultipliers_0_1_dsp_dataax": "main_core_block0_convMultipliers_0_1_aWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_55_T_ETC__q1169": "main_core_block0_convOperandsQ_D_OUT[55:48] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_1_aWire_wget",
+          "main_core_block0_convMultipliers_0_1_dsp_dataax",
+          "main_core_block0_convOperandsQD_OUT_BITS_55_T_ETC__q1169",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_1_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_1_bWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_23_T_ETC__q1170[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_23_T_ETC__q1170 } ",
+          "main_core_block0_convMultipliers_0_1_dsp_dataay": "main_core_block0_convMultipliers_0_1_bWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_23_T_ETC__q1170": "main_core_block0_convOperandsQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_1_bWire_wget",
+          "main_core_block0_convMultipliers_0_1_dsp_dataay",
+          "main_core_block0_convOperandsQD_OUT_BITS_23_T_ETC__q1170",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_2_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_2_aWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_63_T_ETC__q1171[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_63_T_ETC__q1171 } ",
+          "main_core_block0_convMultipliers_0_2_dsp_dataax": "main_core_block0_convMultipliers_0_2_aWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_63_T_ETC__q1171": "main_core_block0_convOperandsQ_D_OUT[63:56] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_2_aWire_wget",
+          "main_core_block0_convMultipliers_0_2_dsp_dataax",
+          "main_core_block0_convOperandsQD_OUT_BITS_63_T_ETC__q1171",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_2_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_2_bWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_31_T_ETC__q1172[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_31_T_ETC__q1172 } ",
+          "main_core_block0_convMultipliers_0_2_dsp_dataay": "main_core_block0_convMultipliers_0_2_bWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_31_T_ETC__q1172": "main_core_block0_convOperandsQ_D_OUT[31:24] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_2_bWire_wget",
+          "main_core_block0_convMultipliers_0_2_dsp_dataay",
+          "main_core_block0_convOperandsQD_OUT_BITS_31_T_ETC__q1172",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_3_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_3_aWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_71_T_ETC__q1173[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_71_T_ETC__q1173 } ",
+          "main_core_block0_convMultipliers_0_3_dsp_dataax": "main_core_block0_convMultipliers_0_3_aWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_71_T_ETC__q1173": "main_core_block0_convOperandsQ_D_OUT[71:64] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_3_aWire_wget",
+          "main_core_block0_convMultipliers_0_3_dsp_dataax",
+          "main_core_block0_convOperandsQD_OUT_BITS_71_T_ETC__q1173",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_convMultipliers_0_3_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_convMultipliers_0_3_bWire_wget": "{ {10{main_core_block0_convOperandsQD_OUT_BITS_39_T_ETC__q1174[7]}},\n\t       main_core_block0_convOperandsQD_OUT_BITS_39_T_ETC__q1174 } ",
+          "main_core_block0_convMultipliers_0_3_dsp_dataay": "main_core_block0_convMultipliers_0_3_bWire_wget ",
+          "main_core_block0_convOperandsQD_OUT_BITS_39_T_ETC__q1174": "main_core_block0_convOperandsQ_D_OUT[39:32] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_convMultipliers_0_3_bWire_wget",
+          "main_core_block0_convMultipliers_0_3_dsp_dataay",
+          "main_core_block0_convOperandsQD_OUT_BITS_39_T_ETC__q1174",
+          "main_core_block0_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_deltaInputProjection_multipliers_0_aWire_wget": "{ {10{main_core_block0_deltaInputProjection_operandQ_ETC__q1150[7]}},\n\t       main_core_block0_deltaInputProjection_operandQ_ETC__q1150 } ",
+          "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataax": "main_core_block0_deltaInputProjection_multipliers_0_aWire_wget ",
+          "main_core_block0_deltaInputProjection_operandQ_ETC__q1150": "main_core_block0_deltaInputProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_deltaInputProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_deltaInputProjection_multipliers_0_aWire_wget",
+          "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataax",
+          "main_core_block0_deltaInputProjection_operandQ_D_OUT",
+          "main_core_block0_deltaInputProjection_operandQ_ETC__q1150"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_deltaInputProjection_multipliers_0_bWire_wget": "{ {10{main_core_block0_deltaInputProjection_operandQ_ETC__q1151[7]}},\n\t       main_core_block0_deltaInputProjection_operandQ_ETC__q1151 } ",
+          "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataay": "main_core_block0_deltaInputProjection_multipliers_0_bWire_wget ",
+          "main_core_block0_deltaInputProjection_operandQ_ETC__q1151": "main_core_block0_deltaInputProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_deltaInputProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_deltaInputProjection_multipliers_0_bWire_wget",
+          "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataay",
+          "main_core_block0_deltaInputProjection_operandQ_D_OUT",
+          "main_core_block0_deltaInputProjection_operandQ_ETC__q1151"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_deltaProjection_engine_multipliers_0_aWire_wget": "{ {10{main_core_block0_deltaProjection_engine_operan_ETC__q1156[7]}},\n\t       main_core_block0_deltaProjection_engine_operan_ETC__q1156 } ",
+          "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataax": "main_core_block0_deltaProjection_engine_multipliers_0_aWire_wget ",
+          "main_core_block0_deltaProjection_engine_operan_ETC__q1156": "main_core_block0_deltaProjection_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_deltaProjection_engine_multipliers_0_aWire_wget",
+          "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataax",
+          "main_core_block0_deltaProjection_engine_operan_ETC__q1156",
+          "main_core_block0_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_deltaProjection_engine_multipliers_0_bWire_wget": "{ {10{main_core_block0_deltaProjection_engine_operan_ETC__q1157[7]}},\n\t       main_core_block0_deltaProjection_engine_operan_ETC__q1157 } ",
+          "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataay": "main_core_block0_deltaProjection_engine_multipliers_0_bWire_wget ",
+          "main_core_block0_deltaProjection_engine_operan_ETC__q1157": "main_core_block0_deltaProjection_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_deltaProjection_engine_multipliers_0_bWire_wget",
+          "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataay",
+          "main_core_block0_deltaProjection_engine_operan_ETC__q1157",
+          "main_core_block0_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_gateMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_gateMultipliers_0_aWire_wget": "{ {10{main_core_block0_gateOperandsQD_OUT_BITS_15_TO_8__q1175[7]}},\n\t       main_core_block0_gateOperandsQD_OUT_BITS_15_TO_8__q1175 } ",
+          "main_core_block0_gateMultipliers_0_dsp_dataax": "main_core_block0_gateMultipliers_0_aWire_wget ",
+          "main_core_block0_gateOperandsQD_OUT_BITS_15_TO_8__q1175": "main_core_block0_gateOperandsQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_gateOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_gateMultipliers_0_aWire_wget",
+          "main_core_block0_gateMultipliers_0_dsp_dataax",
+          "main_core_block0_gateOperandsQD_OUT_BITS_15_TO_8__q1175",
+          "main_core_block0_gateOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_gateMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_gateMultipliers_0_bWire_wget": "{ {10{main_core_block0_gateOperandsQD_OUT_BITS_7_TO_0__q1176[7]}},\n\t       main_core_block0_gateOperandsQD_OUT_BITS_7_TO_0__q1176 } ",
+          "main_core_block0_gateMultipliers_0_dsp_dataay": "main_core_block0_gateMultipliers_0_bWire_wget ",
+          "main_core_block0_gateOperandsQD_OUT_BITS_7_TO_0__q1176": "main_core_block0_gateOperandsQ_D_OUT[7:0] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_gateOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_gateMultipliers_0_bWire_wget",
+          "main_core_block0_gateMultipliers_0_dsp_dataay",
+          "main_core_block0_gateOperandsQD_OUT_BITS_7_TO_0__q1176",
+          "main_core_block0_gateOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_gateProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_gateProjection_multipliers_0_aWire_wget": "{ {10{main_core_block0_gateProjection_operandQD_OUT_ETC__q1148[7]}},\n\t       main_core_block0_gateProjection_operandQD_OUT_ETC__q1148 } ",
+          "main_core_block0_gateProjection_multipliers_0_dsp_dataax": "main_core_block0_gateProjection_multipliers_0_aWire_wget ",
+          "main_core_block0_gateProjection_operandQD_OUT_ETC__q1148": "main_core_block0_gateProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_gateProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_gateProjection_multipliers_0_aWire_wget",
+          "main_core_block0_gateProjection_multipliers_0_dsp_dataax",
+          "main_core_block0_gateProjection_operandQD_OUT_ETC__q1148",
+          "main_core_block0_gateProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_gateProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_gateProjection_multipliers_0_bWire_wget": "{ {10{main_core_block0_gateProjection_operandQD_OUT_ETC__q1149[7]}},\n\t       main_core_block0_gateProjection_operandQD_OUT_ETC__q1149 } ",
+          "main_core_block0_gateProjection_multipliers_0_dsp_dataay": "main_core_block0_gateProjection_multipliers_0_bWire_wget ",
+          "main_core_block0_gateProjection_operandQD_OUT_ETC__q1149": "main_core_block0_gateProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_gateProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_gateProjection_multipliers_0_bWire_wget",
+          "main_core_block0_gateProjection_multipliers_0_dsp_dataay",
+          "main_core_block0_gateProjection_operandQD_OUT_ETC__q1149",
+          "main_core_block0_gateProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_mainProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_mainProjection_multipliers_0_aWire_wget": "{ {10{main_core_block0_mainProjection_operandQD_OUT_ETC__q1146[7]}},\n\t       main_core_block0_mainProjection_operandQD_OUT_ETC__q1146 } ",
+          "main_core_block0_mainProjection_multipliers_0_dsp_dataax": "main_core_block0_mainProjection_multipliers_0_aWire_wget ",
+          "main_core_block0_mainProjection_operandQD_OUT_ETC__q1146": "main_core_block0_mainProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_mainProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_mainProjection_multipliers_0_aWire_wget",
+          "main_core_block0_mainProjection_multipliers_0_dsp_dataax",
+          "main_core_block0_mainProjection_operandQD_OUT_ETC__q1146",
+          "main_core_block0_mainProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_mainProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_mainProjection_multipliers_0_bWire_wget": "{ {10{main_core_block0_mainProjection_operandQD_OUT_ETC__q1147[7]}},\n\t       main_core_block0_mainProjection_operandQD_OUT_ETC__q1147 } ",
+          "main_core_block0_mainProjection_multipliers_0_dsp_dataay": "main_core_block0_mainProjection_multipliers_0_bWire_wget ",
+          "main_core_block0_mainProjection_operandQD_OUT_ETC__q1147": "main_core_block0_mainProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_mainProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_mainProjection_multipliers_0_bWire_wget",
+          "main_core_block0_mainProjection_multipliers_0_dsp_dataay",
+          "main_core_block0_mainProjection_operandQD_OUT_ETC__q1147",
+          "main_core_block0_mainProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_normalization_biasedMultiplier_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_normalization_biasedMultiplier_0_aWire_wget": "{ 4'd0, main_core_block0_normalization_magnitudeQ_D_OUT[13:0] } ",
+          "main_core_block0_normalization_biasedMultiplier_0_dsp_dataax": "main_core_block0_normalization_biasedMultiplier_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_normalization_biasedMultiplier_0_aWire_wget",
+          "main_core_block0_normalization_biasedMultiplier_0_dsp_dataax",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_normalization_biasedMultiplier_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_normalization_biasedMultiplier_0_bWire_wget": "{ 10'd0,\n\t       main_core_block0_normalization_magnitudeQ_D_OUT[23:16] } ",
+          "main_core_block0_normalization_biasedMultiplier_0_dsp_dataay": "main_core_block0_normalization_biasedMultiplier_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_normalization_biasedMultiplier_0_bWire_wget",
+          "main_core_block0_normalization_biasedMultiplier_0_dsp_dataay",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_normalization_weightedMultiplier_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_normalization_weightedMultiplier_0_aWire_wget": "{ 4'd0,\n\t       main_core_block0_normalization_magnitudeQ_D_OUT[45:32] } ",
+          "main_core_block0_normalization_weightedMultiplier_0_dsp_dataax": "main_core_block0_normalization_weightedMultiplier_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT",
+          "main_core_block0_normalization_weightedMultiplier_0_aWire_wget",
+          "main_core_block0_normalization_weightedMultiplier_0_dsp_dataax"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_normalization_weightedMultiplier_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_normalization_weightedMultiplier_0_bWire_wget": "{ 10'd0,\n\t       main_core_block0_normalization_magnitudeQ_D_OUT[31:24] } ",
+          "main_core_block0_normalization_weightedMultiplier_0_dsp_dataay": "main_core_block0_normalization_weightedMultiplier_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_normalization_magnitudeQ_D_OUT",
+          "main_core_block0_normalization_weightedMultiplier_0_bWire_wget",
+          "main_core_block0_normalization_weightedMultiplier_0_dsp_dataay"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_outputProjection_engine_multipliers_0_aWire_wget": "{ {10{main_core_block0_outputProjection_engine_opera_ETC__q1158[7]}},\n\t       main_core_block0_outputProjection_engine_opera_ETC__q1158 } ",
+          "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataax": "main_core_block0_outputProjection_engine_multipliers_0_aWire_wget ",
+          "main_core_block0_outputProjection_engine_opera_ETC__q1158": "main_core_block0_outputProjection_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_outputProjection_engine_multipliers_0_aWire_wget",
+          "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataax",
+          "main_core_block0_outputProjection_engine_opera_ETC__q1158",
+          "main_core_block0_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_outputProjection_engine_multipliers_0_bWire_wget": "{ {10{main_core_block0_outputProjection_engine_opera_ETC__q1159[7]}},\n\t       main_core_block0_outputProjection_engine_opera_ETC__q1159 } ",
+          "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataay": "main_core_block0_outputProjection_engine_multipliers_0_bWire_wget ",
+          "main_core_block0_outputProjection_engine_opera_ETC__q1159": "main_core_block0_outputProjection_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_outputProjection_engine_multipliers_0_bWire_wget",
+          "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataay",
+          "main_core_block0_outputProjection_engine_opera_ETC__q1159",
+          "main_core_block0_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_deltaAMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_deltaAMultipliers_0_aWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160 } ",
+          "main_core_block0_scan_deltaAMultipliers_0_dsp_dataax": "main_core_block0_scan_deltaAMultipliers_0_aWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160": "main_core_block0_scan_selectedQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_deltaAMultipliers_0_aWire_wget",
+          "main_core_block0_scan_deltaAMultipliers_0_dsp_dataax",
+          "main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_deltaAMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_deltaAMultipliers_0_bWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_64__ETC__q1161[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_64__ETC__q1161 } ",
+          "main_core_block0_scan_deltaAMultipliers_0_dsp_dataay": "main_core_block0_scan_deltaAMultipliers_0_bWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_64__ETC__q1161": "main_core_block0_scan_selectedQ_D_OUT[64:57] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_deltaAMultipliers_0_bWire_wget",
+          "main_core_block0_scan_deltaAMultipliers_0_dsp_dataay",
+          "main_core_block0_scan_selectedQD_OUT_BITS_64__ETC__q1161",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_deltaBMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_deltaAMultipliers_0_aWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160 } ",
+          "main_core_block0_scan_deltaBMultipliers_0_dsp_dataax": "main_core_block0_scan_deltaAMultipliers_0_aWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160": "main_core_block0_scan_selectedQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_deltaAMultipliers_0_aWire_wget",
+          "main_core_block0_scan_deltaBMultipliers_0_dsp_dataax",
+          "main_core_block0_scan_selectedQD_OUT_BITS_23__ETC__q1160",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_deltaBMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_deltaBMultipliers_0_bWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_56__ETC__q1162[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_56__ETC__q1162 } ",
+          "main_core_block0_scan_deltaBMultipliers_0_dsp_dataay": "main_core_block0_scan_deltaBMultipliers_0_bWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_56__ETC__q1162": "main_core_block0_scan_selectedQ_D_OUT[56:49] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_deltaBMultipliers_0_bWire_wget",
+          "main_core_block0_scan_deltaBMultipliers_0_dsp_dataay",
+          "main_core_block0_scan_selectedQD_OUT_BITS_56__ETC__q1162",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_directMultiplier_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_directMultiplier_aWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_15__ETC__q1163[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_15__ETC__q1163 } ",
+          "main_core_block0_scan_directMultiplier_dsp_dataax": "main_core_block0_scan_directMultiplier_aWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_15__ETC__q1163": "main_core_block0_scan_selectedQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_directMultiplier_aWire_wget",
+          "main_core_block0_scan_directMultiplier_dsp_dataax",
+          "main_core_block0_scan_selectedQD_OUT_BITS_15__ETC__q1163",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_directMultiplier_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_directMultiplier_bWire_wget": "{ {10{main_core_block0_scan_selectedQD_OUT_BITS_7_TO_0__q1164[7]}},\n\t       main_core_block0_scan_selectedQD_OUT_BITS_7_TO_0__q1164 } ",
+          "main_core_block0_scan_directMultiplier_dsp_dataay": "main_core_block0_scan_directMultiplier_bWire_wget ",
+          "main_core_block0_scan_selectedQD_OUT_BITS_7_TO_0__q1164": "main_core_block0_scan_selectedQ_D_OUT[7:0] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_directMultiplier_bWire_wget",
+          "main_core_block0_scan_directMultiplier_dsp_dataay",
+          "main_core_block0_scan_selectedQD_OUT_BITS_7_TO_0__q1164",
+          "main_core_block0_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_highMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_highMultipliers_0_aWire_wget": "{ 10'd0, main_core_block0_scan_productOperandsQ_D_OUT[33:26] } ",
+          "main_core_block0_scan_highMultipliers_0_dsp_dataax": "main_core_block0_scan_highMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_highMultipliers_0_aWire_wget",
+          "main_core_block0_scan_highMultipliers_0_dsp_dataax",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_highMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_highMultipliers_0_dsp_dataay": "main_core_block0_scan_lowMultipliers_0_bWire_wget ",
+          "main_core_block0_scan_lowMultipliers_0_bWire_wget": "{ 10'd0, main_core_block0_scan_productOperandsQ_D_OUT[25:18] } "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_highMultipliers_0_dsp_dataay",
+          "main_core_block0_scan_lowMultipliers_0_bWire_wget",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_inputMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_inputMultipliers_0_aWire_wget": "{ {10{main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1165[7]}},\n\t       main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1165 } ",
+          "main_core_block0_scan_inputMultipliers_0_dsp_dataax": "main_core_block0_scan_inputMultipliers_0_aWire_wget ",
+          "main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1165": "main_core_block0_scan_recurrenceOperandsQ_D_OUT[39:32] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_inputMultipliers_0_aWire_wget",
+          "main_core_block0_scan_inputMultipliers_0_dsp_dataax",
+          "main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1165",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_inputMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_inputMultipliers_0_bWire_wget": "{ {10{main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1166[7]}},\n\t       main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1166 } ",
+          "main_core_block0_scan_inputMultipliers_0_dsp_dataay": "main_core_block0_scan_inputMultipliers_0_bWire_wget ",
+          "main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1166": "main_core_block0_scan_recurrenceOperandsQ_D_OUT[31:24] "
+        },
+        "leaf_identifiers": [
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block0_scan_inputMultipliers_0_bWire_wget",
+          "main_core_block0_scan_inputMultipliers_0_dsp_dataay",
+          "main_core_block0_scan_recurrenceOperandsQD_OU_ETC__q1166",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_lowMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_lowMultipliers_0_aWire_wget": "{ 2'd0, main_core_block0_scan_productOperandsQ_D_OUT[49:34] } ",
+          "main_core_block0_scan_lowMultipliers_0_dsp_dataax": "main_core_block0_scan_lowMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_lowMultipliers_0_aWire_wget",
+          "main_core_block0_scan_lowMultipliers_0_dsp_dataax",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_lowMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_lowMultipliers_0_bWire_wget": "{ 10'd0, main_core_block0_scan_productOperandsQ_D_OUT[25:18] } ",
+          "main_core_block0_scan_lowMultipliers_0_dsp_dataay": "main_core_block0_scan_lowMultipliers_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_lowMultipliers_0_bWire_wget",
+          "main_core_block0_scan_lowMultipliers_0_dsp_dataay",
+          "main_core_block0_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_stateMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block0_scan_stateMultipliers_0_aWire_wget": "{ 10'd0,\n\t       main_core_block0_scan_recurrenceOperandsQ_D_OUT[65:58] } ",
+          "main_core_block0_scan_stateMultipliers_0_dsp_dataax": "main_core_block0_scan_stateMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT",
+          "main_core_block0_scan_stateMultipliers_0_aWire_wget",
+          "main_core_block0_scan_stateMultipliers_0_dsp_dataax"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block0_scan_stateMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block0_scan_stateMultipliers_0_bWire_wget": "{ 1'd0,\n\t       main_core_block0_scan_recurrenceOperandsQ_D_OUT[57:41] } ",
+          "main_core_block0_scan_stateMultipliers_0_dsp_dataay": "main_core_block0_scan_stateMultipliers_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block0_scan_recurrenceOperandsQ_D_OUT",
+          "main_core_block0_scan_stateMultipliers_0_bWire_wget",
+          "main_core_block0_scan_stateMultipliers_0_dsp_dataay"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_bProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_bProjection_multipliers_0_aWire_wget": "{ {10{main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1183[7]}},\n\t       main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1183 } ",
+          "main_core_block1_bProjection_multipliers_0_dsp_dataax": "main_core_block1_bProjection_multipliers_0_aWire_wget ",
+          "main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1183": "main_core_block1_bProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_bProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_bProjection_multipliers_0_aWire_wget",
+          "main_core_block1_bProjection_multipliers_0_dsp_dataax",
+          "main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1183",
+          "main_core_block1_bProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_bProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_bProjection_multipliers_0_bWire_wget": "{ {10{main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1184[7]}},\n\t       main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1184 } ",
+          "main_core_block1_bProjection_multipliers_0_dsp_dataay": "main_core_block1_bProjection_multipliers_0_bWire_wget ",
+          "main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1184": "main_core_block1_bProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_bProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_bProjection_multipliers_0_bWire_wget",
+          "main_core_block1_bProjection_multipliers_0_dsp_dataay",
+          "main_core_block1_bProjection_operandQD_OUT_BI_ETC__q1184",
+          "main_core_block1_bProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_cProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_cProjection_multipliers_0_aWire_wget": "{ {10{main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1185[7]}},\n\t       main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1185 } ",
+          "main_core_block1_cProjection_multipliers_0_dsp_dataax": "main_core_block1_cProjection_multipliers_0_aWire_wget ",
+          "main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1185": "main_core_block1_cProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_cProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_cProjection_multipliers_0_aWire_wget",
+          "main_core_block1_cProjection_multipliers_0_dsp_dataax",
+          "main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1185",
+          "main_core_block1_cProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_cProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_cProjection_multipliers_0_bWire_wget": "{ {10{main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1186[7]}},\n\t       main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1186 } ",
+          "main_core_block1_cProjection_multipliers_0_dsp_dataay": "main_core_block1_cProjection_multipliers_0_bWire_wget ",
+          "main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1186": "main_core_block1_cProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_cProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_cProjection_multipliers_0_bWire_wget",
+          "main_core_block1_cProjection_multipliers_0_dsp_dataay",
+          "main_core_block1_cProjection_operandQD_OUT_BI_ETC__q1186",
+          "main_core_block1_cProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_0_aWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_47_T_ETC__q1198[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_47_T_ETC__q1198 } ",
+          "main_core_block1_convMultipliers_0_0_dsp_dataax": "main_core_block1_convMultipliers_0_0_aWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_47_T_ETC__q1198": "main_core_block1_convOperandsQ_D_OUT[47:40] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_0_aWire_wget",
+          "main_core_block1_convMultipliers_0_0_dsp_dataax",
+          "main_core_block1_convOperandsQD_OUT_BITS_47_T_ETC__q1198",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_0_bWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_15_TO_8__q1199[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_15_TO_8__q1199 } ",
+          "main_core_block1_convMultipliers_0_0_dsp_dataay": "main_core_block1_convMultipliers_0_0_bWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_15_TO_8__q1199": "main_core_block1_convOperandsQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_0_bWire_wget",
+          "main_core_block1_convMultipliers_0_0_dsp_dataay",
+          "main_core_block1_convOperandsQD_OUT_BITS_15_TO_8__q1199",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_1_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_1_aWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_55_T_ETC__q1200[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_55_T_ETC__q1200 } ",
+          "main_core_block1_convMultipliers_0_1_dsp_dataax": "main_core_block1_convMultipliers_0_1_aWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_55_T_ETC__q1200": "main_core_block1_convOperandsQ_D_OUT[55:48] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_1_aWire_wget",
+          "main_core_block1_convMultipliers_0_1_dsp_dataax",
+          "main_core_block1_convOperandsQD_OUT_BITS_55_T_ETC__q1200",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_1_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_1_bWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_23_T_ETC__q1201[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_23_T_ETC__q1201 } ",
+          "main_core_block1_convMultipliers_0_1_dsp_dataay": "main_core_block1_convMultipliers_0_1_bWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_23_T_ETC__q1201": "main_core_block1_convOperandsQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_1_bWire_wget",
+          "main_core_block1_convMultipliers_0_1_dsp_dataay",
+          "main_core_block1_convOperandsQD_OUT_BITS_23_T_ETC__q1201",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_2_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_2_aWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_63_T_ETC__q1202[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_63_T_ETC__q1202 } ",
+          "main_core_block1_convMultipliers_0_2_dsp_dataax": "main_core_block1_convMultipliers_0_2_aWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_63_T_ETC__q1202": "main_core_block1_convOperandsQ_D_OUT[63:56] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_2_aWire_wget",
+          "main_core_block1_convMultipliers_0_2_dsp_dataax",
+          "main_core_block1_convOperandsQD_OUT_BITS_63_T_ETC__q1202",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_2_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_2_bWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_31_T_ETC__q1203[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_31_T_ETC__q1203 } ",
+          "main_core_block1_convMultipliers_0_2_dsp_dataay": "main_core_block1_convMultipliers_0_2_bWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_31_T_ETC__q1203": "main_core_block1_convOperandsQ_D_OUT[31:24] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_2_bWire_wget",
+          "main_core_block1_convMultipliers_0_2_dsp_dataay",
+          "main_core_block1_convOperandsQD_OUT_BITS_31_T_ETC__q1203",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_3_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_3_aWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_71_T_ETC__q1204[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_71_T_ETC__q1204 } ",
+          "main_core_block1_convMultipliers_0_3_dsp_dataax": "main_core_block1_convMultipliers_0_3_aWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_71_T_ETC__q1204": "main_core_block1_convOperandsQ_D_OUT[71:64] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_3_aWire_wget",
+          "main_core_block1_convMultipliers_0_3_dsp_dataax",
+          "main_core_block1_convOperandsQD_OUT_BITS_71_T_ETC__q1204",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_convMultipliers_0_3_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_convMultipliers_0_3_bWire_wget": "{ {10{main_core_block1_convOperandsQD_OUT_BITS_39_T_ETC__q1205[7]}},\n\t       main_core_block1_convOperandsQD_OUT_BITS_39_T_ETC__q1205 } ",
+          "main_core_block1_convMultipliers_0_3_dsp_dataay": "main_core_block1_convMultipliers_0_3_bWire_wget ",
+          "main_core_block1_convOperandsQD_OUT_BITS_39_T_ETC__q1205": "main_core_block1_convOperandsQ_D_OUT[39:32] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_convMultipliers_0_3_bWire_wget",
+          "main_core_block1_convMultipliers_0_3_dsp_dataay",
+          "main_core_block1_convOperandsQD_OUT_BITS_39_T_ETC__q1205",
+          "main_core_block1_convOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_deltaInputProjection_multipliers_0_aWire_wget": "{ {10{main_core_block1_deltaInputProjection_operandQ_ETC__q1181[7]}},\n\t       main_core_block1_deltaInputProjection_operandQ_ETC__q1181 } ",
+          "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataax": "main_core_block1_deltaInputProjection_multipliers_0_aWire_wget ",
+          "main_core_block1_deltaInputProjection_operandQ_ETC__q1181": "main_core_block1_deltaInputProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_deltaInputProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_deltaInputProjection_multipliers_0_aWire_wget",
+          "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataax",
+          "main_core_block1_deltaInputProjection_operandQ_D_OUT",
+          "main_core_block1_deltaInputProjection_operandQ_ETC__q1181"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_deltaInputProjection_multipliers_0_bWire_wget": "{ {10{main_core_block1_deltaInputProjection_operandQ_ETC__q1182[7]}},\n\t       main_core_block1_deltaInputProjection_operandQ_ETC__q1182 } ",
+          "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataay": "main_core_block1_deltaInputProjection_multipliers_0_bWire_wget ",
+          "main_core_block1_deltaInputProjection_operandQ_ETC__q1182": "main_core_block1_deltaInputProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_deltaInputProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_deltaInputProjection_multipliers_0_bWire_wget",
+          "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataay",
+          "main_core_block1_deltaInputProjection_operandQ_D_OUT",
+          "main_core_block1_deltaInputProjection_operandQ_ETC__q1182"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_deltaProjection_engine_multipliers_0_aWire_wget": "{ {10{main_core_block1_deltaProjection_engine_operan_ETC__q1187[7]}},\n\t       main_core_block1_deltaProjection_engine_operan_ETC__q1187 } ",
+          "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataax": "main_core_block1_deltaProjection_engine_multipliers_0_aWire_wget ",
+          "main_core_block1_deltaProjection_engine_operan_ETC__q1187": "main_core_block1_deltaProjection_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_deltaProjection_engine_multipliers_0_aWire_wget",
+          "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataax",
+          "main_core_block1_deltaProjection_engine_operan_ETC__q1187",
+          "main_core_block1_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_deltaProjection_engine_multipliers_0_bWire_wget": "{ {10{main_core_block1_deltaProjection_engine_operan_ETC__q1188[7]}},\n\t       main_core_block1_deltaProjection_engine_operan_ETC__q1188 } ",
+          "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataay": "main_core_block1_deltaProjection_engine_multipliers_0_bWire_wget ",
+          "main_core_block1_deltaProjection_engine_operan_ETC__q1188": "main_core_block1_deltaProjection_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_deltaProjection_engine_multipliers_0_bWire_wget",
+          "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataay",
+          "main_core_block1_deltaProjection_engine_operan_ETC__q1188",
+          "main_core_block1_deltaProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_gateMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_gateMultipliers_0_aWire_wget": "{ {10{main_core_block1_gateOperandsQD_OUT_BITS_15_TO_8__q1206[7]}},\n\t       main_core_block1_gateOperandsQD_OUT_BITS_15_TO_8__q1206 } ",
+          "main_core_block1_gateMultipliers_0_dsp_dataax": "main_core_block1_gateMultipliers_0_aWire_wget ",
+          "main_core_block1_gateOperandsQD_OUT_BITS_15_TO_8__q1206": "main_core_block1_gateOperandsQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_gateOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_gateMultipliers_0_aWire_wget",
+          "main_core_block1_gateMultipliers_0_dsp_dataax",
+          "main_core_block1_gateOperandsQD_OUT_BITS_15_TO_8__q1206",
+          "main_core_block1_gateOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_gateMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_gateMultipliers_0_bWire_wget": "{ {10{main_core_block1_gateOperandsQD_OUT_BITS_7_TO_0__q1207[7]}},\n\t       main_core_block1_gateOperandsQD_OUT_BITS_7_TO_0__q1207 } ",
+          "main_core_block1_gateMultipliers_0_dsp_dataay": "main_core_block1_gateMultipliers_0_bWire_wget ",
+          "main_core_block1_gateOperandsQD_OUT_BITS_7_TO_0__q1207": "main_core_block1_gateOperandsQ_D_OUT[7:0] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_gateOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_gateMultipliers_0_bWire_wget",
+          "main_core_block1_gateMultipliers_0_dsp_dataay",
+          "main_core_block1_gateOperandsQD_OUT_BITS_7_TO_0__q1207",
+          "main_core_block1_gateOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_gateProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_gateProjection_multipliers_0_aWire_wget": "{ {10{main_core_block1_gateProjection_operandQD_OUT_ETC__q1179[7]}},\n\t       main_core_block1_gateProjection_operandQD_OUT_ETC__q1179 } ",
+          "main_core_block1_gateProjection_multipliers_0_dsp_dataax": "main_core_block1_gateProjection_multipliers_0_aWire_wget ",
+          "main_core_block1_gateProjection_operandQD_OUT_ETC__q1179": "main_core_block1_gateProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_gateProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_gateProjection_multipliers_0_aWire_wget",
+          "main_core_block1_gateProjection_multipliers_0_dsp_dataax",
+          "main_core_block1_gateProjection_operandQD_OUT_ETC__q1179",
+          "main_core_block1_gateProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_gateProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_gateProjection_multipliers_0_bWire_wget": "{ {10{main_core_block1_gateProjection_operandQD_OUT_ETC__q1180[7]}},\n\t       main_core_block1_gateProjection_operandQD_OUT_ETC__q1180 } ",
+          "main_core_block1_gateProjection_multipliers_0_dsp_dataay": "main_core_block1_gateProjection_multipliers_0_bWire_wget ",
+          "main_core_block1_gateProjection_operandQD_OUT_ETC__q1180": "main_core_block1_gateProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_gateProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_gateProjection_multipliers_0_bWire_wget",
+          "main_core_block1_gateProjection_multipliers_0_dsp_dataay",
+          "main_core_block1_gateProjection_operandQD_OUT_ETC__q1180",
+          "main_core_block1_gateProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_mainProjection_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_mainProjection_multipliers_0_aWire_wget": "{ {10{main_core_block1_mainProjection_operandQD_OUT_ETC__q1177[7]}},\n\t       main_core_block1_mainProjection_operandQD_OUT_ETC__q1177 } ",
+          "main_core_block1_mainProjection_multipliers_0_dsp_dataax": "main_core_block1_mainProjection_multipliers_0_aWire_wget ",
+          "main_core_block1_mainProjection_operandQD_OUT_ETC__q1177": "main_core_block1_mainProjection_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_mainProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_mainProjection_multipliers_0_aWire_wget",
+          "main_core_block1_mainProjection_multipliers_0_dsp_dataax",
+          "main_core_block1_mainProjection_operandQD_OUT_ETC__q1177",
+          "main_core_block1_mainProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_mainProjection_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_mainProjection_multipliers_0_bWire_wget": "{ {10{main_core_block1_mainProjection_operandQD_OUT_ETC__q1178[7]}},\n\t       main_core_block1_mainProjection_operandQD_OUT_ETC__q1178 } ",
+          "main_core_block1_mainProjection_multipliers_0_dsp_dataay": "main_core_block1_mainProjection_multipliers_0_bWire_wget ",
+          "main_core_block1_mainProjection_operandQD_OUT_ETC__q1178": "main_core_block1_mainProjection_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_mainProjection_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_mainProjection_multipliers_0_bWire_wget",
+          "main_core_block1_mainProjection_multipliers_0_dsp_dataay",
+          "main_core_block1_mainProjection_operandQD_OUT_ETC__q1178",
+          "main_core_block1_mainProjection_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_normalization_biasedMultiplier_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_normalization_biasedMultiplier_0_aWire_wget": "{ 4'd0, main_core_block1_normalization_magnitudeQ_D_OUT[13:0] } ",
+          "main_core_block1_normalization_biasedMultiplier_0_dsp_dataax": "main_core_block1_normalization_biasedMultiplier_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_normalization_biasedMultiplier_0_aWire_wget",
+          "main_core_block1_normalization_biasedMultiplier_0_dsp_dataax",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_normalization_biasedMultiplier_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_normalization_biasedMultiplier_0_bWire_wget": "{ 10'd0,\n\t       main_core_block1_normalization_magnitudeQ_D_OUT[23:16] } ",
+          "main_core_block1_normalization_biasedMultiplier_0_dsp_dataay": "main_core_block1_normalization_biasedMultiplier_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_normalization_biasedMultiplier_0_bWire_wget",
+          "main_core_block1_normalization_biasedMultiplier_0_dsp_dataay",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_normalization_weightedMultiplier_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_normalization_weightedMultiplier_0_aWire_wget": "{ 4'd0,\n\t       main_core_block1_normalization_magnitudeQ_D_OUT[45:32] } ",
+          "main_core_block1_normalization_weightedMultiplier_0_dsp_dataax": "main_core_block1_normalization_weightedMultiplier_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT",
+          "main_core_block1_normalization_weightedMultiplier_0_aWire_wget",
+          "main_core_block1_normalization_weightedMultiplier_0_dsp_dataax"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_normalization_weightedMultiplier_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_normalization_weightedMultiplier_0_bWire_wget": "{ 10'd0,\n\t       main_core_block1_normalization_magnitudeQ_D_OUT[31:24] } ",
+          "main_core_block1_normalization_weightedMultiplier_0_dsp_dataay": "main_core_block1_normalization_weightedMultiplier_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_normalization_magnitudeQ_D_OUT",
+          "main_core_block1_normalization_weightedMultiplier_0_bWire_wget",
+          "main_core_block1_normalization_weightedMultiplier_0_dsp_dataay"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_outputProjection_engine_multipliers_0_aWire_wget": "{ {10{main_core_block1_outputProjection_engine_opera_ETC__q1189[7]}},\n\t       main_core_block1_outputProjection_engine_opera_ETC__q1189 } ",
+          "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataax": "main_core_block1_outputProjection_engine_multipliers_0_aWire_wget ",
+          "main_core_block1_outputProjection_engine_opera_ETC__q1189": "main_core_block1_outputProjection_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_outputProjection_engine_multipliers_0_aWire_wget",
+          "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataax",
+          "main_core_block1_outputProjection_engine_opera_ETC__q1189",
+          "main_core_block1_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_outputProjection_engine_multipliers_0_bWire_wget": "{ {10{main_core_block1_outputProjection_engine_opera_ETC__q1190[7]}},\n\t       main_core_block1_outputProjection_engine_opera_ETC__q1190 } ",
+          "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataay": "main_core_block1_outputProjection_engine_multipliers_0_bWire_wget ",
+          "main_core_block1_outputProjection_engine_opera_ETC__q1190": "main_core_block1_outputProjection_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_outputProjection_engine_multipliers_0_bWire_wget",
+          "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataay",
+          "main_core_block1_outputProjection_engine_opera_ETC__q1190",
+          "main_core_block1_outputProjection_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_deltaAMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_deltaAMultipliers_0_aWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191 } ",
+          "main_core_block1_scan_deltaAMultipliers_0_dsp_dataax": "main_core_block1_scan_deltaAMultipliers_0_aWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191": "main_core_block1_scan_selectedQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_deltaAMultipliers_0_aWire_wget",
+          "main_core_block1_scan_deltaAMultipliers_0_dsp_dataax",
+          "main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_deltaAMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_deltaAMultipliers_0_bWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_64__ETC__q1192[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_64__ETC__q1192 } ",
+          "main_core_block1_scan_deltaAMultipliers_0_dsp_dataay": "main_core_block1_scan_deltaAMultipliers_0_bWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_64__ETC__q1192": "main_core_block1_scan_selectedQ_D_OUT[64:57] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_deltaAMultipliers_0_bWire_wget",
+          "main_core_block1_scan_deltaAMultipliers_0_dsp_dataay",
+          "main_core_block1_scan_selectedQD_OUT_BITS_64__ETC__q1192",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_deltaBMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_deltaAMultipliers_0_aWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191 } ",
+          "main_core_block1_scan_deltaBMultipliers_0_dsp_dataax": "main_core_block1_scan_deltaAMultipliers_0_aWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191": "main_core_block1_scan_selectedQ_D_OUT[23:16] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_deltaAMultipliers_0_aWire_wget",
+          "main_core_block1_scan_deltaBMultipliers_0_dsp_dataax",
+          "main_core_block1_scan_selectedQD_OUT_BITS_23__ETC__q1191",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_deltaBMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_deltaBMultipliers_0_bWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_56__ETC__q1193[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_56__ETC__q1193 } ",
+          "main_core_block1_scan_deltaBMultipliers_0_dsp_dataay": "main_core_block1_scan_deltaBMultipliers_0_bWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_56__ETC__q1193": "main_core_block1_scan_selectedQ_D_OUT[56:49] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_deltaBMultipliers_0_bWire_wget",
+          "main_core_block1_scan_deltaBMultipliers_0_dsp_dataay",
+          "main_core_block1_scan_selectedQD_OUT_BITS_56__ETC__q1193",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_directMultiplier_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_directMultiplier_aWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_15__ETC__q1194[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_15__ETC__q1194 } ",
+          "main_core_block1_scan_directMultiplier_dsp_dataax": "main_core_block1_scan_directMultiplier_aWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_15__ETC__q1194": "main_core_block1_scan_selectedQ_D_OUT[15:8] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_directMultiplier_aWire_wget",
+          "main_core_block1_scan_directMultiplier_dsp_dataax",
+          "main_core_block1_scan_selectedQD_OUT_BITS_15__ETC__q1194",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_directMultiplier_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_directMultiplier_bWire_wget": "{ {10{main_core_block1_scan_selectedQD_OUT_BITS_7_TO_0__q1195[7]}},\n\t       main_core_block1_scan_selectedQD_OUT_BITS_7_TO_0__q1195 } ",
+          "main_core_block1_scan_directMultiplier_dsp_dataay": "main_core_block1_scan_directMultiplier_bWire_wget ",
+          "main_core_block1_scan_selectedQD_OUT_BITS_7_TO_0__q1195": "main_core_block1_scan_selectedQ_D_OUT[7:0] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_directMultiplier_bWire_wget",
+          "main_core_block1_scan_directMultiplier_dsp_dataay",
+          "main_core_block1_scan_selectedQD_OUT_BITS_7_TO_0__q1195",
+          "main_core_block1_scan_selectedQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_highMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_highMultipliers_0_aWire_wget": "{ 10'd0, main_core_block1_scan_productOperandsQ_D_OUT[33:26] } ",
+          "main_core_block1_scan_highMultipliers_0_dsp_dataax": "main_core_block1_scan_highMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_highMultipliers_0_aWire_wget",
+          "main_core_block1_scan_highMultipliers_0_dsp_dataax",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_highMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_highMultipliers_0_dsp_dataay": "main_core_block1_scan_lowMultipliers_0_bWire_wget ",
+          "main_core_block1_scan_lowMultipliers_0_bWire_wget": "{ 10'd0, main_core_block1_scan_productOperandsQ_D_OUT[25:18] } "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_highMultipliers_0_dsp_dataay",
+          "main_core_block1_scan_lowMultipliers_0_bWire_wget",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_inputMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_inputMultipliers_0_aWire_wget": "{ {10{main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1196[7]}},\n\t       main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1196 } ",
+          "main_core_block1_scan_inputMultipliers_0_dsp_dataax": "main_core_block1_scan_inputMultipliers_0_aWire_wget ",
+          "main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1196": "main_core_block1_scan_recurrenceOperandsQ_D_OUT[39:32] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_inputMultipliers_0_aWire_wget",
+          "main_core_block1_scan_inputMultipliers_0_dsp_dataax",
+          "main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1196",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_inputMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_inputMultipliers_0_bWire_wget": "{ {10{main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1197[7]}},\n\t       main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1197 } ",
+          "main_core_block1_scan_inputMultipliers_0_dsp_dataay": "main_core_block1_scan_inputMultipliers_0_bWire_wget ",
+          "main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1197": "main_core_block1_scan_recurrenceOperandsQ_D_OUT[31:24] "
+        },
+        "leaf_identifiers": [
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_block1_scan_inputMultipliers_0_bWire_wget",
+          "main_core_block1_scan_inputMultipliers_0_dsp_dataay",
+          "main_core_block1_scan_recurrenceOperandsQD_OU_ETC__q1197",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_lowMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_lowMultipliers_0_aWire_wget": "{ 2'd0, main_core_block1_scan_productOperandsQ_D_OUT[49:34] } ",
+          "main_core_block1_scan_lowMultipliers_0_dsp_dataax": "main_core_block1_scan_lowMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_lowMultipliers_0_aWire_wget",
+          "main_core_block1_scan_lowMultipliers_0_dsp_dataax",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_lowMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_lowMultipliers_0_bWire_wget": "{ 10'd0, main_core_block1_scan_productOperandsQ_D_OUT[25:18] } ",
+          "main_core_block1_scan_lowMultipliers_0_dsp_dataay": "main_core_block1_scan_lowMultipliers_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_lowMultipliers_0_bWire_wget",
+          "main_core_block1_scan_lowMultipliers_0_dsp_dataay",
+          "main_core_block1_scan_productOperandsQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_stateMultipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_block1_scan_stateMultipliers_0_aWire_wget": "{ 10'd0,\n\t       main_core_block1_scan_recurrenceOperandsQ_D_OUT[65:58] } ",
+          "main_core_block1_scan_stateMultipliers_0_dsp_dataax": "main_core_block1_scan_stateMultipliers_0_aWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT",
+          "main_core_block1_scan_stateMultipliers_0_aWire_wget",
+          "main_core_block1_scan_stateMultipliers_0_dsp_dataax"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_block1_scan_stateMultipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_block1_scan_stateMultipliers_0_bWire_wget": "{ 1'd0,\n\t       main_core_block1_scan_recurrenceOperandsQ_D_OUT[57:41] } ",
+          "main_core_block1_scan_stateMultipliers_0_dsp_dataay": "main_core_block1_scan_stateMultipliers_0_bWire_wget "
+        },
+        "leaf_identifiers": [
+          "d0",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT"
+        ],
+        "signals": [
+          "d0",
+          "main_core_block1_scan_recurrenceOperandsQ_D_OUT",
+          "main_core_block1_scan_stateMultipliers_0_bWire_wget",
+          "main_core_block1_scan_stateMultipliers_0_dsp_dataay"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_embedding_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_embedding_engine_multipliers_0_aWire_wget": "{ {10{main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1144[7]}},\n\t       main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1144 } ",
+          "main_core_embedding_engine_multipliers_0_dsp_dataax": "main_core_embedding_engine_multipliers_0_aWire_wget ",
+          "main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1144": "main_core_embedding_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_embedding_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_embedding_engine_multipliers_0_aWire_wget",
+          "main_core_embedding_engine_multipliers_0_dsp_dataax",
+          "main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1144",
+          "main_core_embedding_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_embedding_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_embedding_engine_multipliers_0_bWire_wget": "{ {10{main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1145[7]}},\n\t       main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1145 } ",
+          "main_core_embedding_engine_multipliers_0_dsp_dataay": "main_core_embedding_engine_multipliers_0_bWire_wget ",
+          "main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1145": "main_core_embedding_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_embedding_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_embedding_engine_multipliers_0_bWire_wget",
+          "main_core_embedding_engine_multipliers_0_dsp_dataay",
+          "main_core_embedding_engine_operandQD_OUT_BITS_ETC__q1145",
+          "main_core_embedding_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_headHidden_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_headHidden_engine_multipliers_0_aWire_wget": "{ {10{main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1208[7]}},\n\t       main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1208 } ",
+          "main_core_headHidden_engine_multipliers_0_dsp_dataax": "main_core_headHidden_engine_multipliers_0_aWire_wget ",
+          "main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1208": "main_core_headHidden_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_headHidden_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_headHidden_engine_multipliers_0_aWire_wget",
+          "main_core_headHidden_engine_multipliers_0_dsp_dataax",
+          "main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1208",
+          "main_core_headHidden_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_headHidden_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_headHidden_engine_multipliers_0_bWire_wget": "{ {10{main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1209[7]}},\n\t       main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1209 } ",
+          "main_core_headHidden_engine_multipliers_0_dsp_dataay": "main_core_headHidden_engine_multipliers_0_bWire_wget ",
+          "main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1209": "main_core_headHidden_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_headHidden_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_headHidden_engine_multipliers_0_bWire_wget",
+          "main_core_headHidden_engine_multipliers_0_dsp_dataay",
+          "main_core_headHidden_engine_operandQD_OUT_BIT_ETC__q1209",
+          "main_core_headHidden_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_headOutput_engine_multipliers_0_dsp_dataax": {
+        "assignments": {
+          "main_core_headOutput_engine_multipliers_0_aWire_wget": "{ {10{main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1210[7]}},\n\t       main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1210 } ",
+          "main_core_headOutput_engine_multipliers_0_dsp_dataax": "main_core_headOutput_engine_multipliers_0_aWire_wget ",
+          "main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1210": "main_core_headOutput_engine_operandQ_D_OUT[16:9] "
+        },
+        "leaf_identifiers": [
+          "main_core_headOutput_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_headOutput_engine_multipliers_0_aWire_wget",
+          "main_core_headOutput_engine_multipliers_0_dsp_dataax",
+          "main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1210",
+          "main_core_headOutput_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      },
+      "main_core_headOutput_engine_multipliers_0_dsp_dataay": {
+        "assignments": {
+          "main_core_headOutput_engine_multipliers_0_bWire_wget": "{ {10{main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1211[7]}},\n\t       main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1211 } ",
+          "main_core_headOutput_engine_multipliers_0_dsp_dataay": "main_core_headOutput_engine_multipliers_0_bWire_wget ",
+          "main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1211": "main_core_headOutput_engine_operandQ_D_OUT[8:1] "
+        },
+        "leaf_identifiers": [
+          "main_core_headOutput_engine_operandQ_D_OUT"
+        ],
+        "signals": [
+          "main_core_headOutput_engine_multipliers_0_bWire_wget",
+          "main_core_headOutput_engine_multipliers_0_dsp_dataay",
+          "main_core_headOutput_engine_operandQD_OUT_BIT_ETC__q1211",
+          "main_core_headOutput_engine_operandQ_D_OUT"
+        ],
+        "write_presence_dependencies": []
+      }
+    },
+    "operand_ports": [
+      "main_core_block0_bProjection_multipliers_0_dsp_dataax",
+      "main_core_block0_bProjection_multipliers_0_dsp_dataay",
+      "main_core_block0_cProjection_multipliers_0_dsp_dataax",
+      "main_core_block0_cProjection_multipliers_0_dsp_dataay",
+      "main_core_block0_convMultipliers_0_0_dsp_dataax",
+      "main_core_block0_convMultipliers_0_0_dsp_dataay",
+      "main_core_block0_convMultipliers_0_1_dsp_dataax",
+      "main_core_block0_convMultipliers_0_1_dsp_dataay",
+      "main_core_block0_convMultipliers_0_2_dsp_dataax",
+      "main_core_block0_convMultipliers_0_2_dsp_dataay",
+      "main_core_block0_convMultipliers_0_3_dsp_dataax",
+      "main_core_block0_convMultipliers_0_3_dsp_dataay",
+      "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataax",
+      "main_core_block0_deltaInputProjection_multipliers_0_dsp_dataay",
+      "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataax",
+      "main_core_block0_deltaProjection_engine_multipliers_0_dsp_dataay",
+      "main_core_block0_gateMultipliers_0_dsp_dataax",
+      "main_core_block0_gateMultipliers_0_dsp_dataay",
+      "main_core_block0_gateProjection_multipliers_0_dsp_dataax",
+      "main_core_block0_gateProjection_multipliers_0_dsp_dataay",
+      "main_core_block0_mainProjection_multipliers_0_dsp_dataax",
+      "main_core_block0_mainProjection_multipliers_0_dsp_dataay",
+      "main_core_block0_normalization_biasedMultiplier_0_dsp_dataax",
+      "main_core_block0_normalization_biasedMultiplier_0_dsp_dataay",
+      "main_core_block0_normalization_weightedMultiplier_0_dsp_dataax",
+      "main_core_block0_normalization_weightedMultiplier_0_dsp_dataay",
+      "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataax",
+      "main_core_block0_outputProjection_engine_multipliers_0_dsp_dataay",
+      "main_core_block0_scan_deltaAMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_deltaAMultipliers_0_dsp_dataay",
+      "main_core_block0_scan_deltaBMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_deltaBMultipliers_0_dsp_dataay",
+      "main_core_block0_scan_directMultiplier_dsp_dataax",
+      "main_core_block0_scan_directMultiplier_dsp_dataay",
+      "main_core_block0_scan_highMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_highMultipliers_0_dsp_dataay",
+      "main_core_block0_scan_inputMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_inputMultipliers_0_dsp_dataay",
+      "main_core_block0_scan_lowMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_lowMultipliers_0_dsp_dataay",
+      "main_core_block0_scan_stateMultipliers_0_dsp_dataax",
+      "main_core_block0_scan_stateMultipliers_0_dsp_dataay",
+      "main_core_block1_bProjection_multipliers_0_dsp_dataax",
+      "main_core_block1_bProjection_multipliers_0_dsp_dataay",
+      "main_core_block1_cProjection_multipliers_0_dsp_dataax",
+      "main_core_block1_cProjection_multipliers_0_dsp_dataay",
+      "main_core_block1_convMultipliers_0_0_dsp_dataax",
+      "main_core_block1_convMultipliers_0_0_dsp_dataay",
+      "main_core_block1_convMultipliers_0_1_dsp_dataax",
+      "main_core_block1_convMultipliers_0_1_dsp_dataay",
+      "main_core_block1_convMultipliers_0_2_dsp_dataax",
+      "main_core_block1_convMultipliers_0_2_dsp_dataay",
+      "main_core_block1_convMultipliers_0_3_dsp_dataax",
+      "main_core_block1_convMultipliers_0_3_dsp_dataay",
+      "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataax",
+      "main_core_block1_deltaInputProjection_multipliers_0_dsp_dataay",
+      "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataax",
+      "main_core_block1_deltaProjection_engine_multipliers_0_dsp_dataay",
+      "main_core_block1_gateMultipliers_0_dsp_dataax",
+      "main_core_block1_gateMultipliers_0_dsp_dataay",
+      "main_core_block1_gateProjection_multipliers_0_dsp_dataax",
+      "main_core_block1_gateProjection_multipliers_0_dsp_dataay",
+      "main_core_block1_mainProjection_multipliers_0_dsp_dataax",
+      "main_core_block1_mainProjection_multipliers_0_dsp_dataay",
+      "main_core_block1_normalization_biasedMultiplier_0_dsp_dataax",
+      "main_core_block1_normalization_biasedMultiplier_0_dsp_dataay",
+      "main_core_block1_normalization_weightedMultiplier_0_dsp_dataax",
+      "main_core_block1_normalization_weightedMultiplier_0_dsp_dataay",
+      "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataax",
+      "main_core_block1_outputProjection_engine_multipliers_0_dsp_dataay",
+      "main_core_block1_scan_deltaAMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_deltaAMultipliers_0_dsp_dataay",
+      "main_core_block1_scan_deltaBMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_deltaBMultipliers_0_dsp_dataay",
+      "main_core_block1_scan_directMultiplier_dsp_dataax",
+      "main_core_block1_scan_directMultiplier_dsp_dataay",
+      "main_core_block1_scan_highMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_highMultipliers_0_dsp_dataay",
+      "main_core_block1_scan_inputMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_inputMultipliers_0_dsp_dataay",
+      "main_core_block1_scan_lowMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_lowMultipliers_0_dsp_dataay",
+      "main_core_block1_scan_stateMultipliers_0_dsp_dataax",
+      "main_core_block1_scan_stateMultipliers_0_dsp_dataay",
+      "main_core_embedding_engine_multipliers_0_dsp_dataax",
+      "main_core_embedding_engine_multipliers_0_dsp_dataay",
+      "main_core_headHidden_engine_multipliers_0_dsp_dataax",
+      "main_core_headHidden_engine_multipliers_0_dsp_dataay",
+      "main_core_headOutput_engine_multipliers_0_dsp_dataax",
+      "main_core_headOutput_engine_multipliers_0_dsp_dataay"
+    ],
+    "retained_write_presence_signals": [
+      "main_core_block0_bProjection_multipliers_0_aWire_whas",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas",
+      "main_core_block0_convMultipliers_0_0_aWire_whas",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas",
+      "main_core_block0_gateMultipliers_0_aWire_whas",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas",
+      "main_core_block1_convMultipliers_0_0_aWire_whas",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas",
+      "main_core_block1_gateMultipliers_0_aWire_whas",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas",
+      "main_core_embedding_engine_multipliers_0_aWire_whas",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas"
+    ],
+    "retained_write_presence_uses": [
+      "wire main_core_block0_bProjection_multipliers_0_aWire_whas,",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas,",
+      "main_core_block0_convMultipliers_0_0_aWire_whas,",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas,",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas,",
+      "main_core_block0_gateMultipliers_0_aWire_whas,",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas,",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas,",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas,",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas,",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas,",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas,",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas,",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas,",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas,",
+      "main_core_block1_convMultipliers_0_0_aWire_whas,",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas,",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas,",
+      "main_core_block1_gateMultipliers_0_aWire_whas,",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas,",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas,",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas,",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas,",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas,",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas,",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas,",
+      "main_core_embedding_engine_multipliers_0_aWire_whas,",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas,",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas;",
+      "assign main_core_embedding_engine_multipliers_0_aWire_whas =",
+      "assign main_core_block0_normalization_weightedMultiplier_0_aWire_whas =",
+      "assign main_core_block0_mainProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block0_gateProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block0_deltaInputProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block0_bProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block0_cProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas =",
+      "assign main_core_block0_outputProjection_engine_multipliers_0_aWire_whas =",
+      "assign main_core_block0_scan_deltaAMultipliers_0_aWire_whas =",
+      "assign main_core_block0_scan_stateMultipliers_0_aWire_whas =",
+      "assign main_core_block0_scan_lowMultipliers_0_aWire_whas =",
+      "assign main_core_block0_convMultipliers_0_0_aWire_whas =",
+      "assign main_core_block0_gateMultipliers_0_aWire_whas =",
+      "assign main_core_block1_normalization_weightedMultiplier_0_aWire_whas =",
+      "assign main_core_block1_mainProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block1_gateProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block1_deltaInputProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block1_bProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block1_cProjection_multipliers_0_aWire_whas =",
+      "assign main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas =",
+      "assign main_core_block1_outputProjection_engine_multipliers_0_aWire_whas =",
+      "assign main_core_block1_scan_deltaAMultipliers_0_aWire_whas =",
+      "assign main_core_block1_scan_stateMultipliers_0_aWire_whas =",
+      "assign main_core_block1_scan_lowMultipliers_0_aWire_whas =",
+      "assign main_core_block1_convMultipliers_0_0_aWire_whas =",
+      "assign main_core_block1_gateMultipliers_0_aWire_whas =",
+      "assign main_core_headHidden_engine_multipliers_0_aWire_whas =",
+      "assign main_core_headOutput_engine_multipliers_0_aWire_whas =",
+      "main_core_block0_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_bProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block0_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas } ;",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_gateMultipliers_0_aWire_whas ;",
+      "main_core_block0_gateMultipliers_0_aWire_whas } ;",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas } ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas } ;",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas } ;",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas } ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas } ;",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas } ;",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas } ;",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_gateMultipliers_0_aWire_whas ;",
+      "main_core_block1_gateMultipliers_0_aWire_whas } ;",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas } ;",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas } ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas } ;",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas } ;",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas } ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas } ;",
+      "main_core_embedding_engine_multipliers_0_aWire_whas ;",
+      "main_core_embedding_engine_multipliers_0_aWire_whas } ;",
+      "main_core_embedding_engine_multipliers_0_aWire_whas ;",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas ;",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas } ;",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas ;",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas ;",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas } ;",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_gateMultipliers_0_aWire_whas ;",
+      "main_core_block0_gateMultipliers_0_aWire_whas ;",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block0_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block0_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_bProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_cProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_convMultipliers_0_0_aWire_whas ;",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaInputProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_deltaProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_gateMultipliers_0_aWire_whas ;",
+      "main_core_block1_gateMultipliers_0_aWire_whas ;",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_gateProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_mainProjection_multipliers_0_aWire_whas ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block1_normalization_weightedMultiplier_0_aWire_whas ;",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_outputProjection_engine_multipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_lowMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_stateMultipliers_0_aWire_whas ;",
+      "main_core_block1_scan_deltaAMultipliers_0_aWire_whas ;",
+      "main_core_embedding_engine_multipliers_0_aWire_whas ;",
+      "main_core_embedding_engine_multipliers_0_aWire_whas ;",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas ;",
+      "main_core_headHidden_engine_multipliers_0_aWire_whas ;",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas ;",
+      "main_core_headOutput_engine_multipliers_0_aWire_whas ;"
+    ],
+    "scope": "Continuous-assignment operand cones; dollar and underscore identifiers supported. Presence signals outside operand cones are permitted and reported.",
+    "status": "pass"
+  },
+  "functional_artifacts": [
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11006674458,
+      "bytes": 47506,
+      "configurations": [
+        {
+          "finish_cycle": 130800,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "589d88dd67ee3bf2ca4ba0a34b2f15e83950d782d5d37b27839663e087598aed",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 115503,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "2c3cf2acdaac13c90ad3df9c78b3000d7ced4ec393564bcf3ba59b6a7c21a2ee",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 1,
+      "report_sha256": "122392c41114e5875b7421602c06c10f060cdf725fac0772524ee7c9e7bbc43e",
+      "sha256": "7ebb45ff06f1c2004c492f4c42969099b588293ee7689d9d0acaa1040bf4dbca",
+      "source_files_verified": 137
+    },
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11006604978,
+      "bytes": 43735,
+      "configurations": [
+        {
+          "finish_cycle": 231599,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "d4f6dc81e3a467596118f3c9121373a34b7b3fd0801280e3063fc14f7bcab31f",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 223357,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "be51a92205410b058497110a40280a368e1d4696bb42c1ea6a2a84ec17f5cfe8",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 2,
+      "report_sha256": "1e970ae4972c39c0cf8a905c33ff63ef72e398c103b2f80af8016508579e8dea",
+      "sha256": "90498954f6f70b4a81be16ace230e4d651001e91a4293146338a20c79c0394e5",
+      "source_files_verified": 137
+    },
+    {
+      "api_digest_verified": true,
+      "artifact_id": 11007882953,
+      "bytes": 2972726,
+      "configurations": [
+        {
+          "finish_cycle": 305868,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "818881699d00e2723305de55112db5eec7617fb8f94b6283036b7cfc9109bcd8",
+          "mode": "stress",
+          "outputs": 798,
+          "status": "pass"
+        },
+        {
+          "finish_cycle": 297627,
+          "frames": 14,
+          "log_reparsed_against_frozen_fixtures": true,
+          "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4",
+          "mode": "kernel",
+          "outputs": 798,
+          "status": "pass"
+        }
+      ],
+      "divisor": 4,
+      "report_sha256": "83532de577e65e7d462a50d49478eaf56a31450508cd953e2abda55ea77cce72",
+      "sha256": "e8afaa99335c0c3334aaf19ca24ebee68e1386ffec38b5216161e5259eb26586",
+      "source_files_verified": 137,
+      "warm_reset": {
+        "before_reset": {
+          "cycle": 40000,
+          "in_flight_work_confirmed": true,
+          "input_words_accepted": 1312,
+          "outputs_received": 57
+        },
+        "finish_cycle": 297627,
+        "post_reset_frames": 14,
+        "post_reset_log_reparsed_against_frozen_fixtures": true,
+        "post_reset_outputs": 798,
+        "report_sha256": "f1026aa4a46547d8e6e1f51ba5ff5a30ea9fb2d60cce2519a6fc249325304d32",
+        "source_files_verified": 138,
+        "status": "pass"
+      }
+    }
+  ],
+  "functional_ci_run_id": 36506484774,
+  "functional_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+  "functional_jobs": [
+    {
+      "conclusion": "success",
+      "id": 109208949610,
+      "name": "Native multiplier boundary, stall and reset",
+      "run_id": 36506484774
+    },
+    {
+      "conclusion": "success",
+      "id": 109208949888,
+      "name": "Functional divisor 4",
+      "run_id": 36506484774
+    },
+    {
+      "conclusion": "success",
+      "id": 109208949892,
+      "name": "Functional divisor 2",
+      "run_id": 36506484774
+    },
+    {
+      "conclusion": "success",
+      "id": 109208949897,
+      "name": "Functional divisor 1",
+      "run_id": 36506484774
+    }
+  ],
+  "functional_run_conclusion": "failure",
+  "functional_run_scope": "Four successful functional/native jobs; its original physical job is retained as a failed checker run, not a physical pass.",
+  "generated_rtl_files_verified": 20,
+  "jobs": [
+    {
+      "conclusion": "success",
+      "id": 109214435272,
+      "name": "ULX3S-85F strict 100 MHz and 25 MHz",
+      "run_id": 36508244812
+    }
+  ],
+  "native_multiplier": {
+    "api_digest_verified": true,
+    "artifact_id": 11007028442,
+    "backends": {
+      "bluesim": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      },
+      "iverilog": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      },
+      "iverilog_bsim": {
+        "final_cycle": 403,
+        "first_product_latency_cycles": 4,
+        "products": 256
+      }
+    },
+    "bytes": 292487,
+    "generated_rtl_sha256": "c88fd37832e29e0b445bb13f235013c93c74000bbe58fddd917d4d0ff944ecaa",
+    "log_results_independently_recomputed": true,
+    "operand_control": {
+      "operand_assignments": [
+        "assign test_multiplier_dsp$dataax = test_vectorsR$D_OUT_1[71:54] ;",
+        "assign test_multiplier_dsp$dataay = test_vectorsR$D_OUT_1[53:36] ;"
+      ],
+      "operand_dependency_cones": {
+        "test_multiplier_dsp$dataax": {
+          "assignments": {
+            "test_multiplier_dsp$dataax": "test_vectorsR$D_OUT_1[71:54] "
+          },
+          "leaf_identifiers": [
+            "test_vectorsR$D_OUT_1"
+          ],
+          "signals": [
+            "test_multiplier_dsp$dataax",
+            "test_vectorsR$D_OUT_1"
+          ],
+          "write_presence_dependencies": []
+        },
+        "test_multiplier_dsp$dataay": {
+          "assignments": {
+            "test_multiplier_dsp$dataay": "test_vectorsR$D_OUT_1[53:36] "
+          },
+          "leaf_identifiers": [
+            "test_vectorsR$D_OUT_1"
+          ],
+          "signals": [
+            "test_multiplier_dsp$dataay",
+            "test_vectorsR$D_OUT_1"
+          ],
+          "write_presence_dependencies": []
+        }
+      },
+      "operand_ports": [
+        "test_multiplier_dsp$dataax",
+        "test_multiplier_dsp$dataay"
+      ],
+      "retained_write_presence_signals": [
+        "test_multiplier_aWire$whas"
+      ],
+      "retained_write_presence_uses": [
+        "wire test_drainOn$whas, test_multiplier_aWire$whas;",
+        "assign test_multiplier_aWire$whas =",
+        "assign test_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+        "assign test_multiplier_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+        "{ test_multiplier_validR[1:0], test_multiplier_aWire$whas } ;",
+        "assign test_expectedQ$ENQ = test_multiplier_aWire$whas ;"
+      ],
+      "scope": "Continuous-assignment operand cones; dollar and underscore identifiers supported. Presence signals outside operand cones are permitted and reported.",
+      "status": "pass"
+    },
+    "report_sha256": "08d187b09e151b68e73aa93739013f30630d1f9c0a987274271ec5371ffaf4f7",
+    "sha256": "319f3b4fc7cd3704ab12e64f96c3f545a261d3d479b13ba0ee7c977ef62a1ee1",
+    "source_files_verified": 4,
+    "status": "pass"
+  },
+  "packed_utilization": {
+    "ALU54B": {
+      "available": 78,
+      "used": 0
+    },
+    "CLKDIVF": {
+      "available": 4,
+      "used": 0
+    },
+    "DCCA": {
+      "available": 56,
+      "used": 2
+    },
+    "DCSC": {
+      "available": 2,
+      "used": 0
+    },
+    "DCUA": {
+      "available": 2,
+      "used": 0
+    },
+    "DDRDLL": {
+      "available": 4,
+      "used": 0
+    },
+    "DLLDELD": {
+      "available": 8,
+      "used": 0
+    },
+    "DP16KD": {
+      "available": 208,
+      "used": 22
+    },
+    "DQSBUFM": {
+      "available": 14,
+      "used": 0
+    },
+    "DTR": {
+      "available": 1,
+      "used": 0
+    },
+    "ECLKBRIDGECS": {
+      "available": 2,
+      "used": 0
+    },
+    "ECLKSYNCB": {
+      "available": 10,
+      "used": 0
+    },
+    "EHXPLLL": {
+      "available": 4,
+      "used": 1
+    },
+    "EXTREFB": {
+      "available": 2,
+      "used": 0
+    },
+    "GSR": {
+      "available": 1,
+      "used": 0
+    },
+    "IOLOGIC": {
+      "available": 224,
+      "used": 0
+    },
+    "JTAGG": {
+      "available": 1,
+      "used": 0
+    },
+    "MULT18X18D": {
+      "available": 156,
+      "used": 45
+    },
+    "OSCG": {
+      "available": 1,
+      "used": 0
+    },
+    "PCSCLKDIV": {
+      "available": 2,
+      "used": 0
+    },
+    "SEDGA": {
+      "available": 1,
+      "used": 0
+    },
+    "SIOLOGIC": {
+      "available": 141,
+      "used": 0
+    },
+    "TRELLIS_COMB": {
+      "available": 83640,
+      "used": 39794
+    },
+    "TRELLIS_ECLKBUF": {
+      "available": 8,
+      "used": 0
+    },
+    "TRELLIS_FF": {
+      "available": 83640,
+      "used": 57790
+    },
+    "TRELLIS_IO": {
+      "available": 365,
+      "used": 11
+    },
+    "TRELLIS_RAMW": {
+      "available": 10455,
+      "used": 668
+    },
+    "USRMCLK": {
+      "available": 1,
+      "used": 0
+    }
+  },
+  "physical_job_id": 109214435272,
+  "physical_report_sha256": "a3036a19395c56cc943dc302a46b5b7c8b2fef59ed99ae2f972168e6a7951cb3",
+  "raw_timing_cross_checked": true,
+  "reset_placement": {
+    "available_ff_sites": 83640,
+    "bel": "X63/Y47/SLICEA.FF0",
+    "cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+    "cell_type": "TRELLIS_FF",
+    "center": [
+      63,
+      47.5
+    ],
+    "console_report_verified": true,
+    "ff_grid_bounds": [
+      2,
+      2,
+      124,
+      93
+    ],
+    "ff_sites": 83640,
+    "hook": "place_core_reset.py",
+    "hook_matches_frozen_source": true,
+    "hook_sha256": "dddc65411e5ac0e97d45c88305da62efccba400d68745009506b5add62d892d1",
+    "location": [
+      63,
+      47,
+      1
+    ],
+    "placed_bel": "X63/Y47/SLICEA.FF0",
+    "placed_bel_verified": true,
+    "placed_bel_verified_independently": true,
+    "placed_module": "top",
+    "selection": "nearest-available-FF-to-grid-center"
+  },
+  "scope": "Independent ZIP integrity, frozen checkout and dependency source hashes, strict physical gates, reset placement hook/source identity, selected and actual placed BEL, generated RTL/netlists/constraints/configuration and bitstream digest. No physical board test. Also verifies all three functional ZIP digests from the preceding frozen RTL commit against the current checkout, 137 frozen source hashes per divisor, recomputes six output/cycle reports from raw simulation logs and fixtures, and checks 138 warm-reset source hashes and log integrity.",
+  "source_files_verified": 166,
+  "status": "pass",
+  "sway_source_files_verified": 139,
+  "tested_commit": "7689b27d6816de9d8927de12ddee13672b23491b",
+  "timing_summary_sha256": "dcb02cf7053bbdb862cbfd09640fa92d1ab13dbc21f2524164ddcf9f309a29f8"
+}

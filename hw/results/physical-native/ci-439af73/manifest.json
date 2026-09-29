@@ -1,0 +1,117 @@
+{
+  "candidate_commit": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+  "candidate_tree": "f328b7e9107b7b74c3e6c31c2ac3745958b5a450",
+  "ci_run_id": 36472552335,
+  "status": "all-functional-warm-reset-and-native-pass",
+  "scope": "All six functional configurations, in-flight warm reset, native three-backend regression and native ZIP/source/RTL audit passed. Physical validation remains separate and pending at collection.",
+  "tree_elements": [
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ca7794cd37306ac2f0d60d59a1dd6c9c9f95971a"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/report.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "53eda0cb9917c50b5b711549a47bcfd9acfbf6a1"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/operand-control-isolation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd6952603c5a253e085201dde61d4957ade29928"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/independent-artifact-audit.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ab0a61153cd48246152d561f518d3df2e1bd8a2"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/independent-ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "85ddce87fff6196567c24326973b060425fca0e1"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/native/inspect-artifact.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "215c6b8af634ae2db3d7a437c2b9e4c0458c3f7e"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor1/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "73c2b26134d82789c3b932ddad5e678c33f6e93c"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor1/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31147b0f25e802abfd3c8f40ce884a62864e0302"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor2/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b22ce7200f01da2fffd0b826b4c88a3be4867444"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor2/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f650e54e4cb8246a01389565cc9eb052fb7a9485"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor4/ci-job.log",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5f46d2121d89160ff035f6cadd99f90509218ac9"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor4/validation.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cff263bcaeb53af64dd59aaefe82680b9cd8af19"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/divisor4/warm-reset.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b08a70e3ff824a3e0560a039bbee04c949075e7a"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/source-hash-check.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "975c28b1ff2c4e8c1e2214b2495163ac1f85fef1"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/warm-reset-source-hash-check.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b971c87f242b30bf5b02d322ee450eae32e600a"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/summary.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "397775d149b0ad57aba714303cd20423a858a0e5"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/ci-jobs.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "544b170d8ba4547d052af1f5a67f384f9000aa3f"
+    },
+    {
+      "path": "hw/results/physical-native/ci-439af73/artifact-api-metadata.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76e2796343284300494353d232999877072ce087"
+    }
+  ]
+}

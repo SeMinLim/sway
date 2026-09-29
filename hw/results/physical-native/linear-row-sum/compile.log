@@ -1,0 +1,7 @@
+checking package dependencies
+compiling bsv/SwayLinear.bsv
+compiling bsv/TbLinearSelect.bsv
+code generation for mkTbLinearSelect starts
+Schedule dump file created: build/mkTbLinearSelect.sched
+Verilog file created: build/mkTbLinearSelect.v
+All packages are up to date.

@@ -1,0 +1,6 @@
+LINEAR_TOKEN token=0 values=20 cycles=15000
+LINEAR_TOKEN token=1 values=20 cycles=20269
+LINEAR_TOKEN token=2 values=20 cycles=26854
+LINEAR_TOKEN token=3 values=20 cycles=33433
+LINEAR_PASS tokens=4 values=80 cycles=34458 drain=1024
+LINEAR_CONTROL issued=25600 max_consecutive_issue=320 restart_requests=76 restarts=76

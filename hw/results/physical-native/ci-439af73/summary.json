@@ -1,0 +1,234 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "scope": "Six functional configurations, in-flight warm reset and native multiplier validation only. Physical timing is tracked separately and remained in progress at collection.",
+  "candidate_commit": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+  "candidate_tree": "f328b7e9107b7b74c3e6c31c2ac3745958b5a450",
+  "ci_run_id": 36472552335,
+  "ci_run_url": "https://github.com/SeMinLim/sway/actions/runs/36472552335",
+  "collection_method": "Completed GitHub job logs and SWAY_REPORT JSON preserved. Candidate source hashes checked against immutable blobs. Native artifact independently downloaded and inspected by the separate audit job.",
+  "source_files_checked_per_functional_report": 137,
+  "source_hash_check": "source-hash-check.json",
+  "configurations": [
+    {
+      "job_id": 109098154206,
+      "divisor": 1,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 130800,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "589d88dd67ee3bf2ca4ba0a34b2f15e83950d782d5d37b27839663e087598aed",
+      "sway_records_sha256": "589d88dd67ee3bf2ca4ba0a34b2f15e83950d782d5d37b27839663e087598aed",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"FIFOF_.bsv\", line 135, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109098154206,
+      "divisor": 1,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 115503,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "63efd63d20cbfa1149916d2a7765ea28052e3372ef65176c71da0f212c74ad1d",
+      "log_sha256": "2c3cf2acdaac13c90ad3df9c78b3000d7ced4ec393564bcf3ba59b6a7c21a2ee",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"FIFOF_.bsv\", line 135, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 1335, column 9: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109098154266,
+      "divisor": 2,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 231599,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "d4f6dc81e3a467596118f3c9121373a34b7b3fd0801280e3063fc14f7bcab31f",
+      "sway_records_sha256": "d4f6dc81e3a467596118f3c9121373a34b7b3fd0801280e3063fc14f7bcab31f",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"bsv/SwayScan.bsv\", line 232, column 32: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109098154266,
+      "divisor": 2,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 223357,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac",
+      "log_sha256": "be51a92205410b058497110a40280a368e1d4696bb42c1ea6a2a84ec17f5cfe8",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 3102, column 0: (G0024)",
+        "Warning: \"bsv/SwayScan.bsv\", line 232, column 32: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109098154137,
+      "divisor": 4,
+      "mode": "stress",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 305868,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "818881699d00e2723305de55112db5eec7617fb8f94b6283036b7cfc9109bcd8",
+      "sway_records_sha256": "818881699d00e2723305de55112db5eec7617fb8f94b6283036b7cfc9109bcd8",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    },
+    {
+      "job_id": 109098154137,
+      "divisor": 4,
+      "mode": "kernel",
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 297627,
+      "post_completion_drain_cycles": 2048,
+      "configured_types_sha256": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+      "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4",
+      "compiler_warnings": [
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+        "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+      ]
+    }
+  ],
+  "cycle_note": "finish_cycle includes 2048 trailing-output-check cycles. Added bank selection changes whole-system cycles; no constant per-row or whole-system latency increase is assumed.",
+  "warm_reset": {
+    "status": "pass",
+    "job_id": 109098154137,
+    "divisor": 4,
+    "reset_after_cycles": 40000,
+    "reset_hold_cycles": 5,
+    "before_reset": {
+      "input_words_accepted": 1312,
+      "outputs_received": 57,
+      "cycle": 40000,
+      "in_flight_work_confirmed": true
+    },
+    "post_reset": {
+      "status": "pass",
+      "frames": 14,
+      "outputs": 798,
+      "input_words": 4480,
+      "finish_cycle": 297627,
+      "post_completion_drain_cycles": 2048,
+      "log_sha256": "d9120023deb46a7f4522fb327fa0fa88c1a9fba2d5e6bd2df920c0740b1903c4"
+    },
+    "source_files_checked": 138,
+    "source_unchanged": true,
+    "command_returncodes": [
+      0,
+      0,
+      0
+    ],
+    "source_hash_check": "warm-reset-source-hash-check.json"
+  },
+  "native_multiplier": {
+    "status": "pass",
+    "job_id": 109098154180,
+    "backends": [
+      "bluesim",
+      "iverilog",
+      "iverilog_bsim"
+    ],
+    "products_per_backend": 256,
+    "first_product_latency_cycles": 4,
+    "final_cycle": 403,
+    "report": "native/report.json",
+    "independent_artifact_audit": "native/independent-artifact-audit.json",
+    "independent_audit_run_id": 36473103750,
+    "independent_audit_job_id": 109100002922,
+    "archive_digest_verified": true,
+    "source_and_snapshot_files_verified": 4,
+    "generated_rtl_sha256": "2fa88a0477d6ed371e4341fe29a26a9ebfbee9526be37ba8f71c7a0f610583a6",
+    "operand_assignments": [
+      "assign test_multiplier_dsp$dataax = test_vectorsR$D_OUT_1[71:54] ;",
+      "assign test_multiplier_dsp$dataay = test_vectorsR$D_OUT_1[53:36] ;"
+    ],
+    "operand_write_presence_dependencies": [],
+    "scope": "Fixed signed18x18 wrapper simulation, stalls and pipeline/full reset; no native hardware execution.",
+    "preliminary_check_note": "The candidate workflow's original symbol-absence regex omitted dollar identifiers. Independent artifact inspection correctly retained the WHAS validity/credit signal and verified that neither DSP operand data cone depends on it."
+  },
+  "artifacts": [
+    {
+      "id": 10992767406,
+      "name": "baseline-functional-divisor-1-439af73b51b9e3f7c01b820caf3d25de575eca1d",
+      "size_in_bytes": 47507,
+      "api_digest": "sha256:0eb43a99ef14dedb3e9c3a33ee07181af00ff3921c58acecdc19816b3600e90a",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10992767406/zip",
+      "independently_downloaded_and_digest_verified": false,
+      "verification_report": null
+    },
+    {
+      "id": 10992014197,
+      "name": "baseline-functional-divisor-4-439af73b51b9e3f7c01b820caf3d25de575eca1d",
+      "size_in_bytes": 2971706,
+      "api_digest": "sha256:3cab07a121d4e0d59591628d62b6e0f32a8129adf20b81d84b69b95b146fdae8",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10992014197/zip",
+      "independently_downloaded_and_digest_verified": false,
+      "verification_report": null
+    },
+    {
+      "id": 10991863026,
+      "name": "baseline-native-439af73b51b9e3f7c01b820caf3d25de575eca1d",
+      "size_in_bytes": 292255,
+      "api_digest": "sha256:6832a21cb59bea35165f37b0232fecf89def0982b0689cc38421c3b0af0e3e84",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10991863026/zip",
+      "independently_downloaded_and_digest_verified": true,
+      "verification_report": "native/independent-artifact-audit.json"
+    },
+    {
+      "id": 10991544912,
+      "name": "baseline-functional-divisor-2-439af73b51b9e3f7c01b820caf3d25de575eca1d",
+      "size_in_bytes": 43739,
+      "api_digest": "sha256:25c4f1ce20989344281978dff8b6e125c99723d69a04a6783a8e0b1764b7b034",
+      "expired": false,
+      "archive_download_url": "https://api.github.com/repos/SeMinLim/sway/actions/artifacts/10991544912/zip",
+      "independently_downloaded_and_digest_verified": false,
+      "verification_report": null
+    }
+  ],
+  "limitations": [
+    "The three full-system functional artifact ZIP digests are API-provided only in this collection; final independent artifact inspection will download and re-parse them.",
+    "No physical timing or board-operation pass is claimed by this functional collection."
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "candidate": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+  "checks": {
+    "main.v": {
+      "repository_path": "hw/reference/native_multiply/main.v",
+      "expected": "ad3d688c3f11770dc9bf41ce33026e284a5dd38d80b3f1c2caf9d00024074a79",
+      "actual": "ad3d688c3f11770dc9bf41ce33026e284a5dd38d80b3f1c2caf9d00024074a79"
+    },
+    "bsv/SwayMultiply.bsv": {
+      "repository_path": "hw/bsv/SwayMultiply.bsv",
+      "expected": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+      "actual": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992"
+    },
+    "bsv/TbNativeMultiply.bsv": {
+      "repository_path": "hw/reference/native_multiply/TbNativeMultiply.bsv",
+      "expected": "f8b02398e2ed5f7dac7e437a2e067bd873c62deb35ad80d025b101a15719bf17",
+      "actual": "f8b02398e2ed5f7dac7e437a2e067bd873c62deb35ad80d025b101a15719bf17"
+    },
+    "rtl/sway_mult18x18d.v": {
+      "repository_path": "hw/rtl/sway_mult18x18d.v",
+      "expected": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30",
+      "actual": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30"
+    }
+  },
+  "source_files": 4,
+  "scope": "CI report source hashes matched against current frozen local checkout; artifact ZIP not downloaded by this collection."
+}

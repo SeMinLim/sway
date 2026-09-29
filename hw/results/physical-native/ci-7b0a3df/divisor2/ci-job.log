@@ -1,0 +1,833 @@
+﻿2026-09-28T19:02:18.1994600Z Current runner version: '2.337.0'
+2026-09-28T19:02:18.2014183Z ##[group]Runner Image Provisioner
+2026-09-28T19:02:18.2015066Z Hosted Compute Agent
+2026-09-28T19:02:18.2015552Z Version: 20260828.587
+2026-09-28T19:02:18.2016122Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-28T19:02:18.2016711Z Build Date: 2026-08-28T16:44:25Z
+2026-09-28T19:02:18.2017242Z Worker ID: {ce4d0b35-3b84-40cd-8cf4-93c29293998f}
+2026-09-28T19:02:18.2017898Z Azure Region: westus3
+2026-09-28T19:02:18.2018370Z ##[endgroup]
+2026-09-28T19:02:18.2019549Z ##[group]Operating System
+2026-09-28T19:02:18.2020110Z Ubuntu
+2026-09-28T19:02:18.2020546Z 24.04.5
+2026-09-28T19:02:18.2021042Z LTS
+2026-09-28T19:02:18.2021469Z ##[endgroup]
+2026-09-28T19:02:18.2022196Z ##[group]Runner Image
+2026-09-28T19:02:18.2022689Z Image: ubuntu-24.04
+2026-09-28T19:02:18.2023176Z Version: 20260920.314.1
+2026-09-28T19:02:18.2024227Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260920.314/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-28T19:02:18.2025811Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260920.314
+2026-09-28T19:02:18.2026620Z ##[endgroup]
+2026-09-28T19:02:18.2027557Z ##[group]GITHUB_TOKEN Permissions
+2026-09-28T19:02:18.2029250Z Contents: read
+2026-09-28T19:02:18.2029737Z Metadata: read
+2026-09-28T19:02:18.2030258Z ##[endgroup]
+2026-09-28T19:02:18.2031946Z Secret source: Actions
+2026-09-28T19:02:18.2032753Z Cache mode: write
+2026-09-28T19:02:18.2033307Z Prepare workflow directory
+2026-09-28T19:02:18.2344064Z Prepare all required actions
+2026-09-28T19:02:18.2382779Z Getting action download info
+2026-09-28T19:02:18.5580535Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-09-28T19:02:18.6532316Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-09-28T19:02:18.8871091Z Complete job name: Functional divisor 2
+2026-09-28T19:02:18.9500646Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-09-28T19:02:18.9501420Z with:
+2026-09-28T19:02:18.9501766Z   persist-credentials: false
+2026-09-28T19:02:18.9502182Z   repository: SeMinLim/sway
+2026-09-28T19:02:18.9505476Z   token: ***
+2026-09-28T19:02:18.9505824Z   ssh-strict: true
+2026-09-28T19:02:18.9506176Z   ssh-user: git
+2026-09-28T19:02:18.9506511Z   clean: true
+2026-09-28T19:02:18.9506870Z   sparse-checkout-cone-mode: true
+2026-09-28T19:02:18.9507289Z   fetch-depth: 1
+2026-09-28T19:02:18.9507629Z   fetch-tags: false
+2026-09-28T19:02:18.9507979Z   show-progress: true
+2026-09-28T19:02:18.9508329Z   lfs: false
+2026-09-28T19:02:18.9508654Z   submodules: false
+2026-09-28T19:02:18.9509008Z   set-safe-directory: true
+2026-09-28T19:02:18.9509403Z   allow-unsafe-pr-checkout: false
+2026-09-28T19:02:18.9509984Z ##[endgroup]
+2026-09-28T19:02:19.0321053Z Syncing repository: SeMinLim/sway
+2026-09-28T19:02:19.0323030Z ##[group]Getting Git version info
+2026-09-28T19:02:19.0323916Z Working directory is '/home/runner/work/sway/sway'
+2026-09-28T19:02:19.0324922Z [command]/usr/bin/git version
+2026-09-28T19:02:19.0906558Z git version 2.55.0
+2026-09-28T19:02:19.0925642Z ##[endgroup]
+2026-09-28T19:02:19.0939642Z Temporarily overriding HOME='/home/runner/work/_temp/fb6c7513-2950-4122-ab51-dcfa9b482396' before making global git config changes
+2026-09-28T19:02:19.0941340Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-28T19:02:19.0945002Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sway/sway
+2026-09-28T19:02:19.0993606Z Deleting the contents of '/home/runner/work/sway/sway'
+2026-09-28T19:02:19.0997629Z ##[group]Initializing the repository
+2026-09-28T19:02:19.1001304Z [command]/usr/bin/git init /home/runner/work/sway/sway
+2026-09-28T19:02:19.1105000Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-28T19:02:19.1106258Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-28T19:02:19.1107623Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-28T19:02:19.1108566Z hint: call:
+2026-09-28T19:02:19.1109058Z hint:
+2026-09-28T19:02:19.1109525Z hint: 	git config --global init.defaultBranch <name>
+2026-09-28T19:02:19.1110016Z hint:
+2026-09-28T19:02:19.1110475Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-28T19:02:19.1111198Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-28T19:02:19.1111781Z hint:
+2026-09-28T19:02:19.1112109Z hint: 	git branch -m <name>
+2026-09-28T19:02:19.1112635Z hint:
+2026-09-28T19:02:19.1113389Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-28T19:02:19.1114158Z Initialized empty Git repository in /home/runner/work/sway/sway/.git/
+2026-09-28T19:02:19.1116573Z [command]/usr/bin/git remote add origin https://github.com/SeMinLim/sway
+2026-09-28T19:02:19.1160919Z ##[endgroup]
+2026-09-28T19:02:19.1161568Z ##[group]Disabling automatic garbage collection
+2026-09-28T19:02:19.1163689Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-28T19:02:19.1190807Z ##[endgroup]
+2026-09-28T19:02:19.1191391Z ##[group]Setting up auth
+2026-09-28T19:02:19.1196881Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-28T19:02:19.1225109Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-28T19:02:19.1589548Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-28T19:02:19.1619609Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-28T19:02:19.1812141Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-28T19:02:19.1841369Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-28T19:02:19.2025798Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-28T19:02:19.2060316Z ##[endgroup]
+2026-09-28T19:02:19.2060926Z ##[group]Fetching the repository
+2026-09-28T19:02:19.2067916Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7b0a3df41e864138489a43a97fb92233844b4c19:refs/remotes/origin/codex/baseline-pnr-validation
+2026-09-28T19:02:20.5952271Z From https://github.com/SeMinLim/sway
+2026-09-28T19:02:20.5957148Z  * [new ref]         7b0a3df41e864138489a43a97fb92233844b4c19 -> origin/codex/baseline-pnr-validation
+2026-09-28T19:02:20.5959952Z ##[endgroup]
+2026-09-28T19:02:20.5960918Z ##[group]Determining the checkout info
+2026-09-28T19:02:20.5962021Z ##[endgroup]
+2026-09-28T19:02:20.5965402Z [command]/usr/bin/git sparse-checkout disable
+2026-09-28T19:02:20.6015224Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-28T19:02:20.6050871Z ##[group]Checking out the ref
+2026-09-28T19:02:20.6052009Z [command]/usr/bin/git checkout --progress --force -B codex/baseline-pnr-validation refs/remotes/origin/codex/baseline-pnr-validation
+2026-09-28T19:02:20.6761675Z Switched to a new branch 'codex/baseline-pnr-validation'
+2026-09-28T19:02:20.6764099Z branch 'codex/baseline-pnr-validation' set up to track 'origin/codex/baseline-pnr-validation'.
+2026-09-28T19:02:20.6773026Z ##[endgroup]
+2026-09-28T19:02:20.6811554Z [command]/usr/bin/git log -1 --format=%H
+2026-09-28T19:02:20.6834022Z 7b0a3df41e864138489a43a97fb92233844b4c19
+2026-09-28T19:02:20.6841683Z ##[group]Removing auth
+2026-09-28T19:02:20.6844829Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-28T19:02:20.6873111Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-28T19:02:20.7057356Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-28T19:02:20.7080811Z http.https://github.com/.extraheader
+2026-09-28T19:02:20.7088091Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-28T19:02:20.7120003Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-28T19:02:20.7302980Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-28T19:02:20.7331429Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-28T19:02:20.7513359Z ##[endgroup]
+2026-09-28T19:02:20.7705726Z ##[group]Run set -euo pipefail
+2026-09-28T19:02:20.7706770Z [36;1mset -euo pipefail[0m
+2026-09-28T19:02:20.7708011Z [36;1mmkdir -p "$RUNNER_TEMP/sway-tools/bsc" "$RUNNER_TEMP/sway-verification"[0m
+2026-09-28T19:02:20.7709345Z [36;1msudo apt-get update[0m
+2026-09-28T19:02:20.7711109Z [36;1msudo apt-get install --no-install-recommends -y ca-certificates curl git make g++ python3 iverilog libgmp10 libtcl8.6 libstdc++6[0m
+2026-09-28T19:02:20.7713996Z [36;1mcurl --fail --location --retry 3 --output "$RUNNER_TEMP/bsc.tar.gz" "https://github.com/B-Lang-org/bsc/releases/download/2026.01/bsc-2026.01-ubuntu-24.04.tar.gz"[0m
+2026-09-28T19:02:20.7717094Z [36;1mprintf '%s  %s\n' '6d13db288cf268dc1331f05b277c414b4ff1c1ab9618a6526ba16ad29e484e43' "$RUNNER_TEMP/bsc.tar.gz" | sha256sum --check -[0m
+2026-09-28T19:02:20.7719313Z [36;1mtar -xzf "$RUNNER_TEMP/bsc.tar.gz" --strip-components=1 -C "$RUNNER_TEMP/sway-tools/bsc"[0m
+2026-09-28T19:02:20.7720960Z [36;1mecho "$RUNNER_TEMP/sway-tools/bsc/bin" >> "$GITHUB_PATH"[0m
+2026-09-28T19:02:20.7722600Z [36;1m"$RUNNER_TEMP/sway-tools/bsc/bin/bsc" -v > "$RUNNER_TEMP/sway-verification/bsc-version.txt" 2>&1[0m
+2026-09-28T19:02:20.7724540Z [36;1m/usr/bin/iverilog -V > "$RUNNER_TEMP/sway-verification/iverilog-version.txt" 2>&1[0m
+2026-09-28T19:02:20.7726181Z [36;1mgit rev-parse HEAD > "$RUNNER_TEMP/sway-verification/sway-commit.txt"[0m
+2026-09-28T19:02:20.7727593Z [36;1mcat "$RUNNER_TEMP/sway-verification/bsc-version.txt"[0m
+2026-09-28T19:02:20.8278815Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-28T19:02:20.8279971Z ##[endgroup]
+2026-09-28T19:02:20.9216827Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-09-28T19:02:20.9527495Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-09-28T19:02:20.9539631Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-09-28T19:02:20.9576235Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-09-28T19:02:20.9578984Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-09-28T19:02:20.9595215Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-09-28T19:02:21.0759925Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [446 kB]
+2026-09-28T19:02:21.0893367Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [498 kB]
+2026-09-28T19:02:21.1089783Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1319 kB]
+2026-09-28T19:02:21.1152802Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [299 kB]
+2026-09-28T19:02:21.1170152Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+2026-09-28T19:02:21.1183654Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1697 kB]
+2026-09-28T19:02:21.1253527Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [340 kB]
+2026-09-28T19:02:21.1273498Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+2026-09-28T19:02:21.1305863Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1654 kB]
+2026-09-28T19:02:21.1365669Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [377 kB]
+2026-09-28T19:02:21.1386651Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-09-28T19:02:21.1555234Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [40.6 kB]
+2026-09-28T19:02:21.1982767Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5756 B]
+2026-09-28T19:02:21.1989535Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [31.0 kB]
+2026-09-28T19:02:21.2005846Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe Translation-en [18.6 kB]
+2026-09-28T19:02:21.2025520Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+2026-09-28T19:02:21.2026576Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1063 kB]
+2026-09-28T19:02:21.2075245Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [220 kB]
+2026-09-28T19:02:21.2079848Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+2026-09-28T19:02:21.2092097Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1216 kB]
+2026-09-28T19:02:21.2152370Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [244 kB]
+2026-09-28T19:02:21.2170286Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+2026-09-28T19:02:21.2183627Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1559 kB]
+2026-09-28T19:02:21.2261872Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [359 kB]
+2026-09-28T19:02:28.9150007Z Fetched 12.5 MB in 1s (11.1 MB/s)
+2026-09-28T19:02:29.5502111Z Reading package lists...
+2026-09-28T19:02:29.5763703Z Reading package lists...
+2026-09-28T19:02:29.7464878Z Building dependency tree...
+2026-09-28T19:02:29.7470514Z Reading state information...
+2026-09-28T19:02:29.8789222Z ca-certificates is already the newest version (20260601~24.04.1).
+2026-09-28T19:02:29.8789836Z git is already the newest version (1:2.55.0-0ppa1~ubuntu24.04.2).
+2026-09-28T19:02:29.8790241Z git set to manually installed.
+2026-09-28T19:02:29.8790557Z make is already the newest version (4.3-4.1build2).
+2026-09-28T19:02:29.8790970Z g++ is already the newest version (4:13.2.0-7ubuntu1).
+2026-09-28T19:02:29.8791403Z python3 is already the newest version (3.12.3-0ubuntu2.1).
+2026-09-28T19:02:29.8791949Z libgmp10 is already the newest version (2:6.3.0+dfsg-2ubuntu6.1).
+2026-09-28T19:02:29.8792443Z libgmp10 set to manually installed.
+2026-09-28T19:02:29.8792829Z libtcl8.6 is already the newest version (8.6.14+dfsg-1build1).
+2026-09-28T19:02:29.8793205Z libtcl8.6 set to manually installed.
+2026-09-28T19:02:29.8793583Z libstdc++6 is already the newest version (14.2.0-4ubuntu2~24.04.1).
+2026-09-28T19:02:29.8794060Z The following additional packages will be installed:
+2026-09-28T19:02:29.8794860Z   libcurl3t64-gnutls libcurl4t64
+2026-09-28T19:02:29.8797723Z Suggested packages:
+2026-09-28T19:02:29.8798120Z   gtkwave
+2026-09-28T19:02:29.8964073Z The following NEW packages will be installed:
+2026-09-28T19:02:29.9028697Z   iverilog
+2026-09-28T19:02:29.9041735Z The following packages will be upgraded:
+2026-09-28T19:02:29.9042403Z   curl libcurl3t64-gnutls libcurl4t64
+2026-09-28T19:02:29.9122742Z 3 upgraded, 1 newly installed, 0 to remove and 32 not upgraded.
+2026-09-28T19:02:29.9123263Z Need to get 3031 kB of archives.
+2026-09-28T19:02:29.9123697Z After this operation, 6828 kB of additional disk space will be used.
+2026-09-28T19:02:29.9124285Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-09-28T19:02:29.9784022Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 curl amd64 8.5.0-2ubuntu10.15 [227 kB]
+2026-09-28T19:02:30.0263909Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libcurl4t64 amd64 8.5.0-2ubuntu10.15 [343 kB]
+2026-09-28T19:02:30.0742312Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 iverilog amd64 12.0-2build2 [2126 kB]
+2026-09-28T19:02:30.1317604Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libcurl3t64-gnutls amd64 8.5.0-2ubuntu10.15 [336 kB]
+2026-09-28T19:02:30.3473413Z Fetched 3031 kB in 0s (13.2 MB/s)
+2026-09-28T19:02:30.3969024Z (Reading database ... 
+2026-09-28T19:02:30.3969307Z (Reading database ... 5%
+2026-09-28T19:02:30.3970043Z (Reading database ... 10%
+2026-09-28T19:02:30.3970243Z (Reading database ... 15%
+2026-09-28T19:02:30.3970422Z (Reading database ... 20%
+2026-09-28T19:02:30.3970595Z (Reading database ... 25%
+2026-09-28T19:02:30.3971080Z (Reading database ... 30%
+2026-09-28T19:02:30.3971339Z (Reading database ... 35%
+2026-09-28T19:02:30.3971598Z (Reading database ... 40%
+2026-09-28T19:02:30.3971861Z (Reading database ... 45%
+2026-09-28T19:02:30.3972088Z (Reading database ... 50%
+2026-09-28T19:02:30.4019178Z (Reading database ... 55%
+2026-09-28T19:02:30.4922539Z (Reading database ... 60%
+2026-09-28T19:02:30.6972390Z (Reading database ... 65%
+2026-09-28T19:02:30.9473288Z (Reading database ... 70%
+2026-09-28T19:02:31.1376383Z (Reading database ... 75%
+2026-09-28T19:02:31.3804915Z (Reading database ... 80%
+2026-09-28T19:02:31.5605782Z (Reading database ... 85%
+2026-09-28T19:02:31.7360341Z (Reading database ... 90%
+2026-09-28T19:02:31.9141554Z (Reading database ... 95%
+2026-09-28T19:02:31.9141921Z (Reading database ... 100%
+2026-09-28T19:02:31.9142319Z (Reading database ... 202190 files and directories currently installed.)
+2026-09-28T19:02:31.9182932Z Preparing to unpack .../curl_8.5.0-2ubuntu10.15_amd64.deb ...
+2026-09-28T19:02:31.9213568Z Unpacking curl (8.5.0-2ubuntu10.15) over (8.5.0-2ubuntu10.13) ...
+2026-09-28T19:02:31.9555078Z Preparing to unpack .../libcurl4t64_8.5.0-2ubuntu10.15_amd64.deb ...
+2026-09-28T19:02:31.9582648Z Unpacking libcurl4t64:amd64 (8.5.0-2ubuntu10.15) over (8.5.0-2ubuntu10.13) ...
+2026-09-28T19:02:31.9792068Z Selecting previously unselected package iverilog.
+2026-09-28T19:02:31.9899650Z Preparing to unpack .../iverilog_12.0-2build2_amd64.deb ...
+2026-09-28T19:02:31.9905765Z Unpacking iverilog (12.0-2build2) ...
+2026-09-28T19:02:32.0777801Z Preparing to unpack .../libcurl3t64-gnutls_8.5.0-2ubuntu10.15_amd64.deb ...
+2026-09-28T19:02:32.0836922Z Unpacking libcurl3t64-gnutls:amd64 (8.5.0-2ubuntu10.15) over (8.5.0-2ubuntu10.13) ...
+2026-09-28T19:02:32.1252380Z Setting up libcurl4t64:amd64 (8.5.0-2ubuntu10.15) ...
+2026-09-28T19:02:32.1270883Z Setting up libcurl3t64-gnutls:amd64 (8.5.0-2ubuntu10.15) ...
+2026-09-28T19:02:32.1548370Z Setting up iverilog (12.0-2build2) ...
+2026-09-28T19:02:32.1564509Z Setting up curl (8.5.0-2ubuntu10.15) ...
+2026-09-28T19:02:32.1584903Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-09-28T19:02:32.1604881Z Not building database; man-db/auto-update is not 'true'.
+2026-09-28T19:02:32.1615971Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-09-28T19:02:33.0736734Z 
+2026-09-28T19:02:33.0737085Z Running kernel seems to be up-to-date.
+2026-09-28T19:02:33.0737306Z 
+2026-09-28T19:02:33.0737384Z Restarting services...
+2026-09-28T19:02:33.0883334Z  systemctl restart packagekit.service php8.3-fpm.service
+2026-09-28T19:02:33.1799460Z 
+2026-09-28T19:02:33.1801149Z No containers need to be restarted.
+2026-09-28T19:02:33.1801427Z 
+2026-09-28T19:02:33.1801734Z No user sessions are running outdated binaries.
+2026-09-28T19:02:33.1802145Z 
+2026-09-28T19:02:33.1802429Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-09-28T19:02:33.9580480Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-09-28T19:02:33.9581120Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-09-28T19:02:33.9581698Z 
+2026-09-28T19:02:34.1869330Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-09-28T19:02:34.1869749Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-09-28T19:02:34.4999048Z 
+2026-09-28T19:02:34.4999644Z 100 24.6M  100 24.6M    0     0  45.4M      0 --:--:-- --:--:-- --:--:-- 45.4M
+2026-09-28T19:02:34.5223219Z /home/runner/work/_temp/bsc.tar.gz: OK
+2026-09-28T19:02:35.0155103Z Bluespec Compiler, version 2026.01 (build 9bd39e6f)
+2026-09-28T19:02:35.0155568Z This is free software; for source code and copying conditions, see
+2026-09-28T19:02:35.0155880Z https://github.com/B-Lang-org/bsc
+2026-09-28T19:02:35.0156042Z 
+2026-09-28T19:02:35.0156116Z Invoking command line:
+2026-09-28T19:02:35.0156290Z bsc -v
+2026-09-28T19:02:35.0156394Z 
+2026-09-28T19:02:35.0217637Z ##[group]Run set -euo pipefail
+2026-09-28T19:02:35.0217905Z [36;1mset -euo pipefail[0m
+2026-09-28T19:02:35.0218111Z [36;1mulimit -v 6291456[0m
+2026-09-28T19:02:35.0218338Z [36;1mpython3 hw/reference/check_refactor.py \[0m
+2026-09-28T19:02:35.0218628Z [36;1m  --bsc "$RUNNER_TEMP/sway-tools/bsc/bin/bsc" \[0m
+2026-09-28T19:02:35.0218966Z [36;1m  --backend iverilog --iverilog /usr/bin/iverilog --vvp /usr/bin/vvp \[0m
+2026-09-28T19:02:35.0219318Z [36;1m  --divisors 2 --modes stress kernel --skip-arithmetic \[0m
+2026-09-28T19:02:35.0219638Z [36;1m  --output "$RUNNER_TEMP/sway-verification/functional" \[0m
+2026-09-28T19:02:35.0219966Z [36;1m  2>&1 | tee "$RUNNER_TEMP/sway-verification/functional-run.log"[0m
+2026-09-28T19:02:35.0279061Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-28T19:02:35.0279348Z ##[endgroup]
+2026-09-28T19:06:54.4907328Z SWAY_REFACTOR_PASS divisor=2 mode=stress outputs=798
+2026-09-28T19:10:55.6264982Z SWAY_REFACTOR_PASS divisor=2 mode=kernel outputs=798
+2026-09-28T19:10:55.6651980Z ##[group]Run python3 - <<'PY'
+2026-09-28T19:10:55.6652259Z [36;1mpython3 - <<'PY'[0m
+2026-09-28T19:10:55.6652464Z [36;1mimport hashlib, json, os[0m
+2026-09-28T19:10:55.6652678Z [36;1mfrom pathlib import Path[0m
+2026-09-28T19:10:55.6652944Z [36;1mbase = Path(os.environ["RUNNER_TEMP"]) / "sway-verification"[0m
+2026-09-28T19:10:55.6653221Z [36;1msummaries = [][0m
+2026-09-28T19:10:55.6653535Z [36;1mcandidates = [base / "functional/validation.json", base / "warm-reset/result.json",[0m
+2026-09-28T19:10:55.6653909Z [36;1m              base / "physical/report.json"][0m
+2026-09-28T19:10:55.6654145Z [36;1mfor path in candidates:[0m
+2026-09-28T19:10:55.6654522Z [36;1m    if not path.is_file():[0m
+2026-09-28T19:10:55.6654820Z [36;1m        continue[0m
+2026-09-28T19:10:55.6655125Z [36;1m    result = json.loads(path.read_text())[0m
+2026-09-28T19:10:55.6655401Z [36;1m    print(f"SWAY_REPORT {path.relative_to(base)}")[0m
+2026-09-28T19:10:55.6655701Z [36;1m    print(json.dumps(result, indent=2))[0m
+2026-09-28T19:10:55.6655955Z [36;1m    hashes = result.get("source_sha256", {})[0m
+2026-09-28T19:10:55.6656356Z [36;1m    digest = hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(",", ":")).encode()).hexdigest()[0m
+2026-09-28T19:10:55.6656834Z [36;1m    summary = {"report": str(path.relative_to(base)), "status": result.get("status"),[0m
+2026-09-28T19:10:55.6657210Z [36;1m               "error": result.get("error"), "source_files": len(hashes),[0m
+2026-09-28T19:10:55.6657509Z [36;1m               "source_manifest_sha256": digest,[0m
+2026-09-28T19:10:55.6657899Z [36;1m               "source_hashes_unchanged": result.get("source_hashes_unchanged", result.get("source_unchanged")),[0m
+2026-09-28T19:10:55.6658319Z [36;1m               "reported_clocks": result.get("reported_clocks"),[0m
+2026-09-28T19:10:55.6658702Z [36;1m               "configurations": [{"divisor": x.get("parallelism_divisor"), "mode": x.get("mode"),[0m
+2026-09-28T19:10:55.6659136Z [36;1m                                   "status": x.get("status"), "outputs": x.get("scalar_outputs_checked")}[0m
+2026-09-28T19:10:55.6659672Z [36;1m                                  for x in result.get("configurations", [])]}[0m
+2026-09-28T19:10:55.6659946Z [36;1m    summaries.append(summary)[0m
+2026-09-28T19:10:55.6660184Z [36;1mdetail = base / "physical/nextpnr.json"[0m
+2026-09-28T19:10:55.6660413Z [36;1mif detail.is_file():[0m
+2026-09-28T19:10:55.6660627Z [36;1m    result = json.loads(detail.read_text())[0m
+2026-09-28T19:10:55.6660957Z [36;1m    compact = {key: result[key] for key in ("fmax", "critical_paths") if key in result}[0m
+2026-09-28T19:10:55.6661381Z [36;1m    compact["detailed_report_sha256"] = hashlib.sha256(detail.read_bytes()).hexdigest()[0m
+2026-09-28T19:10:55.6661853Z [36;1m    (base / "physical/timing_summary.json").write_text(json.dumps(compact, indent=2) + "\n")[0m
+2026-09-28T19:10:55.6662331Z [36;1m    print("SWAY_ROUTED_FMAX " + json.dumps(result.get("fmax", {}), sort_keys=True))[0m
+2026-09-28T19:10:55.6662804Z [36;1m    print("SWAY_ROUTED_CRITICAL_PATHS " + json.dumps(result.get("critical_paths", []), sort_keys=True))[0m
+2026-09-28T19:10:55.6663166Z [36;1m    slow = [][0m
+2026-09-28T19:10:55.6663394Z [36;1m    for net in result.get("detailed_net_timings", []):[0m
+2026-09-28T19:10:55.6663684Z [36;1m        if "100mhz" not in net.get("event", ""):[0m
+2026-09-28T19:10:55.6663912Z [36;1m            continue[0m
+2026-09-28T19:10:55.6664128Z [36;1m        for endpoint in net.get("endpoints", []):[0m
+2026-09-28T19:10:55.6664643Z [36;1m            if "100mhz" in endpoint.get("event", "") and max(endpoint["delay"]) > 9.5:[0m
+2026-09-28T19:10:55.6665086Z [36;1m                slow.append({"delay": max(endpoint["delay"]), "driver": net["driver"], "net": net["net"],[0m
+2026-09-28T19:10:55.6665490Z [36;1m                             "cell": endpoint["cell"], "port": endpoint["port"]})[0m
+2026-09-28T19:10:55.6665973Z [36;1m    slow.sort(key=lambda item: item["delay"], reverse=True)[0m
+2026-09-28T19:10:55.6666325Z [36;1m    print("SWAY_SLOW_ENDPOINTS " + json.dumps(slow[:200], sort_keys=True))[0m
+2026-09-28T19:10:55.6666656Z [36;1mbase.mkdir(parents=True, exist_ok=True)[0m
+2026-09-28T19:10:55.6666977Z [36;1m(base / "ci-summary.json").write_text(json.dumps(summaries, indent=2) + "\n")[0m
+2026-09-28T19:10:55.6667347Z [36;1mwith open(os.environ["GITHUB_STEP_SUMMARY"], "a") as output:[0m
+2026-09-28T19:10:55.6667687Z [36;1m    output.write("Commit: " + os.environ["GITHUB_SHA"] + "\n\n")[0m
+2026-09-28T19:10:55.6667958Z [36;1m    fence = chr(96) * 3[0m
+2026-09-28T19:10:55.6668267Z [36;1m    output.write(fence + "json\n" + json.dumps(summaries, indent=2) + "\n" + fence + "\n")[0m
+2026-09-28T19:10:55.6668594Z [36;1m    if not summaries:[0m
+2026-09-28T19:10:55.6668888Z [36;1m        output.write("No checker report was produced; inspect setup/build logs.\n")[0m
+2026-09-28T19:10:55.6669195Z [36;1mPY[0m
+2026-09-28T19:10:55.6723471Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-09-28T19:10:55.6723752Z ##[endgroup]
+2026-09-28T19:10:55.7003168Z SWAY_REPORT functional/validation.json
+2026-09-28T19:10:55.7003603Z {
+2026-09-28T19:10:55.7003973Z   "status": "pass",
+2026-09-28T19:10:55.7004526Z   "compiler": "/home/runner/work/_temp/sway-tools/bsc/bin/bsc",
+2026-09-28T19:10:55.7004951Z   "source_sha256": {
+2026-09-28T19:10:55.7005418Z     "bsv/SwayBaseline.bsv": "a5be30c1bbd2382383edd8dd56c9e193f91d4b04ec7b1915e75f3800e8cce60b",
+2026-09-28T19:10:55.7006239Z     "bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+2026-09-28T19:10:55.7006999Z     "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+2026-09-28T19:10:55.7007766Z     "bsv/SwayLinear.bsv": "9cde354738f486df6d34a25dc242780a459cd1fa8cfd961c9a17ab4002b8e200",
+2026-09-28T19:10:55.7008526Z     "bsv/SwayMultiply.bsv": "47b3d0a36d4e50c7b75b2c8d8e484eff13d513f83a8373d50f4a34cf89a29be9",
+2026-09-28T19:10:55.7009354Z     "bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+2026-09-28T19:10:55.7010233Z     "bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+2026-09-28T19:10:55.7011239Z     "bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+2026-09-28T19:10:55.7012113Z     "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+2026-09-28T19:10:55.7013058Z     "generated/SwayParameters.bsv": "a57d31c5bcf3fd406bb099103995a6d6c276c981c2aad92c2d7099ec6f00328d",
+2026-09-28T19:10:55.7013921Z     "generated/linear_rom/bank000.hex": "d0468693dd6c57928d8d518f789e14f49a97d5420a3b4b677fb7b986dc4eaa0d",
+2026-09-28T19:10:55.7014918Z     "generated/linear_rom/bank001.hex": "95fbc5708f61f410cc83d3e9e1a0509dd2392989f91449260a753758e01b578b",
+2026-09-28T19:10:55.7015707Z     "generated/linear_rom/bank002.hex": "d4e7fdedee24697aa5408b744d9b4db370f598a5ac1a81662fde5dd50db18782",
+2026-09-28T19:10:55.7016615Z     "generated/linear_rom/bank003.hex": "bf62c7c73bdbb1e02ece9065521cdd5a327ec77498dcf60f7ffd377328309e28",
+2026-09-28T19:10:55.7017555Z     "generated/linear_rom/bank004.hex": "069ac39fe120f7eccfb89e4ed1dc6a94fb3565fdfda765c512e8a8ae2770925f",
+2026-09-28T19:10:55.7018489Z     "generated/linear_rom/bank005.hex": "f1bfc10824a0d55a1630f130f3d72b37f49ebde45f3d49c915e053ed46e72d23",
+2026-09-28T19:10:55.7019382Z     "generated/linear_rom/bank006.hex": "3e98511cb6308d24a382f64f3c8458ccf797dffeb6a804373069e8e2f11f238e",
+2026-09-28T19:10:55.7020275Z     "generated/linear_rom/bank007.hex": "add5c27e4bcf36bbf8892e56267d0600afb24d3273db0d0d28653e27b4f6f05f",
+2026-09-28T19:10:55.7021142Z     "generated/linear_rom/bank008.hex": "b462510414b4609964f9c942ee38a04c6a2cbc1def0e6e6538550a8acc429c94",
+2026-09-28T19:10:55.7021957Z     "generated/linear_rom/bank009.hex": "76d05ef8823d18d0d1a2ba22ca799433a323f44f676e4b020b6acd6f44073530",
+2026-09-28T19:10:55.7023032Z     "generated/linear_rom/bank010.hex": "da9bb7105854b941ca6609092c4fda6d62bf157ac8bebb1ac42a98ad2be6aac9",
+2026-09-28T19:10:55.7023858Z     "generated/linear_rom/bank011.hex": "41995f3b57b5c37aae4399199708e2f0634e384cdf0f07d6ded6092125507bc1",
+2026-09-28T19:10:55.7024899Z     "generated/linear_rom/bank012.hex": "7c08f4aba52d147ff435cba8bc517ebf3a717ff45aacfe9a46966e8f636f61b6",
+2026-09-28T19:10:55.7025786Z     "generated/linear_rom/bank013.hex": "81311c0f2c0bcf41ebbf0e8d7b81f93b5d64cf50510ef68e9106dc2f56907391",
+2026-09-28T19:10:55.7026680Z     "generated/linear_rom/bank014.hex": "07e139ec3b82817d5afd7feb831e6330aec05ddca4e738430f144bd049abb3fb",
+2026-09-28T19:10:55.7027555Z     "generated/linear_rom/bank015.hex": "006c728e22ee72d431a6ac295de5c99321094441e157a36a29c01e944427bdcf",
+2026-09-28T19:10:55.7028432Z     "generated/linear_rom/bank016.hex": "e3b2ae310d1e4eca98d50ace38e21a7f2b780db91fc28749bf4da7c557777f05",
+2026-09-28T19:10:55.7029347Z     "generated/linear_rom/bank017.hex": "d864d15566a61660d8e29a2c2d0fc603f32e91e0f9240a4af955b2ec964371ac",
+2026-09-28T19:10:55.7030252Z     "generated/linear_rom/bank018.hex": "f48d19c250bc3e17c7ecd099b446c7f71e0e4d11997e9320690e5dc7d537b574",
+2026-09-28T19:10:55.7031083Z     "generated/linear_rom/bank019.hex": "d1f8b740b2ad284e4dad061f9371c071358251231ee9bc01e4d22cf478d1b151",
+2026-09-28T19:10:55.7031933Z     "generated/linear_rom/bank020.hex": "4900124fc8380c182689f14691e0be3384ab06bb13955141ccc1b6e0c5fdf05f",
+2026-09-28T19:10:55.7032838Z     "generated/linear_rom/bank021.hex": "aad20d0ab187328d33b1e9ac4eee4fced8dbb8acfe969815d772e8aba86ac05d",
+2026-09-28T19:10:55.7033712Z     "generated/linear_rom/bank022.hex": "db3f8a6b17292c486e05859e2b842fd06a4922f8b7f609672a9009a1bb152b33",
+2026-09-28T19:10:55.7034755Z     "generated/linear_rom/bank023.hex": "f0cc206aef0ca6fecaa3ec76850515fc7d8450a8f92a78f46571f057c9d63199",
+2026-09-28T19:10:55.7035623Z     "generated/linear_rom/bank024.hex": "db3f8a6b17292c486e05859e2b842fd06a4922f8b7f609672a9009a1bb152b33",
+2026-09-28T19:10:55.7036501Z     "generated/linear_rom/bank025.hex": "f0cc206aef0ca6fecaa3ec76850515fc7d8450a8f92a78f46571f057c9d63199",
+2026-09-28T19:10:55.7037380Z     "generated/linear_rom/bank026.hex": "2a00bed487b115d8cd7a16217487ae3d4e3def97ad18f15d9e42bbd891051286",
+2026-09-28T19:10:55.7038396Z     "generated/linear_rom/bank027.hex": "2a00bed487b115d8cd7a16217487ae3d4e3def97ad18f15d9e42bbd891051286",
+2026-09-28T19:10:55.7039242Z     "generated/linear_rom/bank028.hex": "a6212d63336db9814fee540f80392f401cc530e2eb0753b06bea834d034c92e7",
+2026-09-28T19:10:55.7040102Z     "generated/linear_rom/bank029.hex": "4271c6c7bf974ed0a1fdcebc800edb9942d5c91c9394a64cc7b4a6b499c7ef08",
+2026-09-28T19:10:55.7040951Z     "generated/linear_rom/bank030.hex": "3981dc6e301b047659146f63fb3637e848dfaef8fec77d393fb22515badb0067",
+2026-09-28T19:10:55.7041773Z     "generated/linear_rom/bank031.hex": "ef589cb0566b42409c4457cc85dc296a9d6c5606b029bce8ff1e9caeff4e98e0",
+2026-09-28T19:10:55.7042621Z     "generated/linear_rom/bank032.hex": "b310c95bd9b5b9285a1861b7e2c6ca563f38c708c87cd4885e524d802a88d99b",
+2026-09-28T19:10:55.7043410Z     "generated/linear_rom/bank033.hex": "5fa4dbd1dcd83a369a3f5a8d5742ee00b9be9db605e2249cd57fcc51cf7a47cb",
+2026-09-28T19:10:55.7044217Z     "generated/linear_rom/bank034.hex": "cc342ac8af4bca5726a7b7d765972277c330c01361acc3d9cae9e1482cbf7ebb",
+2026-09-28T19:10:55.7045146Z     "generated/linear_rom/bank035.hex": "802f867b445ef1b094378db552b8e0051cad88ccf46836df97b32d8bb5c39b5a",
+2026-09-28T19:10:55.7046041Z     "generated/linear_rom/bank036.hex": "60c2a75728ca7ed010eae01feb789a30fc4d4b0bcd9f1c4b82cec8bc7b9d0df9",
+2026-09-28T19:10:55.7046848Z     "generated/linear_rom/bank037.hex": "5312f584d6be3d8a990a5c7506cc9e81a60aa177c7a4e30ff4ab94c9f06f0149",
+2026-09-28T19:10:55.7047682Z     "generated/linear_rom/bank038.hex": "94835dbc65c0ac11aaa40554c460c9172c89f635f22b3c6a892955290cd116a7",
+2026-09-28T19:10:55.7048526Z     "generated/linear_rom/bank039.hex": "89585f3ec295ab84f42c57884dd3418021e5a53eb7869efeea674b464cb13c7b",
+2026-09-28T19:10:55.7049542Z     "generated/linear_rom/bank040.hex": "6e8244da7d59ce92073bf73416533be949b0238dadde9f6ce594444011d11ed7",
+2026-09-28T19:10:55.7050415Z     "generated/linear_rom/bank041.hex": "72c40f1d02235c173a4b390c813958286c1da2e0adaec1b40d352326cebc4104",
+2026-09-28T19:10:55.7051200Z     "generated/linear_rom/bank042.hex": "836dc993c79051b1318589a7f2e3b2b3adc196723efbbf8acaba039e6b70534a",
+2026-09-28T19:10:55.7051728Z     "generated/linear_rom/bank043.hex": "52563fa44dc400399aa913a949eb52e5194995b636d537903201844ff4948738",
+2026-09-28T19:10:55.7052244Z     "generated/linear_rom/bank044.hex": "222468fff6c4d02781f99539b313c9fabb52f0c809efceac9a664dd6c6983a42",
+2026-09-28T19:10:55.7052742Z     "generated/linear_rom/bank045.hex": "daa7af4c5284c5bb9dba1ff786946696bb86c29806e4a98490a3a6bc3bb17895",
+2026-09-28T19:10:55.7053421Z     "generated/linear_rom/bank046.hex": "4f8d6cf2c22c49cae3484a05b2017885458211e2e36f8100f17d6d9ac98368eb",
+2026-09-28T19:10:55.7054238Z     "generated/linear_rom/bank047.hex": "b97a677d260699d7eef4309bb8b80a4b8d32e6d98b2280ba68e97859af7aaeea",
+2026-09-28T19:10:55.7055219Z     "generated/linear_rom/bank048.hex": "11f582eda0f73cc3413a5b806a0e490800b6fa32d72739b1d664c0a1ea72d173",
+2026-09-28T19:10:55.7055734Z     "generated/linear_rom/bank049.hex": "d03ebcbcc54e4ded9130fa5c179ec351a3db8948c547ea0ba568b8254b96f13f",
+2026-09-28T19:10:55.7056254Z     "generated/linear_rom/bank050.hex": "1feb4a18ccaa792377f5a8b123372b055745c156461b4557d14a634bee462a38",
+2026-09-28T19:10:55.7056763Z     "generated/linear_rom/bank051.hex": "e732ac7ffacfc6568427658c38c2163ea45224de47b2bbdac50523595c51b080",
+2026-09-28T19:10:55.7057260Z     "generated/linear_rom/bank052.hex": "389d8678f7063da1b45e914817c016ff6794c48096b21c2402bee4efb80599c8",
+2026-09-28T19:10:55.7057757Z     "generated/linear_rom/bank053.hex": "406782c8eedf5fa66b20289bbed13f1bec1d15a8d6870fa84e22861f895f2d86",
+2026-09-28T19:10:55.7058249Z     "generated/linear_rom/bank054.hex": "2e46474cb378a7d3d0375c729bc3e4af24657cbe7c039104885a9a688b353637",
+2026-09-28T19:10:55.7058746Z     "generated/linear_rom/bank055.hex": "dcde238005c34ba812e113093649ab745dcb54061f53e4e672eb3c1cc8b26a8f",
+2026-09-28T19:10:55.7059244Z     "generated/linear_rom/bank056.hex": "fd4d9520d3059cbccc6a9e50bdf20f710ef859955b7df2e5be82b98547d3cdc9",
+2026-09-28T19:10:55.7059880Z     "generated/linear_rom/bank057.hex": "485aa0bbf3eb8eb59096d8c47f8bf296d90fb3727703292741a54f9b5c69aeaf",
+2026-09-28T19:10:55.7060384Z     "generated/linear_rom/bank058.hex": "2144fe9fe0fa5b0d88c37d2d6a18a6275adae7dacbd7791c1c4ed7e63f5b0e63",
+2026-09-28T19:10:55.7060906Z     "generated/linear_rom/bank059.hex": "a75f2dee2a9af8196422aa0cc6aeb26d1632bcfc7ed0403bb7a0e463b1f1a82b",
+2026-09-28T19:10:55.7061420Z     "generated/linear_rom/bank060.hex": "94c944f9ccbfb1943df1adbc42b812cfb21e171603b2171f40a791f881a5d0ba",
+2026-09-28T19:10:55.7061945Z     "generated/linear_rom/bank061.hex": "09ebf484e3cc3aab912a063fc2216f349c3bacf85cf76fcb31fd729e330aa5f0",
+2026-09-28T19:10:55.7062455Z     "generated/linear_rom/bank062.hex": "885b073a3a786046a78b5ed6a955dac71957d5d3e844ba003804fd1839c05850",
+2026-09-28T19:10:55.7062953Z     "generated/linear_rom/bank063.hex": "b384259fefad0b04a678932d2586c5f08ecde992c737be568b682c608d14fe87",
+2026-09-28T19:10:55.7063453Z     "generated/linear_rom/bank064.hex": "25c41e14e75e823b482eefb0c07d5d77b2fd7bce5667f48e740140cb982ddcf6",
+2026-09-28T19:10:55.7063947Z     "generated/linear_rom/bank065.hex": "56a18311ef21b0ea0aca91a7bf1303b948dab4843a21dbb9075d051e5b77147c",
+2026-09-28T19:10:55.7064648Z     "generated/linear_rom/bank066.hex": "cb71c82ba15604199d75aaf63cf32ae0f70d0513f59a72ac2ee6cfd7449b4885",
+2026-09-28T19:10:55.7065159Z     "generated/linear_rom/bank067.hex": "2a77094317672c57cf81946eee5239f1f7d1f0c30cc942aced87f982ccc1de18",
+2026-09-28T19:10:55.7065666Z     "generated/linear_rom/bank068.hex": "4c9b34a45f161910703e8c6722ce3eb17047f644833d47eb39edb04fb7c93618",
+2026-09-28T19:10:55.7066166Z     "generated/linear_rom/bank069.hex": "155e3baa3fb552bf29e6b7f3d1f1c02f9678ca5f410fcf85f749d9e791a01b01",
+2026-09-28T19:10:55.7066791Z     "generated/linear_rom/bank070.hex": "72f808b43b75c6c5dcb5098fe2a650ae3f3575358c3a330f7876baebd36402af",
+2026-09-28T19:10:55.7067294Z     "generated/linear_rom/bank071.hex": "e7316ca56d611a5d2ae964946f8ea561900f996b35339766460850076ec09b1c",
+2026-09-28T19:10:55.7067788Z     "generated/linear_rom/bank072.hex": "1b17834571dea90f0412ce7a80a67fac670712bb7261fbbcbf32728b7154a08a",
+2026-09-28T19:10:55.7068280Z     "generated/linear_rom/bank073.hex": "e7316ca56d611a5d2ae964946f8ea561900f996b35339766460850076ec09b1c",
+2026-09-28T19:10:55.7068763Z     "generated/linear_rom/bank074.hex": "1b17834571dea90f0412ce7a80a67fac670712bb7261fbbcbf32728b7154a08a",
+2026-09-28T19:10:55.7069295Z     "generated/linear_rom/bank075.hex": "2a00bed487b115d8cd7a16217487ae3d4e3def97ad18f15d9e42bbd891051286",
+2026-09-28T19:10:55.7069847Z     "generated/linear_rom/bank076.hex": "2a00bed487b115d8cd7a16217487ae3d4e3def97ad18f15d9e42bbd891051286",
+2026-09-28T19:10:55.7070364Z     "generated/linear_rom/bank077.hex": "a1fddda3605e9632a3b5819bd783285f78b54d706d52cf2d3290812aa0035e65",
+2026-09-28T19:10:55.7070865Z     "generated/linear_rom/bank078.hex": "9aeaab13eb0b5dc3d7898c58f89b2df5fa7ebc01d70e65d7ea90dd5b54edcddd",
+2026-09-28T19:10:55.7071371Z     "generated/linear_rom/bank079.hex": "153ab8bf480c05e529f5b07335e2b90661c8ab9aef93402b4dd64ed9fd0d6848",
+2026-09-28T19:10:55.7071873Z     "generated/linear_rom/bank080.hex": "c72aaec677aaec60c159872cc85357cda7756dc1d5d832f567cb684fd4e0e18e",
+2026-09-28T19:10:55.7072368Z     "generated/linear_rom/bank081.hex": "1b135178c807c25e28e24d5a0db9e2e58a2e7987174e06e88bfbfb1764ab1f72",
+2026-09-28T19:10:55.7072859Z     "generated/linear_rom/bank082.hex": "734ea2b4ac187f31c27f368a656ad8a2ba8b98d940988ac8cd644075c759400f",
+2026-09-28T19:10:55.7073354Z     "generated/linear_rom/bank083.hex": "8e078a6d810b55b2a189f2667489ae2e09f319a57d1c0a6a05b1a9c9d1675971",
+2026-09-28T19:10:55.7073842Z     "generated/linear_rom/bank084.hex": "412c345de5b17f0e8e98de099df94329ca43ac757c4b877b5df8c8e39885874d",
+2026-09-28T19:10:55.7074484Z     "generated/linear_rom/bank085.hex": "e11b96a1b844d94b812b624d0eefed4f7b596a326911f8e291f03101bc0804d1",
+2026-09-28T19:10:55.7075100Z     "generated/linear_rom/bank086.hex": "9dcaed41f52b5e691f42905ab15d69436e419159509792c1b7b5c48b49275c2f",
+2026-09-28T19:10:55.7075607Z     "generated/linear_rom/bank087.hex": "d99a1aae53b9e0784086570640755fbada5d394b470da99c200ddc81f0663cf2",
+2026-09-28T19:10:55.7076099Z     "generated/linear_rom/bank088.hex": "706cdf92f006eb769c424c8905813dca18d550ea294c7a48d4187b8a975ddcef",
+2026-09-28T19:10:55.7076587Z     "generated/linear_rom/bank089.hex": "7d3e691de3e854567b602d9654c3c42574ca229b8a5acf6fdf25e2ae2232c061",
+2026-09-28T19:10:55.7077087Z     "generated/linear_rom/bank090.hex": "64a2d56afbdc8bdf5ae1e7bd3dcff0c4a01a66b6acd796e28fb9f1640e07092c",
+2026-09-28T19:10:55.7077588Z     "generated/linear_rom/bank091.hex": "9080ed6e4f557248c16f7d95ea606b77fee2e96b4f4115ecfc2c5fe226e12759",
+2026-09-28T19:10:55.7078080Z     "generated/linear_rom/bank092.hex": "138805f24b37b0d8d13675215751f4bf78d9fdfa1fea639103f5f86d9d0f147d",
+2026-09-28T19:10:55.7078577Z     "generated/linear_rom/bank093.hex": "020e4417021a6923c130c2aaed726c34792dae97f5f3ca27242eb5fd7dcf139b",
+2026-09-28T19:10:55.7079099Z     "generated/linear_rom/bank094.hex": "31b2af35cd85fe9513d688721774b27a278ce37378d8f1990b5a4ec4291e0a7d",
+2026-09-28T19:10:55.7079590Z     "generated/linear_rom/bank095.hex": "3dd0b582ffb50235e1a4ae86a23c6083785d8596df3921cf5699e7d38b6f0fb5",
+2026-09-28T19:10:55.7080087Z     "generated/linear_rom/bank096.hex": "a5226dfedd470d78a90e5ed6516df08ff9a73d0acde75a2446a777a994e9dd02",
+2026-09-28T19:10:55.7080588Z     "generated/linear_rom/bank097.hex": "acde26890a168beabc7eb5b427d49c15cb374e95ce3b1ad4f3a53e4611f4a38e",
+2026-09-28T19:10:55.7081085Z     "generated/linear_rom/bank098.hex": "09400e6a9dd6a04159dbeda5092568a30cd42dac7e26174fca7721b2159ce3da",
+2026-09-28T19:10:55.7081574Z     "generated/linear_rom/bank099.hex": "4360d9483903ebc165ebc2603555b6dd2274bfb86f8b8d4850730ff97eef209a",
+2026-09-28T19:10:55.7082166Z     "generated/linear_rom/bank100.hex": "6a91f844ab33ee190ba2c9d26f4ed6ebc5e673a88aa84b3ae8e71ff9dbe4d5b7",
+2026-09-28T19:10:55.7082677Z     "generated/linear_rom/bank101.hex": "ce8369a6606382ed3fb5b1426fa6b300a021a20cda43fee474a00b001f346dc0",
+2026-09-28T19:10:55.7083176Z     "generated/linear_rom/bank102.hex": "85cb40943bb722a126a682d08e6b4637569dce59bc1a94df4cda6c1d2cc6e5c5",
+2026-09-28T19:10:55.7083668Z     "generated/linear_rom/bank103.hex": "fa4f89692dde83c092b1cab1754c0851961fce7b604dd4250bb49b6b734c89d2",
+2026-09-28T19:10:55.7084161Z     "generated/linear_rom/bank104.hex": "66a5d317a5c23c5cd28a90e9d54c5becb68c24e851c79c541c6d9b8366d148fd",
+2026-09-28T19:10:55.7084801Z     "generated/linear_rom/bank105.hex": "a7c84972ec443d3e210abc209e7103c028f0006cd729f60e82a3daf7b12757bd",
+2026-09-28T19:10:55.7085291Z     "generated/linear_rom/bank106.hex": "162ba567595371122db221d54512f499dcd18655a5f361b6a15b2e821361381b",
+2026-09-28T19:10:55.7085788Z     "generated/linear_rom/bank107.hex": "863d7e0310f3e5d2b2069b8c5a5e3449551cf1a4c8d9b4ef695af808163058ce",
+2026-09-28T19:10:55.7086283Z     "generated/linear_rom/bank108.hex": "ee0fca6144ea4a9a954dc0e277ee44676636505d5a1da58d244ab7ec719ef08a",
+2026-09-28T19:10:55.7086782Z     "generated/linear_rom/bank109.hex": "9505fbcdb27370172651cf0c0e7c0f06b6de4efd22f486044c18a9c0b3f17daa",
+2026-09-28T19:10:55.7087299Z     "generated/linear_rom/bank110.hex": "91c09f964f214ce950d7803686a155a2e136fdb5c3d2d487ba6a906d3a80e974",
+2026-09-28T19:10:55.7087797Z     "generated/linear_rom/bank111.hex": "4fbcb1f2cddc67e2990ae244b4db542db2611c099e3cda83d49c7201e1259196",
+2026-09-28T19:10:55.7088296Z     "generated/linear_rom/bank112.hex": "ea5ec338c84612fb5b0d1a6a4c0ff4f17acf5c58542f5587ecf6e1849e616045",
+2026-09-28T19:10:55.7088799Z     "generated/linear_rom/bank113.hex": "aacb32ffcea1c804e3b30045df8b88feeda6128240d5b1de21f91dee2bda93a7",
+2026-09-28T19:10:55.7089304Z     "generated/linear_rom/bank114.hex": "b713eb4614368b28e117ec5c8bdc1ffd1cb990255be497fe2f924526816b89d3",
+2026-09-28T19:10:55.7089802Z     "generated/linear_rom/bank115.hex": "2a772fd8596a6df82a8ed107ed63d60b1476f1bb5cb0ae51c30557827ee440cf",
+2026-09-28T19:10:55.7090407Z     "generated/linear_rom/bank116.hex": "9a302701679ada8437d61639b89c664bf2bfeb5e19c4f057550e4e5d61966b0b",
+2026-09-28T19:10:55.7090896Z     "generated/linear_rom/bank117.hex": "728c5c6983475fef32379a1663fd0ab4a4ac9176dc4fe3aaf4863185f269876f",
+2026-09-28T19:10:55.7091387Z     "generated/linear_rom/bank118.hex": "b500a68eb55a37dca42b811ef8388d1e8dcd1c85cc166047d7521ecf80513926",
+2026-09-28T19:10:55.7091888Z     "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+2026-09-28T19:10:55.7092375Z     "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+2026-09-28T19:10:55.7092883Z     "reference/check_refactor.py": "95632df2fcabbac0f9459096e4f69b7453198f49cb6d770fa79ce4f6a0199169",
+2026-09-28T19:10:55.7093365Z     "reference/check_sim.py": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36",
+2026-09-28T19:10:55.7093841Z     "rtl/BRAM1Load.v": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
+2026-09-28T19:10:55.7094304Z     "rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30",
+2026-09-28T19:10:55.7094928Z     "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
+2026-09-28T19:10:55.7095381Z     "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
+2026-09-28T19:10:55.7095702Z   },
+2026-09-28T19:10:55.7095851Z   "configurations": [
+2026-09-28T19:10:55.7096015Z     {
+2026-09-28T19:10:55.7096161Z       "status": "pass",
+2026-09-28T19:10:55.7096360Z       "evidence": "generated-Verilog simulation",
+2026-09-28T19:10:55.7096586Z       "frames_checked": 14,
+2026-09-28T19:10:55.7096775Z       "scalar_outputs_checked": 798,
+2026-09-28T19:10:55.7096980Z       "input_words": 4480,
+2026-09-28T19:10:55.7097156Z       "finish_cycle": 231448,
+2026-09-28T19:10:55.7097466Z       "post_completion_drain_cycles": 2048,
+2026-09-28T19:10:55.7097719Z       "source_bubbles": "cycles modulo 17 equal to 0 or 1",
+2026-09-28T19:10:55.7098069Z       "sink_stalls": "8192 cycles after each first output, plus cycles modulo 11 equal to 0",
+2026-09-28T19:10:55.7098388Z       "repeated_frame_pairs_checked": [
+2026-09-28T19:10:55.7098583Z         [
+2026-09-28T19:10:55.7098725Z           0,
+2026-09-28T19:10:55.7098866Z           12
+2026-09-28T19:10:55.7099005Z         ],
+2026-09-28T19:10:55.7099142Z         [
+2026-09-28T19:10:55.7099282Z           0,
+2026-09-28T19:10:55.7099418Z           13
+2026-09-28T19:10:55.7099552Z         ]
+2026-09-28T19:10:55.7099685Z       ],
+2026-09-28T19:10:55.7100015Z       "timing_scope": "testbench cycles include deliberate source and sink stalls; not unstalled kernel performance",
+2026-09-28T19:10:55.7100586Z       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+2026-09-28T19:10:55.7101025Z       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+2026-09-28T19:10:55.7101441Z       "log_sha256": "098ddf728435e8b093f01897ec642cb08c4e5201dd6b4a98aad9b2f3c85174d2",
+2026-09-28T19:10:55.7101869Z       "sway_records_sha256": "098ddf728435e8b093f01897ec642cb08c4e5201dd6b4a98aad9b2f3c85174d2",
+2026-09-28T19:10:55.7102191Z       "frames": [
+2026-09-28T19:10:55.7102339Z         {
+2026-09-28T19:10:55.7102477Z           "frame": 0,
+2026-09-28T19:10:55.7102644Z           "input_first_cycle": 2,
+2026-09-28T19:10:55.7102838Z           "input_last_cycle": 363,
+2026-09-28T19:10:55.7103034Z           "output_first_cycle": 25209,
+2026-09-28T19:10:55.7103237Z           "output_last_cycle": 33463,
+2026-09-28T19:10:55.7103456Z           "first_input_to_last_output_cycles": 33461,
+2026-09-28T19:10:55.7103685Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7103870Z         },
+2026-09-28T19:10:55.7104011Z         {
+2026-09-28T19:10:55.7104155Z           "frame": 1,
+2026-09-28T19:10:55.7104318Z           "input_first_cycle": 364,
+2026-09-28T19:10:55.7104653Z           "input_last_cycle": 725,
+2026-09-28T19:10:55.7104846Z           "output_first_cycle": 40281,
+2026-09-28T19:10:55.7105154Z           "output_last_cycle": 48535,
+2026-09-28T19:10:55.7105365Z           "first_input_to_last_output_cycles": 48171,
+2026-09-28T19:10:55.7105580Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7105758Z         },
+2026-09-28T19:10:55.7105893Z         {
+2026-09-28T19:10:55.7106027Z           "frame": 2,
+2026-09-28T19:10:55.7106185Z           "input_first_cycle": 726,
+2026-09-28T19:10:55.7106379Z           "input_last_cycle": 9954,
+2026-09-28T19:10:55.7106570Z           "output_first_cycle": 55353,
+2026-09-28T19:10:55.7106764Z           "output_last_cycle": 63607,
+2026-09-28T19:10:55.7106972Z           "first_input_to_last_output_cycles": 62881,
+2026-09-28T19:10:55.7107191Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7107369Z         },
+2026-09-28T19:10:55.7107505Z         {
+2026-09-28T19:10:55.7107642Z           "frame": 3,
+2026-09-28T19:10:55.7107812Z           "input_first_cycle": 9955,
+2026-09-28T19:10:55.7108006Z           "input_last_cycle": 25028,
+2026-09-28T19:10:55.7108199Z           "output_first_cycle": 70425,
+2026-09-28T19:10:55.7108397Z           "output_last_cycle": 78678,
+2026-09-28T19:10:55.7108605Z           "first_input_to_last_output_cycles": 68723,
+2026-09-28T19:10:55.7108816Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7108991Z         },
+2026-09-28T19:10:55.7109124Z         {
+2026-09-28T19:10:55.7109258Z           "frame": 4,
+2026-09-28T19:10:55.7109417Z           "input_first_cycle": 25029,
+2026-09-28T19:10:55.7109604Z           "input_last_cycle": 40098,
+2026-09-28T19:10:55.7109799Z           "output_first_cycle": 85497,
+2026-09-28T19:10:55.7109999Z           "output_last_cycle": 93750,
+2026-09-28T19:10:55.7110213Z           "first_input_to_last_output_cycles": 68721,
+2026-09-28T19:10:55.7126158Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7126488Z         },
+2026-09-28T19:10:55.7126828Z         {
+2026-09-28T19:10:55.7127019Z           "frame": 5,
+2026-09-28T19:10:55.7127249Z           "input_first_cycle": 40099,
+2026-09-28T19:10:55.7127536Z           "input_last_cycle": 55170,
+2026-09-28T19:10:55.7127813Z           "output_first_cycle": 100569,
+2026-09-28T19:10:55.7128096Z           "output_last_cycle": 108822,
+2026-09-28T19:10:55.7128350Z           "first_input_to_last_output_cycles": 68723,
+2026-09-28T19:10:55.7128584Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7128774Z         },
+2026-09-28T19:10:55.7128917Z         {
+2026-09-28T19:10:55.7129062Z           "frame": 6,
+2026-09-28T19:10:55.7129232Z           "input_first_cycle": 55171,
+2026-09-28T19:10:55.7129436Z           "input_last_cycle": 70242,
+2026-09-28T19:10:55.7129639Z           "output_first_cycle": 115641,
+2026-09-28T19:10:55.7129845Z           "output_last_cycle": 123895,
+2026-09-28T19:10:55.7130063Z           "first_input_to_last_output_cycles": 68724,
+2026-09-28T19:10:55.7130288Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7130479Z         },
+2026-09-28T19:10:55.7130621Z         {
+2026-09-28T19:10:55.7130765Z           "frame": 7,
+2026-09-28T19:10:55.7130935Z           "input_first_cycle": 70243,
+2026-09-28T19:10:55.7131135Z           "input_last_cycle": 85314,
+2026-09-28T19:10:55.7131327Z           "output_first_cycle": 130714,
+2026-09-28T19:10:55.7131523Z           "output_last_cycle": 138968,
+2026-09-28T19:10:55.7131740Z           "first_input_to_last_output_cycles": 68725,
+2026-09-28T19:10:55.7131970Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7132152Z         },
+2026-09-28T19:10:55.7132288Z         {
+2026-09-28T19:10:55.7132429Z           "frame": 8,
+2026-09-28T19:10:55.7132592Z           "input_first_cycle": 85315,
+2026-09-28T19:10:55.7132783Z           "input_last_cycle": 100388,
+2026-09-28T19:10:55.7132977Z           "output_first_cycle": 145785,
+2026-09-28T19:10:55.7133179Z           "output_last_cycle": 154039,
+2026-09-28T19:10:55.7133389Z           "first_input_to_last_output_cycles": 68724,
+2026-09-28T19:10:55.7133603Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7133906Z         },
+2026-09-28T19:10:55.7134041Z         {
+2026-09-28T19:10:55.7134175Z           "frame": 9,
+2026-09-28T19:10:55.7134523Z           "input_first_cycle": 100389,
+2026-09-28T19:10:55.7134719Z           "input_last_cycle": 115458,
+2026-09-28T19:10:55.7134918Z           "output_first_cycle": 160857,
+2026-09-28T19:10:55.7135117Z           "output_last_cycle": 169110,
+2026-09-28T19:10:55.7135339Z           "first_input_to_last_output_cycles": 68721,
+2026-09-28T19:10:55.7135565Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7135746Z         },
+2026-09-28T19:10:55.7135889Z         {
+2026-09-28T19:10:55.7136031Z           "frame": 10,
+2026-09-28T19:10:55.7136199Z           "input_first_cycle": 115459,
+2026-09-28T19:10:55.7136394Z           "input_last_cycle": 130530,
+2026-09-28T19:10:55.7136584Z           "output_first_cycle": 175929,
+2026-09-28T19:10:55.7136783Z           "output_last_cycle": 184182,
+2026-09-28T19:10:55.7136990Z           "first_input_to_last_output_cycles": 68723,
+2026-09-28T19:10:55.7137210Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7137389Z         },
+2026-09-28T19:10:55.7137523Z         {
+2026-09-28T19:10:55.7137658Z           "frame": 11,
+2026-09-28T19:10:55.7137822Z           "input_first_cycle": 130531,
+2026-09-28T19:10:55.7138012Z           "input_last_cycle": 145602,
+2026-09-28T19:10:55.7138202Z           "output_first_cycle": 191001,
+2026-09-28T19:10:55.7138391Z           "output_last_cycle": 199255,
+2026-09-28T19:10:55.7138595Z           "first_input_to_last_output_cycles": 68724,
+2026-09-28T19:10:55.7138805Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7138982Z         },
+2026-09-28T19:10:55.7139115Z         {
+2026-09-28T19:10:55.7139254Z           "frame": 12,
+2026-09-28T19:10:55.7139416Z           "input_first_cycle": 145603,
+2026-09-28T19:10:55.7139598Z           "input_last_cycle": 160674,
+2026-09-28T19:10:55.7139901Z           "output_first_cycle": 206073,
+2026-09-28T19:10:55.7140098Z           "output_last_cycle": 214327,
+2026-09-28T19:10:55.7140304Z           "first_input_to_last_output_cycles": 68724,
+2026-09-28T19:10:55.7140519Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7140693Z         },
+2026-09-28T19:10:55.7140826Z         {
+2026-09-28T19:10:55.7140967Z           "frame": 13,
+2026-09-28T19:10:55.7141134Z           "input_first_cycle": 160675,
+2026-09-28T19:10:55.7141330Z           "input_last_cycle": 175748,
+2026-09-28T19:10:55.7141518Z           "output_first_cycle": 221145,
+2026-09-28T19:10:55.7141708Z           "output_last_cycle": 229399,
+2026-09-28T19:10:55.7141911Z           "first_input_to_last_output_cycles": 68724,
+2026-09-28T19:10:55.7142122Z           "sink_pause_cycles": 8192
+2026-09-28T19:10:55.7142295Z         }
+2026-09-28T19:10:55.7142429Z       ],
+2026-09-28T19:10:55.7142581Z       "parallelism_divisor": 2,
+2026-09-28T19:10:55.7142768Z       "mode": "stress",
+2026-09-28T19:10:55.7142946Z       "compiler_warnings": [
+2026-09-28T19:10:55.7143179Z         "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+2026-09-28T19:10:55.7143471Z         "Warning: Unknown position: (G0024)",
+2026-09-28T19:10:55.7143725Z         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+2026-09-28T19:10:55.7143994Z         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+2026-09-28T19:10:55.7144223Z       ],
+2026-09-28T19:10:55.7144666Z       "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac"
+2026-09-28T19:10:55.7145014Z     },
+2026-09-28T19:10:55.7145152Z     {
+2026-09-28T19:10:55.7145294Z       "status": "pass",
+2026-09-28T19:10:55.7145505Z       "evidence": "generated-Verilog simulation (Icarus)",
+2026-09-28T19:10:55.7145748Z       "frames_checked": 14,
+2026-09-28T19:10:55.7145942Z       "scalar_outputs_checked": 798,
+2026-09-28T19:10:55.7146138Z       "input_words": 4480,
+2026-09-28T19:10:55.7146311Z       "finish_cycle": 223206,
+2026-09-28T19:10:55.7146509Z       "post_completion_drain_cycles": 2048,
+2026-09-28T19:10:55.7146725Z       "source_bubbles": "none inserted",
+2026-09-28T19:10:55.7147041Z       "sink_stalls": "none inserted",
+2026-09-28T19:10:55.7147392Z       "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+2026-09-28T19:10:55.7147762Z       "output_frame_start_intervals_cycles": [
+2026-09-28T19:10:55.7147970Z         15072,
+2026-09-28T19:10:55.7148109Z         15072,
+2026-09-28T19:10:55.7148250Z         15072,
+2026-09-28T19:10:55.7148386Z         15072,
+2026-09-28T19:10:55.7148522Z         15072,
+2026-09-28T19:10:55.7148659Z         15072,
+2026-09-28T19:10:55.7148795Z         15072,
+2026-09-28T19:10:55.7148930Z         15072,
+2026-09-28T19:10:55.7149066Z         15072,
+2026-09-28T19:10:55.7149201Z         15072,
+2026-09-28T19:10:55.7149337Z         15072,
+2026-09-28T19:10:55.7149473Z         15072,
+2026-09-28T19:10:55.7149611Z         15072
+2026-09-28T19:10:55.7149751Z       ],
+2026-09-28T19:10:55.7149919Z       "repeated_frame_pairs_checked": [
+2026-09-28T19:10:55.7150115Z         [
+2026-09-28T19:10:55.7150251Z           0,
+2026-09-28T19:10:55.7150393Z           12
+2026-09-28T19:10:55.7150530Z         ],
+2026-09-28T19:10:55.7150665Z         [
+2026-09-28T19:10:55.7150797Z           0,
+2026-09-28T19:10:55.7150937Z           13
+2026-09-28T19:10:55.7151073Z         ]
+2026-09-28T19:10:55.7151211Z       ],
+2026-09-28T19:10:55.7151476Z       "input_sha256": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+2026-09-28T19:10:55.7151915Z       "expected_sha256": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+2026-09-28T19:10:55.7152348Z       "log_sha256": "b4eebe3ca3f5bc21281d3b4d488bec2cc36478926fbb3a38b44ee12a96e648c8",
+2026-09-28T19:10:55.7152673Z       "frames": [
+2026-09-28T19:10:55.7152825Z         {
+2026-09-28T19:10:55.7152966Z           "frame": 0,
+2026-09-28T19:10:55.7153138Z           "input_first_cycle": 0,
+2026-09-28T19:10:55.7153335Z           "input_last_cycle": 319,
+2026-09-28T19:10:55.7153653Z           "output_first_cycle": 25165,
+2026-09-28T19:10:55.7153860Z           "output_last_cycle": 25221,
+2026-09-28T19:10:55.7154083Z           "first_input_to_last_output_cycles": 25221
+2026-09-28T19:10:55.7154294Z         },
+2026-09-28T19:10:55.7154574Z         {
+2026-09-28T19:10:55.7154714Z           "frame": 1,
+2026-09-28T19:10:55.7154880Z           "input_first_cycle": 320,
+2026-09-28T19:10:55.7155073Z           "input_last_cycle": 639,
+2026-09-28T19:10:55.7155264Z           "output_first_cycle": 40237,
+2026-09-28T19:10:55.7155460Z           "output_last_cycle": 40293,
+2026-09-28T19:10:55.7155667Z           "first_input_to_last_output_cycles": 39973
+2026-09-28T19:10:55.7155871Z         },
+2026-09-28T19:10:55.7156006Z         {
+2026-09-28T19:10:55.7156142Z           "frame": 2,
+2026-09-28T19:10:55.7156302Z           "input_first_cycle": 640,
+2026-09-28T19:10:55.7156490Z           "input_last_cycle": 9872,
+2026-09-28T19:10:55.7156687Z           "output_first_cycle": 55309,
+2026-09-28T19:10:55.7156884Z           "output_last_cycle": 55365,
+2026-09-28T19:10:55.7157087Z           "first_input_to_last_output_cycles": 54725
+2026-09-28T19:10:55.7157291Z         },
+2026-09-28T19:10:55.7157422Z         {
+2026-09-28T19:10:55.7157555Z           "frame": 3,
+2026-09-28T19:10:55.7157716Z           "input_first_cycle": 9873,
+2026-09-28T19:10:55.7157907Z           "input_last_cycle": 24944,
+2026-09-28T19:10:55.7158096Z           "output_first_cycle": 70381,
+2026-09-28T19:10:55.7158294Z           "output_last_cycle": 70437,
+2026-09-28T19:10:55.7158495Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7158697Z         },
+2026-09-28T19:10:55.7158830Z         {
+2026-09-28T19:10:55.7158964Z           "frame": 4,
+2026-09-28T19:10:55.7159130Z           "input_first_cycle": 24945,
+2026-09-28T19:10:55.7159318Z           "input_last_cycle": 40016,
+2026-09-28T19:10:55.7159504Z           "output_first_cycle": 85453,
+2026-09-28T19:10:55.7159691Z           "output_last_cycle": 85509,
+2026-09-28T19:10:55.7159895Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7160094Z         },
+2026-09-28T19:10:55.7160351Z         {
+2026-09-28T19:10:55.7160486Z           "frame": 5,
+2026-09-28T19:10:55.7160645Z           "input_first_cycle": 40017,
+2026-09-28T19:10:55.7160831Z           "input_last_cycle": 55088,
+2026-09-28T19:10:55.7161037Z           "output_first_cycle": 100525,
+2026-09-28T19:10:55.7161241Z           "output_last_cycle": 100581,
+2026-09-28T19:10:55.7161447Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7161667Z         },
+2026-09-28T19:10:55.7161800Z         {
+2026-09-28T19:10:55.7161936Z           "frame": 6,
+2026-09-28T19:10:55.7162096Z           "input_first_cycle": 55089,
+2026-09-28T19:10:55.7162288Z           "input_last_cycle": 70160,
+2026-09-28T19:10:55.7162478Z           "output_first_cycle": 115597,
+2026-09-28T19:10:55.7162671Z           "output_last_cycle": 115653,
+2026-09-28T19:10:55.7162879Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7163077Z         },
+2026-09-28T19:10:55.7163210Z         {
+2026-09-28T19:10:55.7163349Z           "frame": 7,
+2026-09-28T19:10:55.7163506Z           "input_first_cycle": 70161,
+2026-09-28T19:10:55.7163694Z           "input_last_cycle": 85232,
+2026-09-28T19:10:55.7163879Z           "output_first_cycle": 130669,
+2026-09-28T19:10:55.7164075Z           "output_last_cycle": 130725,
+2026-09-28T19:10:55.7164283Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7164692Z         },
+2026-09-28T19:10:55.7164851Z         {
+2026-09-28T19:10:55.7164988Z           "frame": 8,
+2026-09-28T19:10:55.7165150Z           "input_first_cycle": 85233,
+2026-09-28T19:10:55.7165344Z           "input_last_cycle": 100304,
+2026-09-28T19:10:55.7165533Z           "output_first_cycle": 145741,
+2026-09-28T19:10:55.7165725Z           "output_last_cycle": 145797,
+2026-09-28T19:10:55.7165929Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7166127Z         },
+2026-09-28T19:10:55.7166372Z         {
+2026-09-28T19:10:55.7166519Z           "frame": 9,
+2026-09-28T19:10:55.7166682Z           "input_first_cycle": 100305,
+2026-09-28T19:10:55.7166872Z           "input_last_cycle": 115376,
+2026-09-28T19:10:55.7167060Z           "output_first_cycle": 160813,
+2026-09-28T19:10:55.7167250Z           "output_last_cycle": 160869,
+2026-09-28T19:10:55.7167452Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7167651Z         },
+2026-09-28T19:10:55.7167781Z         {
+2026-09-28T19:10:55.7167919Z           "frame": 10,
+2026-09-28T19:10:55.7168084Z           "input_first_cycle": 115377,
+2026-09-28T19:10:55.7168282Z           "input_last_cycle": 130448,
+2026-09-28T19:10:55.7168478Z           "output_first_cycle": 175885,
+2026-09-28T19:10:55.7168671Z           "output_last_cycle": 175941,
+2026-09-28T19:10:55.7168874Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7169075Z         },
+2026-09-28T19:10:55.7169206Z         {
+2026-09-28T19:10:55.7169345Z           "frame": 11,
+2026-09-28T19:10:55.7169508Z           "input_first_cycle": 130449,
+2026-09-28T19:10:55.7169701Z           "input_last_cycle": 145520,
+2026-09-28T19:10:55.7169889Z           "output_first_cycle": 190957,
+2026-09-28T19:10:55.7170081Z           "output_last_cycle": 191013,
+2026-09-28T19:10:55.7170291Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7170491Z         },
+2026-09-28T19:10:55.7170622Z         {
+2026-09-28T19:10:55.7170754Z           "frame": 12,
+2026-09-28T19:10:55.7170915Z           "input_first_cycle": 145521,
+2026-09-28T19:10:55.7171103Z           "input_last_cycle": 160592,
+2026-09-28T19:10:55.7171293Z           "output_first_cycle": 206029,
+2026-09-28T19:10:55.7171483Z           "output_last_cycle": 206085,
+2026-09-28T19:10:55.7171686Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7171886Z         },
+2026-09-28T19:10:55.7172018Z         {
+2026-09-28T19:10:55.7172154Z           "frame": 13,
+2026-09-28T19:10:55.7172325Z           "input_first_cycle": 160593,
+2026-09-28T19:10:55.7172516Z           "input_last_cycle": 175664,
+2026-09-28T19:10:55.7172811Z           "output_first_cycle": 221101,
+2026-09-28T19:10:55.7173001Z           "output_last_cycle": 221157,
+2026-09-28T19:10:55.7173202Z           "first_input_to_last_output_cycles": 60564
+2026-09-28T19:10:55.7173401Z         }
+2026-09-28T19:10:55.7173531Z       ],
+2026-09-28T19:10:55.7173681Z       "parallelism_divisor": 2,
+2026-09-28T19:10:55.7173865Z       "mode": "kernel",
+2026-09-28T19:10:55.7174037Z       "compiler_warnings": [
+2026-09-28T19:10:55.7174278Z         "Warning: \"Prelude.bs\", line 2862, column 0: (G0024)",
+2026-09-28T19:10:55.7174687Z         "Warning: Unknown position: (G0024)",
+2026-09-28T19:10:55.7174933Z         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)",
+2026-09-28T19:10:55.7175206Z         "Warning: \"Prelude.bs\", line 586, column 27: (G0024)"
+2026-09-28T19:10:55.7175434Z       ],
+2026-09-28T19:10:55.7175732Z       "configured_types_sha256": "ba4cff7fceeb4a63ac068c67a73ad5d6fd0203f7096f21c44a93e22779c0ceac"
+2026-09-28T19:10:55.7176078Z     }
+2026-09-28T19:10:55.7176213Z   ]
+2026-09-28T19:10:55.7176378Z }
+2026-09-28T19:10:55.7232349Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-09-28T19:10:55.7232674Z with:
+2026-09-28T19:10:55.7232949Z   name: baseline-functional-divisor-2-7b0a3df41e864138489a43a97fb92233844b4c19
+2026-09-28T19:10:55.7233312Z   path: /home/runner/work/_temp/sway-verification/
+2026-09-28T19:10:55.7233554Z   if-no-files-found: warn
+2026-09-28T19:10:55.7233740Z   compression-level: 6
+2026-09-28T19:10:55.7233922Z   overwrite: false
+2026-09-28T19:10:55.7234089Z   include-hidden-files: false
+2026-09-28T19:10:55.7234278Z ##[endgroup]
+2026-09-28T19:10:55.8542033Z (node:2853) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-09-28T19:10:55.8542696Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-09-28T19:10:55.8609919Z With the provided path, there will be 16 files uploaded
+2026-09-28T19:10:55.8614601Z Artifact name is valid!
+2026-09-28T19:10:55.8615024Z Root directory input is valid!
+2026-09-28T19:10:56.1856449Z Beginning upload of artifact content to blob storage
+2026-09-28T19:10:56.2187979Z (node:2853) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-09-28T19:10:56.5327876Z Uploaded bytes 43171
+2026-09-28T19:10:56.5946313Z Finished uploading artifact content to blob storage!
+2026-09-28T19:10:56.5946819Z SHA256 digest of uploaded artifact zip is 2fe7895a078b8b38186f23dcb34ca8d1d85b67535d56857b8c961a254f5d05eb
+2026-09-28T19:10:56.5948336Z Finalizing artifact upload
+2026-09-28T19:10:56.8635893Z Artifact baseline-functional-divisor-2-7b0a3df41e864138489a43a97fb92233844b4c19.zip successfully finalized. Artifact ID 10990624240
+2026-09-28T19:10:56.8636935Z Artifact baseline-functional-divisor-2-7b0a3df41e864138489a43a97fb92233844b4c19 has been successfully uploaded! Final size is 43171 bytes. Artifact ID is 10990624240
+2026-09-28T19:10:56.8641932Z Artifact download URL: https://github.com/SeMinLim/sway/actions/runs/36469410630/artifacts/10990624240
+2026-09-28T19:10:56.8823559Z Post job cleanup.
+2026-09-28T19:10:56.9537178Z [command]/usr/bin/git version
+2026-09-28T19:10:56.9575174Z git version 2.55.0
+2026-09-28T19:10:56.9608873Z Temporarily overriding HOME='/home/runner/work/_temp/4e99e412-6080-4cd9-8bf7-67006a0a8ed9' before making global git config changes
+2026-09-28T19:10:56.9609587Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-28T19:10:56.9614314Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sway/sway
+2026-09-28T19:10:56.9649241Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-28T19:10:56.9679870Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-28T19:10:56.9900912Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-28T19:10:56.9933694Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-28T19:10:57.0149182Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-28T19:10:57.0182101Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-28T19:10:57.0533759Z Cleaning up orphan processes
+2026-09-28T19:10:57.0830368Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

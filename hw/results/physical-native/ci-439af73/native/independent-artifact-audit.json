@@ -1,0 +1,61 @@
+{
+  "artifact": {
+    "api_digest_verified": true,
+    "bytes": 292255,
+    "id": 10991863026,
+    "sha256": "6832a21cb59bea35165f37b0232fecf89def0982b0689cc38421c3b0af0e3e84"
+  },
+  "backends_equal": true,
+  "candidate_commit": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+  "ci_run_id": 36472552335,
+  "final_cycle": 403,
+  "first_product_latency_cycles": 4,
+  "generated_rtl_sha256": "2fa88a0477d6ed371e4341fe29a26a9ebfbee9526be37ba8f71c7a0f610583a6",
+  "native_job_id": 109098154180,
+  "native_report_sha256": "08d187b09e151b68e73aa93739013f30630d1f9c0a987274271ec5371ffaf4f7",
+  "operand_assignments": [
+    "assign test_multiplier_dsp$dataax = test_vectorsR$D_OUT_1[71:54] ;",
+    "assign test_multiplier_dsp$dataay = test_vectorsR$D_OUT_1[53:36] ;"
+  ],
+  "operand_dependency_cones": {
+    "test_multiplier_dsp$dataax": {
+      "assignments": {
+        "test_multiplier_dsp$dataax": "test_vectorsR$D_OUT_1[71:54] "
+      },
+      "signals": [
+        "test_multiplier_dsp$dataax",
+        "test_vectorsR$D_OUT_1"
+      ],
+      "write_presence_dependencies": []
+    },
+    "test_multiplier_dsp$dataay": {
+      "assignments": {
+        "test_multiplier_dsp$dataay": "test_vectorsR$D_OUT_1[53:36] "
+      },
+      "signals": [
+        "test_multiplier_dsp$dataay",
+        "test_vectorsR$D_OUT_1"
+      ],
+      "write_presence_dependencies": []
+    }
+  },
+  "operand_ports": [
+    ".dataax(test_multiplier_dsp$dataax)",
+    ".dataay(test_multiplier_dsp$dataay)"
+  ],
+  "operand_whas_signals": [
+    "test_multiplier_aWire$whas"
+  ],
+  "products_per_backend": 256,
+  "retained_write_presence_uses": [
+    "wire test_drainOn$whas, test_multiplier_aWire$whas;",
+    "assign test_multiplier_aWire$whas =",
+    "assign test_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+    "assign test_multiplier_acceptedCnt$EN = test_multiplier_aWire$whas ;",
+    "{ test_multiplier_validR[1:0], test_multiplier_aWire$whas } ;",
+    "assign test_expectedQ$ENQ = test_multiplier_aWire$whas ;"
+  ],
+  "scope": "Downloaded native ZIP digest, candidate source and snapshot hashes verified; actual generated RTL operand data cones inspected including dollar identifiers. Presence signals outside those cones are retained and reported. Functional report equality checked; no physical timing claim.",
+  "source_files_verified": 4,
+  "status": "pass"
+}

@@ -28,6 +28,13 @@ $(error blueYosys not found at $(ROOTDIR). Set ROOTDIR=/absolute/path/to/blueyos
 endif
 include $(ROOTDIR)/build.mk
 
+# Keep the normal build and the physical verification runner on the same flow.
+BOARD_PNR_FLAGS += --router router1 --speed 6 --seed 1 --freq 100
+BOARD_PNR_FLAGS += --pre-place "$(PROJECT_DIR)/reference/place_core_reset.py"
+
+# The BSC Icarus link script reads this environment variable for local primitives.
+export BSC_VSIM_FLAGS += -y $(PROJECT_DIR)/rtl
+
 # Icarus executables embed their installation-time vvp path. Invoke the runtime
 # from PATH so copied projects also work with user-local tool installations.
 ifeq ($(SIM_BACKEND),iverilog)
@@ -45,5 +52,16 @@ endif
 runtime-rtl: verilog
 	test -f "$(BSC_RUNTIME_DIR)/RegFile.v"
 	test -f "$(BSC_RUNTIME_DIR)/ResetInverter.v"
-	cp "$(BSC_RUNTIME_DIR)/RegFile.v" "$(BSC_RUNTIME_DIR)/ResetInverter.v" "$(BUILD_DIR)/"
+	cp "$(BSC_RUNTIME_DIR)/RegFile.v" "$(BSC_RUNTIME_DIR)/ResetInverter.v" "$(BSC_RUNTIME_DIR)/FIFOL1.v" "$(BUILD_DIR)/"
+	cp "$(PROJECT_DIR)/rtl/"*.v "$(BUILD_DIR)/"
+	mkdir -p "$(BUILD_DIR)/generated"
+	cp -R "$(PROJECT_DIR)/generated/linear_rom" "$(BUILD_DIR)/generated/"
 netlist: runtime-rtl
+
+# ECP5's eight PFU FFs share LSR. Merge identical reset-only LUTs after mapping;
+# arbitrary LUT merging would invalidate dedicated PFUMX/L6MUX21 structures.
+.PHONY: physical-netlist
+physical-netlist: netlist
+	$(PYTHON) "$(PROJECT_DIR)/reference/merge_reset_controls.py" "$(JSON_NETLIST)" --report "$(BUILD_DIR)/reset_merge.json"
+
+pnr: physical-netlist

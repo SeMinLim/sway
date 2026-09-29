@@ -1,0 +1,128 @@
+=== Generated schedule for mkTbLinearSelect ===
+
+Rule schedule
+-------------
+Rule: dut_engine_multipliers_0_advance
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: dut_engine_multipliers_0_capture
+Predicate: dut_engine_multipliers_0_resultQ.i_notFull &&
+	   dut_engine_multipliers_0_validR[2]
+Blocking rules: (none)
+ 
+Rule: dut_engine_process1
+Predicate: dut_engine_inputQ.i_notEmpty && (! dut_engine_activeOn)
+Blocking rules: (none)
+ 
+Rule: dut_engine_process2
+Predicate: dut_engine_selectQ.i_notFull &&
+	   dut_engine_activeOn && dut_engine_issueOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process2_1
+Predicate: dut_engine_selectQ.i_notEmpty && dut_engine_readQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process2_2
+Predicate: dut_engine_readQ.i_notEmpty && dut_engine_operandQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process2_3
+Predicate: ((dut_engine_multipliers_0_acceptedCnt -
+	     dut_engine_multipliers_0_consumedCnt) <
+	    4'd8) &&
+	   dut_engine_operandQ.i_notEmpty &&
+	   dut_engine_productMetaQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process2_4
+Predicate: dut_engine_productMetaQ.i_notEmpty &&
+	   dut_engine_multipliers_0_resultQ.i_notEmpty &&
+	   dut_engine_productQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process3
+Predicate: dut_engine_productQ.i_notEmpty &&
+	   dut_engine_activeOn && (! dut_engine_productQ.first[0])
+Blocking rules: (none)
+ 
+Rule: dut_engine_process3Last
+Predicate: dut_engine_productQ.i_notEmpty &&
+	   dut_engine_sumQ.i_notFull && dut_engine_rowStartQ.i_notFull &&
+	   dut_engine_activeOn && (! dut_engine_issueOn) &&
+	   dut_engine_productQ.first[0]
+Blocking rules: (none)
+ 
+Rule: dut_engine_processRestart
+Predicate: dut_engine_rowStartQ.i_notEmpty &&
+	   dut_engine_activeOn && (! dut_engine_issueOn)
+Blocking rules: (none)
+ 
+Rule: dut_engine_process4
+Predicate: dut_engine_sumQ.i_notEmpty && dut_engine_affineQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: dut_engine_process4_2
+Predicate: dut_engine_affineQ.i_notEmpty && dut_engine_outputQ.i_notFull &&
+	   dut_engine_activeOn
+Blocking rules: (none)
+ 
+Rule: tick
+Predicate: True
+Blocking rules: (none)
+ 
+Rule: watchdog
+Predicate: ! (cycleCnt <= 32'd100000)
+Blocking rules: (none)
+ 
+Rule: send
+Predicate: dut_engine_inputQ.i_notFull &&
+	   (sentCnt < 4'd4) && (! ((cycleCnt % 32'd7) == 32'd0))
+Blocking rules: (none)
+ 
+Rule: receive
+Predicate: dut_engine_outputQ.i_notEmpty &&
+	   (receivedCnt < 4'd4) && (! (cycleCnt < 32'd15000)) &&
+	   (! ((cycleCnt % 32'd31) <= 32'd7))
+Blocking rules: (none)
+ 
+Rule: trailing
+Predicate: dut_engine_outputQ.i_notEmpty && (receivedCnt == 4'd4)
+Blocking rules: (none)
+ 
+Rule: drain
+Predicate: (receivedCnt == 4'd4) && (drainCnt < 32'd1024)
+Blocking rules: (none)
+ 
+Rule: finish
+Predicate: (receivedCnt == 4'd4) && (drainCnt == 32'd1024)
+Blocking rules: (none)
+ 
+Logical execution order: watchdog,
+			 receive,
+			 trailing,
+			 drain,
+			 finish,
+			 send,
+			 tick,
+			 dut_engine_process1,
+			 dut_engine_process2_3,
+			 dut_engine_process2_2,
+			 dut_engine_process2_1,
+			 dut_engine_process2,
+			 dut_engine_process3,
+			 dut_engine_process3Last,
+			 dut_engine_process2_4,
+			 dut_engine_processRestart,
+			 dut_engine_process4,
+			 dut_engine_process4_2,
+			 dut_engine_multipliers_0_capture,
+			 dut_engine_multipliers_0_advance
+
+================================================

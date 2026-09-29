@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "audit_status": "pass",
+  "scope": "Source/build integration supplement only; physical CI 36506484774 remains authoritative and was in progress at review.",
+  "candidate_commit": "80fbfe4cdb635606c394f435b28c1102c9de5829",
+  "candidate_tree": "a41cd2f9d4025f72f62e0b9f3e0717192c58563c",
+  "preceding_candidate": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+  "prior_source_audit": {
+    "git_blob_sha": "fb60da3d90d6e82811cbb4f818010eeda3444097",
+    "candidate_commit": "439af73b51b9e3f7c01b820caf3d25de575eca1d",
+    "retained_findings": [
+      "Original main comparison and 17 dedicated affine engines",
+      "Numerical/model and coefficient proofs",
+      "Native multiplier, bank selection, reset and ordering review"
+    ],
+    "preservation": "Prior audit is historical evidence and is not relabeled as a test of this candidate.",
+    "path": "../ci-439af73/source-audit.json"
+  },
+  "source_identity": {
+    "production_files": 137,
+    "unchanged_production_files": 134,
+    "modified_production_files": 2,
+    "added_production_files": 1,
+    "all_production_worktree_bytes_match_commit": true,
+    "unchanged_model_rtl_parameter_and_software_files": 332,
+    "changed_files": [
+      {
+        "path": ".github/workflows/baseline-pnr-validation.yml",
+        "prior_git_blob_sha": "2265ae2028ce66d06a80db2a7d3c3739ebbd36ad",
+        "git_blob_sha": "7ce2d63497418953fb18b49c878bfdbea796d73d",
+        "sha256": "6edfd03dcdb03e7f12d52ce619f65becca109300bd328290d66444cc42b7b5a5"
+      },
+      {
+        "path": "hw/Makefile",
+        "prior_git_blob_sha": "6e2bc1b34479ce041a3889bd154a41dbc6b6ba15",
+        "git_blob_sha": "365ff40c5ec2345e9dd2824f62545a97706822b5",
+        "sha256": "bf383686197020f0a8721a2e217ad34813d9357768808b17b5fdbe8ef2e26ce3"
+      },
+      {
+        "path": "hw/reference/check_physical.py",
+        "prior_git_blob_sha": "55c1b79327bf885b6a8156f82507e6a5340592df",
+        "git_blob_sha": "daeb0f71da5015a8cea833b0db17c159aa1855fc",
+        "sha256": "95447f2639024d5c2b1a2951bfa0254c778e49a8451610df52693f090f41ee62"
+      },
+      {
+        "path": "hw/reference/place_core_reset.py",
+        "prior_git_blob_sha": null,
+        "git_blob_sha": "a22d255828274c1d5705e3b261c8dc0769daabb0",
+        "sha256": "dddc65411e5ac0e97d45c88305da62efccba400d68745009506b5add62d892d1"
+      }
+    ],
+    "finding": "All BSV, RTL, generated parameters and fixtures, frozen model, software, generator and integer model blobs are identical to 439. Only physical build/checker/hook plus the native evidence check workflow change."
+  },
+  "reset_placement": {
+    "target_cell": "clocks_coreReset.OUT_RST_TRELLIS_FF_Q",
+    "algorithm": "Nearest available type-compatible FF site to the actual FF-grid bounding-box center; stable squared-distance/x/y/z/name tie-break.",
+    "mutation": "Only target cell BEL attribute; no port, parameter, net, polarity, reset sequence, register or clock mutation.",
+    "existing_constraint": "Different existing BEL fails before mutation; identical BEL is retained.",
+    "legality": "The nextpnr heap placer binds the requested BEL at USER strength and checks full tile legality.",
+    "verification": "Exactly one hook log record must name the expected reset FF; placed JSON TRELLIS_FF NEXTPNR_BEL must equal selected BEL.",
+    "hash_scope": "Committed hook added to source_sha256, byte-identical copy saved in physical artifact, copy hash checked after placement/routing, hook and console record covered by evidence_sha256.",
+    "actual_selected_bel": null,
+    "actual_placement_verified": false
+  },
+  "build_integration": {
+    "normal_make_dry_run_status": "pass",
+    "normal_make_flags": "--85k --package CABGA381 --router router1 --speed 6 --seed 1 --freq 100 --pre-place \"/workspace/scratch/58b69de06207/sway/hw/reference/place_core_reset.py\"",
+    "normal_make_combined_prerequisites": [
+      "synth: bitstream",
+      "bitstream: pnr check-pack",
+      "physical-netlist: netlist",
+      "netlist: verilog check-yosys runtime-rtl",
+      "pnr: netlist check-pnr physical-netlist",
+      "runtime-rtl: verilog"
+    ],
+    "reset_merge_helper_unchanged": true,
+    "normal_flow": "runtime RTL/ROM copies before synthesis; reset merge after mapped netlist and before pnr; same pre-place hook on normal pnr.",
+    "strict_flow": "Same device/package/router/speed/seed/frequency flags and reset hook; place-only stage saves checkpoint; route-only stage restores packed clocks before routing.",
+    "route_clock_targets_mhz": {
+      "$glbnet$clocks_pll_clk_100mhz": 100,
+      "$glbnet$CLK_clk_25mhz$TRELLIS_IO_IN": 25
+    },
+    "route_clock_hook_sha256": "90f3c11177a3e6b2d068f32d805c0e38e2c038b897e5297e765fcf5816f0d289",
+    "route_clock_hook_function_unchanged": true,
+    "clock_acceptance_function_unchanged": true,
+    "new_timing_exceptions_or_global_reset_insertion": false,
+    "pinned_blueyosys_source_checks": [
+      {
+        "path": "build.mk",
+        "sha256": "7899a5aa8e35ad6896b12d564318cf613e8cc48e89b85ba6b75f3042de83d320",
+        "matches_439_physical_source_hash": true
+      },
+      {
+        "path": "boards/profiles.mk",
+        "sha256": "8b5c8dbb31ec272a10a156361818cb377a1eda3cf09e700ea222a71de4acf140",
+        "matches_439_physical_source_hash": true
+      },
+      {
+        "path": "boards/ulx3s/85f/board.mk",
+        "sha256": "742d4e323fd9cd0545051539b06d552d617aec6bd0930d4bb0b9316b100fc0ad",
+        "matches_439_physical_source_hash": true
+      },
+      {
+        "path": "boards/ulx3s/constraints/ulx3s.lpf",
+        "sha256": "93db29a950de4064ed124a09b8175ea9034bab8c6ef50f849167a42bd04c8bea",
+        "matches_439_physical_source_hash": true
+      }
+    ]
+  },
+  "tool_source_review": {
+    "nextpnr_commit": "1aea87ab50cd89ede712003ef9003acce534856d",
+    "sources": [
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/common/kernel/arch_pybindings_shared.h#L49",
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/common/place/placer_heap.cc#L462",
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/common/kernel/command.cc#L645",
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/common/kernel/basectx.cc#L182",
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/common/kernel/context.cc#L130",
+      "https://github.com/YosysHQ/nextpnr/blob/1aea87ab50cd89ede712003ef9003acce534856d/ecp5/lpf.cc#L87"
+    ],
+    "findings": [
+      "Python APIs return BEL-name strings and Loc coordinates; setAttr is the supported attribute setter.",
+      "BEL is the placement request; nextpnr serializes actual placement into NEXTPNR_BEL.",
+      "The unchanged LPF BLOCK RESETPATHS/ASYNCPATHS statements are accepted without timing-state changes by this pinned parser; the 439 report explicitly timed the failing reset path.",
+      "No DCCA/global reset was inserted: the pinned timing implementation would report zero distribution delay for ECP5 global nets. Ordinary routed reset timing remains in scope."
+    ]
+  },
+  "focused_unit_checks": {
+    "status": "pass",
+    "count": 15,
+    "report_sha256": "01251f875b8f29e9d01dfed791f09fc90fa8d3114ae37ef55f89c3d4a0c5a70c",
+    "scope": "Focused fake-context and placed-checkpoint unit checks; no physical timing claim"
+  },
+  "blocking_source_or_build_findings": [],
+  "remaining_acceptance": [
+    "Current candidate actual placement and strict routed 100 MHz / 25 MHz pass",
+    "Candidate-matched CI reports and independent artifact/source/bitstream verification"
+  ]
+}

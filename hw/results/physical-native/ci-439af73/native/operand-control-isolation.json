@@ -1,0 +1,11 @@
+{
+  "generated_rtl_sha256": "2fa88a0477d6ed371e4341fe29a26a9ebfbee9526be37ba8f71c7a0f610583a6",
+  "operand_assignments": [],
+  "operand_ports": [
+    ".dataax(test_multiplier_dsp$dataax)",
+    ".dataay(test_multiplier_dsp$dataay)"
+  ],
+  "operand_whas_signals": [],
+  "scope": "Generated focused Verilog contains no operand DWire write-presence mux; validity and functional behavior are checked separately by the three-backend regression.",
+  "status": "pass"
+}
