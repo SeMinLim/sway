@@ -242,6 +242,12 @@ def check(args, report):
             report["page_decoder_copies"]["audit_boundary"] = "mkTop.before_private_rom.json"
             report["private_rom"] = {"actual_cells": len(private_rom),
                                       "independent_transition_proof_required": "private_rom_audit.json"}
+    wre_copies = [name for name in cells if name.startswith("sway_wre_copy_block")]
+    if wre_copies:
+        if private_rom:
+            report["private_rom"]["audit_boundary"] = "mkTop.before_wre.json"
+        report["wre_copies"] = {"actual_cells": len(wre_copies),
+                                 "independent_transition_proof_required": "wre_audit.json"}
     patterns = address_patterns()
     binary_hashes = {}
     report["engines"] = []

@@ -89,6 +89,10 @@ physical-netlist: netlist
 	cp "$(JSON_NETLIST)" "$(BUILD_DIR)/mkTop.before_private_rom.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_private_rom.py" --before "$(BUILD_DIR)/mkTop.before_private_rom.json" --weights "$(PROJECT_DIR)/model/export/headHidden_weight.bin" --output "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/private_rom.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_private_rom.py" --before "$(BUILD_DIR)/mkTop.before_private_rom.json" --after "$(JSON_NETLIST)" --weights "$(PROJECT_DIR)/model/export/headHidden_weight.bin" --rtl "$(BUILD_DIR)/mkTop.v" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/private_rom_audit.json"
+	# Bound the gate-delay RAM write-enable fanout without changing RAM state.
+	cp "$(JSON_NETLIST)" "$(BUILD_DIR)/mkTop.before_wre.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/replicate_wre.py" --before "$(BUILD_DIR)/mkTop.before_wre.json" --output "$(JSON_NETLIST)" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/wre.json"
+	$(PYTHON) "$(PROJECT_DIR)/reference/check_wre.py" --before "$(BUILD_DIR)/mkTop.before_wre.json" --after "$(JSON_NETLIST)" --cells-sim "$(YOSYS_CELLS_SIM)" --report "$(BUILD_DIR)/wre_audit.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_lut_mapping.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --output "$(BUILD_DIR)/lut_mapping.json"
 	$(PYTHON) "$(PROJECT_DIR)/reference/check_mapped_weights.py" --netlist "$(JSON_NETLIST)" --rtl "$(BUILD_DIR)/mkTop.v" --export "$(PROJECT_DIR)/model/export" --cells-sim "$(YOSYS_CELLS_SIM)" --output "$(BUILD_DIR)/mapped_weights.json"
 

@@ -2,7 +2,7 @@ name: Hardware physical verification
 
 on:
   push:
-    branches: [main, 'codex/20260711-physical-validation']
+    branches: [main, 'codex/20260711-physical-validation', 'codex/20260711-wre-validation']
     paths:
       - 'hw/**'
       - '.github/workflows/hardware-physical.yml'
