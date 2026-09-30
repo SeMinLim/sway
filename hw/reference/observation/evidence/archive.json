@@ -1,0 +1,22 @@
+{
+  "filename": "Sway_Observation_Step4_56Frames_2026-09-30.tar.xz",
+  "size_bytes": 42650808,
+  "sha256": "5200e8749d2d2b8072009d5062d73c3949214073bb97cced0ba28dd081abc290",
+  "measurement_date": "2026-09-30",
+  "baseline_commit": "2c41cc08571e77a4c180e1b16b854bc1c9b434d2",
+  "members_verified": 184,
+  "scope": "Complete raw baseline measurement and analytical sharing certificate; supplied with the run report, outside Git",
+  "contents": [
+    "transactions.csv",
+    "stage_waits.csv",
+    "analysis/assignments.csv",
+    "analysis/analysis.json",
+    "validation.json",
+    "control.log",
+    "observed.log",
+    "generated RTL and baseline snapshot",
+    "observer and reproduction sources",
+    "Icarus prefix comparison and command records"
+  ],
+  "extraction": "tar -xJf Sway_Observation_Step4_56Frames_2026-09-30.tar.xz"
+}

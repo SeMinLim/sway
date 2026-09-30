@@ -1,0 +1,177 @@
+[
+  {
+    "id": 0,
+    "name": "dut_block0_bProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_bProjection_activeOn && !{top}.dut_block0_bProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_bProjection_outputQ$EMPTY_N && !{top}.dut_block0_bProjection_outputQ$DEQ"
+  },
+  {
+    "id": 1,
+    "name": "dut_block0_cProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_cProjection_activeOn && !{top}.dut_block0_cProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_cProjection_outputQ$EMPTY_N && !{top}.dut_block0_cProjection_outputQ$DEQ"
+  },
+  {
+    "id": 2,
+    "name": "dut_block0_deltaInputProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_deltaInputProjection_activeOn && !{top}.dut_block0_deltaInputProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_deltaInputProjection_outputQ$EMPTY_N && !{top}.dut_block0_deltaInputProjection_outputQ$DEQ"
+  },
+  {
+    "id": 3,
+    "name": "dut_block0_deltaProjection_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_deltaProjection_engine_activeOn && !{top}.dut_block0_deltaProjection_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_deltaProjection_engine_outputQ$EMPTY_N && !{top}.dut_block0_deltaProjection_engine_outputQ$DEQ"
+  },
+  {
+    "id": 4,
+    "name": "dut_block0_gateProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_gateProjection_activeOn && !{top}.dut_block0_gateProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_gateProjection_outputQ$EMPTY_N && !{top}.dut_block0_gateProjection_outputQ$DEQ"
+  },
+  {
+    "id": 5,
+    "name": "dut_block0_mainProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_mainProjection_activeOn && !{top}.dut_block0_mainProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_mainProjection_outputQ$EMPTY_N && !{top}.dut_block0_mainProjection_outputQ$DEQ"
+  },
+  {
+    "id": 6,
+    "name": "dut_block0_outputProjection_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block0_outputProjection_engine_activeOn && !{top}.dut_block0_outputProjection_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_outputProjection_engine_outputQ$EMPTY_N && !{top}.dut_block0_outputProjection_engine_outputQ$DEQ"
+  },
+  {
+    "id": 7,
+    "name": "dut_block1_bProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_bProjection_activeOn && !{top}.dut_block1_bProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_bProjection_outputQ$EMPTY_N && !{top}.dut_block1_bProjection_outputQ$DEQ"
+  },
+  {
+    "id": 8,
+    "name": "dut_block1_cProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_cProjection_activeOn && !{top}.dut_block1_cProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_cProjection_outputQ$EMPTY_N && !{top}.dut_block1_cProjection_outputQ$DEQ"
+  },
+  {
+    "id": 9,
+    "name": "dut_block1_deltaInputProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_deltaInputProjection_activeOn && !{top}.dut_block1_deltaInputProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_deltaInputProjection_outputQ$EMPTY_N && !{top}.dut_block1_deltaInputProjection_outputQ$DEQ"
+  },
+  {
+    "id": 10,
+    "name": "dut_block1_deltaProjection_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_deltaProjection_engine_activeOn && !{top}.dut_block1_deltaProjection_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_deltaProjection_engine_outputQ$EMPTY_N && !{top}.dut_block1_deltaProjection_engine_outputQ$DEQ"
+  },
+  {
+    "id": 11,
+    "name": "dut_block1_gateProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_gateProjection_activeOn && !{top}.dut_block1_gateProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_gateProjection_outputQ$EMPTY_N && !{top}.dut_block1_gateProjection_outputQ$DEQ"
+  },
+  {
+    "id": 12,
+    "name": "dut_block1_mainProjection",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_mainProjection_activeOn && !{top}.dut_block1_mainProjection_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_mainProjection_outputQ$EMPTY_N && !{top}.dut_block1_mainProjection_outputQ$DEQ"
+  },
+  {
+    "id": 13,
+    "name": "dut_block1_outputProjection_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_block1_outputProjection_engine_activeOn && !{top}.dut_block1_outputProjection_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_outputProjection_engine_outputQ$EMPTY_N && !{top}.dut_block1_outputProjection_engine_outputQ$DEQ"
+  },
+  {
+    "id": 14,
+    "name": "dut_embedding_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_embedding_engine_activeOn && !{top}.dut_embedding_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_embedding_engine_outputQ$EMPTY_N && !{top}.dut_embedding_engine_outputQ$DEQ"
+  },
+  {
+    "id": 15,
+    "name": "dut_headHidden_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_headHidden_engine_activeOn && !{top}.dut_headHidden_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_headHidden_engine_outputQ$EMPTY_N && !{top}.dut_headHidden_engine_outputQ$DEQ"
+  },
+  {
+    "id": 16,
+    "name": "dut_headOutput_engine",
+    "kind": "affine",
+    "input_wait_expression": "!{top}.dut_headOutput_engine_activeOn && !{top}.dut_headOutput_engine_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_headOutput_engine_outputQ$EMPTY_N && !{top}.dut_headOutput_engine_outputQ$DEQ"
+  },
+  {
+    "id": 17,
+    "name": "dut_block0_normalization",
+    "kind": "normalization",
+    "input_wait_expression": "!{top}.dut_block0_normalization_activeOn && !{top}.dut_block0_normalization_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_normalization_outputQ$EMPTY_N && !{top}.dut_block0_normalization_outputQ$DEQ"
+  },
+  {
+    "id": 18,
+    "name": "dut_block0_scan",
+    "kind": "scan",
+    "input_wait_expression": "!{top}.dut_block0_scan_processOn && !{top}.dut_block0_scan_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_scan_outputQ$EMPTY_N && !{top}.dut_block0_scan_outputQ$DEQ"
+  },
+  {
+    "id": 19,
+    "name": "dut_block0_convolution",
+    "kind": "convolution",
+    "input_wait_expression": "!{top}.dut_block0_convolutionOn && !{top}.dut_block0_mainQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block0_xQ$EMPTY_N && !{top}.dut_block0_xQ$DEQ"
+  },
+  {
+    "id": 20,
+    "name": "dut_block0_gate",
+    "kind": "gate",
+    "input_wait_expression": "!{top}.dut_block0_gatingOn && !({top}.dut_block0_scan_outputQ$EMPTY_N && {top}.dut_block0_gateDelayQ$EMPTY_N)",
+    "output_wait_expression": "{top}.dut_block0_gatingOn && {top}.dut_block0_gateProductsQ$EMPTY_N && ({top}.dut_block0_gateProductsQ$D_OUT[21:16] == 6'd39) && !{top}.dut_block0_outputProjection_engine_inputQ$FULL_N"
+  },
+  {
+    "id": 21,
+    "name": "dut_block1_normalization",
+    "kind": "normalization",
+    "input_wait_expression": "!{top}.dut_block1_normalization_activeOn && !{top}.dut_block1_normalization_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_normalization_outputQ$EMPTY_N && !{top}.dut_block1_normalization_outputQ$DEQ"
+  },
+  {
+    "id": 22,
+    "name": "dut_block1_scan",
+    "kind": "scan",
+    "input_wait_expression": "!{top}.dut_block1_scan_processOn && !{top}.dut_block1_scan_inputQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_scan_outputQ$EMPTY_N && !{top}.dut_block1_scan_outputQ$DEQ"
+  },
+  {
+    "id": 23,
+    "name": "dut_block1_convolution",
+    "kind": "convolution",
+    "input_wait_expression": "!{top}.dut_block1_convolutionOn && !{top}.dut_block1_mainQ$EMPTY_N",
+    "output_wait_expression": "{top}.dut_block1_xQ$EMPTY_N && !{top}.dut_block1_xQ$DEQ"
+  },
+  {
+    "id": 24,
+    "name": "dut_block1_gate",
+    "kind": "gate",
+    "input_wait_expression": "!{top}.dut_block1_gatingOn && !({top}.dut_block1_scan_outputQ$EMPTY_N && {top}.dut_block1_gateDelayQ$EMPTY_N)",
+    "output_wait_expression": "{top}.dut_block1_gatingOn && {top}.dut_block1_gateProductsQ$EMPTY_N && ({top}.dut_block1_gateProductsQ$D_OUT[21:16] == 6'd39) && !{top}.dut_block1_outputProjection_engine_inputQ$FULL_N"
+  }
+]

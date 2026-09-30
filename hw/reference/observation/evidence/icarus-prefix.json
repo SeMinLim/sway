@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "complete_sway_records": 62,
+  "all_records_match_verilator_prefix": true,
+  "output_count": 57,
+  "first_output_cycle": 35384,
+  "last_output_cycle": 35440,
+  "external_stop_cycle": 40000,
+  "runtime": {
+    "exit_code": 0,
+    "elapsed_seconds": 81.25877501600007,
+    "user_seconds": 81.034082,
+    "system_seconds": 0.182797,
+    "peak_rss_kib": 34100
+  },
+  "sha256": {
+    "/workspace/scratch/aec1ffc44acd/observation-icarus-check/prefix_top.v": "929e70f504932a3040e1bf06864a0914c4c49be1c07283c431df2d2af5178933",
+    "/workspace/scratch/aec1ffc44acd/observation-icarus-check/prefix.log": "09ba1416744a34584b89b737f8b6fdd8fb9429d6fdd70e7e55bd5ef7fbde0fd3",
+    "/workspace/scratch/aec1ffc44acd/observation-complete/control.log": "d1e6bce8c02f5955af7ae227e7c06c0fc37c07f3b2f0afc49e43cf5d710f3d10",
+    "/workspace/scratch/aec1ffc44acd/observation-complete/snapshot/build/mkTbSwayKernel.v": "f32ff0c625f6abc7c3a9de0015caa4ca89110bc55e9b003fec55206fc9d9dd2d",
+    "/workspace/scratch/aec1ffc44acd/observation-complete-pinned/control.log": "bd8e1346c9c9aa94ea98af7a3df71d7bd8a1661239ca0dd056ff1502bdba4d00"
+  },
+  "pinned_control_match": true
+}

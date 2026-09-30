@@ -1,0 +1,304 @@
+{
+  "status": "pass",
+  "kind": "baseline trace measurement and fixed-cycle scheduling analysis",
+  "frames_checked": 56,
+  "fixture_frames": 14,
+  "fixture_repetitions": 4,
+  "scalar_outputs_checked": 3192,
+  "control_observer_markers_identical": true,
+  "full_trace_finish_cycle": 1060049,
+  "post_completion_drain_cycles": 2048,
+  "measurement_window": {
+    "start_inclusive_cycle": 295672,
+    "end_exclusive_cycle": 816248,
+    "cycles": 520576,
+    "first_output_frame": 14,
+    "end_output_frame_exclusive": 42,
+    "output_intervals": 28
+  },
+  "baseline_multipliers": 45,
+  "compatible_operation": "signed 18 x 18 -> 36 multiplication",
+  "feasible_shared_multipliers": 25,
+  "reclaimable_multipliers": 20,
+  "reclaimable_fraction": 0.4444444444444444,
+  "stage_confined_total": 45,
+  "reclaimable_within_stages": 0,
+  "additional_cross_stage_reclaim": 20,
+  "allocation_by_stage": [
+    {
+      "stage_id": 0,
+      "name": "dut_block0_bProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 1,
+      "name": "dut_block0_cProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 2,
+      "name": "dut_block0_deltaInputProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 3,
+      "name": "dut_block0_deltaProjection_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 4,
+      "name": "dut_block0_gateProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 5,
+      "name": "dut_block0_mainProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 6,
+      "name": "dut_block0_outputProjection_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 7,
+      "name": "dut_block1_bProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 8,
+      "name": "dut_block1_cProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 9,
+      "name": "dut_block1_deltaInputProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 10,
+      "name": "dut_block1_deltaProjection_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 11,
+      "name": "dut_block1_gateProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 12,
+      "name": "dut_block1_mainProjection",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 13,
+      "name": "dut_block1_outputProjection_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 14,
+      "name": "dut_embedding_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 15,
+      "name": "dut_headHidden_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 16,
+      "name": "dut_headOutput_engine",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 17,
+      "name": "dut_block0_normalization",
+      "baseline_multipliers": 2,
+      "stage_confined_multipliers": 2,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 18,
+      "name": "dut_block0_scan",
+      "baseline_multipliers": 7,
+      "stage_confined_multipliers": 7,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 19,
+      "name": "dut_block0_convolution",
+      "baseline_multipliers": 4,
+      "stage_confined_multipliers": 4,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 20,
+      "name": "dut_block0_gate",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 21,
+      "name": "dut_block1_normalization",
+      "baseline_multipliers": 2,
+      "stage_confined_multipliers": 2,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 22,
+      "name": "dut_block1_scan",
+      "baseline_multipliers": 7,
+      "stage_confined_multipliers": 7,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 23,
+      "name": "dut_block1_convolution",
+      "baseline_multipliers": 4,
+      "stage_confined_multipliers": 4,
+      "reclaimed_within_stage": 0
+    },
+    {
+      "stage_id": 24,
+      "name": "dut_block1_gate",
+      "baseline_multipliers": 1,
+      "stage_confined_multipliers": 1,
+      "reclaimed_within_stage": 0
+    }
+  ],
+  "kernel_output_interval_cycles": 18592,
+  "scheduled_output_interval_cycles": 18592,
+  "output_frame_start_intervals_cycles": [
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592,
+    18592
+  ],
+  "transition_cost_cycles": 1,
+  "transition_policy": "one full idle cycle after every fully drained reservation, even when owner is unchanged",
+  "memory_and_dependencies": "All request/consume cycles and baseline SRAM accesses remain unchanged; no retiming, extra ports, or memory sharing",
+  "metadata": "Original stage metadata remains local and ordered; owner changes occur only with zero unconsumed products",
+  "wait_measurement": "Input starvation and output boundary backpressure are independent, non-additive predicates; neither implies all stage logic is idle",
+  "scope": "Feasible schedule for this complete four-repetition trace, not an optimal-resource claim or implemented shared RTL",
+  "physical_limits": "Shared mux/control/storage area and routed frequency are not measured; no net FPGA-area saving is claimed",
+  "arithmetic": {
+    "trace_rows": 12169920,
+    "products_checked": 10959200,
+    "mismatches": 0,
+    "latency_histogram_cycles": {
+      "4": 10959200
+    },
+    "all_requests_retired": true,
+    "fixed_graph_product_count_checked": 10959200
+  },
+  "schedule_certificate": {
+    "status": "pass",
+    "reservations_checked": 398552,
+    "reserved_transition_cycles": 398527,
+    "owner_changes": 295251,
+    "request_and_consumption_cycles_moved": 0,
+    "in_flight_operations_at_owner_change": 0
+  },
+  "source_sha256": {
+    "transactions": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "units": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+    "stages": "0d6cd6e03d6a0886504c29aa62f72e24361923d423745c65f9a90886d44075d4",
+    "waits": "03873c13979895e4c2119a5c98bf11e63faac2adb76a7432a625eb85eb9a1477",
+    "control": "bd8e1346c9c9aa94ea98af7a3df71d7bd8a1661239ca0dd056ff1502bdba4d00",
+    "observed": "bd8e1346c9c9aa94ea98af7a3df71d7bd8a1661239ca0dd056ff1502bdba4d00",
+    "inputhex": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "expectedhex": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "analyzer": "de56e84a1bb1073c87f425d6b87af999872a79bdf1961d71f5bafdbc9a9cc7ed"
+  },
+  "output_sha256": {
+    "assignments.csv": "e5147493258a416d079d15cc48cfdb92d1234eb762155d3964ce64fa84e8bf30",
+    "units.csv": "93b68b7ccfae0ab189b65bfd56f062c2cce4d1a4ab0dd5ebfc20e498ad05173b",
+    "stages.csv": "44bd21d20d9b98dc09071ffb7eafbef7ae5fca280de495cd092fa9e2fb2dc2d6"
+  }
+}

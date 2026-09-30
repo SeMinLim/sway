@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "compared_original": "/workspace/scratch/aec1ffc44acd/observation-complete",
+  "compared_final_runner": "/workspace/scratch/aec1ffc44acd/observation-complete-pinned",
+  "identical": {
+    "transactions.csv": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "stage_waits.csv": "03873c13979895e4c2119a5c98bf11e63faac2adb76a7432a625eb85eb9a1477",
+    "units.json": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+    "stages.json": "0d6cd6e03d6a0886504c29aa62f72e24361923d423745c65f9a90886d44075d4",
+    "observer.v": "5e8ef560576e337757c158f1714fa88179051ac2672b1d098b93481c2933e80c",
+    "control_top.v": "1d21ad41198274326566277c9403d5c8c3941035e06a3b9d6f95d5555bfa02ab",
+    "observed_top.v": "ba897c10b7ae20b3da53643e64f9b5ee73a52fa6d2ab7a3dbbf73a89673a91f0",
+    "control.log_SWAY_lines": 3305,
+    "observed.log_SWAY_lines": 3305
+  },
+  "measurement_source_pins": 5,
+  "compiled_input_pins": 109
+}

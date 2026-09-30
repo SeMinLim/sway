@@ -104,6 +104,13 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 | Core | 100 | 100.321 | PASS |
 | UART | 25 | 123.031 | PASS |
 
+### Observation
+
+* Unchanged divisor-4 baseline: **56 continuous frames / 3,192 outputs pass**; instrumentation preserves every output value and cycle.
+* Kernel output interval: **18,592 cycles/frame**, measured over 28 interior intervals with startup and drain excluded.
+* Trace-based scheduling supports **45 → 25 signed 18×18 multipliers**, reclaiming **20 (44.44%)** at the same output interval. Stage-confined sharing retains all 45; the reduction requires cross-stage sharing. Original request/result cycles and SRAM accesses remain fixed, with one idle transition cycle between drained reservations.
+* [Method, evidence, and reproduction](hw/reference/observation/README.md). This is a scheduling result; shared hardware area and routed timing have not been measured.
+
 ## Notes
 
 * Maintained by Se-Min Lim.
