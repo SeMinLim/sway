@@ -21,11 +21,10 @@
   * Sway uses the shared build flow provided by [blueYosys](https://github.com/SeMinLim/blueyosys).
   * Keep blueYosys at the same level as Sway, or pass `ROOTDIR=/absolute/path/to/blueyosys` to Make.
 * Environment Setup
-  * Operating System: Linux with GNU Make, GCC/G++, and Python 3.
-  * Compiler: Bluespec Compiler (BSC) with Bluesim.
-  * FPGA Tools: OSS CAD Suite **2026-07-11**, including Yosys **0.67+24 (`0e82bbefe`)**, nextpnr-ecp5 **0.10-82-g2b560ad0**, and ecppack **1.4-79-g56bb170**. The compatibility checks also retain the reviewed Yosys 0.33 primitive model.
-  * The reproduced RTL uses BSC **2025.07 (282e82e9)**.
-  * The verified build pins blueYosys to [`3663e87`](https://github.com/SeMinLim/blueyosys/commit/3663e87b88146c248919923ea952e025944ca3e0). Icarus Verilog is needed for the primitive-model regression tests.
+  * Linux with GNU Make, GCC/G++, and Python 3.
+  * Bluespec Compiler **2025.07** with Bluesim.
+  * OSS CAD Suite **2026-07-11**: Yosys **0.67+24**, nextpnr-ecp5, and ecppack.
+  * Icarus Verilog for primitive-model tests.
 * Software Evaluation
   * Python 3.10 or newer, NumPy, and PyTorch.
   * Install the Python dependencies with `python -m pip install -r sw/requirements.txt`.
@@ -77,36 +76,33 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 
 ## Results
 
-* Software Evaluation
-  * Test RMSE: **8.1461 cm** for exact FP32, **8.1567 cm** for PWL FP32, and **9.3022 cm** for INT8 PTQ.
-  * RMSE is the mean of 57 coordinatewise RMSE values over 7,984 official MARS test frames.
-  * [Checkpoint](sw/results/mars/final/checkpoint.pt), [metrics](sw/results/mars/final/metrics.json), and [verification](sw/results/mars/verification.json).
-  * All 35 software tests pass. [Cleanup verification](sw/results/mars/cleanup_verification.json) confirms unchanged FP32, PWL, and INT8 inference on 264 frames, including the eight real hardware fixtures.
-  * [Training protocol](sw/results/mars/protocol.json) & [architecture checks](sw/results/mars/architecture_verification.json).
-  * INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
-* Hardware Verification
-  * The regression checks all three lane settings against the same 14-frame / 798-coordinate fixtures, using both source/sink stalls and continuous kernel input. A separate test resets the active kernel and checks a complete restart.
-  * Integer-reference RMSE: **9.3015 cm** over all 7,984 test frames. All 455,088 outputs match the software model when only normalization uses the baseline's exact-rational definition; original QDQ differs by at most 3 LSB.
-  * [Integer reference](hw/generated/reference_report.json) & [software comparison](hw/generated/software_contract_verification.json).
-* Hardware Placement and Routing
-  * The physical flow selects `synth_ecp5 -noabc9`; Yosys 0.67 otherwise defaults to ABC9. This changes combinational technology mapping without changing BSV, RTL, weights, precision, engine parallelism, pipeline stages, or clocks.
-  * The reported `physical-netlist` failure came from a checker that allowed only LUT/mux primitives between address FFs and coefficient outputs. Yosys also shares combinational `CCU2C` logic between the address incrementer and ROM decode. The revised auditor accepts the combinational primitive, keeps its complete input cone on the canonical address, and proves those cells remain identical after replication. Replica fan-out into control logic remains forbidden.
-  * Page-decoder copy counts are derived independently from the actual mapped decoder closure. Whole-netlist reversal, same-cycle FF identity/startup checks, and exhaustive coefficient comparisons remain mandatory. No coefficient RAM or additional register stage is introduced.
-  * To close timing with this toolchain, the head-hidden ROM uses private LUT4/PFUMX/L6MUX21 trees. Independent checks prove the coefficient values, original operand-FIFO next-state functions, and startup behavior. The gate-delay LUT-RAM write-enable network uses 20 identical LUT4 copies to distribute 160 existing write-enable connections. Both mapping passes preserve every original register, RAM contents and data/address/clock connections, reset behavior, and enable function; they do not modify BSV, RTL, model parameters, parallelism, precision, or pipeline latency.
-  * `physical-netlist` checks all **139,264 addresses** (17 engines × 8,192 addresses), including zero padding, against frozen INT8 coefficients. It verifies the selected Yosys primitive model and its included files by SHA256. Set `YOSYS_CELLS_SIM=/absolute/path/to/ecp5/cells_sim.v` if the selected installation has no adjacent `yosys-config`.
-  * nextpnr `2b560ad0` computes the HeAP placement retry limit by squaring a signed cell count; this overflows for this design. `--placer-heap-cell-placement-timeout 0` disables that retry guard. Placement legality and the strict **100 MHz core / 25 MHz UART** timing constraints remain enabled.
-  * The supplied failing netlist passes the revised address/page audits and all **139,264 coefficient comparisons with zero mismatches**. The CCU2C evaluator also matches the official 0.67 model for **80,384 parameter/input cases**, with zero mismatches. These are functional/structural results.
-  * **Synthesis, placement, routing, strict timing, and bitstream generation passed** in [CI run 36624329587](https://github.com/SeMinLim/sway/actions/runs/36624329587), using [hardware commit `ef327a9`](https://github.com/SeMinLim/sway/commit/ef327a9be1c881d52e0ccffbebe7eec40ac1d3f3) and the pinned tools above. The run executes the normal `make -C hw synth` flow on ULX3S-85F / CABGA381, speed grade 6, router1, seed 1. Timing failure remains fatal; clock constraints are unchanged.
+### Software Evaluation
 
-  | Routed clock | Required MHz | Achieved MHz | Result |
-  | --- | ---: | ---: | --- |
-  | Core | 100 | 100.321022 | PASS |
-  | UART | 25 | 123.031494 | PASS |
+* Test RMSE: **8.1461 cm** for exact FP32, **8.1567 cm** for PWL FP32, and **9.3022 cm** for INT8 PTQ.
+* RMSE is the mean of 57 coordinatewise RMSE values over 7,984 official MARS test frames.
+* [Checkpoint](sw/results/mars/final/checkpoint.pt), [metrics](sw/results/mars/final/metrics.json), and [verification](sw/results/mars/verification.json).
+* All 35 software tests pass. [Cleanup verification](sw/results/mars/cleanup_verification.json) confirms unchanged FP32, PWL, and INT8 inference on 264 frames, including the eight real hardware fixtures.
+* [Training protocol](sw/results/mars/protocol.json) & [architecture checks](sw/results/mars/architecture_verification.json).
+* INT8 retains the existing `Abar` scale of `2^-7`, with a maximum of `127/128`. Signed delta permits larger values. On the first 2,048 training frames, **39.89%** of PTQ `Abar` values require saturation; full counts and PWL range limits are recorded in the verification report.
 
-  * The passing run checks all **139,264 coefficient addresses with zero mismatches**, the actual reset placement, and exactly two scan-state DP16KD blocks with no affine block RAM. Its artifact contains source/tool hashes, independent transformation proofs, the routed netlist, timing report, and bitstream. `mkTop.bit` SHA256: `9924019e7f56853e0765d9ddddfb285dab3194c674b27319f14aa60db1d2a5ab`.
-  * [The workflow](.github/workflows/hardware-physical.yml) pins tool downloads by SHA256 and repeats the strict build on hardware changes. These results establish tool-based physical verification; they do not claim a programmed-board test.
-  * ECP5 shares one reset signal across eight PFU registers. The physical build folds proven reset inversions into FF reset-polarity settings and merges identical reset-only LUTs, preserving effective reset behavior, data, clocks, and enables.
-  * A pre-placement hook places the existing core-reset output FF near the fabric center to shorten reset distribution. Reset logic and release latency are unchanged; both the physical checker and independent audit verify the actual placed BEL.
+### Hardware Verification
+
+* Regression covers three lane settings, 14 frames / 798 coordinates, input/output stalls, continuous input, and reset/restart.
+* All **139,264 coefficient addresses**, including zero padding, match the frozen INT8 coefficients.
+* Integer-reference RMSE: **9.3015 cm** over 7,984 frames. [Integer reference](hw/generated/reference_report.json) · [Software comparison](hw/generated/software_contract_verification.json).
+
+### Hardware Placement and Routing
+
+* **PASS:** `make -C hw synth` completes placement, routing, and bitstream generation for ULX3S-85F (CABGA381, speed grade 6, divisor 4).
+* Baseline architecture, precision, parallelism, and pipeline latency are unchanged. The design uses two scan-state DP16KD blocks and no affine block RAM.
+* Build settings, reports, and bitstream: [validated CI run](https://github.com/SeMinLim/sway/actions/runs/36624329587).
+
+### Hardware Timing
+
+| Clock | Target (MHz) | Routed Fmax (MHz) | Result |
+| --- | ---: | ---: | --- |
+| Core | 100 | 100.321 | PASS |
+| UART | 25 | 123.031 | PASS |
 
 ## Notes
 
