@@ -19,5 +19,6 @@
   ],
   "scope": "Unchanged baseline; joint trace-derived resource scheduling, not implemented shared hardware or shared-design area/timing.",
   "reproduction_instructions": "ARCHIVE_README.md and repo/hw/reference/observation/resources.md",
-  "distribution": "Archive supplied with the observation run report; large raw evidence is kept outside Git."
+  "distribution": "Large raw evidence is kept outside Git. The verified archive was prepared, but report-file storage failed with HTTP 502; it is not available as a saved report attachment.",
+  "report_attachment_status": "unavailable: storage service transfer failed"
 }

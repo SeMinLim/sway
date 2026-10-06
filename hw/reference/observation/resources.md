@@ -91,8 +91,9 @@ all 45/17/23 resources. All 32 checker tests pass.
 [run validation](evidence/multi_resource/validation.json), and
 [synthesis provenance](evidence/multi_resource/synthesis_provenance.json) contain
 the counts, checks and SHA256 pins. The [archive manifest](evidence/multi_resource/archive.json)
-identifies the complete raw traces, certificates, mapped netlist and SAT proof
-supplied with the run report. The earlier [multiplier and adder observation](README.md)
+identifies the prepared raw-evidence archive containing the complete traces,
+certificates, mapped netlist and SAT proof. Archive attachment storage failed;
+its availability status is recorded in that manifest. The earlier [multiplier and adder observation](README.md)
 remains available.
 
 From the repository root, use the pinned tools on `PATH` and the normal blueYosys
