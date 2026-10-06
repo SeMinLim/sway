@@ -1,0 +1,602 @@
+[
+  {
+    "id": 0,
+    "name": "dut_block0_bProjection_accumulate",
+    "stage": "dut_block0_bProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "be3ed94038d6ac43402a3a4536ec592d7f0040c12e1f91ced14b023e03cc6a84"
+  },
+  {
+    "id": 1,
+    "name": "dut_block0_cProjection_accumulate",
+    "stage": "dut_block0_cProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "e01d34a562dfe4ea9e3cc2e2f51d01d8a6ab4fda08cff8b6f01b30964d61a150"
+  },
+  {
+    "id": 2,
+    "name": "dut_block0_deltaInputProjection_accumulate",
+    "stage": "dut_block0_deltaInputProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 71680,
+    "receipts": 71680,
+    "operations_window": 35840,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 71680
+    },
+    "captured_requests_sha256": "3b446196e04b6cb8ccd26fec7498cc62f93dd4f9385f1c840c4abf6b20c13a7b"
+  },
+  {
+    "id": 3,
+    "name": "dut_block0_deltaProjection_engine_accumulate",
+    "stage": "dut_block0_deltaProjection_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 71680,
+    "receipts": 71680,
+    "operations_window": 35840,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 71680
+    },
+    "captured_requests_sha256": "e27926987e768706d3cc06c1e6e7b7b9514f558f0b701cfe165ee64d68d55c92"
+  },
+  {
+    "id": 4,
+    "name": "dut_block0_gateProjection_accumulate",
+    "stage": "dut_block0_gateProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "d8b3397220dc8f120e8b3d4b81c25a3a2a907f6e6b26f55d591e589f88377193"
+  },
+  {
+    "id": 5,
+    "name": "dut_block0_mainProjection_accumulate",
+    "stage": "dut_block0_mainProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "c4e04b31ec890dacdaf6409a90bf2473dd1701c41eba21a788a39248285b0367"
+  },
+  {
+    "id": 6,
+    "name": "dut_block0_outputProjection_engine_accumulate",
+    "stage": "dut_block0_outputProjection_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "40243379ff6ab33b4467f89784ad307b8449dbd90ec29e6fb0daca5391732794"
+  },
+  {
+    "id": 7,
+    "name": "dut_block1_bProjection_accumulate",
+    "stage": "dut_block1_bProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "3ec5e22a2fb89543f2f079ccaaf8587fd00d84f13f53aa216515cd3bee5dc85a"
+  },
+  {
+    "id": 8,
+    "name": "dut_block1_cProjection_accumulate",
+    "stage": "dut_block1_cProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "27b9d5fe527e7515fe4f91c8b6255fdc13df35eda56e50da4423030a665d94b7"
+  },
+  {
+    "id": 9,
+    "name": "dut_block1_deltaInputProjection_accumulate",
+    "stage": "dut_block1_deltaInputProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 71680,
+    "receipts": 71680,
+    "operations_window": 35840,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 71680
+    },
+    "captured_requests_sha256": "a7f40da427739bb7dfe070385ad11a0e41901d18356c48c8a61746117c1a373c"
+  },
+  {
+    "id": 10,
+    "name": "dut_block1_deltaProjection_engine_accumulate",
+    "stage": "dut_block1_deltaProjection_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 71680,
+    "receipts": 71680,
+    "operations_window": 35840,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 71680
+    },
+    "captured_requests_sha256": "f5f100712e684ee057b31336629364ad66693aab99e8fb29ac725d8de4b044da"
+  },
+  {
+    "id": 11,
+    "name": "dut_block1_gateProjection_accumulate",
+    "stage": "dut_block1_gateProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "099e0559e8d3453fc9bc19b02e5be3f963c171b5ecf3774e00901f7ed993b1e5"
+  },
+  {
+    "id": 12,
+    "name": "dut_block1_mainProjection_accumulate",
+    "stage": "dut_block1_mainProjection",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "7831dc29ecd52ba953993aa5ce2b7a128095dca7a47ef72639d55d7ac5d32c1f"
+  },
+  {
+    "id": 13,
+    "name": "dut_block1_outputProjection_engine_accumulate",
+    "stage": "dut_block1_outputProjection_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 716800,
+    "receipts": 716800,
+    "operations_window": 358400,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 716800
+    },
+    "captured_requests_sha256": "5218fcd773b231cf6b38f67289ccbf28b4731bc95a8aa56774a212b753970356"
+  },
+  {
+    "id": 14,
+    "name": "dut_embedding_engine_accumulate",
+    "stage": "dut_embedding_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 358400,
+    "receipts": 358400,
+    "operations_window": 179200,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 358400
+    },
+    "captured_requests_sha256": "ec77e4b8232e49c2e58e300e897e14a1144e3805dc77685da29e0c035e96a728"
+  },
+  {
+    "id": 15,
+    "name": "dut_headHidden_engine_accumulate",
+    "stage": "dut_headHidden_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 358400,
+    "receipts": 358400,
+    "operations_window": 179200,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 358400
+    },
+    "captured_requests_sha256": "84f087a51667b77d66b5bc19a14d149d76745f8c7d345e28a2dbd801617f2abd"
+  },
+  {
+    "id": 16,
+    "name": "dut_headOutput_engine_accumulate",
+    "stage": "dut_headOutput_engine",
+    "kind": "adder",
+    "counted_in_inventory": true,
+    "operations": 63840,
+    "receipts": 63840,
+    "operations_window": 31920,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 63840
+    },
+    "captured_requests_sha256": "cd66fcead3e71a13c8e14318cc87e59d062d15e8c8dd0f24b26a5d7a07222def"
+  },
+  {
+    "id": 17,
+    "name": "dut_block0_bProjection_requant",
+    "stage": "dut_block0_bProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 7168,
+    "receipts": 7168,
+    "operations_window": 3584,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 7168
+    },
+    "captured_requests_sha256": "b112f172b9ea71d62587b3b89a470432e4cfbba10f79046f6a198974e174fefe"
+  },
+  {
+    "id": 18,
+    "name": "dut_block0_cProjection_requant",
+    "stage": "dut_block0_cProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 7168,
+    "receipts": 7168,
+    "operations_window": 3584,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 7168
+    },
+    "captured_requests_sha256": "6919f4a736b4673d0960965f61154e9e035849675ed54fdf640bbdc2626d46ac"
+  },
+  {
+    "id": 19,
+    "name": "dut_block0_deltaInputProjection_requant",
+    "stage": "dut_block0_deltaInputProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 1792,
+    "receipts": 1792,
+    "operations_window": 896,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 1792
+    },
+    "captured_requests_sha256": "ac1e60fc159d374942d72a2d1de12acf8195df3ab06375d1227f94993245a305"
+  },
+  {
+    "id": 20,
+    "name": "dut_block0_deltaProjection_engine_requant",
+    "stage": "dut_block0_deltaProjection_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "502447b5dc616141481a91b9e1c9250f2e11cd44bfc91f8446cf62cb34f36f5f"
+  },
+  {
+    "id": 21,
+    "name": "dut_block0_gateProjection_requant",
+    "stage": "dut_block0_gateProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "460efd953eee764ef9bacd6ad825766c8586a47bf4ce6acdb47f82f9181d16d4"
+  },
+  {
+    "id": 22,
+    "name": "dut_block0_mainProjection_requant",
+    "stage": "dut_block0_mainProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "a055b8d40ca0914e7fc2fe5a51148a73713de5916907c9fb882e9447aedb0b41"
+  },
+  {
+    "id": 23,
+    "name": "dut_block0_outputProjection_engine_requant",
+    "stage": "dut_block0_outputProjection_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 17920,
+    "receipts": 17920,
+    "operations_window": 8960,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 17920
+    },
+    "captured_requests_sha256": "1200ef1e7066331ec7a236956471f4752bc6d49494d5ac72201d7569b928df88"
+  },
+  {
+    "id": 24,
+    "name": "dut_block1_bProjection_requant",
+    "stage": "dut_block1_bProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 7168,
+    "receipts": 7168,
+    "operations_window": 3584,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 7168
+    },
+    "captured_requests_sha256": "d20978095ea9722ee1db4f4e24d701b5bdc25af95400edeb14d34416cdb99b57"
+  },
+  {
+    "id": 25,
+    "name": "dut_block1_cProjection_requant",
+    "stage": "dut_block1_cProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 7168,
+    "receipts": 7168,
+    "operations_window": 3584,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 7168
+    },
+    "captured_requests_sha256": "9046beddcb9f9755b64c368e69ce9e161f02a0209b3425af47e97969ff272ca1"
+  },
+  {
+    "id": 26,
+    "name": "dut_block1_deltaInputProjection_requant",
+    "stage": "dut_block1_deltaInputProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 1792,
+    "receipts": 1792,
+    "operations_window": 896,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 1792
+    },
+    "captured_requests_sha256": "c362ccfc34f895147f8431350928b660ef90692f72fd548d55852fcfb5138e0a"
+  },
+  {
+    "id": 27,
+    "name": "dut_block1_deltaProjection_engine_requant",
+    "stage": "dut_block1_deltaProjection_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "eb8558f4ba293071dce14b41fb75a08cc354552f7fe410c9cb07e0b5599300f6"
+  },
+  {
+    "id": 28,
+    "name": "dut_block1_gateProjection_requant",
+    "stage": "dut_block1_gateProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "acbdaad31c00b236b32e6eae4d4709a74e522260b4eb3f9af038aa5c6e941ea0"
+  },
+  {
+    "id": 29,
+    "name": "dut_block1_mainProjection_requant",
+    "stage": "dut_block1_mainProjection",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "5f6d36c7b353de32229d6ccae309b9f3b5c67c80a79714d3a4e989a2f0698a2d"
+  },
+  {
+    "id": 30,
+    "name": "dut_block1_outputProjection_engine_requant",
+    "stage": "dut_block1_outputProjection_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 17920,
+    "receipts": 17920,
+    "operations_window": 8960,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 17920
+    },
+    "captured_requests_sha256": "ed5ace2b472a0281ea485919603993a6d415e1e32d199436022922f2257933b4"
+  },
+  {
+    "id": 31,
+    "name": "dut_embedding_engine_requant",
+    "stage": "dut_embedding_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 17920,
+    "receipts": 17920,
+    "operations_window": 8960,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 17920
+    },
+    "captured_requests_sha256": "22c2af7c4e35ae0d5eaa46961a08f9014dc7b73e3608790d3e532d4e8ab305a3"
+  },
+  {
+    "id": 32,
+    "name": "dut_headHidden_engine_requant",
+    "stage": "dut_headHidden_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 1120,
+    "receipts": 1120,
+    "operations_window": 560,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 1120
+    },
+    "captured_requests_sha256": "fe70fb15136fff46ce43406bbb2e693ef1ca4c04febdfa634a90b5e5bb1b198e"
+  },
+  {
+    "id": 33,
+    "name": "dut_headOutput_engine_requant",
+    "stage": "dut_headOutput_engine",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 3192,
+    "receipts": 3192,
+    "operations_window": 1596,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 3192
+    },
+    "captured_requests_sha256": "c686ea81d0e3b58ad718d13fd0f47892174dc64d61dcdd52c551cab3688738a3"
+  },
+  {
+    "id": 34,
+    "name": "dut_block0_conv_requant",
+    "stage": "dut_block0_convolution",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "5f33fef7ac45bdd742619362b041c3a2f26d6e321b3059a609b5d30eb77634a6"
+  },
+  {
+    "id": 35,
+    "name": "dut_block1_conv_requant",
+    "stage": "dut_block1_convolution",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 35840,
+    "receipts": 35840,
+    "operations_window": 17920,
+    "maximum_pending_receipts": 2,
+    "receipt_latency_histogram_cycles": {
+      "1": 35840
+    },
+    "captured_requests_sha256": "813a7893770b7fbeafe6bfec51e89cdbd2a473da3629e2fc2b95d8761c08eb3d"
+  },
+  {
+    "id": 36,
+    "name": "dut_block0_scan_deltaA_requant",
+    "stage": "dut_block0_scan",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "1a7b80de7c0c5463707b718eb1ca58696ac6ac92b904579119ea67a1aa9b657e"
+  },
+  {
+    "id": 37,
+    "name": "dut_block0_scan_deltaB_requant",
+    "stage": "dut_block0_scan",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "0702d3d103626efb957d3e768e86899010d5304f7ef7c32fa0c82b6b7c2b5a49"
+  },
+  {
+    "id": 38,
+    "name": "dut_block1_scan_deltaA_requant",
+    "stage": "dut_block1_scan",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "cf914c3566c541e15327500257ccebc26ab46d66ffa7871ffe88fd236482cfeb"
+  },
+  {
+    "id": 39,
+    "name": "dut_block1_scan_deltaB_requant",
+    "stage": "dut_block1_scan",
+    "kind": "requant",
+    "counted_in_inventory": true,
+    "operations": 286720,
+    "receipts": 286720,
+    "operations_window": 143360,
+    "maximum_pending_receipts": 1,
+    "receipt_latency_histogram_cycles": {
+      "1": 286720
+    },
+    "captured_requests_sha256": "2fcc7b5663b7a7558242f26a09c6c322aa2f8715901787145ec0c3de932b971a"
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "integration_parent": "f44b3cb091671f3a294ea3244d6d6505057cd1e4",
+  "measured_baseline_revision": "a079d0d76e6ed850037c460c8d2a6359bbadae8c",
+  "baseline_hardware_and_fixtures_unchanged": true,
+  "existing_adder_runner_unchanged": true,
+  "joint_runner_renamed_without_content_changes": true,
+  "measured_source_content_matches": {
+    "hw/reference/observation/run_resources.py": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/observation/run.py",
+      "sha256": "f9bd84aaa5e2b81786441d51d0a004cc49fadab658131aa6b7178dd826710ae9"
+    },
+    "hw/reference/observation/generate_observer.py": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/observation/generate_observer.py",
+      "sha256": "9b911756052462d650eb3e91fc9d8b5aac5197d87d92928414f623a31e000e32"
+    },
+    "hw/reference/observation/stages.json": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/observation/stages.json",
+      "sha256": "e9102fe34b92d1678433e00e01771260881d96c706d8fc6bc4b7c2a30d8f86a1"
+    },
+    "hw/reference/check_refactor.py": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/check_refactor.py",
+      "sha256": "9f560de534e3b6b409a61ff5d568cfa7a1ed151b56b84bb8d52f53663c21a79b"
+    },
+    "hw/reference/check_sim.py": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/check_sim.py",
+      "sha256": "bc4afcf865ade4878f69a0d27f3a1da347ea31d226983370ca1a76152638df36"
+    },
+    "hw/reference/observation/generate_extra_observer.py": {
+      "measured_path": "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/observation/generate_extra_observer.py",
+      "sha256": "638e7e38c0e135732c14a76b7681fd5c735806443de8bb17009521b0794bab80"
+    }
+  },
+  "default_observer_outputs_byte_identical_to_parent": {
+    "observed_top.v": "ba897c10b7ae20b3da53643e64f9b5ee73a52fa6d2ab7a3dbbf73a89673a91f0",
+    "stages.json": "0d6cd6e03d6a0886504c29aa62f72e24361923d423745c65f9a90886d44075d4",
+    "control_top.v": "1d21ad41198274326566277c9403d5c8c3941035e06a3b9d6f95d5555bfa02ab",
+    "units.json": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+    "observer.v": "5e8ef560576e337757c158f1714fa88179051ac2672b1d098b93481c2933e80c"
+  },
+  "runner_help_checks": [
+    "run.py --adders",
+    "run_resources.py --extra-resources"
+  ],
+  "scope": "Repository integration checks; original measurement validation and SHA256 pins are retained unchanged."
+}

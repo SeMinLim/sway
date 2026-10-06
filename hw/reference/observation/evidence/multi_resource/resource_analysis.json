@@ -1,0 +1,840 @@
+{
+  "status": "pass",
+  "kind": "same-execution measurement and joint fixed-cycle resource scheduling analysis",
+  "frames_checked": 56,
+  "scalar_outputs_checked": 3192,
+  "control_observer_markers_identical": true,
+  "full_trace_finish_cycle": 1060049,
+  "measurement_window": {
+    "start_inclusive_cycle": 295672,
+    "end_exclusive_cycle": 816248,
+    "output_intervals": 28
+  },
+  "kernel_output_interval_cycles": 18592,
+  "scheduled_output_interval_cycles": 18592,
+  "resources": [
+    {
+      "kind": "multiplier",
+      "baseline": 45,
+      "stage_confined": 45,
+      "shared": 25,
+      "reclaimable": 20
+    },
+    {
+      "kind": "adder",
+      "baseline": 17,
+      "stage_confined": 17,
+      "shared": 13,
+      "reclaimable": 4
+    },
+    {
+      "kind": "requant",
+      "baseline": 23,
+      "stage_confined": 23,
+      "shared": 21,
+      "reclaimable": 2
+    }
+  ],
+  "compatibility_classes": [
+    {
+      "class_id": 0,
+      "compatibility_key": [
+        "adder",
+        24,
+        24
+      ],
+      "unit_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "baseline": 17,
+      "stage_confined": 17,
+      "shared": 13,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 4,
+      "reclaimable": 4,
+      "by_stage": [
+        {
+          "stage": "dut_block0_bProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_cProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_deltaInputProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_deltaProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_gateProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_mainProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_outputProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_bProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_cProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_deltaInputProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_deltaProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_gateProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_mainProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_outputProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_embedding_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_headHidden_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_headOutput_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 306258,
+        "reserved_transition_cycles": 306245,
+        "owner_changes": 228646,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 1,
+      "compatibility_key": [
+        "requant",
+        16,
+        -10,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        39
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block1_scan",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 2,
+      "compatibility_key": [
+        "requant",
+        16,
+        -10,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        37
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block0_scan",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 3,
+      "compatibility_key": [
+        "requant",
+        16,
+        -9,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        36
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block0_scan",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 4,
+      "compatibility_key": [
+        "requant",
+        16,
+        -7,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        38
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block1_scan",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 5,
+      "compatibility_key": [
+        "requant",
+        18,
+        -12,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        35
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block1_convolution",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 896,
+        "reserved_transition_cycles": 895,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 6,
+      "compatibility_key": [
+        "requant",
+        18,
+        -12,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        34
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block0_convolution",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 896,
+        "reserved_transition_cycles": 895,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 7,
+      "compatibility_key": [
+        "requant",
+        24,
+        -16,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        20
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block0_deltaProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 35840,
+        "reserved_transition_cycles": 35839,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 8,
+      "compatibility_key": [
+        "requant",
+        24,
+        -15,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        32
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_headHidden_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 1120,
+        "reserved_transition_cycles": 1119,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 9,
+      "compatibility_key": [
+        "requant",
+        24,
+        -13,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        21,
+        22,
+        27,
+        30,
+        33
+      ],
+      "baseline": 5,
+      "stage_confined": 5,
+      "shared": 4,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 1,
+      "reclaimable": 1,
+      "by_stage": [
+        {
+          "stage": "dut_block0_gateProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_mainProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_deltaProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_outputProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_headOutput_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 128632,
+        "reserved_transition_cycles": 128628,
+        "owner_changes": 65533,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 10,
+      "compatibility_key": [
+        "requant",
+        24,
+        -12,
+        -6,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        28,
+        29
+      ],
+      "baseline": 2,
+      "stage_confined": 2,
+      "shared": 2,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block1_gateProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_mainProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 71680,
+        "reserved_transition_cycles": 71678,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 11,
+      "compatibility_key": [
+        "requant",
+        24,
+        -12,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        17,
+        18,
+        19,
+        24,
+        25,
+        26,
+        31
+      ],
+      "baseline": 7,
+      "stage_confined": 7,
+      "shared": 6,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 1,
+      "reclaimable": 1,
+      "by_stage": [
+        {
+          "stage": "dut_block0_bProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_cProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block0_deltaInputProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_bProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_cProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_block1_deltaInputProjection",
+          "baseline": 1,
+          "stage_confined": 1
+        },
+        {
+          "stage": "dut_embedding_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 48396,
+        "reserved_transition_cycles": 48390,
+        "owner_changes": 25845,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    },
+    {
+      "class_id": 12,
+      "compatibility_key": [
+        "requant",
+        24,
+        -9,
+        -5,
+        8,
+        "ties_to_even",
+        "saturate"
+      ],
+      "unit_ids": [
+        23
+      ],
+      "baseline": 1,
+      "stage_confined": 1,
+      "shared": 1,
+      "reclaimable_within_stage": 0,
+      "additional_cross_stage_reclaim": 0,
+      "reclaimable": 0,
+      "by_stage": [
+        {
+          "stage": "dut_block0_outputProjection_engine",
+          "baseline": 1,
+          "stage_confined": 1
+        }
+      ],
+      "certificate": {
+        "status": "pass",
+        "reservations_checked": 17920,
+        "reserved_transition_cycles": 17919,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    }
+  ],
+  "observed_candidates": 40,
+  "synthesis_verified_independent_candidates": 40,
+  "excluded_constant_or_merged_candidates": [],
+  "physical_simulation_provenance": {
+    "status": "pass",
+    "common_baseline_sources": 16,
+    "bsc_version_identical": true,
+    "parallelism_divisor": 4,
+    "physical_top": "mkTop",
+    "simulation_top": "mkTbSwayKernel",
+    "catalog_and_run_artifact_hashes_identical": true
+  },
+  "arithmetic": {
+    "multipliers": {
+      "trace_rows": 12169920,
+      "products_checked": 10959200,
+      "mismatches": 0,
+      "latency_histogram_cycles": {
+        "4": 10959200
+      },
+      "all_requests_retired": true,
+      "fixed_graph_product_count_checked": 10959200
+    },
+    "additional_operations_checked": 8038968,
+    "additional_receipts_checked": 8038968,
+    "mismatches": 0,
+    "affine_local_feedback_and_row_boundaries_checked": true
+  },
+  "joint_certificate": {
+    "status": "pass",
+    "multiplier_certificate": {
+      "status": "pass",
+      "reservations_checked": 398552,
+      "reserved_transition_cycles": 398527,
+      "owner_changes": 295251,
+      "request_and_consumption_cycles_moved": 0,
+      "in_flight_operations_at_owner_change": 0
+    },
+    "arithmetic_certificates": [
+      {
+        "status": "pass",
+        "reservations_checked": 306258,
+        "reserved_transition_cycles": 306245,
+        "owner_changes": 228646,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 286720,
+        "reserved_transition_cycles": 286719,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 896,
+        "reserved_transition_cycles": 895,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 896,
+        "reserved_transition_cycles": 895,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 35840,
+        "reserved_transition_cycles": 35839,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 1120,
+        "reserved_transition_cycles": 1119,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 128632,
+        "reserved_transition_cycles": 128628,
+        "owner_changes": 65533,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 71680,
+        "reserved_transition_cycles": 71678,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 48396,
+        "reserved_transition_cycles": 48390,
+        "owner_changes": 25845,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      },
+      {
+        "status": "pass",
+        "reservations_checked": 17920,
+        "reserved_transition_cycles": 17919,
+        "owner_changes": 0,
+        "request_and_consumption_cycles_moved": 0,
+        "in_flight_operations_at_owner_change": 0
+      }
+    ],
+    "events_retimed": 0,
+    "all_pools_share_same_baseline_execution": true
+  },
+  "transition_cost_cycles": 1,
+  "combinational_reservations": "Consecutive same-owner operations are one burst; local result capture occurs at each original issue edge; one full idle cycle separates bursts",
+  "state_and_delivery": "sumR, output registers, metadata and FIFOs remain local; next-edge readback or ordered FIFO dequeue verifies every captured additional result; downstream storage retention does not occupy a stateless arithmetic unit",
+  "memory_and_dependencies": "Every arithmetic issue/capture and downstream receipt retains its baseline cycle; stage state, dependency order and SRAM access schedule are unchanged; no added memory ports or retiming",
+  "scope": "Feasible jointly for this complete 56-frame execution; no implemented shared RTL or optimum resource claim",
+  "physical_limits": "Counts describe synthesis-verified independent arithmetic candidates, not source calls; interconnect/control/storage cost, net FPGA area savings and shared routed frequency are not measured",
+  "source_sha256": {
+    "transactions": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "units": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+    "stages": "0d6cd6e03d6a0886504c29aa62f72e24361923d423745c65f9a90886d44075d4",
+    "waits": "03873c13979895e4c2119a5c98bf11e63faac2adb76a7432a625eb85eb9a1477",
+    "control": "3320699d476f93a5868b8d28fbf923e7df53ac5b3bbb9dd615bf6633751add9d",
+    "observed": "3320699d476f93a5868b8d28fbf923e7df53ac5b3bbb9dd615bf6633751add9d",
+    "inputhex": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "expectedhex": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "operations": "bc781085dcd8d398cf9f68a6536d3040994d602151c733edcd1d4a70e9f262fb",
+    "extra_units": "971d15ec1b9511817da04579f5902185dee667e4c5119bd67c5d42da6660893d",
+    "inventory": "005dc14c7cdddfdbfe7aa1a68445d8bf2d4862eb9219240104b195606e4da085",
+    "validation": "cd23c007bcd3478b8e85a0bff87154de66dfc78eaabb0edcf48f3b8c69f71af3",
+    "analyzer": "dce31c7d42ec852da94676005a03099eafed8be9650ae092ca6c2fa77b5870ef",
+    "multiplier_analyzer": "de56e84a1bb1073c87f425d6b87af999872a79bdf1961d71f5bafdbc9a9cc7ed"
+  },
+  "output_sha256": {
+    "resource_assignments.csv": "7f13188806c673de01a3d0bf5ec22d9cd13166ada72e417c524c1b59ba224292",
+    "multiplier_assignments.csv": "e5147493258a416d079d15cc48cfdb92d1234eb762155d3964ce64fa84e8bf30",
+    "resource_units.json": "d8130666ef0f6acdf95fec85fbbedc9b6dea77c3cd296fe7950d21aa41a3e7bd"
+  }
+}

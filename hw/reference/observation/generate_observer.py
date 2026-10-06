@@ -6,7 +6,7 @@ from pathlib import Path
 import re
 
 
-def generate(rtl, directory, observed):
+def generate(rtl, directory, observed, extra_resources=False):
     directory = Path(directory)
     text = Path(rtl).read_text()
     names = sorted(set(re.findall(r"\b(dut_\w+)_acceptedCnt\$EN\b", text)))
@@ -36,6 +36,8 @@ def generate(rtl, directory, observed):
                "  #3; CLK = 0;", "  forever begin #5; CLK = ~CLK; end", "end"]
     if observed:
         wrapper.append("sway_observer observer();")
+        if extra_resources:
+            wrapper.append("sway_extra_observer extra_observer();")
     wrapper.extend(["endmodule", ""])
     wrapper_path = directory / ("observed_top.v" if observed else "control_top.v")
     wrapper_path.write_text("\n".join(wrapper))

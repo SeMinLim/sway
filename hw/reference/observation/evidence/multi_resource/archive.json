@@ -1,0 +1,23 @@
+{
+  "artifact": "Sway_Multi_Resource_Observation_2026-10-06.tar.xz",
+  "created_utc": "2026-10-06",
+  "bytes": 167583560,
+  "sha256": "303c9ae4c146e05f28768376a30f0342b8095bcac6691f142f3709dbb4f831f3",
+  "regular_file_members": 591,
+  "extraction_root": "Sway_Multi_Resource_Observation_2026-10-06",
+  "measured_baseline_revision": "a079d0d76e6ed850037c460c8d2a6359bbadae8c",
+  "integration_parent_revision": "f44b3cb091671f3a294ea3244d6d6505057cd1e4",
+  "manifest": "manifest.json",
+  "manifest_sha256": "9d4afb91fcb83316b2e8e255e4206d9e1ef0990342a135341d477aedbbac4963",
+  "verified": "all members sizes and SHA256 checked; all source hashes unchanged before/after packaging",
+  "contents": [
+    "repo/: reconstruction code, baseline source and compact evidence",
+    "measurement/: raw traces, logs, generated RTL, catalogs and allocation certificates",
+    "measurement/measured_code/: exact originally measured scripts and hashes",
+    "synthesis/: whole-baseline mapped netlist, input RTL, inventory, SAT proof and negative control",
+    "tool_evidence/: tool provenance, ECP5 primitive model and BSC runtime Verilog"
+  ],
+  "scope": "Unchanged baseline; joint trace-derived resource scheduling, not implemented shared hardware or shared-design area/timing.",
+  "reproduction_instructions": "ARCHIVE_README.md and repo/hw/reference/observation/resources.md",
+  "distribution": "Archive supplied with the observation run report; large raw evidence is kept outside Git."
+}

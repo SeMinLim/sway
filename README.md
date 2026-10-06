@@ -106,20 +106,17 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 
 ### Observation
 
-The unchanged divisor-4 baseline passes **56 continuous frames / 3,192 outputs**
-at **18,592 cycles/frame**. Trace-based sharing preserves all output values and cycles.
+* Unchanged divisor-4 baseline: **56 continuous frames / 3,192 outputs pass**; instrumentation preserves every output value and cycle.
+* The following allocations coexist in the **same execution at 18,592 cycles/frame**, preserving operation/result cycles, local state, and SRAM accesses with a one-cycle transition gap.
 
-| Resource | Baseline | Within-stage sharing | Cross-stage sharing | Reclaimable |
+| Resource | Baseline | Sharing within stages | Sharing across stages | Reclaimed |
 | --- | ---: | ---: | ---: | ---: |
-| Signed 18×18 multipliers | 45 | 45 | 25 | 20 (44.44%) |
-| Affine INT24 accumulation adders | 17 | 17 | 13 | 4 (23.53%) |
+| Signed 18×18 multiplier | 45 | 45 | 25 | 20 (44.44%) |
+| INT24 affine accumulation adder | 17 | 17 | 13 | 4 (23.53%) |
+| Selected requantization circuits, exact input/output scales | 23 | 23 | 21 | 2 (8.70%) |
 
-Both schedules hold in the same execution, retaining stage-local `sumR` state,
-FIFO contents, memory accesses, and operation/result cycles. Each reservation
-leaves one full idle cycle before reuse. **6,515,040 additions** and their captured
-results pass; 13 simultaneous additions establish the fixed-cycle adder minimum.
-[Method, evidence, and reproduction](hw/reference/observation/README.md).
-Shared hardware area and routed timing have not been measured.
+* Adder/requantization counts come from full ECP5 synthesis and symbolic equivalence checks, excluding source-call counting and duplicate mapped logic. Requantizers share only within identical width, scale, rounding, and saturation formats.
+* [Method, evidence, and reproduction](hw/reference/observation/resources.md). These are trace-based scheduling results; shared hardware area and routed timing have not been measured.
 
 ## Notes
 

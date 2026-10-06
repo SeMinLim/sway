@@ -1,5 +1,8 @@
 # Observation: baseline trace and sharing analysis
 
+The [joint resource observation](resources.md) extends these multiplier and adder
+measurements to selected requantization circuits in the same execution.
+
 Step 4 measures the dedicated-engine baseline and tests whether compatible
 compute resources can share hardware at its observed throughput. Baseline BSV,
 RTL logic, checkpoint, numerical formats, lane counts, and pipeline are unchanged.
