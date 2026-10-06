@@ -1,0 +1,348 @@
+{
+  "status": "pass",
+  "kind": "measured baseline trace and fixed-cycle scheduling analysis",
+  "frames": 56,
+  "fixture_frames": 14,
+  "fixture_repetitions": 4,
+  "scalar_outputs_checked": 3192,
+  "kernel_markers_identical": true,
+  "finish_cycle": 1060049,
+  "post_completion_drain_cycles": 2048,
+  "operation": "signed INT24 accumulation of sign-extended INT16 product",
+  "baseline_affine_adders": 17,
+  "baseline_adder_count_requires_synthesis_inventory": true,
+  "within_stage_adders": 17,
+  "cross_stage_adders": 13,
+  "reclaimable_adders": 4,
+  "reclaimable_fraction": 0.23529411764705882,
+  "full_trace_reservations": 306258,
+  "fixed_reservation_lower_bound": 13,
+  "lower_bound_witness": {
+    "cycle": 27488,
+    "reservation_ids": [
+      6704,
+      6705,
+      6707,
+      6708,
+      6709,
+      6710,
+      6711,
+      6712,
+      6713,
+      6714,
+      6715,
+      6716,
+      6717
+    ],
+    "original_unit_ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "simultaneous_active_adders_peak": 13,
+  "active_demand_witness": {
+    "cycle": 27498,
+    "reservation_ids": [
+      6707,
+      6708,
+      6709,
+      6710,
+      6711,
+      6712,
+      6713,
+      6714,
+      6715,
+      6717,
+      6718,
+      6719,
+      6720
+    ],
+    "original_unit_ids": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "measurement_window": {
+    "start_inclusive": 295672,
+    "end_exclusive": 816248,
+    "cycles": 520576,
+    "output_frame_interval_count": 28,
+    "cross_stage_adders": 13,
+    "fixed_reservation_lower_bound": 13,
+    "lower_bound_witness": {
+      "cycle": 306368,
+      "reservation_ids": [
+        3101,
+        3102,
+        3104,
+        3105,
+        3106,
+        3107,
+        3108,
+        3109,
+        3110,
+        3111,
+        3112,
+        3113,
+        3114
+      ],
+      "original_unit_ids": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    "reservations": 153140
+  },
+  "original_output_interval_cycles": 18592,
+  "scheduled_output_interval_cycles": 18592,
+  "switch_idle_cycles": 1,
+  "reservation_policy": "maximal consecutive same-unit operations; one full idle cycle after every reservation",
+  "time_semantics": "combinational request and result capture on the same baseline clock edge",
+  "preserved": "all stage-local sumR states, original productQ/sumQ, operation/capture cycles, row order, memory access cycles",
+  "by_stage": [
+    {
+      "stage_id": 0,
+      "name": "dut_block0_bProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 286720,
+      "row_results": 7168,
+      "operations_window": 143360,
+      "row_results_window": 3584
+    },
+    {
+      "stage_id": 1,
+      "name": "dut_block0_cProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 286720,
+      "row_results": 7168,
+      "operations_window": 143360,
+      "row_results_window": 3584
+    },
+    {
+      "stage_id": 2,
+      "name": "dut_block0_deltaInputProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 71680,
+      "row_results": 1792,
+      "operations_window": 35840,
+      "row_results_window": 896
+    },
+    {
+      "stage_id": 3,
+      "name": "dut_block0_deltaProjection_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 71680,
+      "row_results": 35840,
+      "operations_window": 35840,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 4,
+      "name": "dut_block0_gateProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 35840,
+      "operations_window": 358400,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 5,
+      "name": "dut_block0_mainProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 35840,
+      "operations_window": 358400,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 6,
+      "name": "dut_block0_outputProjection_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 17920,
+      "operations_window": 358400,
+      "row_results_window": 8960
+    },
+    {
+      "stage_id": 7,
+      "name": "dut_block1_bProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 286720,
+      "row_results": 7168,
+      "operations_window": 143360,
+      "row_results_window": 3584
+    },
+    {
+      "stage_id": 8,
+      "name": "dut_block1_cProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 286720,
+      "row_results": 7168,
+      "operations_window": 143360,
+      "row_results_window": 3584
+    },
+    {
+      "stage_id": 9,
+      "name": "dut_block1_deltaInputProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 71680,
+      "row_results": 1792,
+      "operations_window": 35840,
+      "row_results_window": 896
+    },
+    {
+      "stage_id": 10,
+      "name": "dut_block1_deltaProjection_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 71680,
+      "row_results": 35840,
+      "operations_window": 35840,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 11,
+      "name": "dut_block1_gateProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 35840,
+      "operations_window": 358400,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 12,
+      "name": "dut_block1_mainProjection",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 35840,
+      "operations_window": 358400,
+      "row_results_window": 17920
+    },
+    {
+      "stage_id": 13,
+      "name": "dut_block1_outputProjection_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 716800,
+      "row_results": 17920,
+      "operations_window": 358400,
+      "row_results_window": 8960
+    },
+    {
+      "stage_id": 14,
+      "name": "dut_embedding_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 358400,
+      "row_results": 17920,
+      "operations_window": 179200,
+      "row_results_window": 8960
+    },
+    {
+      "stage_id": 15,
+      "name": "dut_headHidden_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 358400,
+      "row_results": 1120,
+      "operations_window": 179200,
+      "row_results_window": 560
+    },
+    {
+      "stage_id": 16,
+      "name": "dut_headOutput_engine",
+      "baseline_adders": 1,
+      "within_stage_adders": 1,
+      "operations": 63840,
+      "row_results": 3192,
+      "operations_window": 31920,
+      "row_results_window": 1596
+    }
+  ],
+  "arithmetic": {
+    "additions_checked": 6515040,
+    "mismatches": 0,
+    "row_results_checked": 305368,
+    "original_sumR_states_retained": 17,
+    "incomplete_rows": 0,
+    "multiplier_to_adder_fifo_order_checked": 6515040,
+    "multiplier_get_to_add_delay_histogram": {
+      "1": 6514150,
+      "581": 889,
+      "1383": 1
+    },
+    "maximum_observed_product_fifo_entries": 1,
+    "operation_to_register_capture_cycles": 0
+  },
+  "simultaneous_multiplier_schedule": {
+    "trace_identical_to_previous_verified_56_frame_run": true,
+    "baseline_multipliers": 45,
+    "shared_multipliers": 25,
+    "multiplier_trace_sha256": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "joint_result": "Both disjoint operator pools use their original event times in this same run; no rescheduling is introduced"
+  },
+  "claim_scope": "Minimum for measured fixed cycles and stated indivisible reservations plus gap; not a hardware-area or arbitrary-workload optimum",
+  "physical_limits": "Shared routing, mux/control area and placed/routed timing are unmeasured",
+  "source_sha256": {
+    "transactions": "eb0545b5d36a9a182e16e11c70b7b28652e594712739a0f378c19d9459776737",
+    "units": "34f3fe2cba87af80d35435f2013cf0f40deb39bdccbb4cabae98a45f8c46d4e2",
+    "multiplier_transactions": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "multiplier_units": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+    "control": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "observed": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "inputhex": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "expectedhex": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "prior_analyzer": "de56e84a1bb1073c87f425d6b87af999872a79bdf1961d71f5bafdbc9a9cc7ed",
+    "prior_analysis": "161450727ceb27a8e7651e92feb25836bdff70d23d6eb67fc1ed679940f71645",
+    "analyzer": "f1a2e3a7f4ccaaa2dee619a41c9ece587c4f734aa5e586000eea3d80fcf3aff3"
+  },
+  "output_sha256": {
+    "assignments.csv": "511ec9b396aaeb6948fa60a6936e652e950312c30a68332bb84bc66cc6e6b694",
+    "window_assignments.csv": "80732422028e99bf63b55387e1adb4aef72c360c314390f5abc5431892234970"
+  }
+}

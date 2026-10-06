@@ -1,0 +1,25 @@
+{
+  "filename": "Sway_Adder_Observation_56Frames_2026-10-06.tar.xz",
+  "size_bytes": 120399736,
+  "sha256": "cc12161d4221682946f6c4c2eab260b2ee47618bf4c816d1d61a341851b4238d",
+  "measurement_date": "2026-10-06",
+  "baseline_commit": "a079d0d76e6ed850037c460c8d2a6359bbadae8c",
+  "members_verified": 57,
+  "scope": "Complete affine-adder and simultaneous multiplier measurement plus independent sharing certificates; supplied with the run report, outside Git",
+  "contents": [
+    "adder-observation/run/adder_transactions.csv",
+    "adder-observation/run/transactions.csv",
+    "adder-observation/run/adder_initializations.csv",
+    "adder-observation/run/validation.json",
+    "adder-schedule/results/assignments.csv",
+    "adder-schedule/results/window_assignments.csv",
+    "adder-schedule/results/analysis.json",
+    "adder-schedule/results/verification.json",
+    "adder-inventory/inventory.json",
+    "adder-inventory/focused-mapping.json",
+    "original mapped netlist and generated RTL",
+    "observer, analyzer, checker, inventory scripts and source provenance"
+  ],
+  "extraction": "tar -xJf Sway_Adder_Observation_56Frames_2026-10-06.tar.xz",
+  "source_identity_note": "Recorded script paths and hashes identify the measured archive versions. Repository scripts provide portable interfaces; integration validation records their reproduction."
+}

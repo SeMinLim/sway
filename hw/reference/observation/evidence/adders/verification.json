@@ -1,0 +1,30 @@
+{
+  "status": "pass",
+  "checker_imports_allocator": false,
+  "additions_independently_checked": 6515040,
+  "row_results_independently_checked": 305368,
+  "full_trace": {
+    "reservations_checked": 306258,
+    "owner_changes": 228646,
+    "minimum_idle_gap_cycles": 1,
+    "request_cycles_moved": 0,
+    "capture_cycles_moved": 0
+  },
+  "interior_window": {
+    "reservations_checked": 153140,
+    "owner_changes": 114571,
+    "minimum_idle_gap_cycles": 1,
+    "request_cycles_moved": 0,
+    "capture_cycles_moved": 0
+  },
+  "lower_bound_witnesses_checked": true,
+  "all_reserved_cycles_have_exactly_one_original_operation": true,
+  "all_original_operations_have_exactly_one_assignment": true,
+  "original_sumR_states_retained": 17,
+  "unretired_adder_operations": 0,
+  "source_sha256": {
+    "analysis": "7f2bc8245f98ae15f851f3f32e313489fb1c97b63196e4ab45480cba78e821bf",
+    "transactions": "eb0545b5d36a9a182e16e11c70b7b28652e594712739a0f378c19d9459776737",
+    "checker": "b07f8b7c1a7395e83e78d7399b02bfa14ad74322fc2e526c13c3f505fedb00b0"
+  }
+}

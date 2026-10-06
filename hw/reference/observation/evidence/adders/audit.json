@@ -1,0 +1,89 @@
+{
+  "status": "pass",
+  "scope": "Read-only independent audit of affine sumR adder inventory, passive measurement and fixed-cycle sharing certificate; no repository edits",
+  "substantive_defects_found": [],
+  "checks": {
+    "original_resource_count": "17 live INT24 affine adder circuits identified from full mapped ABC9 netlist of timestamp-equivalent current baseline RTL. Normal and final-row rules share one circuit per engine. Focused noabc9 mapping is supplementary, not the final whole-baseline mapped inventory.",
+    "arithmetic": "Signed INT24 sumR plus sign-extended signed INT16 product; bounded sum checked with 32-bit reference and captured result.",
+    "state_and_final_row": "Normal row updates sumR. Final product captures sumQ data[30:7] while separately resetting sumR. Post-edge register/FIFO1 checks cover both. Stage-local sumR remains separate in sharing model.",
+    "timestamps": "Observer uses pre-edge cycleCnt and actual WILL_FIRE rules/productQ DEQ; post-edge capture checked on falling edge. Combinational adder request and capture occur at same recorded edge; no false multiplier-style latency.",
+    "transition": "Allocator requires next start >= prior capture end + 2, leaving one full idle cycle; guard is charged after every burst, including same owner. Independent checker enforces gap >= 1.",
+    "allocation": "Maximal consecutive same-unit operations are immutable intervals. Interval coloring is matched to sweep overlap lower bound and serialized lower-bound witness. Claim valid only for measured fixed cycles and specified reservations/guard.",
+    "independent_checker": "Does not import allocator; verifies every event occupies its exact serialized cycle, every reservation cycle has one event, per-stage sumR arithmetic, lane conflicts/gaps, serialized hashes and lower-bound witnesses.",
+    "simultaneous_multiplier": "Analyzer requires multiplier trace and inventory hashes equal prior certified 45-to-25 run and links each affine addition to earlier ordered multiplier.get through original registered two-entry productQ. Both resource pools preserve original event times.",
+    "netlist_mapping": "Local Yosys synth_lattice help and focused noabc9 log place sharing/optimization and CCU2 arithmetic mapping before ABC/ABC9 LUT selection. No concrete differing-count mechanism identified for these distinct live affine operands."
+  },
+  "claim_limits": [
+    "This is a trace-derived resource schedule, not implemented shared RTL.",
+    "Shared mux/control/routing area and final shared physical timing are unmeasured.",
+    "No arbitrary-workload optimum or net FPGA area saving established."
+  ],
+  "source_sha256": {
+    "adder-observation/generate_adder_observer.py": "f6ee841338906118985eb94cdd76d82a930d8464b9c04320012a7d2e8fc4652e",
+    "adder-observation/run.py": "32c900e925f0860f053b4996dc2deab28a36ab438a0129e8618a59d6b8bdd8e3",
+    "adder-observation/run_executed.py": "a3b0208804e84a6ee9447cc31eb1a7f108dbf274c29f38e255fff4f3c383a3f2",
+    "adder-schedule/analyze.py": "f1a2e3a7f4ccaaa2dee619a41c9ece587c4f734aa5e586000eea3d80fcf3aff3",
+    "adder-schedule/verify_schedule.py": "b07f8b7c1a7395e83e78d7399b02bfa14ad74322fc2e526c13c3f505fedb00b0",
+    "adder-inventory/inventory.py": "0921765ea93c4ce786475a670c1253448e205ea2b8642b21d0e9d7ee97496890",
+    "adder-inventory/focused_mapping.py": "94e46ebff4124ab0b337f2fb88357d17d9083157c126288d5f392e342865a784",
+    "observation-complete-pinned/reproduction/analyze.py": "de56e84a1bb1073c87f425d6b87af999872a79bdf1961d71f5bafdbc9a9cc7ed",
+    "observation-complete-pinned/reproduction/generate_observer.py": "576c1f4c5fc37904c3bac7de93676e89f7a5e3995a34b786dd4ed673f52fe92d",
+    "observation-complete-pinned/snapshot/bsv/SwayLinear.bsv": "4ef45c4d9e25f1846fdbdb630f829b308ca3c82d70379da8d94e5d741380ec7a"
+  },
+  "corrected_findings": [
+    {
+      "finding": "Observer kernel-check evidence label inherited Icarus although commands executed Verilator.",
+      "resolution": "Metadata-only label correction. Exact executed script/report retained as run_executed.py and validation_executed.json; corrected script explicitly marked not rerun. No result data changed."
+    }
+  ],
+  "runtime_evidence": {
+    "baseline_adders": 17,
+    "within_stage_adders": 17,
+    "cross_stage_adders": 13,
+    "reclaimable_adders": 4,
+    "reclaimable_fraction": 0.23529411764705882,
+    "full_trace_reservations": 306258,
+    "additions_checked": 6515040,
+    "captured_results_checked": 6515040,
+    "row_results_checked": 305368,
+    "sumR_state_checks": 18020833,
+    "frames": 56,
+    "scalar_outputs_checked": 3192,
+    "output_frame_interval_cycles": 18592,
+    "independent_certificate_status": "pass",
+    "full_trace_minimum_idle_gap_cycles": 1,
+    "joint_multiplier_trace_identical": true,
+    "raw_concurrency_witness_independently_read": {
+      "cycle": 27498,
+      "unit_ids": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "operations_on_same_edge": 13
+    },
+    "minimum_scope": "For these fixed operation/capture cycles and one addition per adder per cycle, 13 actual concurrent additions impose a lower bound of 13. Verified schedule attains 13 while also leaving the required transition gap."
+  },
+  "artifact_sha256": {
+    "adder-observation/run/validation.json": "ff2c40c22241cc10babe65b8c77bece8a629e2390b49028d1266db8c1ff0abf2",
+    "adder-observation/run/validation_executed.json": "d11e2df317c34a197c3b7e940a1108ba1fcf5e1f2616c61b2fb3dfaae5bc67e8",
+    "adder-observation/run/adder_checks.json": "15cccb815760e43e5e38cc14fbc6bb02b6c87cc1be2059ae36e6ff8461dacfcd",
+    "adder-observation/run/adder_transactions.csv": "eb0545b5d36a9a182e16e11c70b7b28652e594712739a0f378c19d9459776737",
+    "adder-schedule/results/analysis.json": "7f2bc8245f98ae15f851f3f32e313489fb1c97b63196e4ab45480cba78e821bf",
+    "adder-schedule/results/verification.json": "23d44773e12b38819d89213a68e986942c3a4f7edd38bf6c785ffdeb75c24317",
+    "adder-schedule/results/assignments.csv": "511ec9b396aaeb6948fa60a6936e652e950312c30a68332bb84bc66cc6e6b694",
+    "adder-schedule/results/window_assignments.csv": "80732422028e99bf63b55387e1adb4aef72c360c314390f5abc5431892234970",
+    "adder-inventory/inventory.json": "200d798db7f0da9effe11da7ad8023dcdbf5e5f4260796366faa8740bcdbf84c",
+    "adder-inventory/focused-mapping.json": "ec7956aefd63036a4d29b2bb4cc00759262e03f5813c07a3d15cf2d76db8d93d"
+  }
+}

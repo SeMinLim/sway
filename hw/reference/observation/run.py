@@ -42,6 +42,8 @@ def main():
     parser.add_argument("--verilator", default="verilator")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--jobs", type=int, default=4)
+    parser.add_argument("--adders", action="store_true",
+                        help="Also observe the 17 affine INT24 accumulation adders")
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists():
@@ -60,6 +62,8 @@ def main():
     measurement_sources = [Path(__file__).resolve(), Path(__file__).with_name("generate_observer.py"),
                            Path(__file__).with_name("stages.json"),
                            ROOT / "reference/check_refactor.py", ROOT / "reference/check_sim.py"]
+    if args.adders:
+        measurement_sources.append(Path(__file__).with_name("generate_adder_observer.py"))
     measurement_hashes = {str(path): digest(path) for path in measurement_sources}
     report = {"status": "running", "source_sha256": hashes, "commands": [],
               "measurement_source_sha256": measurement_hashes,
@@ -99,10 +103,23 @@ def main():
     report["generated_rtl_sha256"] = digest(rtl)
     generate(rtl, output, False)
     generate(rtl, output, True)
+    if args.adders:
+        from generate_adder_observer import generate as generate_adders
+        generate_adders(rtl, output)
+        wrapper = output / "observed_top.v"
+        text = wrapper.read_text()
+        if text.count("endmodule") != 1:
+            raise AssertionError("Unexpected observer wrapper")
+        wrapper.write_text(text.replace("endmodule", "sway_adder_observer adder_observer();\nendmodule"))
+        report["adder_capture_semantics"] = (
+            "Request and result capture share one clock edge; "
+            "actual sumR or sumQ storage is checked before the next rising edge")
     compiled_inputs = [rtl, output / "control_top.v", output / "observed_top.v", output / "observer.v",
                        snapshot / "generated/GeneratedTestConfig.bsv",
                        snapshot / "generated/test_input.hex", snapshot / "generated/test_expected.hex",
                        *runtime.glob("*.v")]
+    if args.adders:
+        compiled_inputs.append(output / "adder_observer.v")
     report["compiled_input_sha256"] = {str(path): digest(path) for path in compiled_inputs}
     report_path.write_text(json.dumps(report, indent=2) + "\n")
     for observed in (False, True):
@@ -116,6 +133,8 @@ def main():
                    "-y", str(runtime), "-I" + str(runtime), str(wrapper), str(rtl)]
         if observed:
             command.append(str(observer))
+            if args.adders:
+                command.append(str(output / "adder_observer.v"))
         report["commands"].append(execute(command, snapshot, output / (label + "-build.log"), env))
         report["commands"].append(execute([str(binary_dir / "simulation")], snapshot,
                                           output / (label + ".log"), env))
@@ -142,11 +161,22 @@ def main():
     terminal = (output / "stage_waits.csv").read_text().splitlines()[-1]
     if terminal not in (f"{finish},-1,0,0", f"{finish + 1},-1,0,0"):
         raise AssertionError("Missing observer completion marker")
+    artifacts = ["control.log", "observed.log", "transactions.csv", "stage_waits.csv",
+                 "units.json", "stages.json", "observer.v"]
+    if args.adders:
+        checks = json.loads((output / "adder_checks.json").read_text())
+        # Two blocks, embedding, head-hidden, and head-output affine operations.
+        expected = 56 * (2 * 51200 + 6400 + 6400 + 1140)
+        if checks["operations"] != expected or checks["capture_checks"] != expected:
+            raise AssertionError("Incomplete affine adder operations or result captures")
+        if checks["state_checks"] != 17 * finish or checks["last_edge_cycle"] != finish - 1:
+            raise AssertionError("Incomplete affine retained-state checks")
+        report["adder_checks"] = checks
+        artifacts.extend(["adder_transactions.csv", "adder_initializations.csv",
+                          "adder_checks.json", "adder_units.json", "adder_observer.v"])
     report.update({"status": "pass", "observer_noninterference": "all SWAY records identical",
                    "baseline_sources_unchanged": True, "terminal_wait_marker": terminal,
-                   "artifact_sha256": {name: digest(output / name) for name in
-                       ("control.log", "observed.log", "transactions.csv", "stage_waits.csv",
-                        "units.json", "stages.json", "observer.v")}})
+                   "artifact_sha256": {name: digest(output / name) for name in artifacts}})
     report_path.write_text(json.dumps(report, indent=2) + "\n")
     print("SWAY_OBSERVATION_PASS frames=56 outputs=3192", flush=True)
 

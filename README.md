@@ -106,10 +106,20 @@ Run commands from the Sway repository root. The default board is ULX3S-85F.
 
 ### Observation
 
-* Unchanged divisor-4 baseline: **56 continuous frames / 3,192 outputs pass**; instrumentation preserves every output value and cycle.
-* Kernel output interval: **18,592 cycles/frame**, measured over 28 interior intervals with startup and drain excluded.
-* Trace-based scheduling supports **45 → 25 signed 18×18 multipliers**, reclaiming **20 (44.44%)** at the same output interval. Stage-confined sharing retains all 45; the reduction requires cross-stage sharing. Original request/result cycles and SRAM accesses remain fixed, with one idle transition cycle between drained reservations.
-* [Method, evidence, and reproduction](hw/reference/observation/README.md). This is a scheduling result; shared hardware area and routed timing have not been measured.
+The unchanged divisor-4 baseline passes **56 continuous frames / 3,192 outputs**
+at **18,592 cycles/frame**. Trace-based sharing preserves all output values and cycles.
+
+| Resource | Baseline | Within-stage sharing | Cross-stage sharing | Reclaimable |
+| --- | ---: | ---: | ---: | ---: |
+| Signed 18×18 multipliers | 45 | 45 | 25 | 20 (44.44%) |
+| Affine INT24 accumulation adders | 17 | 17 | 13 | 4 (23.53%) |
+
+Both schedules hold in the same execution, retaining stage-local `sumR` state,
+FIFO contents, memory accesses, and operation/result cycles. Each reservation
+leaves one full idle cycle before reuse. **6,515,040 additions** and their captured
+results pass; 13 simultaneous additions establish the fixed-cycle adder minimum.
+[Method, evidence, and reproduction](hw/reference/observation/README.md).
+Shared hardware area and routed timing have not been measured.
 
 ## Notes
 

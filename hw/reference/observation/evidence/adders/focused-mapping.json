@@ -1,0 +1,350 @@
+{
+  "status": "pass",
+  "adders": 17,
+  "creator": "Yosys 0.67+24 (git sha1 0e82bbefe, Release, Clang /usr/bin/clang++ 18.1.8)",
+  "command": [
+    "/workspace/scratch/aec1ffc44acd/tools/oss-cad-extract-20260711/oss-cad-suite/bin/yosys",
+    "-Q",
+    "-T",
+    "-p",
+    "read_verilog affine_adders.v; synth_ecp5 -top affine_adders -noabc9 -json affine_adders.json; stat"
+  ],
+  "independent_top_level_operands": true,
+  "keep_or_preserve_attributes": false,
+  "source_expressions_copied_verbatim": true,
+  "actual_full_netlist_inventory": "inventory.json",
+  "interpretation": "Focused noabc9 map confirms 17 distinct 24-bit adders for the exact arithmetic cones. Whole-baseline post-synthesis existence is established separately by inventory.json.",
+  "cell_types": {
+    "CCU2C": 204
+  },
+  "files": [
+    {
+      "path": "observation-resource-synth/build/mkTop.v",
+      "sha256": "57c3a24d23e66b6628b696957e6157da74af05c2199bb1ea232640172aa275ef"
+    },
+    {
+      "path": "failure-upload/original/mkTop.json",
+      "sha256": "228484683481ac867b61edf1ff2fecad26f98479a264c6d1fd08d69e8a0483b9"
+    },
+    {
+      "path": "adder-inventory/affine_adders.v",
+      "sha256": "cbeb7cbf2b5b4965c89fa10e541a43d6364b3aaef1b6e7bccded719deae33340"
+    },
+    {
+      "path": "adder-inventory/affine_adders.json",
+      "sha256": "f55d59441c7481bfd21f731ebdda24a68dd3d228987d8be2358d2303c95854a0"
+    },
+    {
+      "path": "adder-inventory/focused-yosys.log",
+      "sha256": "e27a268d4b05cc489c3a6ce4f9e4dee0b39f2300f5d47f15cd02ddcd1977baed"
+    }
+  ],
+  "units": [
+    {
+      "stage": "main_core_block0_bProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_bProjection_sumR_write_1__VAL_1_CCU2C_S1"
+      ]
+    },
+    {
+      "stage": "main_core_block0_cProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_cProjection_sumR_write_1__VAL_1_CCU2C_S1"
+      ]
+    },
+    {
+      "stage": "main_core_block0_deltaInputProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_1"
+      ]
+    },
+    {
+      "stage": "main_core_block0_deltaProjection_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_2"
+      ]
+    },
+    {
+      "stage": "main_core_block0_gateProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_10"
+      ]
+    },
+    {
+      "stage": "main_core_block0_mainProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_4"
+      ]
+    },
+    {
+      "stage": "main_core_block0_outputProjection_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block0_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_6"
+      ]
+    },
+    {
+      "stage": "main_core_block1_bProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_bProjection_sumR_write_1__VAL_1_CCU2C_S1_3"
+      ]
+    },
+    {
+      "stage": "main_core_block1_cProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_cProjection_sumR_write_1__VAL_1_CCU2C_S1_3"
+      ]
+    },
+    {
+      "stage": "main_core_block1_deltaInputProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_deltaInputProjection_sumR_write_1__VAL_1_CCU2C_S1_4"
+      ]
+    },
+    {
+      "stage": "main_core_block1_deltaProjection_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_deltaProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_6"
+      ]
+    },
+    {
+      "stage": "main_core_block1_gateProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_gateProjection_sumR_write_1__VAL_1_CCU2C_S1_8"
+      ]
+    },
+    {
+      "stage": "main_core_block1_mainProjection",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_block1_mainProjection_sumR_write_1__VAL_1_CCU2C_S1_8"
+      ]
+    },
+    {
+      "stage": "main_core_block1_outputProjection_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_block1_outputProjection_engine_sumR_write_1__VAL_1_CCU2C_S1_5"
+      ]
+    },
+    {
+      "stage": "main_core_embedding_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_embedding_engine_sumR_write_1__VAL_1_CCU2C_S1_2"
+      ]
+    },
+    {
+      "stage": "main_core_headHidden_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_headHidden_engine_sumR_write_1__VAL_1_CCU2C_S1_2"
+      ]
+    },
+    {
+      "stage": "main_core_headOutput_engine",
+      "adder_width": 24,
+      "mapped_carry_cells": [
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_4",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_10",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_2",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_1",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_7",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_6",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_3",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_5",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_9",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_8",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1_11",
+        "MUX_main_core_headOutput_engine_sumR_write_1__VAL_1_CCU2C_S1"
+      ]
+    }
+  ]
+}

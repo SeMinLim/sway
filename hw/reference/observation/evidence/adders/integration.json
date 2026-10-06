@@ -1,0 +1,112 @@
+{
+  "status": "pass",
+  "date": "2026-10-06",
+  "baseline_commit": "a079d0d76e6ed850037c460c8d2a6359bbadae8c",
+  "scope": "Repository packaging and reproduction of the validated affine-adder observation; no baseline hardware changes",
+  "baseline_source_sha256": {
+    "bsv/SwayBaseline.bsv": "e1e575e7b69fbefff3b370a607ba8a665537ba2cf5f622c2eee3e4638b644e32",
+    "bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayLinear.bsv": "4ef45c4d9e25f1846fdbdb630f829b308ca3c82d70379da8d94e5d741380ec7a",
+    "bsv/SwayMultiply.bsv": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+    "bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+    "bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+    "bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+    "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "generated/SwayParameters.bsv": "504e08b81b59da7356fd86123e91cb6078472a2d551b9f3528e0baff26f57b06",
+    "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "rtl/BRAM1Load.v": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
+    "rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30",
+    "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
+    "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
+  },
+  "repository_script_sha256": {
+    "run.py": "c197e97365b4347545fc9f100ae60cef556cbf5b7e7a73bd1f13929860f21542",
+    "generate_adder_observer.py": "f6ee841338906118985eb94cdd76d82a930d8464b9c04320012a7d2e8fc4652e",
+    "analyze_adders.py": "51331921501105a244905a9160f144ba1c29a5bc99e73957096586504d2a01e0",
+    "verify_adders.py": "b07f8b7c1a7395e83e78d7399b02bfa14ad74322fc2e526c13c3f505fedb00b0",
+    "inventory_adders.py": "e2928a263720082af9fe632e58397e906c9dad5424fa9aec8ef7c3a2d96ff474",
+    "focused_map_adders.py": "3c34e8fec726572dec905f2e383e4cb826e381e342bf134d13ed39b6607c2425"
+  },
+  "fresh_observation": {
+    "frames": 56,
+    "scalar_outputs": 3192,
+    "adder_checks": {
+      "operations": 6515040,
+      "capture_checks": 6515040,
+      "state_checks": 18020833,
+      "last_edge_cycle": 1060048
+    },
+    "replay": {
+      "status": "pass",
+      "original_observation": "/workspace/scratch/aec1ffc44acd/adder-observation/run",
+      "repository_run": "/workspace/scratch/aec1ffc44acd/adder-integration-validation",
+      "identical_artifacts": {
+        "adder_transactions.csv": "eb0545b5d36a9a182e16e11c70b7b28652e594712739a0f378c19d9459776737",
+        "adder_initializations.csv": "2210ac132d00ca0ffa6645404a44387e0602ff6921cc7e496d48a5043d8bf214",
+        "adder_units.json": "34f3fe2cba87af80d35435f2013cf0f40deb39bdccbb4cabae98a45f8c46d4e2",
+        "adder_checks.json": "15cccb815760e43e5e38cc14fbc6bb02b6c87cc1be2059ae36e6ff8461dacfcd",
+        "adder_observer.v": "d15c77b56466333e057666305023f915816d5c83adc60d25d2d11ec59d9f7dbe",
+        "transactions.csv": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+        "stage_waits.csv": "03873c13979895e4c2119a5c98bf11e63faac2adb76a7432a625eb85eb9a1477",
+        "units.json": "aeeb3fc3ca2ceb0773c08efb654608ee87a4c987118818158a45b927effc0aa8",
+        "stages.json": "0d6cd6e03d6a0886504c29aa62f72e24361923d423745c65f9a90886d44075d4",
+        "observer.v": "5e8ef560576e337757c158f1714fa88179051ac2672b1d098b93481c2933e80c"
+      },
+      "identical_kernel_records": 3305,
+      "baseline_source_sha256_identical": true,
+      "recovery_used": true
+    },
+    "validation_report": "reproduction-validation.json",
+    "validation_report_sha256": "2f476be8788748dff7d2495eb7f64d1d1f7cdfb7b90c54802ca85e699e4d2fe5"
+  },
+  "analyzer_and_checker_reproduction": {
+    "status": "pass",
+    "analysis_semantics_identical": true,
+    "serialized_certificates_byte_identical": true,
+    "certificate_sha256": {
+      "assignments.csv": "511ec9b396aaeb6948fa60a6936e652e950312c30a68332bb84bc66cc6e6b694",
+      "window_assignments.csv": "80732422028e99bf63b55387e1adb4aef72c360c314390f5abc5431892234970"
+    },
+    "changed_source_hashes": {
+      "analyzer": {
+        "original": "f1a2e3a7f4ccaaa2dee619a41c9ece587c4f734aa5e586000eea3d80fcf3aff3",
+        "integrated": "51331921501105a244905a9160f144ba1c29a5bc99e73957096586504d2a01e0"
+      }
+    },
+    "parser_prior_defaults_verified": true,
+    "independent_checker_semantics_identical": true,
+    "independent_checker_status": "pass"
+  },
+  "mapped_inventory_reproduction": {
+    "full_inventory": {
+      "status": "pass",
+      "adders": 17,
+      "width": 24,
+      "total_distinct_carry_cells": 204,
+      "report_sha256": "97d94907ebbff20a94834eae7ed4c388e2e32ea157d56da796df0367bb6e33b8"
+    },
+    "focused_noabc9": {
+      "status": "pass",
+      "adders": 17,
+      "width": 24,
+      "total_distinct_carry_cells": 204,
+      "report_sha256": "806b2d91aa30dccc3b8eda26e1662ad27c04324711186fcaedb72b7ef3000704"
+    },
+    "default_mapped_rtl": {
+      "status": "pass",
+      "adders": 17,
+      "width": 24,
+      "total_distinct_carry_cells": 204,
+      "report_sha256": "bf82f93a235167a83b46566b0a953773e36176c956e659df9328066893449c9e"
+    }
+  },
+  "existing_observation_regression_tests": {
+    "command": "python3 -m unittest discover -s hw/reference/observation -p 'test_*.py'",
+    "tests": 16,
+    "status": "pass"
+  },
+  "readme_links_checked": true,
+  "git_diff_check": "pass"
+}

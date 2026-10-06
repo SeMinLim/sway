@@ -1,0 +1,1698 @@
+{
+  "status": "pass",
+  "source_sha256": {
+    "bsv/SwayBaseline.bsv": "e1e575e7b69fbefff3b370a607ba8a665537ba2cf5f622c2eee3e4638b644e32",
+    "bsv/SwayBlock.bsv": "eea28575bb9ef9220d0415e5661a4f5276c198b4251ea5d00dbf19c7c5bb69ce",
+    "bsv/SwayClock.bsv": "0837c9f0c98e67e2b933a3d411342a05e4f15fd36f03ac44f297e871cc652c81",
+    "bsv/SwayLinear.bsv": "4ef45c4d9e25f1846fdbdb630f829b308ca3c82d70379da8d94e5d741380ec7a",
+    "bsv/SwayMultiply.bsv": "4372d3eae264cb12817051eb6f1795c8e0b7f3eea1b267b7ba4c8174e4b14992",
+    "bsv/SwayNorm.bsv": "e6d745634fea68b52e4a3e4cba195d83be1bcc57d57b05a11fd88b2bb440eb5f",
+    "bsv/SwayScan.bsv": "2b9d1c22030869a1abffc3ad4fdbff8a468111fa17e136f21bae4c17ee0d275e",
+    "bsv/SwayTypes.bsv": "5921edce99813d9c590c61496721d659a1a4b424bef837024518f2721ec67607",
+    "generated/GeneratedTestConfig.bsv": "74aee8f80bda41ec1aef155a909cc21a1810e581b330e0dcd43f251e2c06ffa6",
+    "generated/SwayParameters.bsv": "504e08b81b59da7356fd86123e91cb6078472a2d551b9f3528e0baff26f57b06",
+    "generated/test_expected.hex": "f47029ab9b036f15f2eda3ee53451d524d54b4c35df49d6737513d8362e15158",
+    "generated/test_input.hex": "0d4c15face2920f62ebfd43363ed027e36943abd3377d2fd234eacbebc7fe59a",
+    "rtl/BRAM1Load.v": "9f0ea8d784d9865b4c6c5a97ff20f1689c5b963072a98b9c975870d903091fa4",
+    "rtl/sway_mult18x18d.v": "5e7a8be0f9cfce25f7b9546140fae909a09b2c7f0cb90fb6d27f5800a146ad30",
+    "sim/TbSway.bsv": "8bc228c8fcb5933c40c19bdd70e7ae2dd8411d80c6ba1c2d0fd3d75f3a98c1d5",
+    "sim/TbSwayKernel.bsv": "d2876467c1191ff993170eec4a9e2ffa3b46fab900728c097fcfb063bfe3603e"
+  },
+  "measurement_source_sha256": {
+    "/workspace/scratch/aec1ffc44acd/adder-observation/generate_adder_observer.py": "f6ee841338906118985eb94cdd76d82a930d8464b9c04320012a7d2e8fc4652e",
+    "/workspace/scratch/aec1ffc44acd/observation-complete-pinned/reproduction/generate_observer.py": "576c1f4c5fc37904c3bac7de93676e89f7a5e3995a34b786dd4ed673f52fe92d",
+    "/workspace/scratch/aec1ffc44acd/observation-complete-pinned/reproduction/stages.json": "e9102fe34b92d1678433e00e01771260881d96c706d8fc6bc4b7c2a30d8f86a1",
+    "/workspace/scratch/aec1ffc44acd/sway-observation-current/hw/reference/check_refactor.py": "9f560de534e3b6b409a61ff5d568cfa7a1ed151b56b84bb8d52f53663c21a79b",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run_executed.py": "a3b0208804e84a6ee9447cc31eb1a7f108dbf274c29f38e255fff4f3c383a3f2",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run.py": "32c900e925f0860f053b4996dc2deab28a36ab438a0129e8618a59d6b8bdd8e3"
+  },
+  "commands": [
+    {
+      "command": [
+        "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/bin/bsc",
+        "-verilog",
+        "-bdir",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build",
+        "-vdir",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build",
+        "-info-dir",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build",
+        "-p",
+        "+:bsv:generated:sim",
+        "-u",
+        "-show-schedule",
+        "-g",
+        "mkTbSwayKernel",
+        "sim/TbSwayKernel.bsv"
+      ],
+      "reused_completed_compilation": true,
+      "log_sha256": "c2e3b537c31d6139258c7a266bae4242f311eeb0221adba094ff405bd04fb2c7"
+    },
+    {
+      "command": [
+        "/workspace/scratch/aec1ffc44acd/tools/observation-tools/bin/verilator",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "observation_top",
+        "-Wno-fatal",
+        "-Wno-STMTDLY",
+        "--output-split",
+        "10000",
+        "--output-split-cfuncs",
+        "100",
+        "-j",
+        "3",
+        "--Mdir",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/control_obj",
+        "-o",
+        "simulation",
+        "-y",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/rtl",
+        "-y",
+        "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog",
+        "-I/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/control_top.v",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build/mkTbSwayKernel.v"
+      ],
+      "seconds": 20.22898006439209,
+      "log_sha256": "83f72447c22f1f624e5303f3899161306b5736577d2ce5a2a685b524d830eca3"
+    },
+    {
+      "command": [
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/control_obj/simulation"
+      ],
+      "seconds": 20.44138813018799,
+      "log_sha256": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67"
+    },
+    {
+      "command": [
+        "/workspace/scratch/aec1ffc44acd/tools/observation-tools/bin/verilator",
+        "--binary",
+        "--timing",
+        "--top-module",
+        "observation_top",
+        "-Wno-fatal",
+        "-Wno-STMTDLY",
+        "--output-split",
+        "10000",
+        "--output-split-cfuncs",
+        "100",
+        "-j",
+        "3",
+        "--Mdir",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/observed_obj",
+        "-o",
+        "simulation",
+        "-y",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/rtl",
+        "-y",
+        "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog",
+        "-I/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/observed_top.v",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build/mkTbSwayKernel.v",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/observer.v",
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/adder_observer.v"
+      ],
+      "seconds": 20.565648078918457,
+      "log_sha256": "6fad04b79943bdf509df655e0dac1aa4de3f6e6e4fbcb89d43a75b076ba78e81"
+    },
+    {
+      "command": [
+        "/workspace/scratch/aec1ffc44acd/adder-observation/run/observed_obj/simulation"
+      ],
+      "seconds": 51.62112379074097,
+      "log_sha256": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67"
+    }
+  ],
+  "frames": 56,
+  "input_repetitions": 4,
+  "scope": "Passive generated-Verilog trace, not shared hardware implementation",
+  "capture_semantics": "Adder request and result capture share one clock edge; post-edge storage checked before next rising edge",
+  "tool_versions": {
+    "bsc": "Bluespec Compiler, version 2025.07 (build 282e82e9)\nThis is free software; for source code and copying conditions, see\nhttps://github.com/B-Lang-org/bsc\n\nInvoking command line:\nbsc -v\n\n",
+    "verilator": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)\n"
+  },
+  "prior_rtl_comparison": {
+    "status": "pass",
+    "prior_sha256": "19a54b9c9e07c4a907ed94097c46f35e88dc2640d9be688828dd925626edc3aa",
+    "new_sha256": "b54a136ba792bfb16f24abe7acb4461edf3ed4a57fd57e2003157920fa81f4aa",
+    "differing_lines_1_based": [
+      4
+    ],
+    "only_difference": "Compiler timestamp comment on line 4",
+    "prior_timestamp": "// On Wed Sep 30 00:29:43 EDT 2026",
+    "new_timestamp": "// On Tue Oct  6 12:19:31 JST 2026"
+  },
+  "generated_rtl_sha256": "b54a136ba792bfb16f24abe7acb4461edf3ed4a57fd57e2003157920fa81f4aa",
+  "compiled_input_sha256": {
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/build/mkTbSwayKernel.v": "b54a136ba792bfb16f24abe7acb4461edf3ed4a57fd57e2003157920fa81f4aa",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/control_top.v": "1d21ad41198274326566277c9403d5c8c3941035e06a3b9d6f95d5555bfa02ab",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/observed_top.v": "642b0ffbb2ef41ed883e8e6e34186ea89a9d20edbaaa935aee5f8324529df5c9",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/adder_observer.v": "d15c77b56466333e057666305023f915816d5c83adc60d25d2d11ec59d9f7dbe",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/observer.v": "5e8ef560576e337757c158f1714fa88179051ac2672b1d098b93481c2933e80c",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/generated/test_input.hex": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "/workspace/scratch/aec1ffc44acd/adder-observation/run/snapshot/generated/test_expected.hex": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncBit1.v": "da94f32a036397d2ad794731be75bd3ca2e7fd88db66281f375125f417def74e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ResetToBool.v": "421b9ef46f2f90fa27f9d0d3a6e539a9b1ab3f57ae1ef8be50df167425c3f22c",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegA.v": "8525f2b765ddc7c1321320f4fb1c254356e0eee8c115d26771e72005bb4d418d",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/GatedClockInverter.v": "8145e7d634e10c8cf9b573eda804141d9784e01cd42244ddf72caf09b6674463",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/main.v": "181132cca24dd4af60ec664a7a51579d265de7af2865e1b1e84be3733b5c9f16",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegTwoUN.v": "5b61388165f9d8c34d019a5907c62225db0d6d09515c0a06e80b3fd3cb14792f",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/Empty.v": "c44e356a625ad6855df4a5f23670ce4ff501e43c1fdf2b838394be53b82ae701",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM1.v": "e5f0aeabcdcc0f5788abfc0786f4178fea1ab3e931eff24be408c6229555e5d4",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ClockMux.v": "74a4a74d710b1366f2da416c92d4d42b235cb3d17815cb03430d1343583a831a",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegN.v": "74c1317a4545a53793bed91838ed64a63aaabd603d0b350c4bcd29cad5e4d92d",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeHook.v": "3c2da4c1cbac7ae8545d0e252f0fff6889e999f56af05146c07970235ec01352",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/MakeResetA.v": "735d9de8b7da0931c92e982d0d904fc4f3eae636ab16cd92cb0cf2d8d458458b",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncHandshake.v": "2f7d135ad312bc61a4f5a0d27d1c0476dcdf19f289a01d5195d86bf9455e5f68",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM1BE.v": "51e1c1c762937c6e260869020ff1542d20df0e71f4f606721a8b022fe5b328af",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFOLevel.v": "cd6c385dde38ee15fc96afcc4b507b3e4eb1457d8cbe1bd861828e7ba1fb27ab",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SizedFIFO0.v": "29a75e6e7b90a66ee8afea6bdc23d79d5b23170b1fdc0a512d1a06a55383b03f",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/MakeReset.v": "5e7f6a11a964edac3fd3f3a61d3550f2e0009ec79e4f5b791228b400f3052a5e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/DualPortRam.v": "8cb10d6fa081a25677e3ea7258d724023b780d4a428fa3b4ccf83c1efae8a22f",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeMux.v": "b42817e27d1c6207d3ba270adaf3730afd155a06c9f8ab54b219ff0d3100e80c",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncRegister.v": "b59fe959811d7381eac944ceb751a71867d95c7972c1d20590a6a3a484d36111",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/Fork.v": "fcf6915e220c924802b11db4a6984ea5910be926947a164bf8df95ffb826b96d",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CrossingRegN.v": "22ea871dd237c88843f89a04f3287be21512e52dd10c2773819c97dee880e039",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegUN.v": "e2c7afcc02d27beb8edb72faae77ddd992a1f7ab8dbaaac7ea249483f368aeef",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RevertReg.v": "a919dec21d4d6f1a0eac547e4f536dc3757abc8f9b71e843c40fba90b764c6dc",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncReset0.v": "6249267b0c6785509be0a7b9962e214d5174d318edfb1c7791a29bc17fcf1bdd",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncBit05.v": "3ad8a19d7edd6e17b8307e55614c6ebdc8b4ecabdd846f96f89e6bf1168e53ad",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BypassWire.v": "e2c14f2d09c381f893d8e87720c04c586e53ebfe9c99cb726b99d02bbb299c95",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CRegN5.v": "a430d2c1a714543ba11d1e7fb47a4601b1f7e27c0eeec5fc97bbf46e0549cf6c",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/UngatedClockSelect.v": "8f59146c0f14f3f7f273d85be6e0b7d4bdb969251970eac791d31b0349314d8b",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFO10.v": "93f8ba7db340da570b7e3eb8b66584dfe829051483257e12d89a84074f15173a",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/TriState.v": "a36d1bf76441807d6c3061ebfba5a0ae77751ca629c7f3d3467dad4073993d4b",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConfigRegN.v": "8168602aeaefa221b2cadc835c1f5c9a4ad875990b6a05a401e9d8ddcf3653c8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFO20.v": "493006bf2ed5451e5c8286208ef0026674129c95ad9ede6b9f6495aa3144518f",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/InitialReset.v": "eb832d05e867f1966a254f393bf315d2855f42e2900217625c5f44d8843fe2be",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/MakeClock.v": "42558c04562299e192645c3d2b517856c1b5280e33c2cca6ae8ef6eca33841d0",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFOL1.v": "8c10a0981d80d17e88a8a7bd3df062f68fe6ea48a387ad5257eaa1aa1b668245",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegTwoN.v": "38aa42d2ecf69c18f4dc0a054d1413dceb4fb8067a36429ac9c52f9f8ac3fc3d",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegFileLoad.v": "71555757cdf742b318e363d9c7cc68f9d35b51db7a7b02c88a39e9d238a6fe9e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConvertToZ.v": "a60236ca15d6e79229b2f2793db216f8ae4adac908c972d86814707a46e914e1",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegTwoA.v": "273984d5301fe32d0ab1a7ce045bf3f1b51859ef7f5d3843b552adc0cd06db1b",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFO1.v": "e65e575bcb6a90e2b361184caccd8fe757c2e5fdd3f32f65e28050b1d83dd783",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM2.v": "cd70c2576f949231975373b60270b1428c4fe7b247e0213796edd7893cbd5bbf",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFOL2.v": "1904548b83630c552809aad561e11c70edbd430b252ca8e10de64847c0ec0c0e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ResolveZ.v": "c346c22d550cf938602b1d854850dae31f18b6ec4809204b140f9f75a2fd6fd1",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFO1.v": "407cdce6b37ade0beb22d59a308d05a5c29a0bcb98f29d028505dd08086b1e34",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SizedFIFO.v": "81c228fe5eac8ef039c61eb484bbe83497bc6847bee30d8778a2df880cc991d8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFOL10.v": "2fcbdd721881d3ae86b174edb01fe0ad8aaef10601d563d968cec3424be5d349",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeCapture.v": "16854d1d482e3af175bfb3c787104f89b9af7b0971d7be1b0b29d11e3ec85b9e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncResetA.v": "b950607e990775635067ca060368f00617b54858c6433e7de788e95357612a8f",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CRegA5.v": "ad03aca1511cc74e3334e9d90d18bada87c7366c0fb4c3438349ee929985fff5",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BypassWire0.v": "4ce98bd9f62c29f4e5f9a7aec23ca9ddc0d5d4904937433cac44aac3941e1284",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncPulse.v": "93c4b2589faa8e3a1f41e99e3e43a91e0e2728610015c523a5d17baba3a0d63e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/MakeReset0.v": "b86c6dac83783929c9be1f30a049d5c0f39963d67dc1453bac6b7ca000d1ba42",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM2BE.v": "b421adbb646c9ab675602c4d0c96b0f25aa2a10906026cf50205bce6beadaf28",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SampleReg.v": "1d0850221791c094610a18dc213e2d2ecf464fc60ce831f51d5679310a1bc635",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RWire.v": "c01556414f8801a33187af3b4283d8cc68908469798a7b480d80754097c3e1b3",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncBit15.v": "54069009b400a4254292639e3521893ddcbf3150aac5ed8c5c0619fc824f5a76",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SizedFIFOL.v": "db5a81c73d0bbc506d52a0bfde172b46b9cb254a4c93db9c5bced138e23e3da9",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CrossingRegA.v": "d7523f428877c9ba3d08e95e5e147b063de818cd3f0854494f76da98d3a97569",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFO.v": "ef38fd61ce276220ac2c0ab44f334bef6f02c1138b83523302d9df733b9127ce",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ResetEither.v": "95aaa149f3b14ddbbb2bc76435e8a37eb9f6f1b1f46aede62c7b9ed5ee4d48f5",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ClockInverter.v": "054f34490cf0e862ae6a3474a35a03100370b1a40e3e719dbfa30b1a4bb59b4e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConfigRegA.v": "bd004b0fb4087765d0dec8d54b5477898c4f789dd01b15b456f7cab595ed7a7d",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/InoutConnect.v": "4bba8652d588472f1b768d5c5ad230ad70ef430d6e42e9859e569e4cd82f6d94",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFO0.v": "d9e2a3d589c54d63b0acfb31dbaa26b0c41d7000e04dbd509864b11d7abe3ad3",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/GatedClockDiv.v": "c831905e7d8fd0032635091f40cc59dbe27f1c1c5ab24168c219f0b90dd69896",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConfigRegUN.v": "60f37aec4be867088c69fad10837e6ee24b9e4068babf8022c1376d87c542d06",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ClockDiv.v": "eb01c6b20fd73274bce3dd0f28b29e065b7f98f7f05434bce4d16ffb7f2ea973",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CrossingBypassWire.v": "97c250829aa76b058174ad8aaf8d04e485d4100cbf395d07fc38670e26d0fc52",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConstrainedRandom.v": "5665035e7d4fc03e76d3329c146f37634c0cbbcf533e88c7a1b525ffecf95903",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncReset.v": "25cdf454e9e6acea25d2a3e823eb2b05f4221ed4ef9c53180cc1fe842c7497a8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ScanIn.v": "2d682edff83b301a912383ccf97b3e93ccd400e7459d6bb1bbe63018e1e8b9cd",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFOL20.v": "795f852aec8cf4559dd9677d35d252b6bc8bd9e37117619474e8efcb31bfd2d3",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ClockGen.v": "77ab773b3b76d2423ad91ca1c38a4fbe603114e804138246d69ff5567324e7b8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ResetInverter.v": "34d4347e3c72294ec1bfd1e63f2faf6511c97750d4f4e3621bf2c39347647383",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegFile.v": "7de616d2aff8b2411994abadf3876aba8bd64e753741c73d2c0ea19fff0a7db8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/Counter.v": "a879abde58fc72ccbabd5fee05dee150d868fd34df26e7371665147e3d8fcec4",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/McpRegUN.v": "01239649e1838fe17ee846ef4d0e2e3979e3dda537e0ddde624585908e7407ec",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SizedFIFOL0.v": "17ea66458c377a2002b79cee841e06ec35ac2a0146abc1f2407785b93fdc6547",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncWire.v": "93338818d2279164b55d7d4ce5f103edfdecb84c9a81a02f4f6cbf0f2fabf4a8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM2Load.v": "bafec004ed8c32cfdfe7b85ee8a8c9c2f374cf0a7c101d84dd28b1707e5a9451",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM1BELoad.v": "db5466ef57bf582d0b1af6e0e368e744828f5482e4a1b61ae395b0e075e05089",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CRegUN5.v": "d54a6278eda14ec1bcf28a17cd3066131616b2e3e84cbd3115b166ce6034fb6e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ResetMux.v": "83795654168846065eecd5c95c4744fecf6925ac8449cb2cfc155ef1c775c78e",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFO2.v": "bae0481cc69aabde2254b50e3d80bf0a7b6af6ccf27cd981c4b1154c7a848384",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeTrigger.v": "bb1457fbc33a0601382aedaeb5a1faa5bfe67e6e9dadd82c9d7cd9c7dd4f93d5",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM2BELoad.v": "1b10e96f24702cab3f5f2588f480727f1bbf49973b0ec6a2e3fc668452e99885",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/GatedClock.v": "eaee465671578bc62ce565bff745536dddaaac0cfe80f09740d7fe785d37f827",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/CrossingRegUN.v": "a6766ce261f165de9ec6256c51d38655e69860d7955eaa93676ea1d092adadca",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RWire0.v": "4f8c24c3091e951725c265bf1dc2882f6b1003bafcb3fd8d4c30fb10943c1ff8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ClockSelect.v": "9c6b0881f808352c25645c0566b6b52d6ddb15de9d81226085278d9184f24e51",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/UngatedClockMux.v": "57d3756101dee32570ccc68abcbc8aa58a5ea549c09a73949bb06dba47f7f0e1",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ConvertFromZ.v": "aeb0ff2dd93d01309256bcfc446eda186dd211a45e39a529a952de523139db29",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/LatchCrossingReg.v": "15e6c25697483bca9d3c2863ffc865e980a6851240b040ce4b5f3671fd884bc8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncBit.v": "be4d3b8f9e285bf6dc2baa489da046a59acaebc313afc1bedda782607bb73d72",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeWire.v": "1615621e47c506a3e8103ef4263aa71d0cd8630febd0dbaefeb63b6eccbdb083",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/FIFO10.v": "16d99fe9849aca9a89d4752d09afbb6d37448830c0d8148c94cfa421eabaa266",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BRAM1Load.v": "a2cad18de3f5dec8439bef9c66833e8f7b49edd5c73784856d6d705d440f27a2",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/RegAligned.v": "93b962c25f10305a4f1365686dd62472a12a76b348ab06bc30f9c12cb498864b",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/SyncFIFOLevel0.v": "45121556793493bdb3859b1d1d40ebb4242881237f1532ed2e369512b360b9a8",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/BypassCrossingWire.v": "f6668b0e18ca9ff67333cb1bc1931a6ff6f37249f36a77883933a552274074d3",
+    "/workspace/scratch/aec1ffc44acd/tools/bsc-2025.07-ubuntu-24.04/lib/Verilog/ProbeValue.v": "2b85b59eaea1e53948c34ba58c6dc018dc348ba7ed98c35c3085134224203e09"
+  },
+  "control": {
+    "status": "pass",
+    "evidence": "generated-Verilog simulation (Verilator)",
+    "frames_checked": 56,
+    "scalar_outputs_checked": 3192,
+    "input_words": 17920,
+    "finish_cycle": 1060049,
+    "post_completion_drain_cycles": 2048,
+    "source_bubbles": "none inserted",
+    "sink_stalls": "none inserted",
+    "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+    "output_frame_start_intervals_cycles": [
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592
+    ],
+    "repeated_frame_pairs_checked": [
+      [
+        0,
+        12
+      ],
+      [
+        0,
+        13
+      ],
+      [
+        0,
+        14
+      ],
+      [
+        1,
+        15
+      ],
+      [
+        2,
+        16
+      ],
+      [
+        3,
+        17
+      ],
+      [
+        4,
+        18
+      ],
+      [
+        5,
+        19
+      ],
+      [
+        6,
+        20
+      ],
+      [
+        7,
+        21
+      ],
+      [
+        8,
+        22
+      ],
+      [
+        9,
+        23
+      ],
+      [
+        10,
+        24
+      ],
+      [
+        11,
+        25
+      ],
+      [
+        0,
+        26
+      ],
+      [
+        0,
+        27
+      ],
+      [
+        0,
+        28
+      ],
+      [
+        1,
+        29
+      ],
+      [
+        2,
+        30
+      ],
+      [
+        3,
+        31
+      ],
+      [
+        4,
+        32
+      ],
+      [
+        5,
+        33
+      ],
+      [
+        6,
+        34
+      ],
+      [
+        7,
+        35
+      ],
+      [
+        8,
+        36
+      ],
+      [
+        9,
+        37
+      ],
+      [
+        10,
+        38
+      ],
+      [
+        11,
+        39
+      ],
+      [
+        0,
+        40
+      ],
+      [
+        0,
+        41
+      ],
+      [
+        0,
+        42
+      ],
+      [
+        1,
+        43
+      ],
+      [
+        2,
+        44
+      ],
+      [
+        3,
+        45
+      ],
+      [
+        4,
+        46
+      ],
+      [
+        5,
+        47
+      ],
+      [
+        6,
+        48
+      ],
+      [
+        7,
+        49
+      ],
+      [
+        8,
+        50
+      ],
+      [
+        9,
+        51
+      ],
+      [
+        10,
+        52
+      ],
+      [
+        11,
+        53
+      ],
+      [
+        0,
+        54
+      ],
+      [
+        0,
+        55
+      ]
+    ],
+    "input_sha256": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "expected_sha256": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "log_sha256": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "frames": [
+      {
+        "frame": 0,
+        "input_first_cycle": 0,
+        "input_last_cycle": 319,
+        "output_first_cycle": 35384,
+        "output_last_cycle": 35440,
+        "first_input_to_last_output_cycles": 35440
+      },
+      {
+        "frame": 1,
+        "input_first_cycle": 320,
+        "input_last_cycle": 639,
+        "output_first_cycle": 53976,
+        "output_last_cycle": 54032,
+        "first_input_to_last_output_cycles": 53712
+      },
+      {
+        "frame": 2,
+        "input_first_cycle": 640,
+        "input_last_cycle": 13044,
+        "output_first_cycle": 72568,
+        "output_last_cycle": 72624,
+        "first_input_to_last_output_cycles": 71984
+      },
+      {
+        "frame": 3,
+        "input_first_cycle": 13045,
+        "input_last_cycle": 31636,
+        "output_first_cycle": 91160,
+        "output_last_cycle": 91216,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 4,
+        "input_first_cycle": 31637,
+        "input_last_cycle": 50228,
+        "output_first_cycle": 109752,
+        "output_last_cycle": 109808,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 5,
+        "input_first_cycle": 50229,
+        "input_last_cycle": 68820,
+        "output_first_cycle": 128344,
+        "output_last_cycle": 128400,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 6,
+        "input_first_cycle": 68821,
+        "input_last_cycle": 87412,
+        "output_first_cycle": 146936,
+        "output_last_cycle": 146992,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 7,
+        "input_first_cycle": 87413,
+        "input_last_cycle": 106004,
+        "output_first_cycle": 165528,
+        "output_last_cycle": 165584,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 8,
+        "input_first_cycle": 106005,
+        "input_last_cycle": 124596,
+        "output_first_cycle": 184120,
+        "output_last_cycle": 184176,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 9,
+        "input_first_cycle": 124597,
+        "input_last_cycle": 143188,
+        "output_first_cycle": 202712,
+        "output_last_cycle": 202768,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 10,
+        "input_first_cycle": 143189,
+        "input_last_cycle": 161780,
+        "output_first_cycle": 221304,
+        "output_last_cycle": 221360,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 11,
+        "input_first_cycle": 161781,
+        "input_last_cycle": 180372,
+        "output_first_cycle": 239896,
+        "output_last_cycle": 239952,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 12,
+        "input_first_cycle": 180373,
+        "input_last_cycle": 198964,
+        "output_first_cycle": 258488,
+        "output_last_cycle": 258544,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 13,
+        "input_first_cycle": 198965,
+        "input_last_cycle": 217556,
+        "output_first_cycle": 277080,
+        "output_last_cycle": 277136,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 14,
+        "input_first_cycle": 217557,
+        "input_last_cycle": 236148,
+        "output_first_cycle": 295672,
+        "output_last_cycle": 295728,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 15,
+        "input_first_cycle": 236149,
+        "input_last_cycle": 254740,
+        "output_first_cycle": 314264,
+        "output_last_cycle": 314320,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 16,
+        "input_first_cycle": 254741,
+        "input_last_cycle": 273332,
+        "output_first_cycle": 332856,
+        "output_last_cycle": 332912,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 17,
+        "input_first_cycle": 273333,
+        "input_last_cycle": 291924,
+        "output_first_cycle": 351448,
+        "output_last_cycle": 351504,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 18,
+        "input_first_cycle": 291925,
+        "input_last_cycle": 310516,
+        "output_first_cycle": 370040,
+        "output_last_cycle": 370096,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 19,
+        "input_first_cycle": 310517,
+        "input_last_cycle": 329108,
+        "output_first_cycle": 388632,
+        "output_last_cycle": 388688,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 20,
+        "input_first_cycle": 329109,
+        "input_last_cycle": 347700,
+        "output_first_cycle": 407224,
+        "output_last_cycle": 407280,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 21,
+        "input_first_cycle": 347701,
+        "input_last_cycle": 366292,
+        "output_first_cycle": 425816,
+        "output_last_cycle": 425872,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 22,
+        "input_first_cycle": 366293,
+        "input_last_cycle": 384884,
+        "output_first_cycle": 444408,
+        "output_last_cycle": 444464,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 23,
+        "input_first_cycle": 384885,
+        "input_last_cycle": 403476,
+        "output_first_cycle": 463000,
+        "output_last_cycle": 463056,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 24,
+        "input_first_cycle": 403477,
+        "input_last_cycle": 422068,
+        "output_first_cycle": 481592,
+        "output_last_cycle": 481648,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 25,
+        "input_first_cycle": 422069,
+        "input_last_cycle": 440660,
+        "output_first_cycle": 500184,
+        "output_last_cycle": 500240,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 26,
+        "input_first_cycle": 440661,
+        "input_last_cycle": 459252,
+        "output_first_cycle": 518776,
+        "output_last_cycle": 518832,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 27,
+        "input_first_cycle": 459253,
+        "input_last_cycle": 477844,
+        "output_first_cycle": 537368,
+        "output_last_cycle": 537424,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 28,
+        "input_first_cycle": 477845,
+        "input_last_cycle": 496436,
+        "output_first_cycle": 555960,
+        "output_last_cycle": 556016,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 29,
+        "input_first_cycle": 496437,
+        "input_last_cycle": 515028,
+        "output_first_cycle": 574552,
+        "output_last_cycle": 574608,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 30,
+        "input_first_cycle": 515029,
+        "input_last_cycle": 533620,
+        "output_first_cycle": 593144,
+        "output_last_cycle": 593200,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 31,
+        "input_first_cycle": 533621,
+        "input_last_cycle": 552212,
+        "output_first_cycle": 611736,
+        "output_last_cycle": 611792,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 32,
+        "input_first_cycle": 552213,
+        "input_last_cycle": 570804,
+        "output_first_cycle": 630328,
+        "output_last_cycle": 630384,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 33,
+        "input_first_cycle": 570805,
+        "input_last_cycle": 589396,
+        "output_first_cycle": 648920,
+        "output_last_cycle": 648976,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 34,
+        "input_first_cycle": 589397,
+        "input_last_cycle": 607988,
+        "output_first_cycle": 667512,
+        "output_last_cycle": 667568,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 35,
+        "input_first_cycle": 607989,
+        "input_last_cycle": 626580,
+        "output_first_cycle": 686104,
+        "output_last_cycle": 686160,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 36,
+        "input_first_cycle": 626581,
+        "input_last_cycle": 645172,
+        "output_first_cycle": 704696,
+        "output_last_cycle": 704752,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 37,
+        "input_first_cycle": 645173,
+        "input_last_cycle": 663764,
+        "output_first_cycle": 723288,
+        "output_last_cycle": 723344,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 38,
+        "input_first_cycle": 663765,
+        "input_last_cycle": 682356,
+        "output_first_cycle": 741880,
+        "output_last_cycle": 741936,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 39,
+        "input_first_cycle": 682357,
+        "input_last_cycle": 700948,
+        "output_first_cycle": 760472,
+        "output_last_cycle": 760528,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 40,
+        "input_first_cycle": 700949,
+        "input_last_cycle": 719540,
+        "output_first_cycle": 779064,
+        "output_last_cycle": 779120,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 41,
+        "input_first_cycle": 719541,
+        "input_last_cycle": 738132,
+        "output_first_cycle": 797656,
+        "output_last_cycle": 797712,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 42,
+        "input_first_cycle": 738133,
+        "input_last_cycle": 756724,
+        "output_first_cycle": 816248,
+        "output_last_cycle": 816304,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 43,
+        "input_first_cycle": 756725,
+        "input_last_cycle": 775316,
+        "output_first_cycle": 834840,
+        "output_last_cycle": 834896,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 44,
+        "input_first_cycle": 775317,
+        "input_last_cycle": 793908,
+        "output_first_cycle": 853432,
+        "output_last_cycle": 853488,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 45,
+        "input_first_cycle": 793909,
+        "input_last_cycle": 812500,
+        "output_first_cycle": 872024,
+        "output_last_cycle": 872080,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 46,
+        "input_first_cycle": 812501,
+        "input_last_cycle": 831092,
+        "output_first_cycle": 890616,
+        "output_last_cycle": 890672,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 47,
+        "input_first_cycle": 831093,
+        "input_last_cycle": 849684,
+        "output_first_cycle": 909208,
+        "output_last_cycle": 909264,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 48,
+        "input_first_cycle": 849685,
+        "input_last_cycle": 868276,
+        "output_first_cycle": 927800,
+        "output_last_cycle": 927856,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 49,
+        "input_first_cycle": 868277,
+        "input_last_cycle": 886868,
+        "output_first_cycle": 946392,
+        "output_last_cycle": 946448,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 50,
+        "input_first_cycle": 886869,
+        "input_last_cycle": 905460,
+        "output_first_cycle": 964984,
+        "output_last_cycle": 965040,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 51,
+        "input_first_cycle": 905461,
+        "input_last_cycle": 924052,
+        "output_first_cycle": 983576,
+        "output_last_cycle": 983632,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 52,
+        "input_first_cycle": 924053,
+        "input_last_cycle": 942644,
+        "output_first_cycle": 1002168,
+        "output_last_cycle": 1002224,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 53,
+        "input_first_cycle": 942645,
+        "input_last_cycle": 961236,
+        "output_first_cycle": 1020760,
+        "output_last_cycle": 1020816,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 54,
+        "input_first_cycle": 961237,
+        "input_last_cycle": 979828,
+        "output_first_cycle": 1039352,
+        "output_last_cycle": 1039408,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 55,
+        "input_first_cycle": 979829,
+        "input_last_cycle": 998420,
+        "output_first_cycle": 1057944,
+        "output_last_cycle": 1058000,
+        "first_input_to_last_output_cycles": 78171
+      }
+    ]
+  },
+  "observed": {
+    "status": "pass",
+    "evidence": "generated-Verilog simulation (Verilator)",
+    "frames_checked": 56,
+    "scalar_outputs_checked": 3192,
+    "input_words": 17920,
+    "finish_cycle": 1060049,
+    "post_completion_drain_cycles": 2048,
+    "source_bubbles": "none inserted",
+    "sink_stalls": "none inserted",
+    "timing_scope": "kernel interface cycles; excludes UART, physical timing and post-completion drain",
+    "output_frame_start_intervals_cycles": [
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592,
+      18592
+    ],
+    "repeated_frame_pairs_checked": [
+      [
+        0,
+        12
+      ],
+      [
+        0,
+        13
+      ],
+      [
+        0,
+        14
+      ],
+      [
+        1,
+        15
+      ],
+      [
+        2,
+        16
+      ],
+      [
+        3,
+        17
+      ],
+      [
+        4,
+        18
+      ],
+      [
+        5,
+        19
+      ],
+      [
+        6,
+        20
+      ],
+      [
+        7,
+        21
+      ],
+      [
+        8,
+        22
+      ],
+      [
+        9,
+        23
+      ],
+      [
+        10,
+        24
+      ],
+      [
+        11,
+        25
+      ],
+      [
+        0,
+        26
+      ],
+      [
+        0,
+        27
+      ],
+      [
+        0,
+        28
+      ],
+      [
+        1,
+        29
+      ],
+      [
+        2,
+        30
+      ],
+      [
+        3,
+        31
+      ],
+      [
+        4,
+        32
+      ],
+      [
+        5,
+        33
+      ],
+      [
+        6,
+        34
+      ],
+      [
+        7,
+        35
+      ],
+      [
+        8,
+        36
+      ],
+      [
+        9,
+        37
+      ],
+      [
+        10,
+        38
+      ],
+      [
+        11,
+        39
+      ],
+      [
+        0,
+        40
+      ],
+      [
+        0,
+        41
+      ],
+      [
+        0,
+        42
+      ],
+      [
+        1,
+        43
+      ],
+      [
+        2,
+        44
+      ],
+      [
+        3,
+        45
+      ],
+      [
+        4,
+        46
+      ],
+      [
+        5,
+        47
+      ],
+      [
+        6,
+        48
+      ],
+      [
+        7,
+        49
+      ],
+      [
+        8,
+        50
+      ],
+      [
+        9,
+        51
+      ],
+      [
+        10,
+        52
+      ],
+      [
+        11,
+        53
+      ],
+      [
+        0,
+        54
+      ],
+      [
+        0,
+        55
+      ]
+    ],
+    "input_sha256": "3112fe28239d47d3e02ef615c437f469335906ec17e8b487f6e980c36f5c7114",
+    "expected_sha256": "c87e3a87ca821f38bffa3e55a05a76c1c267f5eb7fc8d14f5579291faee9530a",
+    "log_sha256": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "frames": [
+      {
+        "frame": 0,
+        "input_first_cycle": 0,
+        "input_last_cycle": 319,
+        "output_first_cycle": 35384,
+        "output_last_cycle": 35440,
+        "first_input_to_last_output_cycles": 35440
+      },
+      {
+        "frame": 1,
+        "input_first_cycle": 320,
+        "input_last_cycle": 639,
+        "output_first_cycle": 53976,
+        "output_last_cycle": 54032,
+        "first_input_to_last_output_cycles": 53712
+      },
+      {
+        "frame": 2,
+        "input_first_cycle": 640,
+        "input_last_cycle": 13044,
+        "output_first_cycle": 72568,
+        "output_last_cycle": 72624,
+        "first_input_to_last_output_cycles": 71984
+      },
+      {
+        "frame": 3,
+        "input_first_cycle": 13045,
+        "input_last_cycle": 31636,
+        "output_first_cycle": 91160,
+        "output_last_cycle": 91216,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 4,
+        "input_first_cycle": 31637,
+        "input_last_cycle": 50228,
+        "output_first_cycle": 109752,
+        "output_last_cycle": 109808,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 5,
+        "input_first_cycle": 50229,
+        "input_last_cycle": 68820,
+        "output_first_cycle": 128344,
+        "output_last_cycle": 128400,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 6,
+        "input_first_cycle": 68821,
+        "input_last_cycle": 87412,
+        "output_first_cycle": 146936,
+        "output_last_cycle": 146992,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 7,
+        "input_first_cycle": 87413,
+        "input_last_cycle": 106004,
+        "output_first_cycle": 165528,
+        "output_last_cycle": 165584,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 8,
+        "input_first_cycle": 106005,
+        "input_last_cycle": 124596,
+        "output_first_cycle": 184120,
+        "output_last_cycle": 184176,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 9,
+        "input_first_cycle": 124597,
+        "input_last_cycle": 143188,
+        "output_first_cycle": 202712,
+        "output_last_cycle": 202768,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 10,
+        "input_first_cycle": 143189,
+        "input_last_cycle": 161780,
+        "output_first_cycle": 221304,
+        "output_last_cycle": 221360,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 11,
+        "input_first_cycle": 161781,
+        "input_last_cycle": 180372,
+        "output_first_cycle": 239896,
+        "output_last_cycle": 239952,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 12,
+        "input_first_cycle": 180373,
+        "input_last_cycle": 198964,
+        "output_first_cycle": 258488,
+        "output_last_cycle": 258544,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 13,
+        "input_first_cycle": 198965,
+        "input_last_cycle": 217556,
+        "output_first_cycle": 277080,
+        "output_last_cycle": 277136,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 14,
+        "input_first_cycle": 217557,
+        "input_last_cycle": 236148,
+        "output_first_cycle": 295672,
+        "output_last_cycle": 295728,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 15,
+        "input_first_cycle": 236149,
+        "input_last_cycle": 254740,
+        "output_first_cycle": 314264,
+        "output_last_cycle": 314320,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 16,
+        "input_first_cycle": 254741,
+        "input_last_cycle": 273332,
+        "output_first_cycle": 332856,
+        "output_last_cycle": 332912,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 17,
+        "input_first_cycle": 273333,
+        "input_last_cycle": 291924,
+        "output_first_cycle": 351448,
+        "output_last_cycle": 351504,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 18,
+        "input_first_cycle": 291925,
+        "input_last_cycle": 310516,
+        "output_first_cycle": 370040,
+        "output_last_cycle": 370096,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 19,
+        "input_first_cycle": 310517,
+        "input_last_cycle": 329108,
+        "output_first_cycle": 388632,
+        "output_last_cycle": 388688,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 20,
+        "input_first_cycle": 329109,
+        "input_last_cycle": 347700,
+        "output_first_cycle": 407224,
+        "output_last_cycle": 407280,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 21,
+        "input_first_cycle": 347701,
+        "input_last_cycle": 366292,
+        "output_first_cycle": 425816,
+        "output_last_cycle": 425872,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 22,
+        "input_first_cycle": 366293,
+        "input_last_cycle": 384884,
+        "output_first_cycle": 444408,
+        "output_last_cycle": 444464,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 23,
+        "input_first_cycle": 384885,
+        "input_last_cycle": 403476,
+        "output_first_cycle": 463000,
+        "output_last_cycle": 463056,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 24,
+        "input_first_cycle": 403477,
+        "input_last_cycle": 422068,
+        "output_first_cycle": 481592,
+        "output_last_cycle": 481648,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 25,
+        "input_first_cycle": 422069,
+        "input_last_cycle": 440660,
+        "output_first_cycle": 500184,
+        "output_last_cycle": 500240,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 26,
+        "input_first_cycle": 440661,
+        "input_last_cycle": 459252,
+        "output_first_cycle": 518776,
+        "output_last_cycle": 518832,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 27,
+        "input_first_cycle": 459253,
+        "input_last_cycle": 477844,
+        "output_first_cycle": 537368,
+        "output_last_cycle": 537424,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 28,
+        "input_first_cycle": 477845,
+        "input_last_cycle": 496436,
+        "output_first_cycle": 555960,
+        "output_last_cycle": 556016,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 29,
+        "input_first_cycle": 496437,
+        "input_last_cycle": 515028,
+        "output_first_cycle": 574552,
+        "output_last_cycle": 574608,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 30,
+        "input_first_cycle": 515029,
+        "input_last_cycle": 533620,
+        "output_first_cycle": 593144,
+        "output_last_cycle": 593200,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 31,
+        "input_first_cycle": 533621,
+        "input_last_cycle": 552212,
+        "output_first_cycle": 611736,
+        "output_last_cycle": 611792,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 32,
+        "input_first_cycle": 552213,
+        "input_last_cycle": 570804,
+        "output_first_cycle": 630328,
+        "output_last_cycle": 630384,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 33,
+        "input_first_cycle": 570805,
+        "input_last_cycle": 589396,
+        "output_first_cycle": 648920,
+        "output_last_cycle": 648976,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 34,
+        "input_first_cycle": 589397,
+        "input_last_cycle": 607988,
+        "output_first_cycle": 667512,
+        "output_last_cycle": 667568,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 35,
+        "input_first_cycle": 607989,
+        "input_last_cycle": 626580,
+        "output_first_cycle": 686104,
+        "output_last_cycle": 686160,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 36,
+        "input_first_cycle": 626581,
+        "input_last_cycle": 645172,
+        "output_first_cycle": 704696,
+        "output_last_cycle": 704752,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 37,
+        "input_first_cycle": 645173,
+        "input_last_cycle": 663764,
+        "output_first_cycle": 723288,
+        "output_last_cycle": 723344,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 38,
+        "input_first_cycle": 663765,
+        "input_last_cycle": 682356,
+        "output_first_cycle": 741880,
+        "output_last_cycle": 741936,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 39,
+        "input_first_cycle": 682357,
+        "input_last_cycle": 700948,
+        "output_first_cycle": 760472,
+        "output_last_cycle": 760528,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 40,
+        "input_first_cycle": 700949,
+        "input_last_cycle": 719540,
+        "output_first_cycle": 779064,
+        "output_last_cycle": 779120,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 41,
+        "input_first_cycle": 719541,
+        "input_last_cycle": 738132,
+        "output_first_cycle": 797656,
+        "output_last_cycle": 797712,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 42,
+        "input_first_cycle": 738133,
+        "input_last_cycle": 756724,
+        "output_first_cycle": 816248,
+        "output_last_cycle": 816304,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 43,
+        "input_first_cycle": 756725,
+        "input_last_cycle": 775316,
+        "output_first_cycle": 834840,
+        "output_last_cycle": 834896,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 44,
+        "input_first_cycle": 775317,
+        "input_last_cycle": 793908,
+        "output_first_cycle": 853432,
+        "output_last_cycle": 853488,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 45,
+        "input_first_cycle": 793909,
+        "input_last_cycle": 812500,
+        "output_first_cycle": 872024,
+        "output_last_cycle": 872080,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 46,
+        "input_first_cycle": 812501,
+        "input_last_cycle": 831092,
+        "output_first_cycle": 890616,
+        "output_last_cycle": 890672,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 47,
+        "input_first_cycle": 831093,
+        "input_last_cycle": 849684,
+        "output_first_cycle": 909208,
+        "output_last_cycle": 909264,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 48,
+        "input_first_cycle": 849685,
+        "input_last_cycle": 868276,
+        "output_first_cycle": 927800,
+        "output_last_cycle": 927856,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 49,
+        "input_first_cycle": 868277,
+        "input_last_cycle": 886868,
+        "output_first_cycle": 946392,
+        "output_last_cycle": 946448,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 50,
+        "input_first_cycle": 886869,
+        "input_last_cycle": 905460,
+        "output_first_cycle": 964984,
+        "output_last_cycle": 965040,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 51,
+        "input_first_cycle": 905461,
+        "input_last_cycle": 924052,
+        "output_first_cycle": 983576,
+        "output_last_cycle": 983632,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 52,
+        "input_first_cycle": 924053,
+        "input_last_cycle": 942644,
+        "output_first_cycle": 1002168,
+        "output_last_cycle": 1002224,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 53,
+        "input_first_cycle": 942645,
+        "input_last_cycle": 961236,
+        "output_first_cycle": 1020760,
+        "output_last_cycle": 1020816,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 54,
+        "input_first_cycle": 961237,
+        "input_last_cycle": 979828,
+        "output_first_cycle": 1039352,
+        "output_last_cycle": 1039408,
+        "first_input_to_last_output_cycles": 78171
+      },
+      {
+        "frame": 55,
+        "input_first_cycle": 979829,
+        "input_last_cycle": 998420,
+        "output_first_cycle": 1057944,
+        "output_last_cycle": 1058000,
+        "first_input_to_last_output_cycles": 78171
+      }
+    ]
+  },
+  "baseline_sources_unchanged": true,
+  "observer_noninterference": "All 3305 kernel records match control and prior observation",
+  "simultaneous_multiplier_trace": "Byte-identical to prior certified 45-to-25 trace",
+  "adder_checks": {
+    "operations": 6515040,
+    "capture_checks": 6515040,
+    "state_checks": 18020833,
+    "last_edge_cycle": 1060048
+  },
+  "artifact_sha256": {
+    "control.log": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "observed.log": "0eecb34ad2fe1496c0b37d0c9c06cb4472452dfce8879dc1fdd80f8913933e67",
+    "transactions.csv": "2923d24c11d43b12d0a3901a476ab1a1a1c60360d28931158171d860c1f9a801",
+    "stage_waits.csv": "03873c13979895e4c2119a5c98bf11e63faac2adb76a7432a625eb85eb9a1477",
+    "adder_transactions.csv": "eb0545b5d36a9a182e16e11c70b7b28652e594712739a0f378c19d9459776737",
+    "adder_initializations.csv": "2210ac132d00ca0ffa6645404a44387e0602ff6921cc7e496d48a5043d8bf214",
+    "adder_checks.json": "15cccb815760e43e5e38cc14fbc6bb02b6c87cc1be2059ae36e6ff8461dacfcd",
+    "adder_units.json": "34f3fe2cba87af80d35435f2013cf0f40deb39bdccbb4cabae98a45f8c46d4e2",
+    "adder_observer.v": "d15c77b56466333e057666305023f915816d5c83adc60d25d2d11ec59d9f7dbe"
+  },
+  "metadata_correction": {
+    "reason": "The kernel-log parser inherited an Icarus evidence label; build and simulation commands run Verilator 5.020.",
+    "fields": [
+      "control.evidence",
+      "observed.evidence"
+    ],
+    "old_value": "generated-Verilog simulation (Icarus)",
+    "new_value": "generated-Verilog simulation (Verilator)",
+    "simulation_rerun": false,
+    "original_report": "/workspace/scratch/aec1ffc44acd/adder-observation/run/validation_executed.json",
+    "original_report_sha256": "d11e2df317c34a197c3b7e940a1108ba1fcf5e1f2616c61b2fb3dfaae5bc67e8",
+    "executed_runner_original_path": "/workspace/scratch/aec1ffc44acd/adder-observation/run.py",
+    "executed_runner_preserved_copy": "/workspace/scratch/aec1ffc44acd/adder-observation/run_executed.py",
+    "executed_runner_sha256": "a3b0208804e84a6ee9447cc31eb1a7f108dbf274c29f38e255fff4f3c383a3f2",
+    "corrected_runner_path": "/workspace/scratch/aec1ffc44acd/adder-observation/run.py",
+    "corrected_runner_sha256": "32c900e925f0860f053b4996dc2deab28a36ab438a0129e8618a59d6b8bdd8e3",
+    "corrected_runner_was_executed": false,
+    "verification": "All compiled input, measurement source, baseline source, and result artifact hashes rechecked after metadata-only correction."
+  }
+}

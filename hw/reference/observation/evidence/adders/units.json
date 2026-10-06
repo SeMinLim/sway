@@ -1,0 +1,155 @@
+[
+  {
+    "id": 0,
+    "name": "dut_block0_bProjection",
+    "stage": "dut_block0_bProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 1,
+    "name": "dut_block0_cProjection",
+    "stage": "dut_block0_cProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 2,
+    "name": "dut_block0_deltaInputProjection",
+    "stage": "dut_block0_deltaInputProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 3,
+    "name": "dut_block0_deltaProjection_engine",
+    "stage": "dut_block0_deltaProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 4,
+    "name": "dut_block0_gateProjection",
+    "stage": "dut_block0_gateProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 5,
+    "name": "dut_block0_mainProjection",
+    "stage": "dut_block0_mainProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 6,
+    "name": "dut_block0_outputProjection_engine",
+    "stage": "dut_block0_outputProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 7,
+    "name": "dut_block1_bProjection",
+    "stage": "dut_block1_bProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 8,
+    "name": "dut_block1_cProjection",
+    "stage": "dut_block1_cProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 9,
+    "name": "dut_block1_deltaInputProjection",
+    "stage": "dut_block1_deltaInputProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 10,
+    "name": "dut_block1_deltaProjection_engine",
+    "stage": "dut_block1_deltaProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 11,
+    "name": "dut_block1_gateProjection",
+    "stage": "dut_block1_gateProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 12,
+    "name": "dut_block1_mainProjection",
+    "stage": "dut_block1_mainProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 13,
+    "name": "dut_block1_outputProjection_engine",
+    "stage": "dut_block1_outputProjection",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 14,
+    "name": "dut_embedding_engine",
+    "stage": "dut_embedding",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 15,
+    "name": "dut_headHidden_engine",
+    "stage": "dut_headHidden",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  },
+  {
+    "id": 16,
+    "name": "dut_headOutput_engine",
+    "stage": "dut_headOutput",
+    "lane": 0,
+    "sum_bits": 24,
+    "product_bits": 16,
+    "request_cycle_equals_capture_cycle": true
+  }
+]
