@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "contract": "hw/reference/integer_model.py; exact integer normalization, ties-to-even, INT24 current / INT17 retained state",
+  "parameterValues": 15717,
+  "nonlinearTableValues": 1024,
+  "derivedTables": {
+    "expProductValues": [
+      2048,
+      512
+    ],
+    "gateInputValues": [
+      256,
+      256
+    ],
+    "normReciprocalValues": 256,
+    "expProductVerification": "All 65536 signed-INT8 operand pairs per block match separate requantization and lookup",
+    "gateInputVerification": "All 256 signed-INT8 inputs per block match separate requantization and lookup",
+    "normalizationReciprocal": "floor(2^32 / (20 * max(span, 1))); integer quotient correction preserves exact rounding",
+    "additionalBytes": 4096
+  },
+  "inputShape": [
+    8,
+    8,
+    5
+  ],
+  "outputShape": [
+    57
+  ],
+  "inputExponent": -4,
+  "outputExponent": -6,
+  "fixtureFrames": 14,
+  "realFixtureFrames": 8,
+  "realTestIndices": [
+    0,
+    1,
+    49,
+    249,
+    1023,
+    2047,
+    4095,
+    7983
+  ],
+  "sourceSHA256": {
+    "hw/reference/integer_model.py": "523bb8c5b25e8d3bcefe4f07d6dbf1e51caf63a169b367f36cf6a98f396bc863",
+    "hw/model/export/manifest.json": "ee8eb5147b61577c0877b4baaef0dcd37a34d5f80761cd18e01abd280591a0f6",
+    "hw/model/export/quantization.json": "8c0de688b90fb3ab74245bc2bc3c81487c3e00c0b8eb41cb09d03f1a8000cf70",
+    "hw/generated/nonlinear_tables.npy": "fbe6d0347c64501572c491f32247cf67eeee4bbb05db7d9a814643e2b72d4e69",
+    "hw/generated/test_trace.npz": "d65686362a20b5e2103af1b89fff5b0faeaa419e62ae7662c14ca0ab8be887c6",
+    "hw/model/real_fixture_features.npy": "1ac75b47763f223d558bc92588f59da641d2128a060ec8afba9d90b36841b9b9",
+    "hw/model/export/embedding_weight.bin": "f34bb689eb4c1e8f1c35be1d7ea21bebe7ecccab2f6a4ab3cd63e1b9650bab0d",
+    "hw/model/export/embedding_bias.bin": "5284c66898a7dc83c384c45f2f6b889e0e1a58f7b8e79c6324822e14680ed096",
+    "hw/model/export/blocks_0_normWeight.bin": "a2a6b9adaf311cbe4c49492472116b33e5e8d867ca4c2d4f9853e8b5e13fe8d8",
+    "hw/model/export/blocks_0_normBias.bin": "d4ccb483d0c0a47ef5d8788dee9cec33d94c2b22bfe08c62a1d4aaca7c9ef5e4",
+    "hw/model/export/blocks_0_inWeight.bin": "caf57ed861712ed90c47ccde7a9ac19c1dfecf22b59ff973f0d303dfb79ced6e",
+    "hw/model/export/blocks_0_convWeight.bin": "cf109d3ee703fbc680e8f45a0d5e962147d98fb5994810a85ecf8fa62dd74d53",
+    "hw/model/export/blocks_0_convBias.bin": "6ef2a6d45f1ca8f5bee1c764f837c3db93c2915c3d41aa729c707b7647a239a8",
+    "hw/model/export/blocks_0_xWeight.bin": "36ad14eb28c3ba279dd7e6d0188e958c4e018deb09cf872ae5e80fc329b196a8",
+    "hw/model/export/blocks_0_dtWeight.bin": "d57b2b0725e182c1b64c699d119df39b3253220dcda661b3c360736987775efc",
+    "hw/model/export/blocks_0_dtBias.bin": "f9445ed0455165348b70996e1c5aa4257a0d9d5efe6be14e6b42cdbd03439544",
+    "hw/model/export/blocks_0_A.bin": "5e041a636da8185ba51cbd9bc52d70a10114b1c0e5d2eb59973ccc7018358877",
+    "hw/model/export/blocks_0_D.bin": "4a9f20d71830fd04f765f686cef6b6e08d1928268eceb259e9f8d06454b5cd5f",
+    "hw/model/export/blocks_0_outWeight.bin": "29f56bab0056a8be35e020296adbb6834725929ffafc9fc81873522bf9b87da0",
+    "hw/model/export/blocks_1_normWeight.bin": "6b19d7e5ffbcd845d081bb442663e68511ad85b8afeb0ec538918ac53e5f9499",
+    "hw/model/export/blocks_1_normBias.bin": "ed68747cf502d429d4db25a6f9d1c8d2af2636bf2dd756015e7285303d6143c0",
+    "hw/model/export/blocks_1_inWeight.bin": "1618989a8a2563d7aa481850042f56b90bde4a318e1d20643cb8412f05246444",
+    "hw/model/export/blocks_1_convWeight.bin": "a28bd97914a6bbc55a8fc7640563781348284e65a0281d7de7455503f9689ece",
+    "hw/model/export/blocks_1_convBias.bin": "99ad0d7b71c286bb22cd4d74df8707dbeca96ed6b09a5dd48c7ae23dba642a14",
+    "hw/model/export/blocks_1_xWeight.bin": "929c29b7a8c9e5a5c273cfb9869edc5f122cbf01ca1211ef76f26a01470cce90",
+    "hw/model/export/blocks_1_dtWeight.bin": "000a897dbdc6157066b8ff1c0cd828e16d6370c780bee92beeb448016c02b1d2",
+    "hw/model/export/blocks_1_dtBias.bin": "6c1ee1a062661eec1c5ef612a835ec9b99a257a7a9814dbacd00ae711d596b44",
+    "hw/model/export/blocks_1_A.bin": "1d0ff6deabf2a96cfd2ee79db7da9cdc95638109439bb2fd3d895a4f658170be",
+    "hw/model/export/blocks_1_D.bin": "2f424606ac81c464ab1a834fd64bfc0a217e39d28e41632c33e0c3ebe4893155",
+    "hw/model/export/blocks_1_outWeight.bin": "4bea5c99ef8323575bedd2fdda5029151d2c6091b35cfea72c18b323aeacfcd6",
+    "hw/model/export/headHidden_weight.bin": "75440fcbdaf2741e978d3e6ab9824c56156665c01aad6c1dd1953af065d226a6",
+    "hw/model/export/headHidden_bias.bin": "ae42f285de27904c5583eb161ccde6d37f19a2a307bfde051668f6b0fdc01457",
+    "hw/model/export/headOutput_weight.bin": "705b7ae6d441347765a12a70858f6bf4e74a285e2bb4ab64cd17209bcad8fdcf",
+    "hw/model/export/headOutput_bias.bin": "103e4353057d01ed724841b1634ba288cda899c02b3885860dc8a9f91397c26f"
+  },
+  "generatedSHA256": {
+    "sway_model.h": "2903912d2f62d586cf7e5a1da7c9925d18b703a7ae48ed8c1d0faa9d6975899a",
+    "sway_model.c": "8abeb2f3a819231e2b6ed8850385284d989347a7f503c8187df6c95e3f814260",
+    "sway_fixtures.h": "e04bb571aa8c00095ab8f35b8a7ccdcd067d368cf8a3c9a6a107d7fe3131f137",
+    "sway_fixtures.c": "d980361e728b50b6d0c7ecbd2c9537a5f6873f11e52d0af9bea9d43772ceb9f9"
+  },
+  "weightsChanged": false,
+  "scalesChanged": false,
+  "trainingPerformed": false
+}

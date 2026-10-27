@@ -1,0 +1,18 @@
+APP = sway_gap8
+APP_SRCS = gap8_main.c sway.c generated/sway_model.c generated/sway_fixtures.c
+APP_INC = . generated
+SWAY_SIMD ?= 1
+SWAY_CL_HZ ?= 170000000
+SWAY_FC_HZ ?= 250000000
+SWAY_REPEATS ?= 8
+SWAY_TRIALS ?= 3
+SWAY_MAX_CORES ?= 8
+SWAY_OPT ?= O2
+APP_CFLAGS = -$(SWAY_OPT) -std=gnu11 -fno-strict-aliasing -DSWAY_GAP8=1 -DSWAY_SIMD=$(SWAY_SIMD)
+APP_CFLAGS += -DSWAY_CL_HZ=$(SWAY_CL_HZ) -DSWAY_FC_HZ=$(SWAY_FC_HZ)
+APP_CFLAGS += -DSWAY_REPEATS=$(SWAY_REPEATS) -DSWAY_TRIALS=$(SWAY_TRIALS) -DSWAY_MAX_CORES=$(SWAY_MAX_CORES)
+
+ifndef RULES_DIR
+$(error Source the GAP SDK board configuration before building)
+endif
+include $(RULES_DIR)/pmsis_rules.mk

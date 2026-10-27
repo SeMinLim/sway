@@ -110,7 +110,7 @@ class QATTests(unittest.TestCase):
     def test_saved_checkpoint_and_fixtures(self):
         checkpointPath = self.root / "results" / "mars" / "final" / "checkpoint.pt"
         profilePath = checkpointPath.parent / "calibration.json"
-        dataPath = self.root.parent / "hw" / "model" / "real_fixture_features.npy"
+        dataPath = self.root.parents[1] / "hw" / "model" / "real_fixture_features.npy"
         for path in [checkpointPath, profilePath, dataPath]:
             self.assertTrue(path.is_file(), "Required checked-in file missing: " + str(path))
         import numpy as np

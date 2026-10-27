@@ -26,7 +26,7 @@ def main():
     if args.batch_size < 1:
         parser.error("--batch-size must be positive")
     torch.set_num_threads(2)
-    source = ROOT.parent / "sw"
+    source = ROOT.parent / "sw" / "python"
     sys.path.insert(0, str(source))
     from evaluate_ptq import loadCheckpoint
     from model import forwardModel, piecewise as software_piecewise
@@ -106,7 +106,7 @@ def main():
         "schemaVersion": 2,
         "checkpointSHA256": file_hash(MODEL / "checkpoint.pt"),
         "sourceCommit": provenance["sourceCommit"],
-        "sourceSHA256": {"sw/" + name: file_hash(source / name) for name in ["model.py", "quantize.py", "evaluate_ptq.py"]},
+        "sourceSHA256": {"sw/python/" + name: file_hash(source / name) for name in ["model.py", "quantize.py", "evaluate_ptq.py"]},
         "referenceSHA256": {"reference/" + name: file_hash(Path(__file__).parent / name)
                             for name in ["generate.py", "integer_model.py", "check_contract.py"]},
         "nonlinearTableSHA256": file_hash(GENERATED / "nonlinear_tables.npy"),

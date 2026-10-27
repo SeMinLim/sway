@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "status": "pass",
+  "kind": "host numerical validation, not GAP8 performance",
+  "compiler": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0",
+  "datasets": {
+    "frozenFixtures": 14,
+    "constantFrames": 256,
+    "singleElementImpulses": 640,
+    "randomUniformFrames": 128,
+    "randomExtremeFrames": 64,
+    "resetSequenceFrames": 16,
+    "randomSeed": 20261027
+  },
+  "framesPerConfiguration": 1118,
+  "outputElementsPerConfiguration": 63726,
+  "traceElementsPerConfiguration": 24014640,
+  "traceFields": [
+    "embedding",
+    "blocks.0.residual",
+    "blocks.1.residual",
+    "headHidden",
+    "headActivation",
+    "blocks.0.currentState",
+    "blocks.1.currentState",
+    "blocks.0.state",
+    "blocks.1.state"
+  ],
+  "configurations": [
+    {
+      "configuration": "validate_serial",
+      "cores": 1,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Validated execution: 1118 frames, 1 cores"
+    },
+    {
+      "configuration": "validate_parallel",
+      "cores": 1,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Validated execution: 1118 frames, 1 cores"
+    },
+    {
+      "configuration": "validate_parallel",
+      "cores": 2,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Validated execution: 1118 frames, 2 cores"
+    },
+    {
+      "configuration": "validate_parallel",
+      "cores": 4,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Validated execution: 1118 frames, 4 cores"
+    },
+    {
+      "configuration": "validate_parallel",
+      "cores": 8,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Validated execution: 1118 frames, 8 cores"
+    },
+    {
+      "configuration": "validate_frames",
+      "cores": 2,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Independent-frame execution: 1118 frames, 2 cores"
+    },
+    {
+      "configuration": "validate_frames",
+      "cores": 4,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Independent-frame execution: 1118 frames, 4 cores"
+    },
+    {
+      "configuration": "validate_frames",
+      "cores": 8,
+      "frames": 1118,
+      "outputAndTraceMatch": true,
+      "log": "Independent-frame execution: 1118 frames, 8 cores"
+    }
+  ],
+  "persistentTeam": {
+    "workspace": "one shared workspace reused for all frames",
+    "externalBarriersBetweenFrames": 0,
+    "traceEnabled": false,
+    "configurations": [
+      {
+        "cores": 1,
+        "frames": 1118,
+        "allOutputsMatch": true,
+        "log": "Persistent-team execution: 1118 frames, 1 cores"
+      },
+      {
+        "cores": 2,
+        "frames": 1118,
+        "allOutputsMatch": true,
+        "log": "Persistent-team execution: 1118 frames, 2 cores"
+      },
+      {
+        "cores": 4,
+        "frames": 1118,
+        "allOutputsMatch": true,
+        "log": "Persistent-team execution: 1118 frames, 4 cores"
+      },
+      {
+        "cores": 8,
+        "frames": 1118,
+        "allOutputsMatch": true,
+        "log": "Persistent-team execution: 1118 frames, 8 cores"
+      }
+    ]
+  },
+  "arithmeticCases": {
+    "divideEven32": 90343,
+    "roundShift32": 263869,
+    "roundShift64": 1792,
+    "requantize32": 517419,
+    "requantize64": 1764,
+    "saturate24": 8213,
+    "retainState": 8206,
+    "divideEvenReciprocal32": 74316,
+    "requantizeBounded32": 500017
+  },
+  "arithmeticLog": "Arithmetic validation passed: 1465939 cases",
+  "sanitizer": {
+    "enabled": true,
+    "inferenceLog": "Validated execution: 1118 frames, 1 cores",
+    "arithmeticLog": "Arithmetic validation passed: 1465939 cases",
+    "passed": true,
+    "checks": [
+      "address",
+      "undefined-behavior"
+    ],
+    "leakDetection": false
+  },
+  "inputSHA256": "a87ca8da186de37372667968b9456a2266cc5e47bd5aa2a7b187e176c8e8211f",
+  "referenceOutputAndTraceSHA256": "a9b72f212a99a2a42c756eedfa009acbc14d7e8697ef6b30ff213fbff9f2e932",
+  "sourceSHA256": {
+    "sw/c/sway.c": "2a3f6c97052e30c2112e622b4a6287e5b8a52e12e735d9c13c77745be0527968",
+    "sw/c/sway.h": "9c1b1b701c2f334a9cc18f1fff0bb786efc6c3daf076bbdda3dca5a21c81f721",
+    "sw/c/sway_math.h": "3d7f330a9fabe18e90ff7554bdd4e59564499ecb3146a7d6933b27b885dc4f14",
+    "sw/c/generated/sway_model.c": "8abeb2f3a819231e2b6ed8850385284d989347a7f503c8187df6c95e3f814260",
+    "sw/c/generated/sway_model.h": "2903912d2f62d586cf7e5a1da7c9925d18b703a7ae48ed8c1d0faa9d6975899a",
+    "sw/c/tests/validate.c": "ddb55f091972a63b21912b32ed4f35d6274bff465b4130046aaaf64b3f8a58fe",
+    "sw/c/tests/validate_frames.c": "224c04afa9b1b1be7446fe2aef170a658d1eae3206f8db37dfb45315d42b8570",
+    "sw/c/tests/validate_stream.c": "81365b8eedeced168c6c50144c269c6ad0a6042b4a706b563058736d0c583ce0",
+    "sw/c/tests/arithmetic.c": "f83d6172d2868c164450da0f1a554a4cf9e46f5329a2874d18eab79f6c9a6520",
+    "sw/c/tools/validate.py": "790854745ea86c27977e492d205cfabf9ca1cb0f635b59575036b17e1befb4b9",
+    "hw/reference/integer_model.py": "523bb8c5b25e8d3bcefe4f07d6dbf1e51caf63a169b367f36cf6a98f396bc863"
+  }
+}
